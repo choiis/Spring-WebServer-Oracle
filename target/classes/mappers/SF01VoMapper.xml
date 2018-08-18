@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	도메인마다 namespace 를 구현하고
+	각각의 crud 에 대한 id 설정 후 쿼리 작성
+-->
+
+<mapper namespace="com.singer.mappers.SF01">		
+		<insert id="insert"  parameterType="com.singer.vo.SF01Vo">
+			insert into SF01 (seq, title, text, userid, regdate, filename)
+			values (SEQ_SF01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{filename}) 
+		</insert>
+		
+		<update id="update" parameterType="com.singer.vo.SF01Vo">
+			update SF01 
+			set title = #{title},
+				text = #{text}
+			where seq = #{seq}
+		</update>
+		
+		<update id="like" parameterType="com.singer.vo.SF01Vo">
+			update SF01 
+			set good = #{good} + 1
+			where seq = #{seq}
+			and title = #{title}
+		</update>
+		
+		<update id="hate" parameterType="com.singer.vo.SF01Vo">
+			update SF01 
+			set good = #{good} - 1
+			where seq = #{seq}
+			and title = #{title}
+		</update>
+		
+		<update id="click" parameterType="com.singer.vo.SF01Vo">
+			update SF01
+			set hit = #{hit} + 1
+			where seq = #{seq}
+		</update>
+		
+		<select id="selectOne" resultType="com.singer.vo.SF01Vo" parameterType="com.singer.vo.SF01Vo">
+			select 
+				seq as seq,
+				title as title, 
+				text as text, 
+				userid as userid,
+				regdate as regdate,
+				hit as hit, 
+				good as good,
+				filename as filename
+			 from SF01
+			 where seq = #{seq}
+		</select>
+		
+		<select id="select" resultType="com.singer.vo.SF01Vo"  parameterType="com.singer.vo.SF01Vo">
+		select S1.*
+			 from (
+			 
+			select 
+				rownum as rown,
+				s1.seq as seq,
+				s1.title as title, 
+				s1.text as text, 
+				s1.userid as userid,  
+				s1.regdate as regdate,
+				s1.hit as hit, 
+				s1.good as good,
+				count(*) over() as totCnt,
+        		(select count(*) 
+        				from SF02 s2
+        			where s1.seq = s2.seq01
+        		) as reply
+			 from SF01 s1
+			 where 1=1
+			 <if test="title != null">
+			 	and title like #{title} || '%'
+			 </if>
+			 <if test="userid != null">
+			 	and userid = #{userid}
+			 </if>
+			 order by seq desc , regdate desc
+			) S1 where S1.rown between 
+		#{startRownum} + 1 and #{endRownum}
+		</select>
+		
+		<delete id="delete" parameterType="com.singer.vo.SF01Vo">
+			delete from SF01
+			where seq = #{seq}
+			and title = #{title}
+		</delete>
+		
+		<update id="insertFile" parameterType="java.util.HashMap">
+			update SF01 
+			set fileblob = #{fileblob}
+			where title = #{title}
+			and userid = #{userid}
+		</update>
+		
+		<select id="selectFile" parameterType="com.singer.vo.SF01Vo" resultType="java.util.Map">
+			select filename as filename,
+				fileblob as fileblob
+			 from SF01 
+			where seq = #{seq}
+			and regdate = #{regdate}
+		</select>
+</mapper>
