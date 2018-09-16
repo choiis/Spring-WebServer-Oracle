@@ -17,9 +17,9 @@ public interface SB01Service {
 
 	public int updateSB01Vo(SB01Vo sb01Vo) throws Exception;
 
-	public int likeSB01Vo(SB01Vo sb01Vo) throws Exception;
+	public int likeSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception;
 
-	public int hateSB01Vo(SB01Vo sb01Vo) throws Exception;
+	public int hateSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception;
 
 	public int deleteSB01Vo(SB01Vo sb01Vo) throws Exception;
 

@@ -16,12 +16,18 @@ public class SF01Vo extends SuperVo {
 	private int selection;
 	private String findText;
 
+	private String sessionid;
+	private String datelog;
+	private String goodlog;
+	private String hatelog;
+
 	public SF01Vo() {
 		super();
 	}
 
 	public SF01Vo(int seq, String title, String text, String userid, String regdate, int hit, int good, String filename,
-			MultipartFile fileblob, int reply, int selection, String findText) {
+			MultipartFile fileblob, int reply, int selection, String findText, String sessionid, String datelog,
+			String goodlog, String hatelog) {
 		super();
 		this.seq = seq;
 		this.title = title;
@@ -35,6 +41,10 @@ public class SF01Vo extends SuperVo {
 		this.reply = reply;
 		this.selection = selection;
 		this.findText = findText;
+		this.sessionid = sessionid;
+		this.datelog = datelog;
+		this.goodlog = goodlog;
+		this.hatelog = hatelog;
 	}
 
 	public int getSeq() {
@@ -133,11 +143,44 @@ public class SF01Vo extends SuperVo {
 		this.findText = findText;
 	}
 
+	public String getSessionid() {
+		return sessionid;
+	}
+
+	public void setSessionid(String sessionid) {
+		this.sessionid = sessionid;
+	}
+
+	public String getDatelog() {
+		return datelog;
+	}
+
+	public void setDatelog(String datelog) {
+		this.datelog = datelog;
+	}
+
+	public String getGoodlog() {
+		return goodlog;
+	}
+
+	public void setGoodlog(String goodlog) {
+		this.goodlog = goodlog;
+	}
+
+	public String getHatelog() {
+		return hatelog;
+	}
+
+	public void setHatelog(String hatelog) {
+		this.hatelog = hatelog;
+	}
+
 	@Override
 	public String toString() {
 		return "SF01Vo [seq=" + seq + ", title=" + title + ", text=" + text + ", userid=" + userid + ", regdate="
 				+ regdate + ", hit=" + hit + ", good=" + good + ", filename=" + filename + ", fileblob=" + fileblob
-				+ ", reply=" + reply + ", selection=" + selection + ", findText=" + findText + "]";
+				+ ", reply=" + reply + ", selection=" + selection + ", findText=" + findText + ", sessionid="
+				+ sessionid + ", datelog=" + datelog + ", goodlog=" + goodlog + ", hatelog=" + hatelog + "]";
 	}
 
 }

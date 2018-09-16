@@ -56,7 +56,7 @@ create table SB01(
 );
 
 alter table SB01
-add constraint pk_SB01 primary key(seq,title)
+add constraint pk_SB01 primary key(seq)
 
 CREATE index idx_SB01_1
 on SB01(seq, regdate);
@@ -67,6 +67,9 @@ on SB01(title);
 CREATE index idx_SB01_3
 on SB01(userid);
 
+
+CREATE index idx_SB01_4
+on SB01(seq,title);
 
 
 CREATE SEQUENCE seq_SB02 
@@ -104,7 +107,7 @@ create table SF01(
 );
 
 alter table SF01
-add constraint pk_SF01 primary key(seq,title)
+add constraint pk_SF01 primary key(seq)
 
 CREATE index idx_SF01_1
 on SF01(seq, regdate);
@@ -115,6 +118,8 @@ on SF01(title);
 CREATE index idx_SF01_3
 on SF01(userid);
 
+CREATE index idx_SF01_4
+on SF01(seq,title);
 
 CREATE SEQUENCE seq_SF02 
 START WITH 1 INCREMENT BY 1 ;
@@ -133,3 +138,15 @@ add constraint pk_SF02 primary key(seq, seq01)
 
 CREATE index idx_SF02_1
 on SF02(seq01, regdate);
+
+create table SG01(
+  btype varchar2(10) not null,
+  seq number not null,
+  sessionid varchar2(20) not null,
+  datelog varchar2(20) not null,
+  goodlog varchar2(3)  ,
+  hatelog varchar2(3) 
+);
+
+alter table SG01
+add constraint pk_SG01 primary key(btype,seq,sessionid)

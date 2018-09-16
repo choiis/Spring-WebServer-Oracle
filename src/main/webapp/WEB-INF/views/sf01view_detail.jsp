@@ -35,6 +35,19 @@
 			}
 		});
 		
+		// 좋아요 버튼을 클릭할때 이벤트 발생
+		$("#button_like").on("click", function(e) {
+			if(confirm("좋아요 할까요?")) {
+				like_sf01();
+			}
+		});
+		
+		// 싫어요 버튼을 클릭할때 이벤트 발생
+		$("#button_hate").on("click", function(e) {
+			if(confirm("싫어요 할까요?")) {
+				hate_sf01();
+			}
+		});
 		
 		fn_PreSave = function() {
 
@@ -159,6 +172,40 @@
 	        gfn_paging("pagenation", "showSF02List" , data.size);
 		});
 	};
+	
+	function like_sf01() {
+		
+		var sendData = JSON.stringify({
+			"seq" : parseInt($("#seq01").val()),
+        	"title" : $("#title").val(),
+			"good" : parseInt($("#good").text())
+        	
+        });
+		
+		gfn_ajax("sf01like.do","POST" , sendData , function(data) {
+			if(data.result == 1) {
+				$("#good").text(data.like);
+				$("#button_like").attr('disabled', true);
+			
+			}
+		});
+	}
+	
+	function hate_sf01() {
+		
+		var sendData = JSON.stringify({
+			"seq" : parseInt($("#seq01").val()),
+        	"title" : $("#title").val(),
+			"good" : parseInt($("#good").text())
+        });
+		
+		gfn_ajax("sf01hate.do","POST" , sendData , function(data) {
+			if(data.result == 1) {
+				$("#good").text(data.like);
+				$("#button_hate").attr('disabled', true);
+			}
+		});
+	}
 </script>
  <jsp:include page="banner.jsp" /> 
 	<header>
@@ -171,30 +218,48 @@
 		<div>
 		<form id="form_delete" method="post" action="/common/sf01delete.do">
 						
-			<input type="hidden" id="seq01" name="seq" value="${SF01Vo.seq}" />
-			<input type="hidden" id="title" name="title" value="${SF01Vo.title}" />
-			<p>작성자 : ${SF01Vo.userid}</p>
-			<p>제목 : ${SF01Vo.title}</p>
-			<p>등록일자 : ${SF01Vo.regdate}</p>
-			<c:if test="${SF01Vo.deleteYn}" var="result" scope="page">
+			<input type="hidden" id="seq01" name="seq" value="${sf01Vo.seq}" />
+			<input type="hidden" id="title" name="title" value="${sf01Vo.title}" />
+			<p>작성자 : ${sf01Vo.userid}</p>
+			<p>제목 : ${sf01Vo.title}</p>
+			<p>등록일자 : ${sf01Vo.showDate}</p>
+			<c:if test="${sf01Vo.deleteYn}" var="result" scope="page">
        			<input id="button_delete" type="button" value="삭제">
     		</c:if>
     	</form>
 		</div>
 		<div>
-			<p>내용 : ${SF01Vo.text}</p>
-			<p>조회수 : ${SF01Vo.hit}</p>
-			<p>좋아요 : ${SF01Vo.good}</p>
+			<div>내용 :<p>${sf01Vo.text}</p></div>
+			<div>조회수 :<p>${sf01Vo.hit}</p></div>
+			<div>좋아요 :<p id="good">${sf01Vo.good}</p></div>
 			
-			<p>파일명 : ${SF01Vo.filename}</p>
-			<a href="/common/selectFile.do?seq=${SF01Vo.seq}&regdate=${SF01Vo.regdate}">파일 받기</a>
+			<c:choose>
+				<c:when test="${sf01Vo.goodlog!='Y'}">
+					<input id="button_like" type="button" value="좋아요">
+				</c:when>
+				<c:otherwise>
+					<input id="button_like" type="button" value="좋아요" disabled>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${sf01Vo.hatelog!='Y'}">
+					<input id="button_hate" type="button" value="싫어요">
+				</c:when>
+				<c:otherwise>
+					<input id="button_hate" type="button" value="싫어요" disabled>
+				</c:otherwise>
+			</c:choose>
+			
+			<p>파일명 : ${sf01Vo.filename}</p>
+			<a href="/common/selectFile.do?seq=${sf01Vo.seq}&regdate=${sf01Vo.regdate}">파일 받기</a>
 		</div>
 		
 		<div class="container">
 		<form id="form" method="post"  action="/common/sf02insert.do">
 				댓글 내용<textarea id="text" name="text" rows="2" cols="40">
 				</textarea>
-				<input type="hidden" id="seq01" name="seq01" value="${SF01Vo.seq}" />
+				<input type="hidden" id="seq01" name="seq01" value="${sf01Vo.seq}" />
 				<button id="btn_insert_button" type="button" >저장</button>
 		</form>
 		<table border = "1">

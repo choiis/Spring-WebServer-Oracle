@@ -14,7 +14,6 @@ $(document).ready(function() {
 		        console.log("code:" + request.status + "\n" + "error:" + error);
 		    }
 		});
-		
 	}
 	
 	/** paging 공통 함수*/

@@ -64,12 +64,14 @@ public class SF01ServiceImpl implements SF01Service {
 	public SF01Vo selectOneSF01Vo(SF01Vo sf01vo, String userid) throws Exception {
 
 		sf01Dao.clickSF01Vo(sf01vo);
-		SF01Vo SF01vo = sf01Dao.selectOneSF01Vo(sf01vo);
-		if (SF01vo.getUserid().equals(userid)) {
-			SF01vo.setDeleteYn(true);
+		sf01vo.setSessionid(userid);
+		sf01vo = sf01Dao.selectOneSF01Vo(sf01vo);
+		if (sf01vo.getUserid().equals(userid)) {
+			sf01vo.setDeleteYn(true);
 		}
+		sf01vo.setShowDate(DateUtil.getDateFormat(sf01vo.getRegdate()));
 
-		return SF01vo;
+		return sf01vo;
 	}
 
 	@Override
@@ -77,14 +79,33 @@ public class SF01ServiceImpl implements SF01Service {
 		return sf01Dao.updateSF01Vo(sf01vo);
 	}
 
+	@Transactional
 	@Override
-	public int likeSF01Vo(SF01Vo SF01Vo) throws Exception {
-		return sf01Dao.likeSF01Vo(SF01Vo);
+	public int likeSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
+		int like = sf01Vo.getGood() + 1;
+		sf01Dao.likeSF01Vo(sf01Vo);
+
+		sf01Vo.setSessionid(sessionid);
+		sf01Vo.setDatelog(DateUtil.getTodayTime());
+
+		sf01Dao.likelogSF01Vo(sf01Vo);
+
+		return like;
 	}
 
+	@Transactional
 	@Override
-	public int hateSF01Vo(SF01Vo sf01vo) throws Exception {
-		return sf01Dao.hateSF01Vo(sf01vo);
+	public int hateSF01Vo(SF01Vo sf01vo, String sessionid) throws Exception {
+		int like = sf01vo.getGood() - 1;
+
+		sf01Dao.hateSF01Vo(sf01vo);
+
+		sf01vo.setSessionid(sessionid);
+		sf01vo.setDatelog(DateUtil.getTodayTime());
+
+		sf01Dao.hatelogSF01Vo(sf01vo);
+
+		return like;
 	}
 
 	@Transactional

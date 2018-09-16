@@ -36,6 +36,19 @@
 			}
 		});
 		
+		// 좋아요 버튼을 클릭할때 이벤트 발생
+		$("#button_like").on("click", function(e) {
+			if(confirm("좋아요 할까요?")) {
+				like_sb01();
+			}
+		});
+		
+		// 싫어요 버튼을 클릭할때 이벤트 발생
+		$("#button_hate").on("click", function(e) {
+			if(confirm("싫어요 할까요?")) {
+				hate_sb01();
+			}
+		});
 		
 		fn_PreSave = function() {
 
@@ -160,6 +173,40 @@
 	        gfn_paging("pagenation", "showSB02List" , data.size);
 		});
 	};
+	
+	function like_sb01() {
+	
+		var sendData = JSON.stringify({
+			"seq" : parseInt($("#seq01").val()),
+        	"title" : $("#title").val(),
+			"good" : parseInt($("#good").text())
+        	
+        });
+		
+		gfn_ajax("sb01like.do","POST" , sendData , function(data) {
+			if(data.result == 1) {
+				$("#good").text(data.like);
+				$("#button_like").attr('disabled', true);
+			
+			}
+		});
+	}
+	
+	function hate_sb01() {
+		
+		var sendData = JSON.stringify({
+			"seq" : parseInt($("#seq01").val()),
+        	"title" : $("#title").val(),
+			"good" : parseInt($("#good").text())
+        });
+		
+		gfn_ajax("sb01hate.do","POST" , sendData , function(data) {
+			if(data.result == 1) {
+				$("#good").text(data.like);
+				$("#button_hate").attr('disabled', true);
+			}
+		});
+	}
 </script>
  <jsp:include page="banner.jsp" /> 
 	<header>
@@ -174,18 +221,37 @@
 						
 			<input type="hidden" id="seq01" name="seq" value="${sb01Vo.seq}" />
 			<input type="hidden" id="title" name="title" value="${sb01Vo.title}" />
+			<input type="hidden" id="regdate" name="regdate" value="${sb01Vo.regdate}" />
 			<p>작성자 : ${sb01Vo.userid}</p>
 			<p>제목 : ${sb01Vo.title}</p>
-			<p>등록일자 : ${sb01Vo.regdate}</p>
+			<p>등록일자 : ${sb01Vo.showDate}</p>
 			<c:if test="${sb01Vo.deleteYn}" var="result" scope="page">
        			<input id="button_delete" type="button" value="삭제">
     		</c:if>
     	</form>
 		</div>
 		<div>
-			<p>내용 : ${sb01Vo.text}</p>
-			<p>조회수 : ${sb01Vo.hit}</p>
-			<p>좋아요 : ${sb01Vo.good}</p>
+			<div>내용 :<p>${sb01Vo.text}</p></div>
+			<div>조회수 :<p>${sb01Vo.hit}</p></div>
+			<div>좋아요 :<p id="good">${sb01Vo.good}</p></div>
+			<c:choose>
+				<c:when test="${sb01Vo.goodlog!='Y'}">
+					<input id="button_like" type="button" value="좋아요">
+				</c:when>
+				<c:otherwise>
+					<input id="button_like" type="button" value="좋아요" disabled>
+				</c:otherwise>
+			</c:choose>
+				
+    		<c:choose>
+				<c:when test="${sb01Vo.hatelog!='Y'}">
+					<input id="button_hate" type="button" value="싫어요">
+				</c:when>
+				<c:otherwise>
+					<input id="button_hate" type="button" value="싫어요" disabled>
+				</c:otherwise>
+			</c:choose>
+    		
 			<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
 			    <source src="/common/selectVideo.do?seq=${sb01Vo.seq}&title=${sb01Vo.title}" type="video/mp4" />
 			</video>

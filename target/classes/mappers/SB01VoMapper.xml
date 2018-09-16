@@ -38,17 +38,27 @@
 			where seq = #{seq}
 		</update>
 		
-		<select id="selectOne" resultType="com.singer.vo.SB01Vo" parameterType="com.singer.vo.SB01Vo">
-			select 
-				seq as seq,
-				title as title, 
-				text as text, 
-				userid as userid,
-				regdate as regdate,
-				hit as hit, 
-				good as good
-			 from SB01
-			 where seq = #{seq}
+		<select id="selectOne" resultType="com.singer.vo.SB01Vo" parameterType="com.singer.vo.SB01Vo">	
+		select 
+    		S1.seq as seq,
+    		S1.title as title, 
+   			S1.text as text, 
+  			S1.userid as userid,
+    		S1.regdate as regdate,
+    		S1.hit as hit, 
+   			S1.good as good,
+    		SL1.goodlog as goodlog,
+    		SL1.hatelog  as hatelog
+    		from SB01 S1
+    		left outer join(
+     		  select *
+       		from SG01
+       		where btype = 'SB01' and
+       		seq = #{seq} and
+      		sessionid = #{sessionid}
+   		 ) SL1
+  		on (S1.seq = SL1.seq)
+  		where S1.seq = #{seq}
 		</select>
 		
 		<select id="select" resultType="com.singer.vo.SB01Vo"  parameterType="com.singer.vo.SB01Vo">
@@ -99,4 +109,32 @@
 			select video from SB01 
 			where seq = #{seq}
 		</select>
+		
+		<update id="likelog" parameterType="com.singer.vo.SB01Vo">
+			merge into SG01 S1
+				using dual
+				on (
+				S1.btype = 'SB01'
+				and S1.seq = #{seq}
+				and S1.sessionid = #{sessionid})
+			when matched then
+				update set S1.datelog = #{datelog},
+  					S1.goodlog = 'Y'
+			when not matched then
+				insert (S1.btype, S1.seq, S1.sessionid, S1.datelog, S1.goodlog ) values('SB01' ,#{seq}, #{sessionid}, #{datelog} , 'Y')
+		</update>
+		
+		<update id="hatelog" parameterType="com.singer.vo.SB01Vo">
+			merge into SG01 S1
+				using dual
+				on (
+				S1.btype = 'SB01'
+				and S1.seq = #{seq}
+				and S1.sessionid = #{sessionid})
+			when matched then
+				update set S1.datelog = #{datelog},
+  					S1.hatelog = 'Y'
+			when not matched then
+				insert (S1.btype, S1.seq, S1.sessionid, S1.datelog, S1.hatelog ) values('SB01' ,#{seq}, #{sessionid}, #{datelog} , 'Y')
+		</update>
 </mapper>

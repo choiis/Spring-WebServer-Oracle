@@ -214,4 +214,34 @@ public class SB01Controller {
 		log.debug("exit sb01delete.do");
 		return model;
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/sb01like.do", method = RequestMethod.POST)
+	public HashMap<String, Object> likeSB01Vo(@RequestBody SB01Vo sb01Vo, HttpSession session) throws Exception {
+		log.debug("enter sb01like.do");
+		log.debug("sb01Vo : " + sb01Vo);
+		String sessionid = (String) session.getAttribute("userid");
+		int like = sb01Service.likeSB01Vo(sb01Vo, sessionid);
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("result", 1);
+		hashMap.put("like", like);
+		log.debug("exit sb01like.do");
+		return hashMap;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/sb01hate.do", method = RequestMethod.POST)
+	public HashMap<String, Object> hateSB01Vo(@RequestBody SB01Vo sb01Vo, HttpSession session) throws Exception {
+		log.debug("enter sb01hate.do");
+		log.debug("sb01Vo : " + sb01Vo);
+		String sessionid = (String) session.getAttribute("userid");
+		int like = sb01Service.hateSB01Vo(sb01Vo, sessionid);
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("result", 1);
+		hashMap.put("like", like);
+		log.debug("exit sb01hate.do");
+		return hashMap;
+	}
 }

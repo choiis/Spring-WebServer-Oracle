@@ -108,4 +108,16 @@ public class DateUtil {
 		}
 	}
 
+	/**
+	 * 상세날짜형식을 날짜 형식으로 반환한다
+	 */
+	public static String getDateFormat(String str) {
+		if (str == null) {
+			return "";
+		} else if ("".equals(str)) {
+			return "";
+		} else {
+			return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+		}
+	}
 }

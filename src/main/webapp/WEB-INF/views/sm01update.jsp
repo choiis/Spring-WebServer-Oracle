@@ -55,7 +55,7 @@
 			if(!fn_PreSave()) {
 				return ;
 			}
-			
+
 			$("#form").submit();
 	
  		});
@@ -75,7 +75,7 @@
 				<div id="sb01insert" class="animate form">
 					<div id="login" class="animate form">
 						<h4>회원 정보를 입력해 주세요</h4>
-						<form id="form" method="post" enctype="multipart/form-data" action="/common/sm01update.do">
+						<form id="form" name="updateform" method="post" enctype="multipart/form-data" action="/common/sm01update.do">
 							<input type="hidden" id="userid" name="userid" value="${sm01Vo.userid}"> <br>
 							<br> 이름:<input	type="text" id="username" name="username" value="${sm01Vo.username}" maxlength="6">
 							<br> 전화번호:<input type="text" id="phone" name="phone" value="${sm01Vo.phone}" maxlength="14">
@@ -83,10 +83,10 @@
 							<br> 이메일:<input type="text" id="email" name="email" value="${sm01Vo.email}" maxlength="20">
 							<br>
 							<button id="save" type="button" >저장</button>
-							<input id="fileInput" type="file" name="imgFile" />
+							<input id="fileInput" type="file" name="imgFile" />				
 						</form>
-						<img id="showTempImage" alt="" src="/common/selectPhoto.do?userid=${sm01Vo.userid}" height="170px" width="150px"/>
-			
+						<img id="showTempImage" alt="" name="photo" src="/common/selectPhoto.do?userid=${sm01Vo.userid}" height="170px" width="150px"/>
+		
 					</div>
 				</div>
 			</div>

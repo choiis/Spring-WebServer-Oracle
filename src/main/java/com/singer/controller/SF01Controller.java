@@ -26,12 +26,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.CommonUtil;
 import com.singer.service.SF01Service;
+import com.singer.vo.SB01Vo;
 import com.singer.vo.SF01Vo;
 import oracle.sql.BLOB;
 
 @Controller("sF01Controller")
 public class SF01Controller {
-	
+
 	private final Log log = LogFactory.getLog(SF01Controller.class);
 
 	@Resource(name = "sf01Service")
@@ -145,7 +146,7 @@ public class SF01Controller {
 		ModelAndView model = new ModelAndView("/sf01view_detail");
 		String userid = (String) session.getAttribute("userid");
 		sf01Vo = sf01Service.selectOneSF01Vo(sf01Vo, userid);
-		model.addObject("SF01Vo", sf01Vo);
+		model.addObject("sf01Vo", sf01Vo);
 
 		log.debug("sf01Vo : " + sf01Vo);
 		log.debug("exit sf01showFind.do");
@@ -202,5 +203,35 @@ public class SF01Controller {
 		log.debug("exit sf01delete.do");
 
 		return model;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/sf01like.do", method = RequestMethod.POST)
+	public HashMap<String, Object> likeSF01Vo(@RequestBody SF01Vo sf01Vo, HttpSession session) throws Exception {
+		log.debug("enter sf01like.do");
+		log.debug("sf01Vo : " + sf01Vo);
+		String sessionid = (String) session.getAttribute("userid");
+		int like = sf01Service.likeSF01Vo(sf01Vo, sessionid);
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("result", 1);
+		hashMap.put("like", like);
+		log.debug("exit sf01like.do");
+		return hashMap;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/sf01hate.do", method = RequestMethod.POST)
+	public HashMap<String, Object> hateSF01Vo(@RequestBody SF01Vo sf01Vo, HttpSession session) throws Exception {
+		log.debug("enter sf01hate.do");
+		log.debug("sf01Vo : " + sf01Vo);
+		String sessionid = (String) session.getAttribute("userid");
+		int like = sf01Service.hateSF01Vo(sf01Vo, sessionid);
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("result", 1);
+		hashMap.put("like", like);
+		log.debug("exit sf01hate.do");
+		return hashMap;
 	}
 }

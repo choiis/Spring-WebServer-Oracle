@@ -16,8 +16,8 @@
 		<bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 			<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 			<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-			<property name="username" value="username" />
-			<property name="password" value="password" />
+			<property name="username" value="hr" />
+			<property name="password" value="tiger" />
 		</bean>
 		
 		<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
@@ -51,8 +51,8 @@
 		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
    		 	<property name="host" value="smtp.naver.com" />
     		<property name="port" value="465" />
-    		<property name="username" value="#####@naver.com" />
-    		<property name="password" value="*****" />
+    		<property name="username" value="YYYYY@naver.com" />
+    		<property name="password" value="XXXXX" />
     		<!-- email 요청시는 SMTP -->
 			<property name="javaMailProperties">
 				<props>
@@ -72,7 +72,9 @@
 		</bean>
 		
 		<bean name = "excelView" class = "com.singer.view.ExcelView" />
-			
-		<context:component-scan base-package="com.singer"></context:component-scan>
+
+		<context:component-scan base-package="com.singer">
+		</context:component-scan>
 		
+
 </beans>

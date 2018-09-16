@@ -64,10 +64,12 @@ public class SB01ServiceImpl implements SB01Service {
 	public SB01Vo selectOneSB01Vo(SB01Vo sb01Vo, String userid) throws Exception {
 
 		sb01Dao.clickSB01Vo(sb01Vo);
+		sb01Vo.setSessionid(userid);
 		SB01Vo sb01vo = sb01Dao.selectOneSB01Vo(sb01Vo);
 		if (sb01vo.getUserid().equals(userid)) {
 			sb01vo.setDeleteYn(true);
 		}
+		sb01Vo.setShowDate(DateUtil.getDateFormat(sb01Vo.getRegdate()));
 
 		return sb01vo;
 	}
@@ -77,14 +79,33 @@ public class SB01ServiceImpl implements SB01Service {
 		return sb01Dao.updateSB01Vo(sb01Vo);
 	}
 
+	@Transactional
 	@Override
-	public int likeSB01Vo(SB01Vo sb01Vo) throws Exception {
-		return sb01Dao.likeSB01Vo(sb01Vo);
+	public int likeSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
+		int like = sb01Vo.getGood() + 1;
+		sb01Dao.likeSB01Vo(sb01Vo);
+
+		sb01Vo.setSessionid(sessionid);
+		sb01Vo.setDatelog(DateUtil.getTodayTime());
+
+		sb01Dao.likelogSB01Vo(sb01Vo);
+
+		return like;
 	}
 
+	@Transactional
 	@Override
-	public int hateSB01Vo(SB01Vo sb01Vo) throws Exception {
-		return sb01Dao.hateSB01Vo(sb01Vo);
+	public int hateSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
+		int like = sb01Vo.getGood() - 1;
+
+		sb01Dao.hateSB01Vo(sb01Vo);
+
+		sb01Vo.setSessionid(sessionid);
+		sb01Vo.setDatelog(DateUtil.getTodayTime());
+
+		sb01Dao.hatelogSB01Vo(sb01Vo);
+
+		return like;
 	}
 
 	@Transactional

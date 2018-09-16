@@ -3,6 +3,7 @@ package com.singer.vo;
 public class SuperVo {
 	private String adminyn;
 	private boolean deleteYn;
+	private String showDate;
 	private int totCnt;
 	private int startRownum;
 	private int endRownum;
@@ -12,10 +13,12 @@ public class SuperVo {
 
 	}
 
-	public SuperVo(String adminyn, boolean deleteYn, int totCnt, int startRownum, int endRownum, int nowPage) {
+	public SuperVo(String adminyn, boolean deleteYn, String showDate, int totCnt, int startRownum, int endRownum,
+			int nowPage) {
 		super();
 		this.adminyn = adminyn;
 		this.deleteYn = deleteYn;
+		this.showDate = showDate;
 		this.totCnt = totCnt;
 		this.startRownum = startRownum;
 		this.endRownum = endRownum;
@@ -36,6 +39,14 @@ public class SuperVo {
 
 	public void setDeleteYn(boolean deleteYn) {
 		this.deleteYn = deleteYn;
+	}
+
+	public String getShowDate() {
+		return showDate;
+	}
+
+	public void setShowDate(String showDate) {
+		this.showDate = showDate;
 	}
 
 	public int getTotCnt() {
