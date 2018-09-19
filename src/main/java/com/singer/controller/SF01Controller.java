@@ -26,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.CommonUtil;
 import com.singer.service.SF01Service;
-import com.singer.vo.SB01Vo;
 import com.singer.vo.SF01Vo;
 import oracle.sql.BLOB;
 
@@ -99,7 +98,7 @@ public class SF01Controller {
 		log.debug("enter sf01show.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-
+		int nowPage = sf01Vo.getNowPage() + 1;
 		List<SF01Vo> list = sf01Service.selectSF01Vo(sf01Vo);
 		hashmap.put("list", list);
 
@@ -109,6 +108,7 @@ public class SF01Controller {
 		} else {
 			hashmap.put("size", 0);
 		}
+		hashmap.put("nowPage", nowPage);
 		log.debug("list : " + list);
 		log.debug("exit sf01show.do");
 		return hashmap;

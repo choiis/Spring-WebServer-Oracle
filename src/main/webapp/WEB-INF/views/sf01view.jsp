@@ -26,7 +26,6 @@
 		
 		// 찾기 버튼 클릭
 		$("#btn_findText_button").on("click", function(e) {
-
 			// 검색 함수
 			findSF01();
 		});
@@ -35,13 +34,33 @@
 		$("#findText").on("keyup", function(key) {
 			
 			if(key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-
 				// 검색 함수
 				findSF01();
 			}
 		});
 		
+		// 조회(페이지 버튼)
+		$(document).on("click", "a[name='page_move']" , function() {
+			var page = $(this).attr('value');
+			showSF01List(page);
+		});
 		
+		// 조회(이전 버튼)
+		$(document).on("click", "a[name='page_prev']" , function() {
+			var page = $("#startPage").attr('value');
+			showSF01List(Number(page) - 10);
+		});
+		
+		// 조회(다음 버튼)
+		$(document).on("click", "a[name='page_next']" , function() {
+			var page = $("#startPage").attr('value');
+			var maxPage = $("#maxPage").attr('value');
+			if(Number(page) + 10 > maxPage) {
+				showSF01List(maxPage);
+			} else {
+				showSF01List(Number(page) + 10);
+			}
+		});
 	});
 	
 	// 검색 함수
@@ -78,7 +97,7 @@
 			
 	        $("#SF01viewTbody").html(html);
 	     	// 페이징 함수 호출
-	        gfn_paging("pagenation", "showSF01List" , data.size);
+	        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
 		});
 	}
 	
@@ -88,7 +107,7 @@
 		if(!gfn_isNull(nowPage)) {
 			page = nowPage;
 		} else {
-			page = 0;
+			page = 1;
 		}
 		
 		var sendData = JSON.stringify({
@@ -114,8 +133,8 @@
 			});
 			
 	        $("#SF01viewTbody").html(html);
-	        // 페이징 함수 호출
-	        gfn_paging("pagenation", "showSF01List" , data.size);
+	     	// 페이징 함수 호출
+	        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
 		});
 	};
 
@@ -133,6 +152,8 @@
 		<option value="2">글쓴이</option>
 	</select>
 	<input type="text" id="findText" name="findText" maxlength="20">
+	<input type="hidden" id="startPage" name="startPage">
+	<input type="hidden" id="maxPage" name="maxPage">
 	<button id="btn_findText_button" type="button" >게시물 검색</button>
 		<div class="container">
 		<table border = "1">

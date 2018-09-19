@@ -100,7 +100,7 @@ public class SB01Controller {
 
 		log.debug("enter sb01show.do");
 		log.debug("sb01Vo : " + sb01Vo);
-
+		int nowPage = sb01Vo.getNowPage() + 1;
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 
 		List<SB01Vo> list = sb01Service.selectSB01Vo(sb01Vo);
@@ -112,6 +112,7 @@ public class SB01Controller {
 		} else {
 			hashmap.put("size", 0);
 		}
+		hashmap.put("nowPage", nowPage);
 		log.debug("list : " + list);
 		log.debug("exit sb01show.do");
 		return hashmap;

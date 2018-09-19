@@ -36,8 +36,8 @@ public class SB01ServiceImpl implements SB01Service {
 	public List<SB01Vo> selectSB01Vo(SB01Vo sb01Vo) throws Exception {
 
 		int nowPage = sb01Vo.getNowPage();
-		sb01Vo.setStartRownum(nowPage * Constants.ROW_PER_PAGE);
-		sb01Vo.setEndRownum((nowPage + 1) * Constants.ROW_PER_PAGE);
+		sb01Vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE);
+		sb01Vo.setEndRownum(nowPage * Constants.ROW_PER_PAGE);
 
 		return sb01Dao.selectSB01Vo(sb01Vo);
 	}

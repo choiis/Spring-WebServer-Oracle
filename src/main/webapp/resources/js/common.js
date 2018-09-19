@@ -17,6 +17,7 @@ $(document).ready(function() {
 	}
 	
 	/** paging 공통 함수*/
+	/*
 	gfn_paging = function(url, eventName, size) {
 		var html2 = "";		   
 		for (var i = 0; i < size ; i++) {
@@ -24,6 +25,54 @@ $(document).ready(function() {
 		}
 		$("#" + url).html(html2);    
 	}
+	*/
+	/** paging 공통 함수*/
+	gfn_paging = function(pStartPage, pMaxPage, pLoc, pName) {
+		var pagination ="";
+		
+		$("#startPage").attr('value',pStartPage);
+		$("#maxPage").attr('value',pMaxPage);
+		
+		var forstart = 0;
+		var forend = 0;
+		
+		var currPage = Math.floor((pStartPage - 1) / 10 + 1);
+		
+		if(currPage > 1) {
+			forstart = (currPage - 1) * 10 + 1;
+		} else {
+			forstart = 1;
+		}
+		
+		forend = forstart + 9;
+		if(pMaxPage < forend) {
+			forend = pMaxPage;
+		}
+		
+		if(pStartPage > 10) {
+			pagination += '<a href="# class="btn_prev_fisrt" name="page_start"></a>';
+			pagination += '<a href="# class="btn_prev" name="page_prev"></a>';
+		}
+		
+		pagination += '<span id="pageing" name="' + pName + '">';
+		for(var i = forstart; i<= forend; i++) {
+			if(pStartPage == i) {
+				pagination += '<a href="#" id="page_move' + i + '" name="' + pName + '" value="' + i + '" "class="on" >' + i + '</a>  ';
+			} else {
+				pagination += '<a href="#" id="page_move' + i + '" name="' + pName + '" value="' + i + '" >' + i + '</a>';
+			}
+		}
+		pagination += '</span>'
+	
+		if(forend < pMaxPage) {
+			pagination += '<a href="# class="btn_next_fisrt" name="page_next"></a>';
+			pagination += '<a href="# class="btn_next" name="page_last"></a>';
+		}
+		
+		$(pLoc).empty();
+		$(pLoc).append(pagination);
+	}
+	
 	
 	/** null 체크*/
 	gfn_isNull = function(obj) {
