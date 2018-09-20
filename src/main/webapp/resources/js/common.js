@@ -78,10 +78,12 @@ $(document).ready(function() {
 	gfn_isNull = function(obj) {
 
 		var array = new Array();
-		array[0] = 1;
-		array[1] = 2;
-		
+
 		if(obj == undefined) {
+			return true;
+		} else if(obj == null) {
+			return true;
+		} else if(obj === null) {
 			return true;
 		} else if(typeof obj == "string") {
 			if(obj === "") {
@@ -130,6 +132,93 @@ $(document).ready(function() {
 	gfn_isKor = function(obj) {
 		var regex= /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 		return regex.test(obj);
+	}
+
+	
+	gfn_toDate = function(dateId) {
+		var date = dateId;
+		var year = date.substr(0, 4);
+		var month = date.substr(4, 2);
+		var day = date.substr(6, 2);
+		return new Date(year, month - 1, day);
+	}
+	
+	gtn_firstDate = function(dateId) {
+		var date = dateId;
+		var year = date.substr(0, 4);
+		var month = date.substr(4, 2);
+		var day = "01";
+		return new Date(year, month - 1, day);
+	}
+	
+	gtn_beforeDate = function(dateId, sub_date) {
+		var dayOfMonth = dateId.getDate();
+		dateId.setDate(dayOfMonth - sub_date);
+		dateId = gfn_parseDate(dateId);
+		return dateId;
+	}
+	
+	gfn_parseDate = function(dateId) {
+
+		var year = "" + (dateId.getFullYear());
+		var month = "" + (dateId.getMonth() + 1);
+		var day = "" + (dateId.getDate());
+		
+		if(month.length == 1) {
+			month = "0" + month;
+		}
+		if(day.length == 1) {
+			day = "0" + day;
+		}
+		
+		return "" + year + month + day;
+	}
+	
+	/** select box 셋팅*/
+	gfn_selectList = function(codeGrpCd , id) {
+		var combo ='<option value="" selected>전체</option>';
+		var formData = JSON.stringify({codeGrpCd:codeGrpCd});
+		$.ajax({
+		    url : '/common/commListSch.do',
+		    contentType:"application/json;charset=UTF-8",
+		    type : 'post',
+		    dataType : 'json',
+		    data : formData,
+		    success : function(data) {
+		    	if(!gfn_isNull(data.commList)){
+		    		if(data.commList.length > 0) {
+		    			for(var i = 0 ; i < data.commList.length ;i++) {
+		    				combo += '<option value=' + data.commList[i].codeCd + '>' + data.commList[i].codeNm + '</option>';
+		    			}
+		    			$("#inpFom [id=]" + id + "]").append(combo);
+		    		}
+		    	}
+		    },
+		    error : function(request, status, error) {
+		        console.log("code:" + request.status + "\n" + "error:" + error);
+		    }
+		});
+	}
+	
+	/** 공통 코드 조회*/	
+	gfn_getCommCode = function(codeGrpCd) {
+		var formData = JSON.stringify({codeGrpCd:codeGrpCd});
+		var common_code;
+		$.ajax({
+		    url : '/common/commListSch.do',
+		    contentType:"application/json;charset=UTF-8",
+		    type : 'post',
+		    dataType : 'json',
+		    async : false,
+		    data : formData,
+		    success : function(data) {
+		    	common_code = data.commList;
+		    },
+		    error : function(request, status, error) {
+		        console.log("code:" + request.status + "\n" + "error:" + error);
+		    }
+		});	
+		return common_code;
 	}
 	
 	gfn_alert = function (message, title) {
