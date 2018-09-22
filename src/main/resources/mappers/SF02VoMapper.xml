@@ -26,23 +26,19 @@
 		</update>
 		
 		<select id="select" resultType="com.singer.vo.SF02Vo"  parameterType="com.singer.vo.SF02Vo">
-		select S2.* from
-			(select rownum as rown,
-    			S.* from
-				(select 
+		select * from
+			(select 
 				seq as seq,
-				seq01 as seq01,
+				ceil(row_number() over(order by regdate desc) / #{rowPerPage} ) as nowPage,
+        		seq01 as seq01,
 				text as text, 
 				userid as userid,  
 				regdate as regdate,
 				good as good,
 				count(*) over() as totCnt
 			 from SF02 
-			 where seq01 = #{seq01}
-			 order by regdate desc
-			 ) S
-		 ) S2 where S2.rown between 
-		#{startRownum} + 1 and #{endRownum}
+ 			where seq01 = #{seq01}
+			)	where nowPage = #{nowPage}
 		</select>
 		
 		<delete id="delete" parameterType="com.singer.vo.SF02Vo">

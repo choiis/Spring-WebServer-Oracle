@@ -18,26 +18,27 @@ public class SB02ServiceImpl implements SB02Service {
 	private SB02Dao sb02Dao;
 
 	@Override
-	public int insertSB02Vo(SB02Vo SB02Vo) throws Exception {
+	public int insertSB02Vo(SB02Vo sb02Vo) throws Exception {
 
-		SB02Vo.setRegdate(DateUtil.getTodayTime());
+		sb02Vo.setRegdate(DateUtil.getTodayTime());
 
-		return sb02Dao.insertSB02Vo(SB02Vo);
+		return sb02Dao.insertSB02Vo(sb02Vo);
 	}
 
 	@Override
-	public int likeSB02Vo(SB02Vo SB02Vo) throws Exception {
-		return sb02Dao.likeSB02Vo(SB02Vo);
+	public int likeSB02Vo(SB02Vo sb02Vo) throws Exception {
+		return sb02Dao.likeSB02Vo(sb02Vo);
 	}
 
 	@Override
-	public List<SB02Vo> selectSB02Vo(SB02Vo SB02Vo, String userid) throws Exception {
+	public List<SB02Vo> selectSB02Vo(SB02Vo sb02Vo, String userid) throws Exception {
 
-		int nowPage = SB02Vo.getNowPage();
-		SB02Vo.setStartRownum(nowPage * Constants.ROW_PER_PAGE);
-		SB02Vo.setEndRownum((nowPage + 1) * Constants.ROW_PER_PAGE);
+		int nowPage = sb02Vo.getNowPage();
 
-		List<SB02Vo> list = sb02Dao.selectSB02Vo(SB02Vo);
+		sb02Vo.setNowPage(nowPage);
+		sb02Vo.setRowPerPage(Constants.ROW_PER_PAGE);
+
+		List<SB02Vo> list = sb02Dao.selectSB02Vo(sb02Vo);
 
 		for (int i = 0; i < list.size(); i++) {
 
@@ -50,13 +51,13 @@ public class SB02ServiceImpl implements SB02Service {
 	}
 
 	@Override
-	public int updateSB02Vo(SB02Vo SB02Vo) throws Exception {
-		return sb02Dao.updateSB02Vo(SB02Vo);
+	public int updateSB02Vo(SB02Vo sb02Vo) throws Exception {
+		return sb02Dao.updateSB02Vo(sb02Vo);
 	}
 
 	@Override
-	public int deleteSB02Vo(SB02Vo SB02Vo) throws Exception {
-		return sb02Dao.deleteSB02Vo(SB02Vo);
+	public int deleteSB02Vo(SB02Vo sb02Vo) throws Exception {
+		return sb02Dao.deleteSB02Vo(sb02Vo);
 	}
 
 }

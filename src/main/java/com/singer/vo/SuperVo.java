@@ -8,13 +8,14 @@ public class SuperVo {
 	private int startRownum;
 	private int endRownum;
 	private int nowPage;
+	private int rowPerPage;
 
 	public SuperVo() {
 
 	}
 
 	public SuperVo(String adminyn, boolean deleteYn, String showDate, int totCnt, int startRownum, int endRownum,
-			int nowPage) {
+			int nowPage, int rowPerPage) {
 		super();
 		this.adminyn = adminyn;
 		this.deleteYn = deleteYn;
@@ -23,6 +24,7 @@ public class SuperVo {
 		this.startRownum = startRownum;
 		this.endRownum = endRownum;
 		this.nowPage = nowPage;
+		this.rowPerPage = rowPerPage;
 	}
 
 	public String getAdminyn() {
@@ -81,10 +83,19 @@ public class SuperVo {
 		this.nowPage = nowPage;
 	}
 
+	public int getRowPerPage() {
+		return rowPerPage;
+	}
+
+	public void setRowPerPage(int rowPerPage) {
+		this.rowPerPage = rowPerPage;
+	}
+
 	@Override
 	public String toString() {
-		return "SuperVo [adminyn=" + adminyn + ", deleteYn=" + deleteYn + ", totCnt=" + totCnt + ", startRownum="
-				+ startRownum + ", endRownum=" + endRownum + ", nowPage=" + nowPage + "]";
+		return "SuperVo [adminyn=" + adminyn + ", deleteYn=" + deleteYn + ", showDate=" + showDate + ", totCnt="
+				+ totCnt + ", startRownum=" + startRownum + ", endRownum=" + endRownum + ", nowPage=" + nowPage
+				+ ", rowPerPage=" + rowPerPage + "]";
 	}
 
 }

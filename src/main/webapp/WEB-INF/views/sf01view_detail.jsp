@@ -16,7 +16,7 @@
 	// 페이지 로딩이 완료되고, jQuery 스크립트 실행된다
 	$(document).ready(function() {
 
-		showSF02List();
+		showSF02List(1);
 		
 		// 저장 버튼을 클릭할때 이벤트 발생
 		$("#btn_insert_button").on("click", function(e) {
@@ -49,6 +49,32 @@
 			}
 		});
 		
+		// 조회(페이지 버튼)
+		$(document).on("click", "a[name='page_move']", function(e) {
+			e.preventDefault();
+			var page = $(this).attr('value');
+			showSF02List(page);
+		});
+		
+		// 조회(이전 버튼)
+		$(document).on("click", "a[name='page_prev']", function() {
+			e.preventDefault();
+			var page = $("#startPage").attr('value');
+			showSF02List(Number(page) - 10);
+		});
+		
+		// 조회(다음 버튼)
+		$(document).on("click", "a[name='page_next']", function() {
+			e.preventDefault();
+			var page = $("#startPage").attr('value');
+			var maxPage = $("#maxPage").attr('value');
+			if(Number(page) + 10 > maxPage) {
+				showSF02List(maxPage);
+			} else {
+				showSF02List(Number(page) + 10);
+			}
+		});
+		
 		fn_PreSave = function() {
 
 			if(gfn_isNull($("#form #text").val().trim())) {
@@ -66,7 +92,8 @@
 			
 			var sendData = JSON.stringify({
 		    	"seq" : $("#seq" + idx).text(),
-		    	"seq01" : $("#seq01" + idx).text()
+		    	"seq01" : $("#seq01" + idx).text(),
+	        	"nowPage" : 1
 		    });
 			
 			gfn_ajax("sf02delete.do","POST" , sendData , function(data) {
@@ -90,26 +117,20 @@
 		            html += '</tr>';
 		        }
 
-		        $("#SF02viewTbody").html(html);
-		    	 // 페이징 함수 호출
-		        gfn_paging("pagenation", "showSF02List" , data.size);
+		        $("#SF02viewTbody").empty();
+		        $("#SF02viewTbody").append(html);
+			    // 페이징 함수 호출
+		        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
 			});
 		}
 	}
 	
-	function showSF02List(nowPage) {
-		
-		if(!gfn_isNull(nowPage)) {
-			page = nowPage;
-		} else {
-			page = 0;
-		}
+	function showSF02List(page) {
 		
 		var sendData =  JSON.stringify({
 	    	"seq01" : parseInt($("#seq01").val()),
 	    	"nowPage" : page
 	    });
-		
 		
 		gfn_ajax("sf02show.do","POST" , sendData , function(data) {
 			var html = "";
@@ -132,10 +153,10 @@
 		         html += '</tr>';
 	        }
 
-	        $("#SF02viewTbody").html(html);
-	        
-	     	// 페이징 함수 호출
-	        gfn_paging("pagenation", "showSF02List" , data.size);
+			$("#SF02viewTbody").empty();
+	        $("#SF02viewTbody").append(html);
+		    // 페이징 함수 호출
+	        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
 		});
 	};
 	
@@ -144,7 +165,8 @@
 		
 		var sendData = JSON.stringify({
 			"seq01" : parseInt($("#seq01").val()),
-        	"text" : $("#form #text").val().trim()
+        	"text" : $("#form #text").val().trim(),
+        	"nowPage" : 1
         });
 
 		gfn_ajax("sf02insert.do","POST" , sendData , function(data) {
@@ -167,9 +189,10 @@
 	            
 	            html += '</tr>';
 	        }
-	        $("#SF02viewTbody").html(html);
-	    	 // 페이징 함수 호출
-	        gfn_paging("pagenation", "showSF02List" , data.size);
+	        $("#SF02viewTbody").empty();
+	        $("#SF02viewTbody").append(html);
+		    // 페이징 함수 호출
+	        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
 		});
 	};
 	
