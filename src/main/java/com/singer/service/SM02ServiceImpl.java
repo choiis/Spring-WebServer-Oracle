@@ -19,17 +19,10 @@ public class SM02ServiceImpl implements SM02Service {
 
 	@Transactional
 	@Override
-	public List<SM02Vo> insertSM02Vo(SM02Vo sm02Vo) throws Exception {
+	public int insertSM02Vo(SM02Vo sm02Vo) throws Exception {
 
 		sm02Vo.setRegdate(DateUtil.getTodayTime());
-
-		sm02Dao.insertSM02Vo(sm02Vo);
-		
-		int nowPage = sm02Vo.getNowPage();
-		sm02Vo.setStartRownum(nowPage * Constants.ROW_PER_PAGE);
-		sm02Vo.setEndRownum((nowPage + 1) * Constants.ROW_PER_PAGE);
-		
-		return sm02Dao.selectSM02Vo(sm02Vo);
+		return sm02Dao.insertSM02Vo(sm02Vo);
 	}
 
 	@Transactional
@@ -37,8 +30,8 @@ public class SM02ServiceImpl implements SM02Service {
 	public List<SM02Vo> selectSM02Vo(SM02Vo sm02Vo) throws Exception {
 
 		int nowPage = sm02Vo.getNowPage();
-		sm02Vo.setStartRownum(nowPage * Constants.ROW_PER_PAGE);
-		sm02Vo.setEndRownum((nowPage + 1) * Constants.ROW_PER_PAGE);
+		sm02Vo.setNowPage(nowPage);
+		sm02Vo.setRowPerPage(Constants.ROW_PER_PAGE);
 
 		return sm02Dao.selectSM02Vo(sm02Vo);
 	}

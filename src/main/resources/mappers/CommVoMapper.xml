@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	도메인마다 namespace 를 구현하고
+	각각의 crud 에 대한 id 설정 후 쿼리 작성
+-->
+
+<mapper namespace="com.singer.mappers.Comm">	
+	<select id="selectCode" resultType="com.singer.vo.CommVo"  parameterType="com.singer.vo.CommVo">
+	select *  
+		from code
+	where codegrp = #{codegrp}
+	</select>
+</mapper>

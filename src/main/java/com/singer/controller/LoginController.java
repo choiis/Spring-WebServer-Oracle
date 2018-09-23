@@ -77,6 +77,7 @@ public class LoginController {
 			session.setAttribute("regdate", one.getRegdate());
 			session.setAttribute("phone", one.getPhone());
 			session.setAttribute("email", one.getEmail());
+			session.setAttribute("usertype", one.getUsertype());
 
 			hashMap.put("code", Constants.SUCCESS_CODE);
 

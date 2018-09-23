@@ -42,8 +42,8 @@ public class SM01ServiceImpl implements SM01Service {
 	public List<SM01Vo> selectSM01Vo(SM01Vo sm01Vo) throws Exception {
 
 		int nowPage = sm01Vo.getNowPage();
-		sm01Vo.setStartRownum(nowPage * Constants.ROW_PER_PAGE);
-		sm01Vo.setEndRownum((nowPage + 1) * Constants.ROW_PER_PAGE);
+		sm01Vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE);
+		sm01Vo.setEndRownum(nowPage * Constants.ROW_PER_PAGE);
 
 		return sm01Dao.selectSM01Vo(sm01Vo);
 	}

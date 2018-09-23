@@ -42,7 +42,8 @@
 
 			var sendData = JSON.stringify({
 				"title" : $("#title").val(),
-			    "text" : $("#text").val()
+			    "text" : $("#text").val(),
+			    "nowPage" : 1
 		    });
 
 			gfn_ajax("sm02insert.do","POST" , sendData , function(data) {
@@ -63,7 +64,7 @@
 				$("#sm02viewTbody").html(html);
 				 
 				// 페이징 함수 호출
-			    gfn_paging("pagenation", "showSM02List" , data.size);
+				gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
 			});
 		});
 		
@@ -75,7 +76,8 @@
 		if(confirm("삭제할까요?")) {
 			
 			var sendData = JSON.stringify({
-			    "seq" : $("#seq" + idx).text()
+			    "seq" : $("#seq" + idx).text(),
+			    "nowPage" : 1
 		    });
 			
 			gfn_ajax("sm02delete.do","POST" , sendData , function(data) {
@@ -95,7 +97,7 @@
 				$("#sm02viewTbody").html(html);
 				 
 				// 페이징 함수 호출
-			    gfn_paging("pagenation", "showSM02List" , data.size);
+				gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
 			});
 		}
 	}
@@ -105,7 +107,7 @@
 		if(!gfn_isNull(nowPage)) {
 			page = nowPage;
 		} else {
-			page = 0;
+			page = 1;
 		}
 		
 		var sendData = JSON.stringify({
@@ -128,9 +130,8 @@
 			});
 			
 			$("#sm02viewTbody").html(html);
-			
 			// 페이징 함수 호출
-	        gfn_paging("pagenation", "showSM02List" , data.size);
+			gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
 		});
 	};
 </script>

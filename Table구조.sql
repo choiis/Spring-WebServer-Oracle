@@ -8,7 +8,8 @@ grade varchar2(2) not null,
 regdate varchar2(8) not null,
 phone varchar2(15) not null,
 email varchar2(30) not null,
-video blob
+video blob,
+usertype varchar2(5)
 );
 
 alter table SM01
@@ -150,3 +151,32 @@ create table SG01(
 
 alter table SG01
 add constraint pk_SG01 primary key(btype,seq,sessionid)
+
+CREATE table CODE (
+codecd varchar2(10) not null,
+codenm varchar2(20) not null,
+codegrp varchar2(5) not null,
+username varchar2(20) not null,
+regdate varchar2(8) not null
+);
+
+alter table CODE
+add constraint pk_CODE primary key(codegrp,codecd);
+
+CREATE table CODE_GRP (
+codegrp varchar2(5) not null,
+codegrpnm varchar2(20) not null,
+username varchar2(20) not null,
+regdate varchar2(8) not null
+);
+
+alter table CODE_GRP
+add constraint pk_CODE_GRP primary key(codegrp);
+
+insert into CODE_GRP values('U001','유저등급코드','admin','20180901')
+
+
+insert into CODE values('01','관리자','U001','admin','20180901')
+insert into CODE values('02','특별회원','U001','admin','20180901')
+insert into CODE values('03','우수회원','U001','admin','20180901')
+insert into CODE values('04','사용자','U001','admin','20180901')

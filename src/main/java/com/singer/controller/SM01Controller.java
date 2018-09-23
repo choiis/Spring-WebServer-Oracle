@@ -83,20 +83,35 @@ public class SM01Controller {
 		return model;
 	}
 
-	@RequestMapping(value = "/sm01select.do", method = RequestMethod.GET)
-	public ModelAndView toSelectSM01Vo(@RequestParam(value = "idx", defaultValue = "0") int idx,
-			@ModelAttribute("SM01Vo") SM01Vo sm01Vo) throws Exception {
+	@RequestMapping(value = "/sm01.do", method = RequestMethod.GET)
+	public ModelAndView toShowSM01() {
+		ModelAndView model = new ModelAndView("/sm01list");
+		log.debug("enter sm01.do");
+
+		log.debug("exit sm01.do");
+		return model;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/sm01select.do", method = RequestMethod.POST)
+	public HashMap<String, Object> toSelectSM01Vo(@RequestBody SM01Vo sm01Vo) throws Exception {
 		log.debug("enter sm01select.do");
 		log.debug("sm01Vo : " + sm01Vo);
-		ModelAndView model = new ModelAndView("/sm01list");
+		int nowPage = sm01Vo.getNowPage() + 1;
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 
-		sm01Vo.setNowPage(idx);
 		List<SM01Vo> list = sm01Service.selectSM01Vo(sm01Vo);
-		model.addObject("list", list);
-
+		hashmap.put("list", list);
+		// 페이징을 위한 카운트
+		if (list.size() != 0) {
+			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+		} else {
+			hashmap.put("size", 0);
+		}
+		hashmap.put("nowPage", nowPage);
 		log.debug("list : " + list);
 		log.debug("exit sm01select.do");
-		return model;
+		return hashmap;
 	}
 
 	@RequestMapping(value = "/sm01update.do", method = RequestMethod.POST)

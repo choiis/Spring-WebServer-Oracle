@@ -5,7 +5,7 @@ import java.util.List;
 import com.singer.vo.SM02Vo;
 
 public interface SM02Service {
-	public List<SM02Vo> insertSM02Vo(SM02Vo sm02Vo) throws Exception;
+	public int insertSM02Vo(SM02Vo sm02Vo) throws Exception;
 
 	public List<SM02Vo> selectSM02Vo(SM02Vo sm02Vo) throws Exception;
 

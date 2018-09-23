@@ -7,8 +7,8 @@
 
 <mapper namespace="com.singer.mappers.SM01">		
 		<insert id="insert"  parameterType="com.singer.vo.SM01Vo">
-			insert into SM01 (userid, passwd, adminyn, username, brth, regdate, phone, email)
-			values (#{userid}, #{passwd}, #{adminyn}, #{username}, #{brth}, #{regdate}, #{phone}, #{email}) 
+			insert into SM01 (userid, passwd, adminyn, username, brth, regdate, phone, email, usertype)
+			values (#{userid}, #{passwd}, #{adminyn}, #{username}, #{brth}, #{regdate}, #{phone}, #{email},'04') 
 		</insert>
 		
 		<update id="update" parameterType="com.singer.vo.SM01Vo">
@@ -35,20 +35,21 @@
 		</select>
 		
 		<select id="select" resultType="com.singer.vo.SM01Vo"  parameterType="com.singer.vo.SM01Vo">
-			select S1.*,
-			count(*) over() as totCnt
+			select S1.*
 			 from (
 			select 
-				rownum rown,
-				userid,
-				passwd, 
-				adminyn, 
-				username, 
-				brth, 
-				grade, 
-				regdate,
-				phone, 
-				email
+				rownum as rown,
+				userid as userid,
+				passwd as passwd, 
+				adminyn as adminyn, 
+				username as username, 
+				brth as brth, 
+				grade as grade, 
+				regdate as regdate,
+				phone as phone, 
+				email as email,
+				usertype as usertype,
+				count(*) over() as totCnt
 			 from SM01
 			 order by regdate
 			) S1 where S1.rown between 

@@ -53,8 +53,10 @@ public class SM02Controller {
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
 			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			hashmap.put("nowPage", list.get(0).getNowPage());
 		} else {
 			hashmap.put("size", 0);
+			hashmap.put("nowPage", 0);
 		}
 
 		log.debug("list : " + list);
@@ -82,8 +84,10 @@ public class SM02Controller {
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
 			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			hashmap.put("nowPage", list.get(0).getNowPage());
 		} else {
 			hashmap.put("size", 0);
+			hashmap.put("nowPage", 0);
 		}
 
 		log.debug("list : " + list);
@@ -103,15 +107,18 @@ public class SM02Controller {
 
 		log.debug("sm02Vo : " + sm02Vo);
 
-		List<SM02Vo> list = sm02Service.insertSM02Vo(sm02Vo);
+		sm02Service.insertSM02Vo(sm02Vo);
+
+		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo);
 		hashmap.put("list", list);
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
 			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			hashmap.put("nowPage", list.get(0).getNowPage());
 		} else {
 			hashmap.put("size", 0);
+			hashmap.put("nowPage", 0);
 		}
-
 		log.debug("list : " + list);
 		log.debug("exit sm02delete.do");
 

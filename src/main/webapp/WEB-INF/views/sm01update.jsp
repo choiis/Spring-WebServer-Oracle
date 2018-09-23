@@ -45,7 +45,11 @@
 				return false;
 			}
 			
-			
+			if(!gfn_IsImage($("#fileInput").val())) {
+				alert("이미지 파일만 입력하세요");
+				return false;
+			}
+		
 			return true;
 		}
 		

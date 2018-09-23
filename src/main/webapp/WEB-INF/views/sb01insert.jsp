@@ -33,6 +33,11 @@
 				return false;
 			}
 			
+			if(!gfn_IsVideo($("input[name=videoFile]")[0].files[0].name)) {
+				alert("동영상파일만 업로드해 주세요");
+				return false;
+			}
+			
 			return true;
 		}
 		

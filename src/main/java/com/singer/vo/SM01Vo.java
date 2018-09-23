@@ -12,6 +12,7 @@ public class SM01Vo extends SuperVo {
 	private String regdate;
 	private String phone;
 	private String email;
+	private String usertype;
 	private MultipartFile photo;
 
 	public SM01Vo() {
@@ -19,7 +20,7 @@ public class SM01Vo extends SuperVo {
 	}
 
 	public SM01Vo(String userid, String passwd, String username, String brth, String grade, String regdate,
-			String phone, String email, MultipartFile photo) {
+			String phone, String email, String usertype, MultipartFile photo) {
 		super();
 		this.userid = userid;
 		this.passwd = passwd;
@@ -29,6 +30,7 @@ public class SM01Vo extends SuperVo {
 		this.regdate = regdate;
 		this.phone = phone;
 		this.email = email;
+		this.usertype = usertype;
 		this.photo = photo;
 	}
 
@@ -96,6 +98,14 @@ public class SM01Vo extends SuperVo {
 		this.email = email;
 	}
 
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
+
 	public MultipartFile getPhoto() {
 		return photo;
 	}
@@ -107,8 +117,8 @@ public class SM01Vo extends SuperVo {
 	@Override
 	public String toString() {
 		return "SM01Vo [userid=" + userid + ", passwd=" + passwd + ", username=" + username + ", brth=" + brth
-				+ ", grade=" + grade + ", regdate=" + regdate + ", phone=" + phone + ", email=" + email + ", photo="
-				+ photo + "]";
+				+ ", grade=" + grade + ", regdate=" + regdate + ", phone=" + phone + ", email=" + email + ", usertype="
+				+ usertype + ", photo=" + photo + "]";
 	}
 
 }

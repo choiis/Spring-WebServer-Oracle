@@ -17,16 +17,6 @@ $(document).ready(function() {
 	}
 	
 	/** paging 공통 함수*/
-	/*
-	gfn_paging = function(url, eventName, size) {
-		var html2 = "";		   
-		for (var i = 0; i < size ; i++) {
-			html2 += '<a href="#" onclick="' + eventName + '(' + i + ');">' + (i + 1) + '</a>  ';    
-		}
-		$("#" + url).html(html2);    
-	}
-	*/
-	/** paging 공통 함수*/
 	gfn_paging = function(pStartPage, pMaxPage, pLoc, pName) {
 		var pagination ="";
 		
@@ -116,6 +106,48 @@ $(document).ready(function() {
 		return regex.test(obj);
 	}
 	
+	/** 파일 확장자 */	
+	gfn_getFileType = function(filename) {
+		var len = filename.length;
+		var lastDot = filename.lastIndexOf('.');
+		// 확장자 명만 추출한 후 소문자로 변경
+		var fileType = filename.substring(lastDot, len).toLowerCase();
+		return fileType;
+	}
+	
+	/** 이미지 파일 확인*/	
+	gfn_IsImage = function(filename) {
+		if(gfn_isNull(filename)) {
+			return false;
+		} else {
+			var fileType = gfn_getFileType(filename);
+			
+			if(fileType == '.png' || fileType == '.bmp' || fileType == '.jpg' 
+				|| fileType == '.jpeg' || fileType == '.jpe' || fileType == '.jfif' 
+				|| fileType == '.gif' || fileType == '.tif' || fileType == '.tiff' ) {
+				return true;
+			}
+			return false;
+		}
+	}
+	
+	/** 동영상 파일 확인*/	
+	gfn_IsVideo = function(filename) {
+		if(gfn_isNull(filename)) {
+			return false;
+		} else {
+			var fileType = gfn_getFileType(filename);
+			
+			if(fileType == '.avi' || fileType == '.mp4' || fileType == '.wmv' 
+				|| fileType == '.asf' || fileType == 'mpe' || fileType == '.asx' 
+				|| fileType == '.mpeg' || fileType == '.rm' || fileType == '.mov'
+				|| fileType == '.dat' || fileType == '.flv' ) {
+				return true;
+			}
+			return false;
+		}
+	}
+	
 	/** 날짜로 변환*/
 	gfn_dateFormat = function(str) {
 		return str.substr(0, 4) + "/" + str.substr(4, 2) + "/" + str.substr(6, 2);
@@ -127,14 +159,13 @@ $(document).ready(function() {
 		return regex.test(obj);
 	}
 	
-	
 	/** 한글 체크*/	
 	gfn_isKor = function(obj) {
 		var regex= /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 		return regex.test(obj);
 	}
 
-	
+	/** Date 반환*/	
 	gfn_toDate = function(dateId) {
 		var date = dateId;
 		var year = date.substr(0, 4);
@@ -142,7 +173,8 @@ $(document).ready(function() {
 		var day = date.substr(6, 2);
 		return new Date(year, month - 1, day);
 	}
-	
+
+	/** 달의 첫째날 반환*/
 	gtn_firstDate = function(dateId) {
 		var date = dateId;
 		var year = date.substr(0, 4);
@@ -151,13 +183,15 @@ $(document).ready(function() {
 		return new Date(year, month - 1, day);
 	}
 	
+	/** 이전 날짜 반환*/
 	gtn_beforeDate = function(dateId, sub_date) {
 		var dayOfMonth = dateId.getDate();
 		dateId.setDate(dayOfMonth - sub_date);
 		dateId = gfn_parseDate(dateId);
 		return dateId;
 	}
-	
+
+	/** Date 파싱*/
 	gfn_parseDate = function(dateId) {
 
 		var year = "" + (dateId.getFullYear());
@@ -177,9 +211,9 @@ $(document).ready(function() {
 	/** select box 셋팅*/
 	gfn_selectList = function(codeGrpCd , id) {
 		var combo ='<option value="" selected>전체</option>';
-		var formData = JSON.stringify({codeGrpCd:codeGrpCd});
+		var formData = JSON.stringify({codegrp:codeGrpCd});
 		$.ajax({
-		    url : '/common/commListSch.do',
+		    url : '/common/commCode.do',
 		    contentType:"application/json;charset=UTF-8",
 		    type : 'post',
 		    dataType : 'json',
@@ -188,7 +222,7 @@ $(document).ready(function() {
 		    	if(!gfn_isNull(data.commList)){
 		    		if(data.commList.length > 0) {
 		    			for(var i = 0 ; i < data.commList.length ;i++) {
-		    				combo += '<option value=' + data.commList[i].codeCd + '>' + data.commList[i].codeNm + '</option>';
+		    				combo += '<option value=' + data.commList[i].codecd + '>' + data.commList[i].codenm + '</option>';
 		    			}
 		    			$("#inpFom [id=]" + id + "]").append(combo);
 		    		}
@@ -202,10 +236,10 @@ $(document).ready(function() {
 	
 	/** 공통 코드 조회*/	
 	gfn_getCommCode = function(codeGrpCd) {
-		var formData = JSON.stringify({codeGrpCd:codeGrpCd});
+		var formData = JSON.stringify({codegrp:codeGrpCd});
 		var common_code;
 		$.ajax({
-		    url : '/common/commListSch.do',
+		    url : '/common/commCode.do',
 		    contentType:"application/json;charset=UTF-8",
 		    type : 'post',
 		    dataType : 'json',
@@ -220,6 +254,18 @@ $(document).ready(function() {
 		});	
 		return common_code;
 	}
+	
+	/** 공통 코드 사용 */
+	gfn_getCommCodeNm = function(common_code, code) {
+		var result = "";
+		
+		$.each(common_code , function(idx, value) {
+			if(code == value.codecd) {
+				result = value.codenm;
+			}
+		});
+		return result;
+	} 
 	
 	gfn_alert = function (message, title) {
 	    if (!gfn_isNull(title))

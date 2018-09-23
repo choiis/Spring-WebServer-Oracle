@@ -1,6 +1,5 @@
 package com.singer.controller;
 
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -166,28 +165,27 @@ public class SF01Controller {
 		log.debug("sf01Vo : " + sf01Vo);
 		HashMap<String, Object> hashMap = sf01Service.selectFile(sf01Vo);
 
+		String filename = (String) hashMap.get("FILENAME");
+		BLOB fileblob = (BLOB) hashMap.get("FILEBLOB");
+
+		byte[] fileBytes = fileblob.getBytes();
 		try {
 
-			String filename = (String) hashMap.get("FILENAME");
-			BLOB fileblob = (BLOB) hashMap.get("FILEBLOB");
-
-			byte fileByte[] = fileblob.getBytes();
-
 			response.setContentType("application/octet-stream");
-			response.setContentLength(fileByte.length);
+			response.setContentLength(fileBytes.length);
 			response.setHeader("Content-Disposition",
 					"attachment; fileName=\"" + URLEncoder.encode(filename, "UTF-8") + "\";");
 			response.setHeader("Content-Transfer-Encoding", "binary");
-			response.getOutputStream().write(fileByte);
+			response.getOutputStream().write(fileBytes);
 
 			response.getOutputStream().flush();
-
-		} catch (IOException e) {
+			response.getOutputStream().close();
 
 		} finally {
 			response.getOutputStream().close();
 			log.debug("exit selectFile.do");
 		}
+
 	}
 
 	@ResponseBody

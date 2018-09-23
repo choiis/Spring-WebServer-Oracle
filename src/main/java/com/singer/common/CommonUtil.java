@@ -84,6 +84,28 @@ public class CommonUtil {
 	}
 
 	/**
+	 * Oracle nvl
+	 */
+	public static String nvl(String str, String nvl) {
+		if (isNull(str)) {
+			return nvl;
+		} else {
+			return str;
+		}
+	}
+
+	/**
+	 * Oracle nvl
+	 */
+	public static Object nvl(Object obj, String nvl) {
+		if (isNull(obj)) {
+			return nvl;
+		} else {
+			return obj;
+		}
+	}
+
+	/**
 	 * 페이지 카운트 반환
 	 */
 	public static int getPageCnt(int cnt) {
