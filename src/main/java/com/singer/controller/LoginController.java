@@ -41,6 +41,7 @@ public class LoginController {
 		session.removeAttribute("regdate");
 		session.removeAttribute("phone");
 		session.removeAttribute("email");
+		session.removeAttribute("usertype");
 
 		model.addObject("message", "로그아웃!");
 

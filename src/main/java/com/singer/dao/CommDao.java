@@ -20,4 +20,7 @@ public class CommDao {
 		return sqlSession.selectList(namespace + ".selectCode", sb01Vo);
 	}
 
+	public List<CommVo> selectMenu(CommVo sb01Vo) throws Exception {
+		return sqlSession.selectList(namespace + ".selectMenu", sb01Vo);
+	}
 }

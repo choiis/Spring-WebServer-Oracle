@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	도메인마다 namespace 를 구현하고
+	각각의 crud 에 대한 id 설정 후 쿼리 작성
+-->
+
+<mapper namespace="com.singer.mappers.SP01">		
+		<insert id="insert"  parameterType="com.singer.vo.SP01Vo">
+			insert into SP01 (seq, title, text, userid, regdate, state, ptype)
+			values (SEQ_SP01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate} ,'01', #{ptype}) 
+		</insert>
+		
+		<insert id="insertSP03"  parameterType="com.singer.vo.SP01Vo">
+			insert into SP03 (registerid , seq, regdate)
+			values (#{registerid}, #{seq}, #{regdate}) 
+		</insert>
+		
+		<update id="update" parameterType="com.singer.vo.SP01Vo">
+			update SP01 
+			set title = #{title},
+				text = #{text}
+			where seq = #{seq}
+		</update>
+		
+		<update id="buyRegister" parameterType="com.singer.vo.SP01Vo">
+			update SP01 
+			set state = '02'
+			where seq = #{seq}
+			and title = #{title}
+		</update>
+		
+		<update id="sell" parameterType="com.singer.vo.SP01Vo">
+			update SP01 
+			set state = '03'
+			where seq = #{seq}
+			and title = #{title}
+		</update>
+		
+		<update id="cancel" parameterType="com.singer.vo.SP01Vo">
+			update SP01 
+			set state = '01'
+			where seq = #{seq}
+			and title = #{title}
+		</update>
+		
+		<update id="like" parameterType="com.singer.vo.SP01Vo">
+			update SP01 
+			set good = #{good} + 1
+			where seq = #{seq}
+			and title = #{title}
+		</update>
+		
+		<update id="hate" parameterType="com.singer.vo.SP01Vo">
+			update SP01 
+			set good = #{good} - 1
+			where seq = #{seq}
+			and title = #{title}
+		</update>
+		
+		<update id="click" parameterType="com.singer.vo.SP01Vo">
+			update SP01
+			set hit = #{hit} + 1
+			where seq = #{seq}
+		</update>
+		
+		<select id="selectOne" resultType="com.singer.vo.SP01Vo" parameterType="com.singer.vo.SP01Vo">	
+		select 
+    		S1.seq as seq,
+    		S1.title as title, 
+   			S1.text as text, 
+  			S1.userid as userid,
+    		S1.regdate as regdate,
+			S1.state as state,
+			S1.ptype as ptype,
+    		S1.hit as hit, 
+   			S1.good as good,
+    		SL1.goodlog as goodlog,
+    		SL1.hatelog  as hatelog
+    		from SP01 S1
+    		left outer join(
+     		  select *
+       		from SG01
+       		where btype = 'SP01' and
+       		seq = #{seq} and
+      		sessionid = #{sessionid}
+   		 ) SL1
+  		on (S1.seq = SL1.seq)
+  		where S1.seq = #{seq}
+		</select>
+		
+		<select id="select" resultType="com.singer.vo.SP01Vo"  parameterType="com.singer.vo.SP01Vo">
+		select S1.*
+			 from (
+			 
+			select 
+				rownum as rown,
+				s1.seq as seq,
+				s1.title as title, 
+				s1.text as text, 
+				s1.userid as userid,  
+				s1.regdate as regdate,
+				s1.state as state,
+				s1.ptype as ptype,
+				s1.hit as hit, 
+				s1.good as good,
+				count(*) over() as totCnt,
+        		(select count(*) 
+        				from SP02 s2
+        			where s1.seq = s2.seq01
+        		) as reply
+			 from SP01 s1
+			 where 1=1
+			 <if test="title != null">
+			 	and title like #{title} || '%'
+			 </if>
+			 <if test="userid != null">
+			 	and userid = #{userid}
+			 </if>
+			 order by seq desc , regdate desc
+			) S1 where S1.rown between 
+		#{startRownum} + 1 and #{endRownum}
+		</select>
+		
+		
+		<select id="selectMyList" resultType="com.singer.vo.SP01Vo"  parameterType="com.singer.vo.SP01Vo">
+		select S1.*
+			 from (
+			select 
+				rownum as rown,
+				s1.seq as seq,
+				s1.title as title, 
+				s1.text as text, 
+				s1.userid as userid,  
+				s1.regdate as regdate,
+				s1.state as state,
+				s1.ptype as ptype,
+				s1.hit as hit, 
+				s1.good as good,
+				s3.registerid as registerid
+			 from SP01 s1
+			  left outer join (
+     			   select * from SP03 
+        			where  regdate = (select MAX(regdate)
+        		from SP03)
+       			) s3
+       		on (s1.seq = s3.seq)
+			 where userid = #{userid}
+			 <if test="title != null">
+			 	and title like #{title} || '%'
+			 </if>
+			 order by seq desc , regdate desc
+			) S1 where S1.rown between 
+		#{startRownum} + 1 and #{endRownum}
+		</select>
+		
+		<delete id="delete" parameterType="com.singer.vo.SP01Vo">
+			delete from SP01
+			where seq = #{seq}
+			and title = #{title}
+		</delete>
+		
+		<update id="insertExplain" parameterType="java.util.HashMap">
+			update SP01 
+			set explain = #{explain}
+			where title = #{title}
+			and userid = #{userid}
+		</update>
+		
+		<select id="selectExplain" parameterType="com.singer.vo.SP01Vo" resultType="java.util.Map">
+			select explain from SP01 
+			where seq = #{seq}
+		</select>
+		
+		<update id="likelog" parameterType="com.singer.vo.SP01Vo">
+			merge into SG01 S1
+				using dual
+				on (
+				S1.btype = 'SP01'
+				and S1.seq = #{seq}
+				and S1.sessionid = #{sessionid})
+			when matched then
+				update set S1.datelog = #{datelog},
+  					S1.goodlog = 'Y'
+			when not matched then
+				insert (S1.btype, S1.seq, S1.sessionid, S1.datelog, S1.goodlog ) values('SP01' ,#{seq}, #{sessionid}, #{datelog} , 'Y')
+		</update>
+		
+		<update id="hatelog" parameterType="com.singer.vo.SP01Vo">
+			merge into SG01 S1
+				using dual
+				on (
+				S1.btype = 'SP01'
+				and S1.seq = #{seq}
+				and S1.sessionid = #{sessionid})
+			when matched then
+				update set S1.datelog = #{datelog},
+  					S1.hatelog = 'Y'
+			when not matched then
+				insert (S1.btype, S1.seq, S1.sessionid, S1.datelog, S1.hatelog ) values('SP01' ,#{seq}, #{sessionid}, #{datelog} , 'Y')
+		</update>
+</mapper>

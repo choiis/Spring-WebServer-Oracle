@@ -15,6 +15,9 @@
 <script type="text/javascript">
 	// 페이지 로딩이 완료되고, jQuery 스크립트 실행된다
 	$(document).ready(function() {
+		
+		// 메뉴 불러오기
+		selectMenu();
 		// 로그아웃 클릭
 		$("#logout").on("click",function(e) {
 			e.preventDefault();
@@ -24,6 +27,23 @@
 			} 
 		});
 	});
+	
+	function selectMenu() {
+		
+		var sendData = JSON.stringify({});
+		
+		gfn_ajax("commMenu.do","POST" , sendData , function(data) {
+			var html = "";
+	       	
+	        $.each(data.commList, function(index, item) {
+	        	html += '<li><a href = "' + item.menuurl + '" >' + item.menunm + '</a></li>';
+	        });
+	        $("#menuList").empty();
+	        $("#menuList").append(html);
+			
+		});
+	}
+	
 </script>
 </body>
   <ul id="navi">
@@ -34,18 +54,7 @@
         <br>
         <a href="#" id="logout">로그아웃</a>
         <div class="title">게시판 이용</div>
-            <ul class="sub">
-          	    <li><a href = '/common/sb01.do'>노래 동영상</a></li>
-          	    <li><a href = '/common/sf01.do'>파일 게시판</a></li>
-                <li><a href = '/common/sm02.do'>나의 메모장</a></li> 
-                <li><a href = '/common/sm01.do'>회원목록</a></li> 
-                <%
-                if("01".equals(session.getAttribute("usertype")))%>
-                <li><a href = '/common/code.do'>코드관리</a></li>
-                <li><a href = '/common/sg01.do'>공지사항</a></li>	
-                <li><a href = '/common/si01.do'>메인이미지</a></li>	
-                <%
-                %>
+            <ul id="menuList" class="sub">
             </ul>
       	</li>
     </ul>

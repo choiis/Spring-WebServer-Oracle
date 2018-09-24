@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	도메인마다 namespace 를 구현하고
+	각각의 crud 에 대한 id 설정 후 쿼리 작성
+-->
+
+<mapper namespace="com.singer.mappers.SP02">		
+		<insert id="insert"  parameterType="com.singer.vo.SP02Vo">
+			insert into SP02 (seq, seq01, text, userid, regdate)
+			values (SEQ_SP02.NEXTVAL, #{seq01}, #{text}, #{userid}, #{regdate}) 
+		</insert>
+		
+		<update id="update" parameterType="com.singer.vo.SP02Vo">
+			update SP02 
+			set text = #{text}
+			where seq = #{seq}
+			and seq01 = #{seq01}
+		</update>
+		
+		<update id="like" parameterType="com.singer.vo.SP02Vo">
+			update SP02 
+			set good = #{good} + 1
+			where seq = #{seq}
+			and seq01 = #{seq01}
+		</update>
+		
+		<select id="select" resultType="com.singer.vo.SP02Vo"  parameterType="com.singer.vo.SP02Vo">
+		select * from
+			(select 
+				seq as seq,
+				ceil(row_number() over(order by regdate desc) / #{rowPerPage} ) as nowPage,
+        		seq01 as seq01,
+				text as text, 
+				userid as userid,  
+				regdate as regdate,
+				good as good,
+				count(*) over() as totCnt
+			 from SP02 
+ 			where seq01 = #{seq01}
+		)	where nowPage = #{nowPage}
+		</select>
+		
+		<delete id="delete" parameterType="com.singer.vo.SP02Vo">
+			delete from SP02
+			where seq = #{seq}
+			and seq01 = #{seq01}
+		</delete>
+		
+		<delete id="delete_seq01" parameterType="com.singer.vo.SP02Vo">
+			delete from SP02
+			where seq01 = #{seq01}
+		</delete>
+</mapper>

@@ -15,6 +15,70 @@ usertype varchar2(5)
 alter table SM01
 add constraint pk_SM01 primary key(userid);
 
+CREATE table MENU (
+  menucd varchar2(2) not null,
+  menunm varchar2(20) not null,
+  menuurl varchar2(20) not null,
+  authlevel varchar2(2) not null,
+  reguser varchar2(20) not null,
+  regdate varchar2(8) not null,
+  moduser varchar2(20) not null,
+  moddate varchar2(8) not null
+);
+
+
+alter table MENU
+add constraint pk_MENU primary key(menucd);
+
+insert into MENU values('01','코드관리','/common/code.do','01','admin','20180901','admin','20180901')
+insert into MENU values('02','공지사항','/common/command.do','02','admin','20180901','admin','20180901')
+insert into MENU values('03','회원관리','/sm01.do','02','admin','20180901','admin','20180901')
+insert into MENU values('04','노래 동영상','/common/sb01.do','04','admin','20180901','admin','20180901')
+insert into MENU values('05','파일 게시판','/common/sf01.do','04','admin','20180901','admin','20180901')
+insert into MENU values('06','상품 거래','/common/sp01.do','04','admin','20180901','admin','20180901')
+insert into MENU values('07','나의 메모장','/common/sm01.do','04','admin','20180901','admin','20180901')
+
+CREATE table CODE (
+codecd varchar2(10) not null,
+codenm varchar2(20) not null,
+codegrp varchar2(5) not null,
+username varchar2(20) not null,
+regdate varchar2(8) not null
+);
+
+alter table CODE
+add constraint pk_CODE primary key(codegrp,codecd);
+
+CREATE table CODE_GRP (
+codegrp varchar2(5) not null,
+codegrpnm varchar2(20) not null,
+username varchar2(20) not null,
+regdate varchar2(8) not null
+);
+
+alter table CODE_GRP
+add constraint pk_CODE_GRP primary key(codegrp);
+
+insert into CODE_GRP values('U001','유저등급코드','admin','20180901')
+insert into CODE_GRP values('P001','판매상태코드','admin','20180901')
+insert into CODE_GRP values('P002','판매상품코드','admin','20180901')
+
+insert into CODE values('01','관리자','U001','admin','20180901')
+insert into CODE values('02','특별회원','U001','admin','20180901')
+insert into CODE values('03','우수회원','U001','admin','20180901')
+insert into CODE values('04','사용자','U001','admin','20180901')
+
+insert into CODE values('01','판매대기','P001','admin','20180901')
+insert into CODE values('02','판매신청','P001','admin','20180901')
+insert into CODE values('03','판매완료','P001','admin','20180901')
+
+insert into CODE values('01','음반','P002','admin','20180901')
+insert into CODE values('02','악보','P002','admin','20180901')
+insert into CODE values('03','악기','P002','admin','20180901')
+insert into CODE values('04','티켓','P002','admin','20180901')
+insert into CODE values('05','파일','P002','admin','20180901')
+insert into CODE values('06','기타','P002','admin','20180901')
+
 CREATE table SL01(
 userid varchar2(10) not null,
 logintime varchar2(20) not null,
@@ -152,31 +216,60 @@ create table SG01(
 alter table SG01
 add constraint pk_SG01 primary key(btype,seq,sessionid)
 
-CREATE table CODE (
-codecd varchar2(10) not null,
-codenm varchar2(20) not null,
-codegrp varchar2(5) not null,
-username varchar2(20) not null,
-regdate varchar2(8) not null
+CREATE SEQUENCE seq_SP01 
+START WITH 1 INCREMENT BY 1 ;
+
+create table SP01(
+  seq number not null,
+  title varchar2(20) not null,
+  text varchar2(200) not null,
+  userid varchar2(20) not null,
+  regdate varchar2(20) not null,
+  state varchar2(5) not null,
+  ptype varchar2(5) not null,
+  hit number(4)  default 0 not null ,
+  good number(4) default 0 not null ,
+  explain blob
 );
 
-alter table CODE
-add constraint pk_CODE primary key(codegrp,codecd);
+alter table SP01
+add constraint pk_SP01 primary key(seq)
 
-CREATE table CODE_GRP (
-codegrp varchar2(5) not null,
-codegrpnm varchar2(20) not null,
-username varchar2(20) not null,
-regdate varchar2(8) not null
+CREATE index idx_SP01_1
+on SP01(seq, regdate);
+
+CREATE index idx_SP01_2
+on SP01(title);
+
+CREATE index idx_SP01_3
+on SP01(userid);
+
+CREATE index idx_SP01_4
+on SP01(seq,title);
+
+CREATE SEQUENCE seq_SP02 
+START WITH 1 INCREMENT BY 1 ;
+
+create table SP02(
+  seq number not null,
+  seq01 number not null,
+  text varchar2(200) not null,
+  userid varchar2(20) not null,
+  regdate varchar2(20) not null,
+  good number(4) default 0 not null
 );
 
-alter table CODE_GRP
-add constraint pk_CODE_GRP primary key(codegrp);
+alter table SP02
+add constraint pk_SP02 primary key(seq, seq01)
 
-insert into CODE_GRP values('U001','유저등급코드','admin','20180901')
+CREATE index idx_SP02_1
+on SB02(seq01, regdate);
 
+create table SP03(
+  registerid varchar2(20) not null,
+  seq number not null,
+  regdate varchar2(20) not null
+);
 
-insert into CODE values('01','관리자','U001','admin','20180901')
-insert into CODE values('02','특별회원','U001','admin','20180901')
-insert into CODE values('03','우수회원','U001','admin','20180901')
-insert into CODE values('04','사용자','U001','admin','20180901')
+alter table SP03
+add constraint pk_SP03 primary key(registerid, seq)

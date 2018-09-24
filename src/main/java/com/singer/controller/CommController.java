@@ -37,4 +37,19 @@ public class CommController {
 		log.debug("exit sb01show.do");
 		return hashmap;
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/commMenu.do", method = RequestMethod.POST)
+	public HashMap<String, Object> toSelectMenu(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+
+		log.debug("enter commMenu.do");
+		log.debug("CommVo : " + commVo);
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		String authlevel = (String) session.getAttribute("usertype");
+		List<CommVo> list = commService.selectMenu(commVo, authlevel);
+		hashmap.put("commList", list);
+
+		log.debug("exit commMenu.do");
+		return hashmap;
+	}
 }

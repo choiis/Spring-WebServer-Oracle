@@ -20,4 +20,10 @@ public class CommServiceImpl implements CommService {
 		return commDao.selectCode(vo);
 	}
 
+	@Override
+	public List<CommVo> selectMenu(CommVo vo, String authlevel) throws Exception {
+		vo.setAuthlevel(authlevel);
+		return commDao.selectMenu(vo);
+	}
+
 }

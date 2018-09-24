@@ -12,17 +12,39 @@ public class CommVo extends SuperVo {
 
 	private String regdate;
 
+	private String reguser;
+
+	private String menucd;
+
+	private String menunm;
+
+	private String menuurl;
+
+	private String authlevel;
+
+	private String moduser;
+
+	private String moddate;
+
 	public CommVo() {
 		super();
 	}
 
-	public CommVo(String codecd, String codenm, String codegrp, String username, String regdate) {
+	public CommVo(String codecd, String codenm, String codegrp, String username, String regdate, String reguser,
+			String menucd, String menunm, String menuurl, String authlevel, String moduser, String moddate) {
 		super();
 		this.codecd = codecd;
 		this.codenm = codenm;
 		this.codegrp = codegrp;
 		this.username = username;
 		this.regdate = regdate;
+		this.reguser = reguser;
+		this.menucd = menucd;
+		this.menunm = menunm;
+		this.menuurl = menuurl;
+		this.authlevel = authlevel;
+		this.moduser = moduser;
+		this.moddate = moddate;
 	}
 
 	public String getCodecd() {
@@ -65,10 +87,68 @@ public class CommVo extends SuperVo {
 		this.regdate = regdate;
 	}
 
+	public String getReguser() {
+		return reguser;
+	}
+
+	public void setReguser(String reguser) {
+		this.reguser = reguser;
+	}
+
+	public String getMenucd() {
+		return menucd;
+	}
+
+	public void setMenucd(String menucd) {
+		this.menucd = menucd;
+	}
+
+	public String getMenunm() {
+		return menunm;
+	}
+
+	public void setMenunm(String menunm) {
+		this.menunm = menunm;
+	}
+
+	public String getMenuurl() {
+		return menuurl;
+	}
+
+	public void setMenuurl(String menuurl) {
+		this.menuurl = menuurl;
+	}
+
+	public String getAuthlevel() {
+		return authlevel;
+	}
+
+	public void setAuthlevel(String authlevel) {
+		this.authlevel = authlevel;
+	}
+
+	public String getModuser() {
+		return moduser;
+	}
+
+	public void setModuser(String moduser) {
+		this.moduser = moduser;
+	}
+
+	public String getModdate() {
+		return moddate;
+	}
+
+	public void setModdate(String moddate) {
+		this.moddate = moddate;
+	}
+
 	@Override
 	public String toString() {
 		return "CommVo [codecd=" + codecd + ", codenm=" + codenm + ", codegrp=" + codegrp + ", username=" + username
-				+ ", regdate=" + regdate + "]";
+				+ ", regdate=" + regdate + ", reguser=" + reguser + ", menucd=" + menucd + ", menunm=" + menunm
+				+ ", menuurl=" + menuurl + ", authlevel=" + authlevel + ", moduser=" + moduser + ", moddate=" + moddate
+				+ "]";
 	}
 
 }

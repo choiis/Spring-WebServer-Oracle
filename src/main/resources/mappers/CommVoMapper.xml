@@ -11,4 +11,11 @@
 		from code
 	where codegrp = #{codegrp}
 	</select>
+	
+	<select id="selectMenu" resultType="com.singer.vo.CommVo"  parameterType="com.singer.vo.CommVo">
+	select menucd as menucd,
+      menunm as menunm,
+      menuurl as menuurl
+	from menu where authlevel >= #{authlevel}
+	</select>
 </mapper>

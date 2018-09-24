@@ -210,7 +210,7 @@ $(document).ready(function() {
 	
 	/** select box 셋팅*/
 	gfn_selectList = function(codeGrpCd , id) {
-		var combo ='<option value="" selected>전체</option>';
+		var combo ='<option value="" selected>선택</option>';
 		var formData = JSON.stringify({codegrp:codeGrpCd});
 		$.ajax({
 		    url : '/common/commCode.do',
@@ -224,7 +224,7 @@ $(document).ready(function() {
 		    			for(var i = 0 ; i < data.commList.length ;i++) {
 		    				combo += '<option value=' + data.commList[i].codecd + '>' + data.commList[i].codenm + '</option>';
 		    			}
-		    			$("#inpFom [id=]" + id + "]").append(combo);
+		    			$("#" + id + "").append(combo);
 		    		}
 		    	}
 		    },
