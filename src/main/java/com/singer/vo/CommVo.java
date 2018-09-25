@@ -1,5 +1,7 @@
 package com.singer.vo;
 
+import java.util.List;
+
 public class CommVo extends SuperVo {
 
 	private String codecd;
@@ -26,12 +28,17 @@ public class CommVo extends SuperVo {
 
 	private String moddate;
 
+	private String codegrpnm;
+
+	private List<CommVo> commList;
+
 	public CommVo() {
 		super();
 	}
 
 	public CommVo(String codecd, String codenm, String codegrp, String username, String regdate, String reguser,
-			String menucd, String menunm, String menuurl, String authlevel, String moduser, String moddate) {
+			String menucd, String menunm, String menuurl, String authlevel, String moduser, String moddate,
+			String codegrpnm, List<CommVo> commList) {
 		super();
 		this.codecd = codecd;
 		this.codenm = codenm;
@@ -45,6 +52,8 @@ public class CommVo extends SuperVo {
 		this.authlevel = authlevel;
 		this.moduser = moduser;
 		this.moddate = moddate;
+		this.codegrpnm = codegrpnm;
+		this.commList = commList;
 	}
 
 	public String getCodecd() {
@@ -143,12 +152,28 @@ public class CommVo extends SuperVo {
 		this.moddate = moddate;
 	}
 
+	public String getCodegrpnm() {
+		return codegrpnm;
+	}
+
+	public void setCodegrpnm(String codegrpnm) {
+		this.codegrpnm = codegrpnm;
+	}
+
+	public List<CommVo> getCommList() {
+		return commList;
+	}
+
+	public void setCommList(List<CommVo> commList) {
+		this.commList = commList;
+	}
+
 	@Override
 	public String toString() {
 		return "CommVo [codecd=" + codecd + ", codenm=" + codenm + ", codegrp=" + codegrp + ", username=" + username
 				+ ", regdate=" + regdate + ", reguser=" + reguser + ", menucd=" + menucd + ", menunm=" + menunm
 				+ ", menuurl=" + menuurl + ", authlevel=" + authlevel + ", moduser=" + moduser + ", moddate=" + moddate
-				+ "]";
+				+ ", codegrpnm=" + codegrpnm + ", commList=" + commList + "]";
 	}
 
 }

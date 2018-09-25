@@ -16,11 +16,39 @@ public class CommDao {
 
 	private static final String namespace = "com.singer.mappers.Comm";
 
-	public List<CommVo> selectCode(CommVo sb01Vo) throws Exception {
-		return sqlSession.selectList(namespace + ".selectCode", sb01Vo);
+	public List<CommVo> selectCode(CommVo commVo) throws Exception {
+		return sqlSession.selectList(namespace + ".selectCode", commVo);
 	}
 
-	public List<CommVo> selectMenu(CommVo sb01Vo) throws Exception {
-		return sqlSession.selectList(namespace + ".selectMenu", sb01Vo);
+	public List<CommVo> selectMenu(CommVo commVo) throws Exception {
+		return sqlSession.selectList(namespace + ".selectMenu", commVo);
+	}
+
+	public List<CommVo> selectCodeGrp(CommVo commVo) throws Exception {
+		return sqlSession.selectList(namespace + ".selectCodeGrp", commVo);
+	}
+
+	public int insertMenu(CommVo commVo) throws Exception {
+		return sqlSession.insert(namespace + ".insertMenu", commVo);
+	}
+
+	public int deleteMenu(CommVo commVo) throws Exception {
+		return sqlSession.insert(namespace + ".deleteMenu", commVo);
+	}
+
+	public int updateMenu(CommVo commVo) throws Exception {
+		return sqlSession.insert(namespace + ".updateMenu", commVo);
+	}
+
+	public int insertCode(CommVo commVo) throws Exception {
+		return sqlSession.insert(namespace + ".insertCode", commVo);
+	}
+
+	public int deleteCode(CommVo commVo) throws Exception {
+		return sqlSession.insert(namespace + ".deleteCode", commVo);
+	}
+
+	public int updateCode(CommVo commVo) throws Exception {
+		return sqlSession.insert(namespace + ".updateCode", commVo);
 	}
 }

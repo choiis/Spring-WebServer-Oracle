@@ -12,10 +12,54 @@
 	where codegrp = #{codegrp}
 	</select>
 	
+	<select id="selectCodeGrp" resultType="com.singer.vo.CommVo"  parameterType="com.singer.vo.CommVo">
+	select *  
+		from code_grp
+	</select>
+	
+	<insert id="insertCode"  parameterType="com.singer.vo.CommVo">
+	insert into Code
+	values (#{codecd}, #{codenm}, #{codegrp}, #{username},#{regdate}) 
+	</insert>
+	
+	<update id="updateCode" parameterType="com.singer.vo.CommVo">
+	update Code 
+	set codenm = #{codenm}
+	where codecd = #{codecd}
+	and codegrp = #{codegrp}
+	</update>
+		
+	<delete id="deleteCode" parameterType="com.singer.vo.CommVo">
+	delete from Code
+	where codecd = #{codecd}
+	and codegrp = #{codegrp}
+	</delete>
+	
 	<select id="selectMenu" resultType="com.singer.vo.CommVo"  parameterType="com.singer.vo.CommVo">
 	select menucd as menucd,
       menunm as menunm,
-      menuurl as menuurl
+      menuurl as menuurl,
+      authlevel as authlevel
 	from menu where authlevel >= #{authlevel}
 	</select>
+	
+	<insert id="insertMenu"  parameterType="com.singer.vo.CommVo">
+	insert into MENU
+	values (#{menucd}, #{menunm}, #{menuurl}, #{authlevel}, #{reguser},#{regdate} , #{reguser},#{regdate}) 
+	</insert>
+	
+	<update id="updateMenu" parameterType="com.singer.vo.CommVo">
+	update MENU 
+	set menunm = #{menunm},
+		menuurl = #{menuurl},
+		authlevel = #{authlevel},
+		moduser = #{moduser},
+		moddate = #{moddate}
+	where menucd = #{menucd}
+	</update>
+		
+	<delete id="deleteMenu" parameterType="com.singer.vo.CommVo">
+	delete from MENU
+	where menucd = #{menucd}
+	</delete>
 </mapper>

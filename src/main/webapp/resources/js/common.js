@@ -234,6 +234,21 @@ $(document).ready(function() {
 		});
 	}
 	
+	/** select box 셋팅*/
+	gfn_selectedBox = function(codeList , selectedCode , id) {
+		var select ='<select id=' + id + '><option value="">선택</option>';
+		
+		for(var i = 0 ; i < codeList.length ;i++) {
+			if(codeList[i].codecd == selectedCode) {
+				select += '<option value=' + codeList[i].codecd + ' selected>' + codeList[i].codenm + '</option>';
+			} else {
+				select += '<option value=' + codeList[i].codecd + '>' + codeList[i].codenm + '</option>';
+			}
+		}
+		select += '</select>';
+		return select;
+	}
+	
 	/** 공통 코드 조회*/	
 	gfn_getCommCode = function(codeGrpCd) {
 		var formData = JSON.stringify({codegrp:codeGrpCd});
