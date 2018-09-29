@@ -2,53 +2,51 @@ package com.singer.dao;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.singer.vo.CommVo;
 
 @Repository("commDao")
-public class CommDao {
-	@Inject
-	private SqlSession sqlSession;
+public class CommDao extends SuperDao {
 
 	private static final String namespace = "com.singer.mappers.Comm";
 
+	@SuppressWarnings("unchecked")
 	public List<CommVo> selectCode(CommVo commVo) throws Exception {
-		return sqlSession.selectList(namespace + ".selectCode", commVo);
+		return (List<CommVo>) selectList(namespace + ".selectCode", commVo);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CommVo> selectMenu(CommVo commVo) throws Exception {
-		return sqlSession.selectList(namespace + ".selectMenu", commVo);
+		return (List<CommVo>) selectList(namespace + ".selectMenu", commVo);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CommVo> selectCodeGrp(CommVo commVo) throws Exception {
-		return sqlSession.selectList(namespace + ".selectCodeGrp", commVo);
+		return (List<CommVo>) selectList(namespace + ".selectCodeGrp", commVo);
 	}
 
 	public int insertMenu(CommVo commVo) throws Exception {
-		return sqlSession.insert(namespace + ".insertMenu", commVo);
+		return insert(namespace + ".insertMenu", commVo);
 	}
 
 	public int deleteMenu(CommVo commVo) throws Exception {
-		return sqlSession.insert(namespace + ".deleteMenu", commVo);
+		return insert(namespace + ".deleteMenu", commVo);
 	}
 
 	public int updateMenu(CommVo commVo) throws Exception {
-		return sqlSession.insert(namespace + ".updateMenu", commVo);
+		return insert(namespace + ".updateMenu", commVo);
 	}
 
 	public int insertCode(CommVo commVo) throws Exception {
-		return sqlSession.insert(namespace + ".insertCode", commVo);
+		return insert(namespace + ".insertCode", commVo);
 	}
 
 	public int deleteCode(CommVo commVo) throws Exception {
-		return sqlSession.insert(namespace + ".deleteCode", commVo);
+		return insert(namespace + ".deleteCode", commVo);
 	}
 
 	public int updateCode(CommVo commVo) throws Exception {
-		return sqlSession.insert(namespace + ".updateCode", commVo);
+		return insert(namespace + ".updateCode", commVo);
 	}
 }
