@@ -30,6 +30,8 @@ public class CommVo extends SuperVo {
 
 	private String codegrpnm;
 
+	private String password;
+
 	private List<CommVo> commList;
 
 	public CommVo() {
@@ -168,12 +170,20 @@ public class CommVo extends SuperVo {
 		this.commList = commList;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public String toString() {
 		return "CommVo [codecd=" + codecd + ", codenm=" + codenm + ", codegrp=" + codegrp + ", username=" + username
 				+ ", regdate=" + regdate + ", reguser=" + reguser + ", menucd=" + menucd + ", menunm=" + menunm
 				+ ", menuurl=" + menuurl + ", authlevel=" + authlevel + ", moduser=" + moduser + ", moddate=" + moddate
-				+ ", codegrpnm=" + codegrpnm + ", commList=" + commList + "]";
+				+ ", codegrpnm=" + codegrpnm + ", password=" + password + ", commList=" + commList + "]";
 	}
 
 }

@@ -60,7 +60,7 @@
 		
 		var sendData = JSON.stringify({
         	"userid" : $("#userid").val(),
-        	"passwd" : $("#passwd").val()
+        	"passwd" : gfn_AES256_Encode($("#passwd").val())
         });
 		
 		gfn_ajax("login.do","POST" , sendData , function(data) {

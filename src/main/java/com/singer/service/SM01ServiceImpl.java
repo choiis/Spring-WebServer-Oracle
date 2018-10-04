@@ -6,9 +6,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.singer.common.AES256Util;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
@@ -21,6 +24,10 @@ public class SM01ServiceImpl implements SM01Service {
 	@Resource(name = "sm01Dao")
 	private SM01Dao sm01Dao;
 
+	@Autowired
+	@Qualifier("aes256")
+	private AES256Util aes256Util;
+
 	@Transactional
 	@Override
 	public HashMap<String, Object> insertSM01Vo(SM01Vo sm01Vo) throws Exception {
@@ -29,6 +36,8 @@ public class SM01ServiceImpl implements SM01Service {
 		if (CommonUtil.isNull(sm01Vo.getAdminyn())) {
 			sm01Vo.setAdminyn(Constants.YES_N);
 		}
+		String pw = aes256Util.aesEncode(sm01Vo.getPasswd());
+		sm01Vo.setPasswd(pw);
 
 		sm01Vo.setRegdate(DateUtil.getToday());
 
@@ -51,6 +60,7 @@ public class SM01ServiceImpl implements SM01Service {
 	@Transactional
 	@Override
 	public SM01Vo selectOneSM01Vo(SM01Vo sm01Vo) throws Exception {
+
 		return sm01Dao.selectOneSM01Vo(sm01Vo);
 	}
 

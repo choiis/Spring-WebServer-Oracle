@@ -1,6 +1,6 @@
 CREATE table SM01(
 userid varchar2(10) not null,
-passwd varchar2(10) not null,
+passwd varchar2(30) not null,
 adminyn varchar2(5) not null,
 username varchar2(20) not null,
 brth varchar2(8) not null,
@@ -82,6 +82,16 @@ insert into CODE values('03','악기','P002','admin','20180901')
 insert into CODE values('04','티켓','P002','admin','20180901')
 insert into CODE values('05','파일','P002','admin','20180901')
 insert into CODE values('06','기타','P002','admin','20180901')
+
+CREATE table SL01(
+userid varchar2(10) not null,
+logintime varchar2(20) not null,
+browser varchar2(20) not null,
+url varchar2(30) 
+);
+
+alter table SL01
+add constraint pk_SL01 primary key(userid,logintime);
 
 CREATE SEQUENCE seq_SM02
 START WITH 1 INCREMENT BY 1 ;

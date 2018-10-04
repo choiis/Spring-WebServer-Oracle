@@ -300,4 +300,34 @@ $(document).ready(function() {
 	        }
 	    });
 	}
+	
+	gfn_AES256_Encode = function (str) {
+		var result = "";
+		$.ajax({
+			type : "POST",
+		    url : '/common/resources/js/AES256Encode.jsp',
+		    async : false,
+		    data : {"password": str},
+		    success : function(data) {
+		    	
+		    	result = data.password;
+		    }
+		});
+		return result;
+	}
+	
+	gfn_AES256_Decode = function (str) {
+		var result = "";
+		$.ajax({
+			type : "POST",
+		    url : '/common/resources/js/AES256Decode.jsp',
+		    async : false,
+		    data : {"password": str},
+		    success : function(data) {
+		    	
+		    	result = json.password;
+		    }
+		});
+		return result;
+	}
 });
