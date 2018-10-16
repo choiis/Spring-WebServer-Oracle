@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b2c-config>
+	<security>
+		<sql-injection-blacklist>--,alter,begin,create,cursor,declare,delete,drop,exec,insert,kill,sys,update,1=1,1 = 1</sql-injection-blacklist>
+		<sql-skip-param>action,javax,portlet,user_id,email</sql-skip-param>
+	</security>
+</b2c-config>
