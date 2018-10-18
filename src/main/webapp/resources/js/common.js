@@ -207,7 +207,78 @@ $(document).ready(function() {
 		
 		return "" + year + month + day;
 	}
+
+	/** Date 차이*/
+	gfn_diffDate = function(fromDate, toDate){
+		if(gfn_isNull(fromDate) || gfn_isNull(toDate)) {
+			return;
+		}
+		if(fromDate.length == 10) {
+			fromDate = fromDate.replace(/[\-./]/gi , "");
+		}
+		if(toDate.length == 10) {
+			toDate = toDate.replace(/[\-./]/gi , "");
+		}
+		
+		var frYear = fromDate.substring(0, 4);
+		var frMonth = fromDate.substring(4, 6);
+		var frDate = fromDate.substring(6, 8);
+		
+		var toYear = toDate.substring(0, 4);
+		var toMonth = toDate.substring(4, 6);
+		var toDate = toDate.substring(6, 8);
+		
+		var fromDt = new Date(frYear , frMonth , frDate);
+		var toDt = new Date(toYear , toMonth , toDate);
+		
+		var diff = toDt - fromDt;
+		var currDay = 25 * 60 * 60 * 1000;
+		
+		return parseInt(diff / currDay);
+	}
 	
+
+	/** 특수문자 체크*/
+	gfn_isSpecialChar = function(str) {
+		if(str.length > 0 ){
+			for (var i = 0 ; i < str.length ; i++) {
+				var chCode = str.charCodeAt(i);
+				if(chCode < 128 && !(chCode >= 48 && chCode <=57) && 
+					!(chCode >= 65 && chCode <=90) && (chCode >= 97 && chCode <=122)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	/** 날짜 유효성 체크*/
+	gfn_valDate = function(inYear, inMonth, inDay) {
+		var year , month, day;
+		if(new String(inYear).length == 8 && 
+		inMonth == undefined && inDay == undefined) {
+			year = new String(inYear).substr(0, 4);
+			month = new String(inMonth).substr(0, 4);
+			day = new String(inDay).substr(0, 4);
+		} else {
+			year = inYear;
+			month = inMonth;
+			day = inDay;
+		}
+		
+		var inDate = Math.abs(month) + "/" + Math.abs(day) + "/" + Math.abs(year);
+		var objDate = new Date(Date.parse(inDate));
+		var cmpDate = (objDate.getMonth() + 1) + "/" + objDate.getDate() + "/" + objDate.getFullYear();
+		
+		if(cmpDate == "NaN/NaN/NaN") {
+			return 0;
+		} else if(inDate == cmpDate) {
+			return 1;
+		} else {
+			return -1;
+		}
+	}
 	/** select box 셋팅*/
 	gfn_selectList = function(codeGrpCd , id) {
 		var combo ='<option value="" selected>선택</option>';
