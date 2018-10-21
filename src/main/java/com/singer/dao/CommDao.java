@@ -22,6 +22,11 @@ public class CommDao extends SuperDao {
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<CommVo> checkMenuAuth(CommVo commVo) throws Exception {
+		return (List<CommVo>) selectList(namespace + ".checkMenuAuth", commVo);
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<CommVo> selectCodeGrp(CommVo commVo) throws Exception {
 		return (List<CommVo>) selectList(namespace + ".selectCodeGrp", commVo);
 	}

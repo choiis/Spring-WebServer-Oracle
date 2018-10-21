@@ -96,8 +96,13 @@ var user_code = {};
 			return false;
 		}
 		
-		if(!gfn_isKor($("#input_menuurl").val())) {
+		if(gfn_isKor($("#input_menuurl").val())) {
 			alert("메뉴URL엔 한글을 입력할 수 없습니다");
+			return false;
+		}
+		
+		if($("#input_menuurl").val().substr(-3) != ".do") {
+			alert("메뉴URL 뒤엔 .do를 꼭붙여 주세요!");
 			return false;
 		}
 		

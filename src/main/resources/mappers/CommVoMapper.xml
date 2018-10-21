@@ -41,6 +41,15 @@
       menuurl as menuurl,
       authlevel as authlevel
 	from menu where authlevel >= #{authlevel}
+	 order by menucd
+	</select>
+	
+	<select id="checkMenuAuth" resultType="com.singer.vo.CommVo"  parameterType="com.singer.vo.CommVo">
+	select menucd as menucd,
+      menunm as menunm,
+      menuurl as menuurl,
+      authlevel as authlevel
+	from menu where menuurl = #{menuurl}
 	</select>
 	
 	<insert id="insertMenu"  parameterType="com.singer.vo.CommVo">

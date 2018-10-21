@@ -22,7 +22,8 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
 	public String[] getParameterValues(String parameter) {
 		String[] values = super.getParameterValues(parameter);
-
+		log.debug("getParameterValues");
+		log.debug("parameter " + parameter);
 		if (values == null) {
 			return null;
 		}
@@ -41,11 +42,12 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 						String val = values[i].toLowerCase();
 						for (int j = 0; j < blackListArray.size(); j++) {
 							String black = blackListArray.get(j);
-
+							log.info("val " + val);
 							if (val.indexOf(black) != -1) {
 								throw new AppException("SQL Injection 위험이 있습니다 ");
 							}
 						}
+						encodedValues[i] = val;
 					}
 				}
 			} catch (ParserConfigurationException e) {
@@ -60,7 +62,10 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
 	public String getParameter(String name) {
 
+		log.info("getParameter ");
+		log.info("name " + name);
 		String value = super.getParameter(name);
+		log.info("value " + value);
 		if (value == null) {
 			return null;
 		} else if ("".equals(value)) {

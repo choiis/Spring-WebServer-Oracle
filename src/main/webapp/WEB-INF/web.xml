@@ -36,7 +36,7 @@
 		</filter>
 		<filter-mapping>
 			<filter-name>encoding</filter-name>
-			<url-pattern>/*</url-pattern>
+			<url-pattern>*.do</url-pattern>
 		</filter-mapping>
 		
 		<!-- XSS setting -->
@@ -46,7 +46,7 @@
 		</filter>
 		<filter-mapping>
 			<filter-name>XSS</filter-name>
-			<url-pattern>/*</url-pattern>
+			<url-pattern>*.do</url-pattern>
 		</filter-mapping>
 		
 		
