@@ -58,10 +58,10 @@
 			return ;
 		}
 		
-		var sendData = JSON.stringify({
+		var sendData = {
         	"userid" : $("#userid").val(),
         	"passwd" : gfn_AES256_Encode($("#passwd").val())
-        });
+        };
 		
 		gfn_ajax("login.do","POST" , sendData , function(data) {
 			if(data.code == 1){

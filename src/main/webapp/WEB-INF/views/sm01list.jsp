@@ -68,11 +68,11 @@ var user_code = {};
 			return false;
 		}
 		
-		var sendData = JSON.stringify({
+		var sendData = {
         	"findText" : $("#findText").val(),
         	"selection" : $("#likeSelect").val(),
         	"nowPage" : 0
-        });
+        };
 		
 		gfn_ajax("sm01showFind.do","POST" , sendData , function(data) {
 			var html = "";
@@ -104,9 +104,9 @@ var user_code = {};
 			page = 1;
 		}
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			"nowPage" : page
-		});
+		};
 		
 		gfn_ajax("sm01select.do","POST" , sendData , function(data) {
 

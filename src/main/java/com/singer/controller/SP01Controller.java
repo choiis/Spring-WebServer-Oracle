@@ -18,7 +18,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,7 +95,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01show.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectSP01Vo(@RequestBody SP01Vo sp01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> toSelectSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp01show.do");
 		log.debug("SP01Vo : " + sp01Vo);
@@ -120,8 +119,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01showMyList.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectMyListSP01Vo(@RequestBody SP01Vo sp01Vo, HttpSession session)
-			throws Exception {
+	public HashMap<String, Object> toSelectMyListSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp01showMyList.do");
 		log.debug("SP01Vo : " + sp01Vo);
@@ -146,8 +144,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01showFind.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectFindSP01Vo(@RequestBody SP01Vo sp01Vo, HttpSession session)
-			throws Exception {
+	public HashMap<String, Object> toSelectFindSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp01showFind.do");
 		log.debug("SP01Vo : " + sp01Vo);
@@ -244,7 +241,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01like.do", method = RequestMethod.POST)
-	public HashMap<String, Object> likeSP01Vo(@RequestBody SP01Vo sp01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> likeSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
 		log.debug("enter sp01like.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		String sessionid = (String) session.getAttribute("userid");
@@ -259,7 +256,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01hate.do", method = RequestMethod.POST)
-	public HashMap<String, Object> hateSP01Vo(@RequestBody SP01Vo sp01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> hateSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
 		log.debug("enter sp01hate.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		String sessionid = (String) session.getAttribute("userid");
@@ -274,11 +271,11 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01buy.do", method = RequestMethod.POST)
-	public HashMap<String, Object> buySP01Vo(@RequestBody SP01Vo sp01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> buySP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
 		log.debug("enter sp01buy.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		String sessionid = (String) session.getAttribute("userid");
-		int like = sp01Service.buySP01Vo(sp01Vo , sessionid);
+		int like = sp01Service.buySP01Vo(sp01Vo, sessionid);
 
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		hashMap.put("result", 1);
@@ -289,7 +286,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01sell.do", method = RequestMethod.POST)
-	public HashMap<String, Object> sellSP01Vo(@RequestBody SP01Vo sp01Vo) throws Exception {
+	public HashMap<String, Object> sellSP01Vo(SP01Vo sp01Vo) throws Exception {
 		log.debug("enter sp01sell.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		int like = sp01Service.sellSP01Vo(sp01Vo);
@@ -303,7 +300,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01cancel.do", method = RequestMethod.POST)
-	public HashMap<String, Object> cancelSP01Vo(@RequestBody SP01Vo sp01Vo) throws Exception {
+	public HashMap<String, Object> cancelSP01Vo(SP01Vo sp01Vo) throws Exception {
 		log.debug("enter sp01cancel.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		int like = sp01Service.cancelSP01Vo(sp01Vo);

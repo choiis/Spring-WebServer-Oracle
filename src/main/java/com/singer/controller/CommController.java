@@ -31,7 +31,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commCode.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toSelectCommCode(CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toSelectCommCode(@RequestBody CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter commCode.do");
 		log.debug("CommVo : " + commVo);
@@ -45,7 +45,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commCodeGrp.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toSelectCommCodeGrp(@RequestBody CommVo commVo, HttpSession session)
+	public ResponseEntity<CommVo> toSelectCommCodeGrp(CommVo commVo, HttpSession session)
 			throws Exception {
 
 		log.debug("enter commCodeGrp.do");
@@ -60,7 +60,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commMenu.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toSelectMenu(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toSelectMenu(CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter commMenu.do");
 		log.debug("CommVo : " + commVo);
@@ -93,7 +93,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/insertMenu.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toInsertMenu(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toInsertMenu(CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter insertMenu.do");
 		log.debug("CommVo : " + commVo);
@@ -109,7 +109,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteMenu.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toDeleteMenu(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toDeleteMenu(CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter deleteMenu.do");
 		log.debug("CommVo : " + commVo);
@@ -124,7 +124,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/updateMenu.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toUpdateMenu(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toUpdateMenu(CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter updateMenu.do");
 		log.debug("CommVo : " + commVo);
@@ -140,7 +140,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/insertCode.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toInsertCode(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toInsertCode(CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter insertCode.do");
 		log.debug("CommVo : " + commVo);
@@ -155,7 +155,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteCode.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toDeleteCode(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toDeleteCode(CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter deleteCode.do");
 		log.debug("CommVo : " + commVo);
@@ -169,7 +169,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/updateCode.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toUpdateCode(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toUpdateCode(CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter updateCode.do");
 		log.debug("CommVo : " + commVo);

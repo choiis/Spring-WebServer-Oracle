@@ -2,15 +2,14 @@ $(document).ready(function() {
 
 	/** ajax 공통 함수*/
 	gfn_ajax = function(url, type, sendData, callback) {
-		console.log("gfn_ajax ");
-		console.log(sendData);
+
 		$.ajax({
 		    url : "/common/" + url,
 		    type : type,
 		    dataType : "json",
 		    cache : false,
-		    data : sendData,
-		    contentType:"application/json;charset=UTF-8",
+		    data : gfn_jsonSerialize(sendData),
+		    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
 		    success : callback,
 		    error : function(request, status, error) {
 		        console.log("code:" + request.status + "\n" + "error:" + error);
@@ -284,10 +283,10 @@ $(document).ready(function() {
 	/** select box 셋팅*/
 	gfn_selectList = function(codeGrpCd , id) {
 		var combo ='<option value="" selected>선택</option>';
-		var formData = gfn_jsonSerialize({codegrp:codeGrpCd});
+		var formData = JSON.stringify({codegrp:codeGrpCd});
 		$.ajax({
 		    url : '/common/commCode.do',
-		    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+		    contentType:"application/json;charset=UTF-8",
 		    type : 'post',
 		    dataType : 'json',
 		    data : formData,
@@ -324,11 +323,11 @@ $(document).ready(function() {
 	
 	/** 공통 코드 조회*/	
 	gfn_getCommCode = function(codeGrpCd) {
-		var formData = gfn_jsonSerialize({codegrp:codeGrpCd});
+		var formData = JSON.stringify({codegrp:codeGrpCd});
 		var common_code;
 		$.ajax({
 		    url : '/common/commCode.do',
-		    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+		    contentType:"application/json;charset=UTF-8",
 		    type : 'post',
 		    dataType : 'json',
 		    async : false,
@@ -373,7 +372,8 @@ $(document).ready(function() {
 	        }
 	    });
 	}
-	
+
+	/** AES256 암호화 */
 	gfn_AES256_Encode = function (str) {
 		var result = "";
 		$.ajax({
@@ -388,7 +388,8 @@ $(document).ready(function() {
 		});
 		return result;
 	}
-	
+
+	/** AES256 복호화 */
 	gfn_AES256_Decode = function (str) {
 		var result = "";
 		$.ajax({
@@ -403,7 +404,8 @@ $(document).ready(function() {
 		});
 		return result;
 	}
-	
+
+	/** Json 수동 직렬화 */
 	gfn_jsonSerialize = function (json) {
 		var result = "";
 		for (var key in json) {

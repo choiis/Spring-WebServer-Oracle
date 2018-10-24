@@ -78,11 +78,11 @@ var product_code = {};
 			return false;
 		}
 		
-		var sendData = JSON.stringify({
+		var sendData = {
         	"findText" : $("#findText").val(),
         	"selection" : $("#likeSelect").val(),
         	"nowPage" : 0
-        });
+        };
 		
 		gfn_ajax("sp01showFind.do","POST" , sendData , function(data) {
 			var html = "";
@@ -118,9 +118,9 @@ var product_code = {};
 			page = 1;
 		}
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			"nowPage" : page
-		});
+		};
 		
 		gfn_ajax("sp01show.do","POST" , sendData , function(data) {
 

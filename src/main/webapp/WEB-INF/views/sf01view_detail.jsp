@@ -90,11 +90,11 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			var sendData = JSON.stringify({
+			var sendData ={
 		    	"seq" : $("#seq" + idx).text(),
 		    	"seq01" : $("#seq01" + idx).text(),
 	        	"nowPage" : 1
-		    });
+		    };
 			
 			gfn_ajax("sf02delete.do","POST" , sendData , function(data) {
 				var html = "";
@@ -127,10 +127,10 @@
 	
 	function showSF02List(page) {
 		
-		var sendData =  JSON.stringify({
+		var sendData =  {
 	    	"seq01" : parseInt($("#seq01").val()),
 	    	"nowPage" : page
-	    });
+	    };
 		
 		gfn_ajax("sf02show.do","POST" , sendData , function(data) {
 			var html = "";
@@ -163,11 +163,11 @@
 	function re_showSF02List() {
 	
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			"seq01" : parseInt($("#seq01").val()),
         	"text" : $("#form #text").val().trim(),
         	"nowPage" : 1
-        });
+        };
 
 		gfn_ajax("sf02insert.do","POST" , sendData , function(data) {
 			var html = "";
@@ -198,12 +198,12 @@
 	
 	function like_sf01() {
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			"seq" : parseInt($("#seq01").val()),
         	"title" : $("#title").val(),
 			"good" : parseInt($("#good").text())
         	
-        });
+        };
 		
 		gfn_ajax("sf01like.do","POST" , sendData , function(data) {
 			if(data.result == 1) {
@@ -216,11 +216,11 @@
 	
 	function hate_sf01() {
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			"seq" : parseInt($("#seq01").val()),
         	"title" : $("#title").val(),
 			"good" : parseInt($("#good").text())
-        });
+        };
 		
 		gfn_ajax("sf01hate.do","POST" , sendData , function(data) {
 			if(data.result == 1) {

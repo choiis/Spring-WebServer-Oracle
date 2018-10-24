@@ -14,7 +14,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -93,7 +92,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01show.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectSF01Vo(@RequestBody SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> toSelectSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01show.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
@@ -115,8 +114,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01showFind.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectFindSF01Vo(@RequestBody SF01Vo sf01Vo, HttpSession session)
-			throws Exception {
+	public HashMap<String, Object> toSelectFindSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01showFind.do");
 		log.debug("sf01Vo : " + sf01Vo);
 
@@ -205,7 +203,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01like.do", method = RequestMethod.POST)
-	public HashMap<String, Object> likeSF01Vo(@RequestBody SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> likeSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01like.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		String sessionid = (String) session.getAttribute("userid");
@@ -220,7 +218,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01hate.do", method = RequestMethod.POST)
-	public HashMap<String, Object> hateSF01Vo(@RequestBody SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> hateSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01hate.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		String sessionid = (String) session.getAttribute("userid");

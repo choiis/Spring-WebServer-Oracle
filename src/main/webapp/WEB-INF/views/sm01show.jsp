@@ -19,11 +19,11 @@
 		// 메일 전송을 클릭할때 이벤트 발생
 		$("#mail_btn").on("click", function(e) {
 		
-			var sendData = JSON.stringify({
+			var sendData = {
 	        	"email" : $("#email").val(),
 	        	"title" : $("#title").val(),
 	        	"contents" : $("#contents").val()
-	        });
+	        };
 		
 			gfn_ajax("sendMail.do","POST" , sendData , function(data) {
 				if(data == 1011) {

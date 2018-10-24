@@ -35,12 +35,12 @@ var user_code = {};
 			if(confirm("수정하시겠습니까 ??")) {
 				var tr = $(this).parent().parent("tr");
 
-				var sendData = JSON.stringify({
+				var sendData = {
 					menucd : tr.children("td#menucd").text(),
 					menunm : tr.children("td#nm").children("input#menunm").val(),
 					menuurl : tr.children("td#url").children("input#menuurl").val(),
 					authlevel : tr.children("td#level").children("select#authlevel").val()
-				});
+				};
 				gfn_ajax("updateMenu.do","POST" , sendData , function(data) {
 					if(data.result == 1){
 					}
@@ -54,10 +54,10 @@ var user_code = {};
 			if(confirm("삭제하시겠습니까 ??")) {
 				var tr = $(this).parent().parent("tr");
 
-				var sendData = JSON.stringify({
+				var sendData = {
 					menucd : tr.children("td#menucd").text(),
 					menunm : tr.children("td#nm").children("input#menunm").val()
-				});
+				};
 				gfn_ajax("deleteMenu.do","POST" , sendData , function(data) {
 					var html = "";
 			       	
@@ -117,12 +117,12 @@ var user_code = {};
 	function insertMenuList() {
 		console.log("insertMenuList");
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			menucd :$("#input_menucd").val(),
 			menunm :$("#input_menunm").val(),
 			menuurl :$("#input_menuurl").val(),
 			authlevel :$("#input_authlevel").val()
-		});
+		};
 		
 		gfn_ajax("insertMenu.do","POST" , sendData , function(data) {
 			var html = "";
@@ -145,7 +145,7 @@ var user_code = {};
 	function showMenuList() {
 		console.log("showMenuList");
 		
-		var sendData = JSON.stringify({});
+		var sendData = {};
 		gfn_ajax("commMenu.do","POST" , sendData , function(data) {
 			var html = "";
 	       	

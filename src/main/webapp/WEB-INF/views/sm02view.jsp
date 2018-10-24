@@ -40,11 +40,11 @@
 				return ;
 			}
 
-			var sendData = JSON.stringify({
+			var sendData = {
 				"title" : $("#title").val(),
 			    "text" : $("#text").val(),
 			    "nowPage" : 1
-		    });
+		    };
 
 			gfn_ajax("sm02insert.do","POST" , sendData , function(data) {
 				var html = "";
@@ -110,9 +110,9 @@
 			page = 1;
 		}
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			"nowPage" : page
-		});
+		};
 		
 		gfn_ajax("sm02show.do","POST" , sendData , function(data) {
 			var html = "";

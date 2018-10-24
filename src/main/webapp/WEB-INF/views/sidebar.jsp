@@ -30,7 +30,7 @@
 	
 	function selectMenu() {
 		
-		var sendData = JSON.stringify({});
+		var sendData = {};
 		
 		gfn_ajax("commMenu.do","POST" , sendData , function(data) {
 			var html = "";

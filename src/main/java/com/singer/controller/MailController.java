@@ -10,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +28,7 @@ public class MailController {
 
 	@ResponseBody
 	@RequestMapping(value = "/sendMail.do", method = RequestMethod.POST)
-	public int sendMail(ModelAndView modelAndView, @RequestBody MailVo mailVo, HttpServletResponse response) {
+	public int sendMail(ModelAndView modelAndView, MailVo mailVo, HttpServletResponse response) {
 		log.debug("enter sendMail.do");
 		log.debug("mailVo : " + mailVo);
 

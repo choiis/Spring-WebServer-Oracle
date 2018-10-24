@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +27,7 @@ public class SB02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02show.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectSB02Vo(@RequestBody SB02Vo sb02Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> toSelectSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sb02show.do");
 		log.debug("sb02Vo : " + sb02Vo);
@@ -55,7 +54,7 @@ public class SB02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02insert.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toInsertSB02Vo(@RequestBody SB02Vo sb02Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> toInsertSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sb02insert.do");
 		log.debug("sb02Vo : " + sb02Vo);
@@ -85,7 +84,7 @@ public class SB02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02delete.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toDeleteSB02Vo(@RequestBody SB02Vo sb02Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> toDeleteSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
 		log.debug("enter sb02delete.do");
 		log.debug("sb02Vo : " + sb02Vo);
 

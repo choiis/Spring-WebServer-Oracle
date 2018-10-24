@@ -50,11 +50,11 @@
 			if(confirm("수정하시겠습니까 ??")) {
 				var tr = $(this).parent().parent("tr");
 
-				var sendData = JSON.stringify({
+				var sendData = {
 					codecd : tr.children("td#codecd").text(),
 					codenm : tr.children("td#nm").children("input#codenm").val(),
 					codegrp :$("#code_grp").val()
-				});
+				};
 				gfn_ajax("updateCode.do","POST" , sendData , function(data) {
 						
 				});	
@@ -67,10 +67,10 @@
 			if(confirm("삭제하시겠습니까 ??")) {
 				var tr = $(this).parent().parent("tr");
 
-				var sendData = JSON.stringify({
+				var sendData = {
 					codecd : tr.children("td#codecd").text(),
 					codegrp :$("#code_grp").val()
-				});
+				};
 				gfn_ajax("deleteCode.do","POST" , sendData , function(data) {
 					var html = "";
 			       	
@@ -93,10 +93,10 @@
 	/** select box 셋팅*/
 	selectGrpList = function(id) {
 		var combo ='<option value="" selected>선택</option>';
-		var formData = JSON.stringify({});
+		var formData = gfn_jsonSerialize({});
 		$.ajax({
 		    url : '/common/commCodeGrp.do',
-		    contentType:"application/json;charset=UTF-8",
+		    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
 		    type : 'post',
 		    dataType : 'json',
 		    data : formData,
@@ -139,11 +139,11 @@
 	function insertCodeList() {
 		console.log("insertCodeList");
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			codegrp :$("#code_grp").val(),
 			codecd :$("#input_codecd").val(),
 			codenm :$("#input_codenm").val()
-		});
+		};
 		
 		gfn_ajax("insertCode.do","POST" , sendData , function(data) {
 			var html = "";

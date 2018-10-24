@@ -74,11 +74,11 @@
 			return false;
 		}
 		
-		var sendData = JSON.stringify({
+		var sendData = {
         	"findText" : $("#findText").val(),
         	"selection" : $("#likeSelect").val(),
         	"nowPage" : 0
-        });
+        };
 		
 		gfn_ajax("sf01showFind.do","POST" , sendData , function(data) {
 			var html = "";
@@ -112,9 +112,9 @@
 			page = 1;
 		}
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			"nowPage" : page
-		});
+		};
 		
 		gfn_ajax("sf01show.do","POST" , sendData , function(data) {
 

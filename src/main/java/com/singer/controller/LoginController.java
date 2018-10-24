@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,7 +51,7 @@ public class LoginController {
 
 	@ResponseBody
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public HashMap<String, Object> login(@RequestBody SM01Vo sm01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> login(SM01Vo sm01Vo, HttpSession session) throws Exception {
 		log.debug("enter login.do");
 		log.debug("sm01Vo : " + sm01Vo);
 

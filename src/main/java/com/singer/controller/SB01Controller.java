@@ -18,7 +18,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -97,7 +96,7 @@ public class SB01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb01show.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectSB01Vo(@RequestBody SB01Vo sb01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> toSelectSB01Vo(SB01Vo sb01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sb01show.do");
 		log.debug("sb01Vo : " + sb01Vo);
@@ -121,7 +120,7 @@ public class SB01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb01showFind.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectFindSB01Vo(@RequestBody SB01Vo sb01Vo, HttpSession session)
+	public HashMap<String, Object> toSelectFindSB01Vo(SB01Vo sb01Vo, HttpSession session)
 			throws Exception {
 
 		log.debug("enter sb01showFind.do");
@@ -218,7 +217,7 @@ public class SB01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb01like.do", method = RequestMethod.POST)
-	public HashMap<String, Object> likeSB01Vo(@RequestBody SB01Vo sb01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> likeSB01Vo(SB01Vo sb01Vo, HttpSession session) throws Exception {
 		log.debug("enter sb01like.do");
 		log.debug("sb01Vo : " + sb01Vo);
 		String sessionid = (String) session.getAttribute("userid");
@@ -233,7 +232,7 @@ public class SB01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb01hate.do", method = RequestMethod.POST)
-	public HashMap<String, Object> hateSB01Vo(@RequestBody SB01Vo sb01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> hateSB01Vo(SB01Vo sb01Vo, HttpSession session) throws Exception {
 		log.debug("enter sb01hate.do");
 		log.debug("sb01Vo : " + sb01Vo);
 		String sessionid = (String) session.getAttribute("userid");

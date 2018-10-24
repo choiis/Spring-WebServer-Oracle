@@ -18,7 +18,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -94,7 +93,7 @@ public class SM01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm01select.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectSM01Vo(@RequestBody SM01Vo sm01Vo) throws Exception {
+	public HashMap<String, Object> toSelectSM01Vo(SM01Vo sm01Vo) throws Exception {
 		log.debug("enter sm01select.do");
 		log.debug("sm01Vo : " + sm01Vo);
 		int nowPage = sm01Vo.getNowPage() + 1;

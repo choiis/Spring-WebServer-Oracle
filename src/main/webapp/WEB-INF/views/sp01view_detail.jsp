@@ -114,13 +114,13 @@ var product_code = {};
 		
 		if(confirm("삭제할까요?")) {
 			
-			var sendData = JSON.stringify({
+			var sendData = {
 		    	"seq" : $("#seq" + idx).text(),
 		    	"seq01" : $("#seq01" + idx).text(),
 	        	"nowPage" : 1
-		    });
+		    };
 			
-			gfn_ajax("sb0pdelete.do","POST" , sendData , function(data) {
+			gfn_ajax("sp02delete.do","POST" , sendData , function(data) {
 				var html = "";
 		        for (var i = 0; i < data.list.length; i++) {
 		            html += '<tr>';
@@ -150,10 +150,10 @@ var product_code = {};
 	
 	function showSP02List(nowPage) {
 		
-		var sendData =  JSON.stringify({
+		var sendData =  {
 	    	"seq01" : parseInt($("#seq01").val()),
 	    	"nowPage" : nowPage
-	    });
+	    };
 		
 		gfn_ajax("sp02show.do","POST" , sendData , function(data) {
 			var html = "";
@@ -184,11 +184,11 @@ var product_code = {};
 	
 	function re_showSP02List() {
 	
-		var sendData = JSON.stringify({
+		var sendData = {
 			"seq01" : parseInt($("#seq01").val()),
         	"text" : $("#form #text").val().trim(),
         	"nowPage" : 1
-        });
+        };
 
 		gfn_ajax("sp02insert.do","POST" , sendData , function(data) {
 			var html = "";
@@ -219,12 +219,12 @@ var product_code = {};
 	
 	function like_sp01() {
 	
-		var sendData = JSON.stringify({
+		var sendData = {
 			"seq" : parseInt($("#seq01").val()),
         	"title" : $("#title").val(),
 			"good" : parseInt($("#good").text())
         	
-        });
+        };
 		
 		gfn_ajax("sp01like.do","POST" , sendData , function(data) {
 			if(data.result == 1) {
@@ -237,11 +237,11 @@ var product_code = {};
 	
 	function hate_sp01() {
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			"seq" : parseInt($("#seq01").val()),
         	"title" : $("#title").val(),
 			"good" : parseInt($("#good").text())
-        });
+        };
 		
 		gfn_ajax("sp01hate.do","POST" , sendData , function(data) {
 			if(data.result == 1) {
@@ -253,10 +253,10 @@ var product_code = {};
 	
 	function sell() {
 		
-		var sendData = JSON.stringify({
+		var sendData = {
 			"seq" : parseInt($("#seq01").val()),
         	"title" : $("#title").val()
-        });
+        };
 		
 		gfn_ajax("sp01buy.do","POST" , sendData , function(data) {
 			if(data.result == 1) {
