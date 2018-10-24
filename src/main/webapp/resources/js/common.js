@@ -2,6 +2,8 @@ $(document).ready(function() {
 
 	/** ajax 공통 함수*/
 	gfn_ajax = function(url, type, sendData, callback) {
+		console.log("gfn_ajax ");
+		console.log(sendData);
 		$.ajax({
 		    url : "/common/" + url,
 		    type : type,
@@ -282,10 +284,10 @@ $(document).ready(function() {
 	/** select box 셋팅*/
 	gfn_selectList = function(codeGrpCd , id) {
 		var combo ='<option value="" selected>선택</option>';
-		var formData = JSON.stringify({codegrp:codeGrpCd});
+		var formData = gfn_jsonSerialize({codegrp:codeGrpCd});
 		$.ajax({
 		    url : '/common/commCode.do',
-		    contentType:"application/json;charset=UTF-8",
+		    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
 		    type : 'post',
 		    dataType : 'json',
 		    data : formData,
@@ -322,11 +324,11 @@ $(document).ready(function() {
 	
 	/** 공통 코드 조회*/	
 	gfn_getCommCode = function(codeGrpCd) {
-		var formData = JSON.stringify({codegrp:codeGrpCd});
+		var formData = gfn_jsonSerialize({codegrp:codeGrpCd});
 		var common_code;
 		$.ajax({
 		    url : '/common/commCode.do',
-		    contentType:"application/json;charset=UTF-8",
+		    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
 		    type : 'post',
 		    dataType : 'json',
 		    async : false,
@@ -400,5 +402,19 @@ $(document).ready(function() {
 		    }
 		});
 		return result;
+	}
+	
+	gfn_jsonSerialize = function (json) {
+		var result = "";
+		for (var key in json) {
+			if(!gfn_isNull(json[key])) {
+				result += key;
+				result += "=";
+				result += encodeURIComponent(json[key]);
+				result += "&";
+			}
+		}
+		
+		return result.slice(0, -1);
 	}
 });

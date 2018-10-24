@@ -7,8 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.singer.common.AES256Util;
 import com.singer.service.CommService;
 import com.singer.vo.CommVo;
 
@@ -34,7 +31,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commCode.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toSelectCommCode(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toSelectCommCode(CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter commCode.do");
 		log.debug("CommVo : " + commVo);

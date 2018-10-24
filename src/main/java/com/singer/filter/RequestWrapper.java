@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,16 +32,17 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
 			// SQL Injection 대처
 			try {
-				B2CConfig b2cConfig = new B2CConfig();
+				B2CConfig b2cConfig = B2CConfig.getInstance();
 				List<String> skiplist = b2cConfig.getSqlInjectionSkipParam();
 
 				if (!skiplist.contains(parameter)) {
 					List<String> blackListArray = b2cConfig.getSqlInjectionBlackList();
 					if (blackListArray != null) {
 						String val = values[i].toLowerCase();
+						log.info("val " + val);
 						for (int j = 0; j < blackListArray.size(); j++) {
 							String black = blackListArray.get(j);
-							log.info("val " + val);
+							
 							if (val.indexOf(black) != -1) {
 								throw new AppException("SQL Injection 위험이 있습니다 ");
 							}
@@ -50,8 +50,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 						encodedValues[i] = val;
 					}
 				}
-			} catch (ParserConfigurationException e) {
-				log.info("ParserConfigurationException");
 			} catch (AppException e) {
 				log.info("AppException");
 			}

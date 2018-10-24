@@ -53,4 +53,8 @@
 		<welcome-file-list>
 				<welcome-file>/WEB-INF/views/index.jsp</welcome-file>
 		</welcome-file-list>
+		
+		<session-config>
+			<session-timeout>600</session-timeout>
+		</session-config>
 </web-app>

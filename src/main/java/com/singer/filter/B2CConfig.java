@@ -4,8 +4,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.xml.sax.SAXException;
@@ -17,9 +15,16 @@ public class B2CConfig extends XmlUtil {
 
 	private final Log log = LogFactory.getLog(B2CConfig.class);
 
-	public B2CConfig() throws ParserConfigurationException {
+	private static B2CConfig b2cConfig = new B2CConfig();
+
+	public static B2CConfig getInstance() {
+		return b2cConfig;
+	}
+
+	private B2CConfig() {
 		super();
 		loadConfigXml();
+		log.info("B2CConfig Singleton Created");
 	}
 
 	private void loadConfigXml() {

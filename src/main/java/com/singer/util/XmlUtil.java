@@ -29,10 +29,15 @@ public class XmlUtil {
 
 	private DocumentBuilder builder;
 
-	public XmlUtil() throws ParserConfigurationException {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setExpandEntityReferences(true);
-		builder = factory.newDocumentBuilder();
+	public XmlUtil() {
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			factory.setExpandEntityReferences(true);
+			builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			log.info("ParserConfigurationException");
+		}
+
 	}
 
 	public void createDOMDocument(Object obj) throws IOException, SAXException, AppException {
