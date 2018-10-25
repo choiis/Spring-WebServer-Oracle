@@ -45,8 +45,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commCodeGrp.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toSelectCommCodeGrp(CommVo commVo, HttpSession session)
-			throws Exception {
+	public ResponseEntity<CommVo> toSelectCommCodeGrp(CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter commCodeGrp.do");
 		log.debug("CommVo : " + commVo);
@@ -180,4 +179,14 @@ public class CommController {
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/authExpire.do")
+	public ModelAndView authExpire() throws Exception {
+		log.debug("enter authExpire.do");
+
+		ModelAndView model = new ModelAndView("/authExpire");
+
+		log.debug("exit authExpire.do");
+
+		return model;
+	}
 }

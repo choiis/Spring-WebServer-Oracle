@@ -22,16 +22,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		HttpSession session = request.getSession();
-		String userid = (String) session.getAttribute("userid");
+		// HttpSession session = request.getSession();
+		// String userid = (String) session.getAttribute("userid");
 		log.debug("===================== postHandle =========================");
-
-		if (userid == null) {
-			log.debug("login need");
-			response.sendRedirect("/common");
-		} else {
-
-		}
 	}
 
 	@Resource(name = "commDao")
@@ -45,10 +38,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		String uri = request.getRequestURI();
 		String usertype = (String) session.getAttribute("usertype");
 		log.debug("===================== preHandle =========================");
+		// 세션 만료 케이스
+		if ("/common/sessionExpire.do".equals(uri) || "/common".equals(uri)) {
+			return true;
+		}
 
 		if (userid == null) { // 세션 없음
 			log.debug("login need");
-			response.sendRedirect("/common");
+			response.sendRedirect("/common/sessionExpire.do");
 			return false;
 		}
 
@@ -64,7 +61,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				int comp = usertype.compareTo(list.get(0).getAuthlevel());
 				if (comp > 0) { // 권한 없는 메뉴 uri로 접속시
 					log.debug("use denied");
-					response.sendRedirect("/common");
+					response.sendRedirect("/common/authExpire.do");
 					return false;
 				}
 

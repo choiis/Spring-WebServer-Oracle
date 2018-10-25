@@ -36,6 +36,9 @@
 	
 	<beans:bean id="loginInterceptor" class="com.singer.interceptor.LoginInterceptor"></beans:bean>
 	
+	<!-- 전역 예외 처리 -->
+	<beans:bean class="com.singer.common.CommonExceptionHandler"/>
+	
 	<interceptors>
 		<interceptor>
 			<mapping path="/**" />

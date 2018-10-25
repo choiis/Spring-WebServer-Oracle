@@ -173,17 +173,14 @@ public class SM01Controller {
 		return model;
 	}
 
-	@RequestMapping(value = "/sm01show.do", method = RequestMethod.GET)
-	public ModelAndView toSelectOneSM01Vo(@RequestParam(value = "userid") String userid) throws Exception {
+	@RequestMapping(value = "/sm01show.do", method = RequestMethod.POST)
+	public ModelAndView toSelectOneSM01Vo(@ModelAttribute("sm01Vo") SM01Vo sm01Vo) throws Exception {
 		ModelAndView model = new ModelAndView("/sm01show");
-		SM01Vo sm01Vo = new SM01Vo();
-		sm01Vo.setUserid(userid);
 
 		log.debug("enter sm01show.do");
 		log.debug("sm01Vo : " + sm01Vo);
 
 		sm01Vo = sm01Service.selectOneSM01Vo(sm01Vo);
-		sm01Vo.setUserid(userid);
 		model.addObject("sM01Vo", sm01Vo);
 
 		log.debug("sm01Vo : " + sm01Vo);

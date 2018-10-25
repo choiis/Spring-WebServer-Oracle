@@ -98,4 +98,15 @@ public class LoginController {
 
 		return model;
 	}
+
+	@RequestMapping(value = "/sessionExpire.do")
+	public ModelAndView sessionExpire() throws Exception {
+		log.debug("enter sessionExpire.do");
+
+		ModelAndView model = new ModelAndView("/sessionExpire");
+
+		log.debug("exit sessionExpire.do");
+
+		return model;
+	}
 }

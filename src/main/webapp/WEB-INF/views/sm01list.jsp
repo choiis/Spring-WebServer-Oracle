@@ -58,6 +58,23 @@ var user_code = {};
 				showSM01List(Number(page) + 10);
 			}
 		});
+		
+		// 팝업오픈
+		$(document).on("click", "#sm01show", function(e) {
+			e.preventDefault();
+			var tr = $(this).parent().parent();
+			var userid = tr.children("#userid").text();
+			
+			$("#userId").val(userid);
+			var popTitle = "회원정보상세";
+				
+			window.open("", popTitle);
+			
+			frmData.target = popTitle;
+			frmData.action = "/common/sm01show.do";
+			frmData.submit();
+		});
+		
 	});
 	
 	// 검색 함수
@@ -79,8 +96,8 @@ var user_code = {};
 			
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
-	            html += '<td><a href="/common/sm01show.do?userid='+
-	            item.userid +'">' +  item.username + '</a></td>';
+				html += '<td><a id="sm01show">' +  item.username + '</a></td>';
+	            html += '<td id="userid" style="display:none;">' + item.userid + '</td>';
 	            html += '<td >' + item.brth + '</td>';
 	            html += '<td >' + item.regdate + '</td>';
 	            html += '<td >' + item.phone + '</td>';
@@ -113,8 +130,8 @@ var user_code = {};
 			var html = "";
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
-	            html += '<td><a href="/common/sm01show.do?userid='+
-	            item.userid +'">' +  item.username + '</a></td>';
+				html += '<td><a id="sm01show">' +  item.username + '</a></td>';
+	            html += '<td id="userid" style="display:none;">' + item.userid + '</td>';
 	            html += '<td >' + item.brth + '</td>';
 	            html += '<td >' + item.regdate + '</td>';
 	            html += '<td >' + item.phone + '</td>';
@@ -165,6 +182,9 @@ var user_code = {};
 		
 		</div>
 	</section>
+	<form id="frmData" method="post" action="/common/sm01show.do" style="display:none;">
+		<input id="userId" name="userid">
+	</form>
 	<p>
 	<footer> <jsp:include page="footer.jsp" /> </footer>
 </body>
