@@ -11,8 +11,9 @@ $(document).ready(function() {
 		    data : gfn_jsonSerialize(sendData),
 		    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
 		    success : callback,
-		    error : function(request, status, error) {
-		        console.log("code:" + request.status + "\n" + "error:" + error);
+		    error : function(data, status, error) {
+		    	var errorData = JSON.parse(data.responseText);
+		    	alert(errorData.errorCode + " " + errorData.errorMsg);
 		    }
 		});
 	}

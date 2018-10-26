@@ -32,6 +32,10 @@ public class CommVo extends SuperVo {
 
 	private String password;
 
+	private String errorCode;
+
+	private String errorMsg;
+
 	private List<CommVo> commList;
 
 	public CommVo() {
@@ -40,7 +44,7 @@ public class CommVo extends SuperVo {
 
 	public CommVo(String codecd, String codenm, String codegrp, String username, String regdate, String reguser,
 			String menucd, String menunm, String menuurl, String authlevel, String moduser, String moddate,
-			String codegrpnm, List<CommVo> commList) {
+			String codegrpnm, String password, String errorCode, String errorMsg, List<CommVo> commList) {
 		super();
 		this.codecd = codecd;
 		this.codenm = codenm;
@@ -55,6 +59,9 @@ public class CommVo extends SuperVo {
 		this.moduser = moduser;
 		this.moddate = moddate;
 		this.codegrpnm = codegrpnm;
+		this.password = password;
+		this.errorCode = errorCode;
+		this.errorMsg = errorMsg;
 		this.commList = commList;
 	}
 
@@ -178,12 +185,29 @@ public class CommVo extends SuperVo {
 		this.password = password;
 	}
 
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
+
 	@Override
 	public String toString() {
 		return "CommVo [codecd=" + codecd + ", codenm=" + codenm + ", codegrp=" + codegrp + ", username=" + username
 				+ ", regdate=" + regdate + ", reguser=" + reguser + ", menucd=" + menucd + ", menunm=" + menunm
 				+ ", menuurl=" + menuurl + ", authlevel=" + authlevel + ", moduser=" + moduser + ", moddate=" + moddate
-				+ ", codegrpnm=" + codegrpnm + ", password=" + password + ", commList=" + commList + "]";
+				+ ", codegrpnm=" + codegrpnm + ", password=" + password + ", errorCode=" + errorCode + ", errorMsg="
+				+ errorMsg + ", commList=" + commList + "]";
 	}
 
 }

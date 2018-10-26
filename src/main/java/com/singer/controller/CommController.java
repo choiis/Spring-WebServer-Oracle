@@ -3,6 +3,7 @@ package com.singer.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -188,5 +189,29 @@ public class CommController {
 		log.debug("exit authExpire.do");
 
 		return model;
+	}
+
+	@RequestMapping(value = "/error.do")
+	public ResponseEntity<CommVo> errorJson(CommVo commVo, HttpServletRequest request) {
+		log.debug("enter error.do");
+
+		commVo.setErrorCode((String) request.getAttribute("errorCode"));
+		commVo.setErrorMsg((String) request.getAttribute("errorMsg"));
+
+		log.debug("exit error.do");
+		return new ResponseEntity<CommVo>(commVo, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@RequestMapping(value = "/forwardError.do")
+	public ModelAndView forwardError(HttpServletRequest request) throws Exception {
+		log.debug("enter forwardError.do");
+
+		ModelAndView mv = new ModelAndView("/forwardError");
+		String errorCode = (String) request.getAttribute("errorCode");
+		String errorMsg = (String) request.getAttribute("errorMsg");
+		mv.addObject("errorCode", errorCode);
+		mv.addObject("errorMsg", errorMsg);
+		log.debug("exit forwardError.do");
+		return mv;
 	}
 }
