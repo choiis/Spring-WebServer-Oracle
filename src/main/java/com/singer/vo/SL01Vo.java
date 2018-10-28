@@ -1,31 +1,31 @@
 package com.singer.vo;
 
-public class SL01Vo {
+public class SL01Vo extends SuperVo {
 
 	private String userid;
 	private String logintime;
-	private String loginurl;
+	private String ip;
 	private String browser;
-	private int totCnt;
-	private int startRownum;
-	private int endRownum;
-	private int nowPage;
+	private String device;
+	private String lcnt;
+	private String username;
+	private String usertype;
 
 	public SL01Vo() {
-
+		super();
 	}
 
-	public SL01Vo(String userid, String logintime, String loginurl, String browser, int totCnt, int startRownum,
-			int endRownum, int nowPage) {
+	public SL01Vo(String userid, String logintime, String ip, String browser, String device, String lcnt,
+			String username, String usertype) {
 		super();
 		this.userid = userid;
 		this.logintime = logintime;
-		this.loginurl = loginurl;
+		this.ip = ip;
 		this.browser = browser;
-		this.totCnt = totCnt;
-		this.startRownum = startRownum;
-		this.endRownum = endRownum;
-		this.nowPage = nowPage;
+		this.device = device;
+		this.lcnt = lcnt;
+		this.username = username;
+		this.usertype = usertype;
 	}
 
 	public String getUserid() {
@@ -44,12 +44,12 @@ public class SL01Vo {
 		this.logintime = logintime;
 	}
 
-	public String getLoginurl() {
-		return loginurl;
+	public String getIp() {
+		return ip;
 	}
 
-	public void setLoginurl(String loginurl) {
-		this.loginurl = loginurl;
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 	public String getBrowser() {
@@ -60,43 +60,42 @@ public class SL01Vo {
 		this.browser = browser;
 	}
 
-	public int getTotCnt() {
-		return totCnt;
+	public String getDevice() {
+		return device;
 	}
 
-	public void setTotCnt(int totCnt) {
-		this.totCnt = totCnt;
+	public void setDevice(String device) {
+		this.device = device;
 	}
 
-	public int getStartRownum() {
-		return startRownum;
+	public String getLcnt() {
+		return lcnt;
 	}
 
-	public void setStartRownum(int startRownum) {
-		this.startRownum = startRownum;
+	public void setLcnt(String lcnt) {
+		this.lcnt = lcnt;
 	}
 
-	public int getEndRownum() {
-		return endRownum;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setEndRownum(int endRownum) {
-		this.endRownum = endRownum;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public int getNowPage() {
-		return nowPage;
+	public String getUsertype() {
+		return usertype;
 	}
 
-	public void setNowPage(int nowPage) {
-		this.nowPage = nowPage;
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
 	}
 
 	@Override
 	public String toString() {
-		return "SL01Vo [userid=" + userid + ", logintime=" + logintime + ", loginurl=" + loginurl + ", browser="
-				+ browser + ", totCnt=" + totCnt + ", startRownum=" + startRownum + ", endRownum=" + endRownum
-				+ ", nowPage=" + nowPage + "]";
+		return "SL01Vo [userid=" + userid + ", logintime=" + logintime + ", ip=" + ip + ", browser=" + browser
+				+ ", device=" + device + ", lcnt=" + lcnt + ", username=" + username + ", usertype=" + usertype + "]";
 	}
 
 }

@@ -15,16 +15,15 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.singer.dao.CommDao;
 import com.singer.vo.CommVo;
 
-public class LoginInterceptor extends HandlerInterceptorAdapter {
+public class SessionInterceptor extends HandlerInterceptorAdapter {
 
-	private static final Log log = LogFactory.getLog(LoginInterceptor.class);
+	private static final Log log = LogFactory.getLog(SessionInterceptor.class);
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		// HttpSession session = request.getSession();
-		// String userid = (String) session.getAttribute("userid");
-		log.debug("===================== postHandle =========================");
+		// log.debug("===================== postHandle
+		// =========================");
 	}
 
 	@Resource(name = "commDao")

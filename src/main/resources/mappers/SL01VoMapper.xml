@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	도메인마다 namespace 를 구현하고
+	각각의 crud 에 대한 id 설정 후 쿼리 작성
+-->
+
+<mapper namespace="com.singer.mappers.SL01">	
+	<select id="selectSL01" resultType="com.singer.vo.SL01Vo"  parameterType="com.singer.vo.SL01Vo">
+	select * from
+		(select 
+			ceil(row_number() over(order by logintime desc) / #{rowPerPage} ) as nowPage,
+       		userid as userid,
+			logintime as logintime, 
+			browser as browser,  
+			device as device,
+			ip as ip,
+			count(*) over() as totCnt
+		 from SL01 
+		 where 1 = 1
+		 	 <if test="userid != null">
+			 	and userid like #{userid} || '%'
+			 </if>
+			 <if test="browser != null">
+			 	and browser = #{browser} 
+			 </if>
+			 <if test="device != null">
+			 	and device = #{device} 
+			 </if>
+		)	
+	where nowPage = #{nowPage}
+	</select>
+		
+	<select id="selectSL01Count" resultType="com.singer.vo.SL01Vo"  parameterType="com.singer.vo.SL01Vo">
+		select SL.lcnt,
+        SL.userid,
+        SM.username,
+        SM.usertype
+  			from
+		(select count(*) as lcnt,
+ 		   userid
+  		  from SL01 
+  		  where logintime <![CDATA[>]]> #{logintime}
+  		  group by userid
+  		  order by lcnt desc
+		) SL
+		inner join SM01 SM
+		on (SL.userid = SM.userid)
+	</select>	
+		
+	<insert id="insertSL01"  parameterType="com.singer.vo.SL01Vo">
+	insert into SL01
+	values (#{userid}, #{logintime}, #{browser}, #{device}, #{ip} ) 
+	</insert>
+
+</mapper>

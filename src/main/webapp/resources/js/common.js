@@ -420,4 +420,47 @@ $(document).ready(function() {
 		
 		return result.slice(0, -1);
 	}
+	
+	/** 브라우저 가져오기 */
+	gfn_getBrowser = function () {
+		//userAgent값을 모두 소문자로 변환하여 변수에 대입
+	    var agt = navigator.userAgent.toLowerCase();
+	    
+	    if(agt.indexOf("chrome") != -1) {
+	        return 'Chrome';
+	    } else if(agt.indexOf("opera") != -1) {
+	        return 'Opera';
+	    } else if(agt.indexOf("firefox") != -1) {
+	        return 'Firefox';
+	    } else if(agt.indexOf("safari") != -1) {
+	        return 'Safari';
+	    }  else if(agt.indexOf("skipstone") != -1) {
+	        return 'Skipstone';
+	    } else if(agt.indexOf("msie") != -1 || agt.indexOf("trident") != -1) {
+	    	//msie는 Expolrer 11d이전 버전, trident는 Explorer 11버전  
+	    	return 'Internet Explorer';
+	    } else if(agt.indexOf("netscape") != -1) {
+	        return 'Netscape';
+	    } else {
+	        return 'Unknown';
+	    }
+	}
+	
+	/** 기기정보 가져오기 */
+	gfn_getDevice = function () {
+		var tempUser = navigator.userAgent;
+		  
+		// userAgent 값에 iPhone, iPad, ipot, Android 라는 문자열이 하나라도 존재한다면 모바일로 간주됨.
+		if (tempUser.indexOf("iPhone") != -1) {
+			return 'iPhone';
+		} else if (tempUser.indexOf("iPad") != -1) {
+			return 'iPad';
+		} else if (tempUser.indexOf("iPot") != -1) {
+			return 'iPot';
+		} else if (tempUser.indexOf("Android") != -1) {
+			return 'Android';
+		} else {
+			return 'PC';
+		}
+	}
 });

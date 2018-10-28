@@ -1,4 +1,4 @@
-CREATE table SM01(
+﻿CREATE table SM01(
 userid varchar2(10) not null,
 passwd varchar2(30) not null,
 adminyn varchar2(5) not null,
@@ -87,11 +87,12 @@ CREATE table SL01(
 userid varchar2(10) not null,
 logintime varchar2(20) not null,
 browser varchar2(20) not null,
-url varchar2(30) 
+device varchar2(20) not null,
+ip varchar2(30) 
 );
 
 alter table SL01
-add constraint pk_SL01 primary key(userid,logintime);
+add constraint pk_SL01 primary key(logintime,userid);
 
 CREATE SEQUENCE seq_SM02
 START WITH 1 INCREMENT BY 1 ;

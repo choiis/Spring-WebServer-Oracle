@@ -3,6 +3,7 @@ package com.singer.controller;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -15,7 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
+import com.singer.common.DateUtil;
+import com.singer.service.SL01Service;
 import com.singer.service.SM01Service;
+import com.singer.vo.SL01Vo;
 import com.singer.vo.SM01Vo;
 
 @Controller("loginController")
@@ -25,6 +29,9 @@ public class LoginController {
 
 	@Resource(name = "sm01Service")
 	private SM01Service sm01Service;
+
+	@Resource(name = "sl01Service")
+	private SL01Service sl01Service;
 
 	@RequestMapping(value = "/logout.do")
 	public ModelAndView logout(HttpSession session) throws Exception {
@@ -51,7 +58,8 @@ public class LoginController {
 
 	@ResponseBody
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public HashMap<String, Object> login(SM01Vo sm01Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> login(SM01Vo sm01Vo, HttpSession session, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter login.do");
 		log.debug("sm01Vo : " + sm01Vo);
 
@@ -79,6 +87,13 @@ public class LoginController {
 			session.setAttribute("email", one.getEmail());
 			session.setAttribute("usertype", one.getUsertype());
 
+			SL01Vo sl01Vo = new SL01Vo();
+			sl01Vo.setUserid(userId);
+			sl01Vo.setLogintime(DateUtil.getTodayTime());
+			sl01Vo.setIp(request.getRemoteAddr());
+			sl01Vo.setBrowser(sm01Vo.getBrowser());
+			sl01Vo.setDevice(sm01Vo.getDevice());
+			sl01Service.insertSL01(sl01Vo);
 			hashMap.put("code", Constants.SUCCESS_CODE);
 
 			log.debug("code : " + Constants.SUCCESS_CODE);

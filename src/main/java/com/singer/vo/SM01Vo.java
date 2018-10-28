@@ -15,12 +15,15 @@ public class SM01Vo extends SuperVo {
 	private String usertype;
 	private MultipartFile photo;
 
+	private String device;
+	private String browser;
+
 	public SM01Vo() {
 		super();
 	}
 
 	public SM01Vo(String userid, String passwd, String username, String brth, String grade, String regdate,
-			String phone, String email, String usertype, MultipartFile photo) {
+			String phone, String email, String usertype, MultipartFile photo, String device, String browser) {
 		super();
 		this.userid = userid;
 		this.passwd = passwd;
@@ -32,6 +35,8 @@ public class SM01Vo extends SuperVo {
 		this.email = email;
 		this.usertype = usertype;
 		this.photo = photo;
+		this.device = device;
+		this.browser = browser;
 	}
 
 	public String getUserid() {
@@ -114,11 +119,27 @@ public class SM01Vo extends SuperVo {
 		this.photo = photo;
 	}
 
+	public String getDevice() {
+		return device;
+	}
+
+	public void setDevice(String device) {
+		this.device = device;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
 	@Override
 	public String toString() {
 		return "SM01Vo [userid=" + userid + ", passwd=" + passwd + ", username=" + username + ", brth=" + brth
 				+ ", grade=" + grade + ", regdate=" + regdate + ", phone=" + phone + ", email=" + email + ", usertype="
-				+ usertype + ", photo=" + photo + "]";
+				+ usertype + ", photo=" + photo + ", device=" + device + ", browser=" + browser + "]";
 	}
 
 }
