@@ -1,5 +1,7 @@
 package com.singer.common;
 
+import java.util.List;
+
 public class CommonUtil {
 
 	/**
@@ -7,6 +9,17 @@ public class CommonUtil {
 	 */
 	public static int getLength(Object[] array) {
 		return array.length;
+	}
+
+	/**
+	 * 배열 길이를 반환한다
+	 */
+	public static int getLength(List<?> array) {
+		if (isNull(array)) {
+			return 0;
+		} else {
+			return array.size();
+		}
 	}
 
 	/**

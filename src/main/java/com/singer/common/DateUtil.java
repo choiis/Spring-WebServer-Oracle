@@ -7,8 +7,8 @@ import java.util.Date;
 
 public class DateUtil {
 
-	public static SimpleDateFormat sdfDay_8 = new SimpleDateFormat("yyyyMMdd");
-	public static SimpleDateFormat sdfDay_14 = new SimpleDateFormat("yyyyMMddHHmmss");
+	private static SimpleDateFormat sdfDay_8 = new SimpleDateFormat("yyyyMMdd");
+	private static SimpleDateFormat sdfDay_14 = new SimpleDateFormat("yyyyMMddHHmmss");
 
 	/**
 	 * 오늘 날짜를 반환한다
