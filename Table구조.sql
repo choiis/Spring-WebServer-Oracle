@@ -292,3 +292,59 @@ add constraint pk_SP03 primary key(registerid, seq)
 
 alter table SP03
 add constraint fk_sp03 foreign key(seq) references SP01(seq) on delete cascade;
+
+
+CREATE SEQUENCE seq_SV01 
+START WITH 1 INCREMENT BY 1 ;
+
+create table SV01(
+  seq number not null,
+  title varchar2(20) not null,
+  text varchar2(200) not null,
+  userid varchar2(20) not null,
+  regdate varchar2(20) not null,
+  hit number(4)  default 0 not null,
+  multiselect number  default 0 not null
+);
+
+alter table SV01
+add constraint pk_SV01 primary key(seq);
+
+alter table SV01
+add constraint fk_sv01 foreign key(userid) references SM01(userid) on delete cascade;
+
+CREATE index idx_SV01_1
+on SV01(seq, regdate);
+
+CREATE index idx_SV01_2
+on SV01(title);
+
+CREATE index idx_SV01_3
+on SV01(userid);
+
+create table SV02(
+  seq number not null,
+  idx number not null,
+  content varchar2(40) not null,
+  userid varchar2(20) not null,
+  regdate varchar2(20) not null
+);
+
+alter table SV02
+add constraint pk_SV02 primary key(seq, idx);
+
+alter table SV02
+add constraint fk_sv02 foreign key(seq) references SV01(seq) on delete cascade;
+
+create table SV03(
+  seq number not null,
+  idx number not null,
+  userid varchar2(20) not null,
+  regdate varchar2(20) not null
+);
+
+alter table SV03
+add constraint pk_SV03 primary key(seq, idx, userid);
+
+alter table SV03
+add constraint fk_sv03 foreign key(seq, idx) references SV02(seq, idx) on delete cascade;

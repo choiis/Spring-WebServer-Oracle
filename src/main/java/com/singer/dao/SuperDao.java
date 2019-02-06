@@ -19,6 +19,10 @@ public class SuperDao {
 		return sqlSession.selectOne(statement, vo);
 	}
 
+	protected int selectCnt(String statement, Object vo) {
+		return sqlSession.selectOne(statement, vo);
+	}
+
 	protected int update(String statement, Object vo) {
 		return sqlSession.update(statement, vo);
 	}
