@@ -33,7 +33,13 @@
   			S1.userid as userid,
     		S1.regdate as regdate,
     		S1.hit as hit, 
-   			S1.multiselect as multiselect
+   			S1.multiselect as multiselect,
+   			(select 
+				count(*) as votedYn
+				from SV03 S3
+			 where S1.seq = S3.seq
+			 and userid = #{userid}
+			 ) as votedYn
     		from SV01 S1
     	where S1.seq = #{seq}
 		</select>

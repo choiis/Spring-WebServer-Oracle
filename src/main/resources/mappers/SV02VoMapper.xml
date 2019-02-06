@@ -45,15 +45,6 @@
 			 where seq = #{seq}
 		</select>
 		
-		<select id="selectVotedYn" resultType="java.lang.Integer"  parameterType="com.singer.vo.SV02Vo">
-			select 
-				count(*) as votedYn
-				from SV03
-			 where seq = #{seq}
-			 and userid = #{userid}
-		</select>
-		
-		
 		<delete id="delete" parameterType="com.singer.vo.SV02Vo">
 			delete from SV02
 			where seq = #{seq}

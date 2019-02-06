@@ -28,10 +28,6 @@ public class SV02Dao extends SuperDao {
 		return selectCnt(namespace + ".selectTot", sv02Vo);
 	}
 
-	public int selectVotedYn(SV02Vo sv02Vo) throws Exception {
-		return selectCnt(namespace + ".selectVotedYn", sv02Vo);
-	}
-
 	public int deleteSV02Vo(SV02Vo sv02Vo) throws Exception {
 		return delete(namespace + ".delete", sv02Vo);
 	}

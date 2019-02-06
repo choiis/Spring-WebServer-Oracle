@@ -63,7 +63,6 @@ public class SV01ServiceImpl implements SV01Service {
 		List<SV02Vo> list = sv02Dao.selectSV02Vo(sv02Vo);
 		sv01Vo.setSv02Vos(list); // 투표항목 정보
 		sv01Vo.setTotCnt(sv02Dao.selectCnt(sv02Vo)); // 총 투표수
-		sv01Vo.setVotedYn(sv02Dao.selectVotedYn(sv02Vo)); // 개인의 투표여부
 
 		return sv01Vo;
 	}
