@@ -8,7 +8,7 @@ grade varchar2(2) not null,
 regdate varchar2(8) not null,
 phone varchar2(15) not null,
 email varchar2(30) not null,
-video blob,
+photo blob,
 usertype varchar2(5)
 );
 

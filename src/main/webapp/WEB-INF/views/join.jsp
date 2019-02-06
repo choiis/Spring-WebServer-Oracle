@@ -39,12 +39,12 @@
 				alert("이름엔 한글만 입력하세요");
 				return false;
 			}
-			
+			/*
 			if(!gfn_isPhoneNumber($("#phone").val())) {
 				alert("핸드폰번호 형식에 맞게 입력하세요");
 				return false;
 			}
-			
+			*/
 			if(!gfn_isEmail($("#email").val())) {
 				alert("이메일 형식에 맞게 입력하세요");
 				return false;
@@ -94,7 +94,7 @@
 							<br> 이름:<input	type="text" id="username" name="username"  maxlength="6">
 							<br> 전화번호:<input type="text" id="phone" name="phone"  maxlength="14">
 							<br> 생년월일:<input type="text" id="brth" name="brth" maxlength="8">
-							<br> 이메일:<input type="text" id="email" name="email" maxlength="20">
+							<br> 이메일:<input type="text" id="email" name="email" maxlength="30">
 							<br>
 							<button id="save" type="button" >저장</button>
 							<input id="fileInput" type="file" name="imgFile" />

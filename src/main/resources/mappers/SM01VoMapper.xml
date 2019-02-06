@@ -7,8 +7,8 @@
 
 <mapper namespace="com.singer.mappers.SM01">		
 		<insert id="insert"  parameterType="com.singer.vo.SM01Vo">
-			insert into SM01 (userid, passwd, adminyn, username, brth, regdate, phone, email, usertype)
-			values (#{userid}, #{passwd}, #{adminyn}, #{username}, #{brth}, #{regdate}, #{phone}, #{email},'04') 
+			insert into SM01 (userid, passwd, adminyn, username, brth, grade, regdate, phone, email, usertype)
+			values (#{userid}, #{passwd}, #{adminyn}, #{username}, #{brth}, #{grade}, #{regdate}, #{phone}, #{email},'04') 
 		</insert>
 		
 		<update id="update" parameterType="com.singer.vo.SM01Vo">

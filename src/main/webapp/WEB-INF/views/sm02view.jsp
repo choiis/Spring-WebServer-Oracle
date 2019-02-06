@@ -75,11 +75,11 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			var sendData = JSON.stringify({
+			var sendData = {
 			    "seq" : $("#seq" + idx).text(),
 			    "nowPage" : 1
-		    });
-			
+		    };
+
 			gfn_ajax("sm02delete.do","POST" , sendData , function(data) {
 				var html = "";
 				// jQuery 유틸리티 메서드 

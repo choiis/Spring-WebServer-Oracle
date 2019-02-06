@@ -65,8 +65,7 @@ public class SM02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02delete.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toDeleteSM02Vo(@RequestParam(value = "idx", defaultValue = "0") int idx,
-			SM02Vo sm02Vo, HttpSession session) throws Exception {
+	public HashMap<String, Object> toDeleteSM02Vo(SM02Vo sm02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sm02delete.do");
 
@@ -76,7 +75,6 @@ public class SM02Controller {
 		sm02Service.deleteSM02Vo(sm02Vo);
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 
-		sm02Vo.setNowPage(idx);
 		sm02Vo.setUserid((String) session.getAttribute("userid"));
 		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo);
 		hashmap.put("list", list);

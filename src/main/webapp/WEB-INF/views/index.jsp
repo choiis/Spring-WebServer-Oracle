@@ -60,7 +60,8 @@
 		
 		var sendData = {
         	"userid" : $("#userid").val(),
-        	"passwd" : gfn_AES256_Encode($("#passwd").val()),
+        	// "passwd" : gfn_AES256_Encode($("#passwd").val()),
+        	"passwd" : $("#passwd").val(),
         	"browser" : gfn_getBrowser(),
         	"device" : gfn_getDevice()
         };

@@ -36,11 +36,11 @@ public class SM01ServiceImpl implements SM01Service {
 		if (CommonUtil.isNull(sm01Vo.getAdminyn())) {
 			sm01Vo.setAdminyn(Constants.YES_N);
 		}
-		String pw = aes256Util.aesEncode(sm01Vo.getPasswd());
-		sm01Vo.setPasswd(pw);
+		// String pw = aes256Util.aesEncode(sm01Vo.getPasswd());
+		// sm01Vo.setPasswd(pw);
 
 		sm01Vo.setRegdate(DateUtil.getToday());
-
+		sm01Vo.setGrade(Constants.USER_CODE_NORMAL);
 		hashMap.put("succeed", sm01Dao.insertSM01Vo(sm01Vo));
 
 		return hashMap;

@@ -257,29 +257,25 @@ $(document).ready(function() {
 	
 	/** 날짜 유효성 체크*/
 	gfn_valDate = function(inYear, inMonth, inDay) {
-		var year , month, day;
-		if(new String(inYear).length == 8 && 
-		inMonth == undefined && inDay == undefined) {
-			year = new String(inYear).substr(0, 4);
-			month = new String(inMonth).substr(0, 4);
-			day = new String(inDay).substr(0, 4);
-		} else {
-			year = inYear;
-			month = inMonth;
-			day = inDay;
-		}
-		
-		var inDate = Math.abs(month) + "/" + Math.abs(day) + "/" + Math.abs(year);
-		var objDate = new Date(Date.parse(inDate));
-		var cmpDate = (objDate.getMonth() + 1) + "/" + objDate.getDate() + "/" + objDate.getFullYear();
-		
-		if(cmpDate == "NaN/NaN/NaN") {
-			return 0;
-		} else if(inDate == cmpDate) {
-			return 1;
-		} else {
-			return -1;
-		}
+		var nYear = Number(date.substr(0,4));
+	    var nMonth = Number(date.substr(4,2));
+	    var nDay = Number(date.substr(6,2));
+
+	    if (nYear < 1900 || nYear > 3000) { // 사용가능 하지 않은 년도 체크
+	    	return false;
+	    }
+
+	    if (nMonth < 1 || nMonth > 12) { // 사용가능 하지 않은 달 체크
+	    	return false;
+	    }
+
+	    // 해당달의 마지막 일자 구하기
+	    var nMaxDay = new Date(new Date(nYear, nMonth, 1) - 86400000).getDate();
+	    if (nDay < 1 || nDay > nMaxDay) { // 사용가능 하지 않은 날자 체크
+	    	return false;
+	    }
+	    
+	    return true;
 	}
 	/** select box 셋팅*/
 	gfn_selectList = function(codeGrpCd , id) {
