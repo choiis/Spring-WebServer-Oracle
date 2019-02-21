@@ -256,7 +256,7 @@ $(document).ready(function() {
 	
 	
 	/** 날짜 유효성 체크*/
-	gfn_valDate = function(inYear, inMonth, inDay) {
+	gfn_valDate = function(date) {
 		var nYear = Number(date.substr(0,4));
 	    var nMonth = Number(date.substr(4,2));
 	    var nDay = Number(date.substr(6,2));
@@ -277,6 +277,29 @@ $(document).ready(function() {
 	    
 	    return true;
 	}
+	
+	/** 미래 날짜 선택 방지*/
+	gfn_NotAfterToday = function(date) {
+		if(date.length == 10) {
+			date = date.replace(/[\-./]/gi , "");
+		}
+		
+		var compYear = date.substring(0, 4);
+		var compMonth = date.substring(4, 6) - 1;
+		var compDate = date.substring(6, 8);
+		
+		var toDay = new Date();
+		var compDay = new Date(compYear , compMonth , compDate);
+		
+		var diff = toDay - compDay;
+		
+		if(diff < 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	/** select box 셋팅*/
 	gfn_selectList = function(codeGrpCd , id) {
 		var combo ='<option value="" selected>선택</option>';
