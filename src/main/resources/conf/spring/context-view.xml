@@ -19,6 +19,6 @@
 	</bean>
 
 	<bean name="excelView" class="com.singer.view.ExcelView" />
-	<bean name="downloadView" class="com.singer.view.FileDownloadView" />
+	<bean name="blobdownloadView" class="com.singer.view.BlobDownloadView" />
 	
 </beans>

@@ -1,6 +1,5 @@
 package com.singer.controller;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -152,7 +151,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/selectFile.do", method = RequestMethod.GET)
-	public void toSelectPhotoSF01Vo(@RequestParam(value = "seq") int seq,
+	public ModelAndView toSelectPhotoSF01Vo(@RequestParam(value = "seq") int seq,
 			@RequestParam(value = "regdate") String regdate, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		log.debug("enter selectFile.do");
@@ -166,24 +165,11 @@ public class SF01Controller {
 		String filename = (String) hashMap.get("FILENAME");
 		BLOB fileblob = (BLOB) hashMap.get("FILEBLOB");
 
-		byte[] fileBytes = fileblob.getBytes();
-		try {
-
-			response.setContentType("application/octet-stream");
-			response.setContentLength(fileBytes.length);
-			response.setHeader("Content-Disposition",
-					"attachment; fileName=\"" + URLEncoder.encode(filename, "UTF-8") + "\";");
-			response.setHeader("Content-Transfer-Encoding", "binary");
-			response.getOutputStream().write(fileBytes);
-
-			response.getOutputStream().flush();
-			response.getOutputStream().close();
-
-		} finally {
-			response.getOutputStream().close();
-			log.debug("exit selectFile.do");
-		}
-
+		HashMap<String, Object> downloadFile = new HashMap<String, Object>();
+		downloadFile.put("fileblob", fileblob);
+		downloadFile.put("filename", filename);
+		log.debug("exit selectFile.do");
+		return new ModelAndView("blobdownloadView", "downloadFile", downloadFile);
 	}
 
 	@ResponseBody
