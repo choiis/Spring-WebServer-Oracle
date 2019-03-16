@@ -52,9 +52,8 @@
     		from SB01 S1
     		left outer join(
      		  select *
-       		from SG01
-       		where btype = 'SB01' and
-       		seq = #{seq} and
+       		from SBG1
+       		where seq = #{seq} and
       		sessionid = #{sessionid}
    		 ) SL1
   		on (S1.seq = SL1.seq)
@@ -111,30 +110,28 @@
 		</select>
 		
 		<update id="likelog" parameterType="com.singer.vo.SB01Vo">
-			merge into SG01 S1
+			merge into SBG1 S1
 				using dual
 				on (
-				S1.btype = 'SB01'
-				and S1.seq = #{seq}
+				S1.seq = #{seq}
 				and S1.sessionid = #{sessionid})
 			when matched then
 				update set S1.datelog = #{datelog},
   					S1.goodlog = 'Y'
 			when not matched then
-				insert (S1.btype, S1.seq, S1.sessionid, S1.datelog, S1.goodlog ) values('SB01' ,#{seq}, #{sessionid}, #{datelog} , 'Y')
+				insert (S1.seq, S1.sessionid, S1.datelog, S1.goodlog ) values(#{seq}, #{sessionid}, #{datelog} , 'Y')
 		</update>
 		
 		<update id="hatelog" parameterType="com.singer.vo.SB01Vo">
-			merge into SG01 S1
+			merge into SBG1 S1
 				using dual
 				on (
-				S1.btype = 'SB01'
-				and S1.seq = #{seq}
+				S1.seq = #{seq}
 				and S1.sessionid = #{sessionid})
 			when matched then
 				update set S1.datelog = #{datelog},
   					S1.hatelog = 'Y'
 			when not matched then
-				insert (S1.btype, S1.seq, S1.sessionid, S1.datelog, S1.hatelog ) values('SB01' ,#{seq}, #{sessionid}, #{datelog} , 'Y')
+				insert (S1.seq, S1.sessionid, S1.datelog, S1.hatelog ) values(#{seq}, #{sessionid}, #{datelog} , 'Y')
 		</update>
 </mapper>

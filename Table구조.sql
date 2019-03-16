@@ -165,6 +165,20 @@ add constraint fk_sb02 foreign key(seq01) references SB01(seq) on delete cascade
 CREATE index idx_SB02_1
 on SB02(seq01, regdate);
 
+create table SBG1(
+  seq number not null,
+  sessionid varchar2(20) not null,
+  datelog varchar2(20) not null,
+  goodlog varchar2(3),
+  hatelog varchar2(3) 
+);
+
+alter table SBG1
+add constraint pk_SBG1 primary key(seq,sessionid);
+
+alter table SBG1
+add constraint fk_sbg1 foreign key(seq) references SB01(seq) on delete cascade;
+
 CREATE SEQUENCE seq_SF01 
 START WITH 1 INCREMENT BY 1 ;
 
@@ -217,17 +231,19 @@ add constraint fk_sf02 foreign key(seq01) references SF01(seq) on delete cascade
 CREATE index idx_SF02_1
 on SF02(seq01, regdate);
 
-create table SG01(
-  btype varchar2(10) not null,
+create table SFG1(
   seq number not null,
   sessionid varchar2(20) not null,
   datelog varchar2(20) not null,
-  goodlog varchar2(3)  ,
+  goodlog varchar2(3),
   hatelog varchar2(3) 
 );
 
-alter table SG01
-add constraint pk_SG01 primary key(btype,seq,sessionid)
+alter table SFG1
+add constraint pk_SFG1 primary key(seq,sessionid);
+
+alter table SFG1
+add constraint fk_sfg1 foreign key(seq) references SF01(seq) on delete cascade;
 
 CREATE SEQUENCE seq_SP01 
 START WITH 1 INCREMENT BY 1 ;
@@ -293,6 +309,19 @@ add constraint pk_SP03 primary key(registerid, seq)
 alter table SP03
 add constraint fk_sp03 foreign key(seq) references SP01(seq) on delete cascade;
 
+create table SPG1(
+  seq number not null,
+  sessionid varchar2(20) not null,
+  datelog varchar2(20) not null,
+  goodlog varchar2(3),
+  hatelog varchar2(3) 
+);
+
+alter table SPG1
+add constraint pk_SPG1 primary key(seq,sessionid);
+
+alter table SPG1
+add constraint fk_spg1 foreign key(seq) references SP01(seq) on delete cascade;
 
 CREATE SEQUENCE seq_SV01 
 START WITH 1 INCREMENT BY 1 ;
