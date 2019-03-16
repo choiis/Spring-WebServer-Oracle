@@ -143,7 +143,7 @@ var product_code = {};
 		        $("#sp02viewTbody").empty();
 		        $("#sp02viewTbody").append(html);
 		     	// 페이징 함수 호출
-		        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
+		        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
 			});
 		}
 	}
@@ -178,7 +178,7 @@ var product_code = {};
 	        $("#sp02viewTbody").empty();
 	        $("#sp02viewTbody").append(html);
 	     	// 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
+	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
 		});
 	};
 	
@@ -213,7 +213,7 @@ var product_code = {};
 	        $("#sp02viewTbody").empty();
 	        $("#sp02viewTbody").append(html);
 	     	// 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
+	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
 		});
 	};
 	

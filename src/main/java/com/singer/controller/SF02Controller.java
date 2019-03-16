@@ -1,6 +1,5 @@
 package com.singer.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,37 +28,34 @@ public class SF02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf02show.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF02Vo> toSelectSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sf02show.do");
 		log.debug("sf02Vo : " + sf02Vo);
 
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-
 		String userid = (String) session.getAttribute("userid");
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);
-		hashmap.put("list", list);
+		sf02Vo.setList(list);
 
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
-			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sf02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
 		} else {
-			hashmap.put("size", 0);
+			sf02Vo.setTotCnt(0);
 		}
 
 		log.debug("list : " + list);
 		log.debug("exit sf02show.do");
-		return hashmap;
+		return new ResponseEntity<SF02Vo>(sf02Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sf02insert.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toInsertSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF02Vo> toInsertSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sf02insert.do");
 		log.debug("sf02Vo : " + sf02Vo);
 
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		String userid = (String) session.getAttribute("userid");
 
 		sf02Vo.setUserid(userid);
@@ -65,44 +63,43 @@ public class SF02Controller {
 		sf02Service.insertSF02Vo(sf02Vo);
 
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);
-		hashmap.put("list", list);
+		sf02Vo.setList(list);
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
-			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-			hashmap.put("nowPage", list.get(0).getNowPage());
+			sf02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sf02Vo.setNowPage(list.get(0).getNowPage());
 		} else {
-			hashmap.put("size", 0);
-			hashmap.put("nowPage", 0);
+			sf02Vo.setTotCnt(0);
+			sf02Vo.setNowPage(0);
 		}
 		log.debug("list : " + list);
 		log.debug("exit sf02insert.do");
-		return hashmap;
+		return new ResponseEntity<SF02Vo>(sf02Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sf02delete.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toDeleteSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF02Vo> toDeleteSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
 		log.debug("enter sf02delete.do");
 		log.debug("sf02Vo : " + sf02Vo);
 
 		sf02Service.deleteSF02Vo(sf02Vo);
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 
 		String userid = (String) session.getAttribute("userid");
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);
-		hashmap.put("list", list);
+		sf02Vo.setList(list);
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
-			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-			hashmap.put("nowPage", list.get(0).getNowPage());
+			sf02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sf02Vo.setNowPage(list.get(0).getNowPage());
 		} else {
-			hashmap.put("size", 0);
-			hashmap.put("nowPage", 0);
+			sf02Vo.setTotCnt(0);
+			sf02Vo.setNowPage(0);
 		}
 
 		log.debug("list : " + list);
 		log.debug("exit sf02delete.do");
-		return hashmap;
+		return new ResponseEntity<SF02Vo>(sf02Vo, HttpStatus.OK);
 	}
 
 }

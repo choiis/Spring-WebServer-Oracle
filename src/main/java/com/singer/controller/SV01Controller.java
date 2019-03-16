@@ -1,6 +1,5 @@
 package com.singer.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,54 +64,50 @@ public class SV01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv01show.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectSV01Vo(SV01Vo sv01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV01Vo> toSelectSV01Vo(SV01Vo sv01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sv01show.do");
 		log.debug("SV01Vo : " + sv01Vo);
 		int nowPage = sv01Vo.getNowPage() + 1;
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 
 		List<SV01Vo> list = sv01Service.selectSV01Vo(sv01Vo);
-		hashmap.put("list", list);
+		sv01Vo.setList(list);
 
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
-			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sv01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
 		} else {
-			hashmap.put("size", 0);
+			sv01Vo.setTotCnt(0);
 		}
-		hashmap.put("nowPage", nowPage);
+		sv01Vo.setNowPage(nowPage);
 		log.debug("list : " + list);
 		log.debug("exit sv01show.do");
-		return hashmap;
+		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sv01insert.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toInsertSV01Vo(@RequestBody SV01Vo sv01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV01Vo> toInsertSV01Vo(@RequestBody SV01Vo sv01Vo, HttpSession session) throws Exception {
 		log.debug("enter sv01insert.do");
 		log.debug("sv01Vo : " + sv01Vo);
 
 		String userid = (String) session.getAttribute("userid");
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		int cnt = sv01Service.insertSV01Vo(sv01Vo, userid);
 
-		hashmap.put("response", cnt);
+		sv01Service.insertSV01Vo(sv01Vo, userid);
+
 		log.debug("exit sv01insert.do");
-		return hashmap;
+		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sv01selectOne.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectOneSV01Vo(SV01Vo sv01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV01Vo> toSelectOneSV01Vo(SV01Vo sv01Vo, HttpSession session) throws Exception {
 		log.debug("enter sv01selectOne.do");
 		log.debug("sv01Vo : " + sv01Vo);
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		String userid = (String) session.getAttribute("userid");
 
 		sv01Vo = sv01Service.selectOneSV01Vo(sv01Vo, userid);
-		hashmap.put("vo", sv01Vo);
 		log.debug("exit sv01selectOne.do");
-		return hashmap;
+		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);
 	}
 }

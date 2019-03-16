@@ -60,13 +60,11 @@
 				sendData.sv02Vos = list;
 				
 				gfn_ajaxRequestBody("sv03insert.do", "POST", sendData, function(data) {
-						
-					if(data.response == 1) {
-						if(confirm("투표 완료!")) {
-							location.href='/common/sv01show_detail.do?seq=' 
-							+ $("#seq").val() + '&hit=-1';
-						}	
-					}
+					if(confirm("투표 완료!")) {
+						location.href='/common/sv01show_detail.do?seq=' 
+						+ $("#seq").val() + '&hit=-1';
+					}	
+					
 				});
 			}
 		});
@@ -102,24 +100,24 @@
 	    };
 		
 		gfn_ajax("sv01selectOne.do","POST" , sendData , function(data) {
-			var vo = data.vo
-			$("#writer").text(vo.userid);
-			$("#title").text(vo.title);
-			$("#text").text(vo.text);
-			$("#hits").text(vo.hit);
-			$("#multiselect").val(vo.multiselect);
+		
+			$("#writer").text(data.userid);
+			$("#title").text(data.title);
+			$("#text").text(data.text);
+			$("#hits").text(data.hit);
+			$("#multiselect").val(data.multiselect);
 
 			var html = "";
-			if(vo.votedYn == 0 ) { // 투표안함
-				if(vo.multiselect == 0) { // 단일선택
-					for(var i = 0 ; i < vo.sv02Vos.length ;i++) {
-						html += "<input type='radio' id='rdo' name='rdo' value=" + vo.sv02Vos[i].idx + " /> " +
-						 vo.sv02Vos[i].content + " ";
+			if(data.votedYn == 0 ) { // 투표안함
+				if(data.multiselect == 0) { // 단일선택
+					for(var i = 0 ; i < data.sv02Vos.length ;i++) {
+						html += "<input type='radio' id='rdo' name='rdo' value=" + data.sv02Vos[i].idx + " /> " +
+						data.sv02Vos[i].content + " ";
 					}
 				} else { // 중복선택
-					for(var i = 0 ; i < vo.sv02Vos.length ;i++) {
-						html += "<input type='checkbox' id='chk' name='chk' value=" + vo.sv02Vos[i].idx + " /> " +
-						 vo.sv02Vos[i].content + " ";
+					for(var i = 0 ; i < data.sv02Vos.length ;i++) {
+						html += "<input type='checkbox' id='chk' name='chk' value=" + data.sv02Vos[i].idx + " /> " +
+						data.sv02Vos[i].content + " ";
 					}
 				}
 				
@@ -128,15 +126,15 @@
 			} else { // 투표함
 				$("#button_vote").hide();
 				
-				var totCnt = vo.totCnt;
+				var totCnt = data.totCnt;
 				html += "<p>전체 표 ";
 				html += totCnt;
 				html += "</p><br>";
-				for(var i = 0 ; i < vo.sv02Vos.length ;i++) {
+				for(var i = 0 ; i < data.sv02Vos.length ;i++) {
 					html += "<div>";
-					html += vo.sv02Vos[i].content;
+					html += data.sv02Vos[i].content;
 					html += "  <span>";
-					html += vo.sv02Vos[i].voted;
+					html += data.sv02Vos[i].voted;
 					html += "표 </span>";
 					html += "<div>";
 				}

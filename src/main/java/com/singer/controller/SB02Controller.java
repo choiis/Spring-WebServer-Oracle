@@ -1,6 +1,5 @@
 package com.singer.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,39 +28,36 @@ public class SB02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02show.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SB02Vo> toSelectSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sb02show.do");
 		log.debug("sb02Vo : " + sb02Vo);
 
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-
 		String userid = (String) session.getAttribute("userid");
 		List<SB02Vo> list = sb02Service.selectSB02Vo(sb02Vo, userid);
-		hashmap.put("list", list);
+		sb02Vo.setList(list);
 
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
-			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-			hashmap.put("nowPage", list.get(0).getNowPage());
+			sb02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sb02Vo.setNowPage(list.get(0).getNowPage());
 		} else {
-			hashmap.put("size", 0);
-			hashmap.put("nowPage", 0);
+			sb02Vo.setTotCnt(0);
+			sb02Vo.setNowPage(0);
 		}
 
 		log.debug("list : " + list);
 		log.debug("exit sb02show.do");
-		return hashmap;
+		return new ResponseEntity<SB02Vo>(sb02Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02insert.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toInsertSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SB02Vo> toInsertSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sb02insert.do");
 		log.debug("sb02Vo : " + sb02Vo);
 
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		String userid = (String) session.getAttribute("userid");
 
 		sb02Vo.setUserid(userid);
@@ -67,42 +65,45 @@ public class SB02Controller {
 		sb02Service.insertSB02Vo(sb02Vo);
 
 		List<SB02Vo> list = sb02Service.selectSB02Vo(sb02Vo, userid);
-		hashmap.put("list", list);
+		sb02Vo.setList(list);
+
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
-			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-			hashmap.put("nowPage", list.get(0).getNowPage());
+			sb02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sb02Vo.setNowPage(list.get(0).getNowPage());
 		} else {
-			hashmap.put("size", 0);
-			hashmap.put("nowPage", 0);
+			sb02Vo.setTotCnt(0);
+			sb02Vo.setNowPage(0);
 		}
 
 		log.debug("sb02Vo : " + sb02Vo);
 		log.debug("exit sb02insert.do");
-		return hashmap;
+		return new ResponseEntity<SB02Vo>(sb02Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02delete.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toDeleteSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SB02Vo> toDeleteSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
 		log.debug("enter sb02delete.do");
 		log.debug("sb02Vo : " + sb02Vo);
 
 		sb02Service.deleteSB02Vo(sb02Vo);
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 
 		String userid = (String) session.getAttribute("userid");
 		List<SB02Vo> list = sb02Service.selectSB02Vo(sb02Vo, userid);
-		hashmap.put("list", list);
+		sb02Vo.setList(list);
+
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
-			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sb02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sb02Vo.setNowPage(list.get(0).getNowPage());
 		} else {
-			hashmap.put("size", 0);
+			sb02Vo.setTotCnt(0);
+			sb02Vo.setNowPage(0);
 		}
 
 		log.debug("list : " + list);
 		log.debug("exit sb02delete.do");
-		return hashmap;
+		return new ResponseEntity<SB02Vo>(sb02Vo, HttpStatus.OK);
 	}
 }

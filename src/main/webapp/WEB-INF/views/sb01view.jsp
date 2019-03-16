@@ -99,7 +99,7 @@
 			
 	        $("#sb01viewTbody").html(html);
 	    	 // 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
+	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
 		});
 	}
 	
@@ -137,7 +137,7 @@
 			
 	        $("#sb01viewTbody").html(html);
 	        // 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
+	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
 		});
 	};
 

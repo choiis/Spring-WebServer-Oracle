@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.CommonUtil;
+import com.singer.common.Constants;
 import com.singer.service.SF01Service;
 import com.singer.vo.SF01Vo;
 import oracle.sql.BLOB;
@@ -91,45 +94,41 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01show.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF01Vo> toSelectSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01show.do");
 		log.debug("sf01Vo : " + sf01Vo);
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		int nowPage = sf01Vo.getNowPage() + 1;
 		List<SF01Vo> list = sf01Service.selectSF01Vo(sf01Vo);
-		hashmap.put("list", list);
+		sf01Vo.setList(list);
 
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
-			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sf01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
 		} else {
-			hashmap.put("size", 0);
+			sf01Vo.setTotCnt(0);
 		}
-		hashmap.put("nowPage", nowPage);
+		sf01Vo.setNowPage(nowPage);
 		log.debug("list : " + list);
 		log.debug("exit sf01show.do");
-		return hashmap;
+		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01showFind.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectFindSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF01Vo> toSelectFindSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01showFind.do");
 		log.debug("sf01Vo : " + sf01Vo);
 
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-
 		List<SF01Vo> list = sf01Service.selectFindSF01Vo(sf01Vo);
-		hashmap.put("list", list);
-		// 페이징을 위한 카운트
+		sf01Vo.setList(list);
 		if (list.size() != 0) {
-			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sf01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
 		} else {
-			hashmap.put("size", 0);
+			sf01Vo.setTotCnt(0);
 		}
 		log.debug("list : " + list);
 		log.debug("exit sf01showFind.do");
-		return hashmap;
+		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
@@ -189,31 +188,29 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01like.do", method = RequestMethod.POST)
-	public HashMap<String, Object> likeSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF01Vo> likeSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01like.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		String sessionid = (String) session.getAttribute("userid");
 		int like = sf01Service.likeSF01Vo(sf01Vo, sessionid);
 
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("result", 1);
-		hashMap.put("like", like);
+		sf01Vo.setResult(Constants.SUCCESS_CODE);
+		sf01Vo.setLike(like);
 		log.debug("exit sf01like.do");
-		return hashMap;
+		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01hate.do", method = RequestMethod.POST)
-	public HashMap<String, Object> hateSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF01Vo> hateSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01hate.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		String sessionid = (String) session.getAttribute("userid");
 		int like = sf01Service.hateSF01Vo(sf01Vo, sessionid);
 
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("result", 1);
-		hashMap.put("like", like);
+		sf01Vo.setResult(Constants.SUCCESS_CODE);
+		sf01Vo.setLike(like);
 		log.debug("exit sf01hate.do");
-		return hashMap;
+		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 }

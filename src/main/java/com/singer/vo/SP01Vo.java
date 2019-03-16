@@ -1,5 +1,7 @@
 package com.singer.vo;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class SP01Vo extends SuperVo {
@@ -23,13 +25,15 @@ public class SP01Vo extends SuperVo {
 	private String goodlog;
 	private String hatelog;
 
+	private List<SP01Vo> list;
+
 	public SP01Vo() {
 		super();
 	}
 
 	public SP01Vo(int seq, String title, String text, String userid, String regdate, String state, String ptype,
 			int hit, int good, MultipartFile explain, int reply, int selection, String findText, String registerid,
-			String sessionid, String datelog, String goodlog, String hatelog) {
+			String sessionid, String datelog, String goodlog, String hatelog, List<SP01Vo> list) {
 		super();
 		this.seq = seq;
 		this.title = title;
@@ -49,6 +53,7 @@ public class SP01Vo extends SuperVo {
 		this.datelog = datelog;
 		this.goodlog = goodlog;
 		this.hatelog = hatelog;
+		this.list = list;
 	}
 
 	public int getSeq() {
@@ -195,13 +200,21 @@ public class SP01Vo extends SuperVo {
 		this.registerid = registerid;
 	}
 
+	public List<SP01Vo> getList() {
+		return list;
+	}
+
+	public void setList(List<SP01Vo> list) {
+		this.list = list;
+	}
+
 	@Override
 	public String toString() {
 		return "SP01Vo [seq=" + seq + ", title=" + title + ", text=" + text + ", userid=" + userid + ", regdate="
 				+ regdate + ", state=" + state + ", ptype=" + ptype + ", hit=" + hit + ", good=" + good + ", explain="
 				+ explain + ", reply=" + reply + ", selection=" + selection + ", findText=" + findText + ", registerid="
 				+ registerid + ", sessionid=" + sessionid + ", datelog=" + datelog + ", goodlog=" + goodlog
-				+ ", hatelog=" + hatelog + "]";
+				+ ", hatelog=" + hatelog + ", list=" + list + "]";
 	}
 
 }

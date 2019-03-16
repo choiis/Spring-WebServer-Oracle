@@ -1,5 +1,7 @@
 package com.singer.vo;
 
+import java.util.List;
+
 public class SP02Vo extends SuperVo {
 
 	private int seq;
@@ -9,11 +11,13 @@ public class SP02Vo extends SuperVo {
 	private String regdate;
 	private int good;
 
+	private List<SP02Vo> list;
+
 	public SP02Vo() {
 		super();
 	}
 
-	public SP02Vo(int seq, int seq01, String text, String userid, String regdate, int good) {
+	public SP02Vo(int seq, int seq01, String text, String userid, String regdate, int good, List<SP02Vo> list) {
 		super();
 		this.seq = seq;
 		this.seq01 = seq01;
@@ -21,6 +25,7 @@ public class SP02Vo extends SuperVo {
 		this.userid = userid;
 		this.regdate = regdate;
 		this.good = good;
+		this.list = list;
 	}
 
 	public int getSeq() {
@@ -71,10 +76,18 @@ public class SP02Vo extends SuperVo {
 		this.good = good;
 	}
 
+	public List<SP02Vo> getList() {
+		return list;
+	}
+
+	public void setList(List<SP02Vo> list) {
+		this.list = list;
+	}
+
 	@Override
 	public String toString() {
-		return "SB02Vo [seq=" + seq + ", seq01=" + seq01 + ", text=" + text + ", userid=" + userid + ", regdate="
-				+ regdate + ", good=" + good + "]";
+		return "SP02Vo [seq=" + seq + ", seq01=" + seq01 + ", text=" + text + ", userid=" + userid + ", regdate="
+				+ regdate + ", good=" + good + ", list=" + list + "]";
 	}
 
 }

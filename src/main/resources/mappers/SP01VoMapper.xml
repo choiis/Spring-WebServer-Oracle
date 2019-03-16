@@ -60,7 +60,10 @@
 		
 		<update id="click" parameterType="com.singer.vo.SP01Vo">
 			update SP01
-			set hit = #{hit} + 1
+			set hit = (select hit 
+				from SP01
+				where seq = #{seq}
+			)  + 1
 			where seq = #{seq}
 		</update>
 		
