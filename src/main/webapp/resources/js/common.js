@@ -18,6 +18,24 @@ $(document).ready(function() {
 		});
 	}
 	
+	/** ajax_requestBody 공통 함수*/
+	gfn_ajaxRequestBody = function(url, type, sendData, callback) {
+		
+		$.ajax({
+		    url : "/common/" + url,
+		    type : type,
+		    dataType : "json",
+		    cache : false,
+		    data : JSON.stringify(sendData),
+		    contentType:"application/json;charset=UTF-8",
+		    success : callback,
+		    error : function(data, status, error) {
+		    	var errorData = JSON.parse(data.responseText);
+		    	alert(errorData.errorCode + " " + errorData.errorMsg);
+		    }
+		});
+	}
+	
 	/** paging 공통 함수*/
 	gfn_paging = function(pStartPage, pMaxPage, pLoc, pName) {
 		var pagination ="";

@@ -5,7 +5,7 @@ import java.util.List;
 import com.singer.vo.SV01Vo;
 
 public interface SV01Service {
-	public int insertSV01Vo(SV01Vo sv01Vo) throws Exception;
+	public int insertSV01Vo(SV01Vo sv01Vo, String userid) throws Exception;
 
 	public List<SV01Vo> selectSV01Vo(SV01Vo sv01Vo) throws Exception;
 

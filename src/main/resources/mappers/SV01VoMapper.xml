@@ -8,7 +8,7 @@
 <mapper namespace="com.singer.mappers.SV01">		
 		<insert id="insert"  parameterType="com.singer.vo.SV01Vo">
 			insert into SV01 (seq, title, text, userid, regdate, multiselect)
-			values (#{seq}, #{title}, #{text}, #{userid}, #{regdate}, #{multiselect}) 
+			values (SEQ_SV01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{multiselect}) 
 		</insert>
 		
 		<update id="update" parameterType="com.singer.vo.SV01Vo">

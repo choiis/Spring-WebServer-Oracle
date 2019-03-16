@@ -9,7 +9,7 @@
 
 		<insert id="insert"  parameterType="com.singer.vo.SV02Vo">
 			insert into SV02 (seq, idx, content, userid, regdate)
-			values (#{seq}, #{idx}, #{content}, #{userid}, #{regdate} ) 
+			values (SEQ_SV01.CURRVAL, #{idx}, #{content}, #{userid}, #{regdate} ) 
 		</insert>
 		
 		<insert id="insertSv03Vo"  parameterType="com.singer.vo.SV03Vo">
@@ -28,7 +28,7 @@
 			select 
 				s2.seq as seq,
 				s2.idx as idx, 
-				s2.content as content
+				s2.content as content,
         		(select count(*) 
         				from SV03 s3
         			where s2.seq = s3.seq

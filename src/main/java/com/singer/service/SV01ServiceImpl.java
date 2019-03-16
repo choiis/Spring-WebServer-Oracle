@@ -25,17 +25,17 @@ public class SV01ServiceImpl implements SV01Service {
 
 	@Transactional
 	@Override
-	public int insertSV01Vo(SV01Vo sv01Vo) throws Exception {
+	public int insertSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
 
 		String regDate = DateUtil.getTodayTime();
-
+		sv01Vo.setUserid(userid);
 		sv01Vo.setRegdate(regDate);
 		int result = sv01Dao.insertSV01Vo(sv01Vo);
 
 		List<SV02Vo> list = sv01Vo.getSv02Vos();
 		int leng = list.size();
 		for (int i = 0; i < leng; i++) {
-			list.get(i).setIdx(i + 1);
+			list.get(i).setUserid(userid);
 			list.get(i).setRegdate(regDate);
 			sv02Dao.insertSV02Vo(list.get(i));
 		}
@@ -53,7 +53,7 @@ public class SV01ServiceImpl implements SV01Service {
 	@Override
 	public SV01Vo selectOneSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
 		sv01Dao.clickSV01Vo(sv01Vo);
-
+		sv01Vo.setUserid(userid);
 		sv01Vo = sv01Dao.selectOneSV01Vo(sv01Vo);
 
 		SV02Vo sv02Vo = new SV02Vo();
