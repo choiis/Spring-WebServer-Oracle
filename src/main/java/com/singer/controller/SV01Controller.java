@@ -109,7 +109,7 @@ public class SV01Controller {
 		String userid = (String) session.getAttribute("userid");
 
 		sv01Vo = sv01Service.selectOneSV01Vo(sv01Vo, userid);
-		hashmap.put("data", sv01Vo);
+		hashmap.put("vo", sv01Vo);
 		log.debug("exit sv01selectOne.do");
 		return hashmap;
 	}

@@ -1,4 +1,4 @@
-﻿CREATE table SM01(
+CREATE table SM01(
 userid varchar2(10) not null,
 passwd varchar2(30) not null,
 adminyn varchar2(5) not null,
@@ -36,7 +36,8 @@ insert into MENU values('03','회원관리','/sm01.do','02','admin','20180901','
 insert into MENU values('04','노래 동영상','/common/sb01.do','04','admin','20180901','admin','20180901')
 insert into MENU values('05','파일 게시판','/common/sf01.do','04','admin','20180901','admin','20180901')
 insert into MENU values('06','상품 거래','/common/sp01.do','04','admin','20180901','admin','20180901')
-insert into MENU values('07','나의 메모장','/common/sm02.do','04','admin','20180901','admin','20180901')
+insert into MENU values('07','투표 게시판','/common/sv01.do','04','admin','20180901','admin','20180901')
+insert into MENU values('08','나의 메모장','/common/sm02.do','04','admin','20180901','admin','20180901')
 
 CREATE table CODE_GRP (
 codegrp varchar2(5) not null,

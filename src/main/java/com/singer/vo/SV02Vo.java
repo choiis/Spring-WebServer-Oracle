@@ -1,5 +1,7 @@
 package com.singer.vo;
 
+import java.util.List;
+
 public class SV02Vo extends SuperVo {
 
 	private int seq;
@@ -16,12 +18,14 @@ public class SV02Vo extends SuperVo {
 
 	private int votedYn;
 
+	private List<SV02Vo> sv02Vos;
+
 	public SV02Vo() {
 		super();
 	}
 
-	public SV02Vo(int seq, int idx, String content, String regdate, String userid, int voted, int totVoted,
-			int votedYn) {
+	public SV02Vo(int seq, int idx, String content, String regdate, String userid, int voted, int totVoted, int votedYn,
+			List<SV02Vo> sv02Vos) {
 		super();
 		this.seq = seq;
 		this.idx = idx;
@@ -31,6 +35,7 @@ public class SV02Vo extends SuperVo {
 		this.voted = voted;
 		this.totVoted = totVoted;
 		this.votedYn = votedYn;
+		this.sv02Vos = sv02Vos;
 	}
 
 	public int getSeq() {
@@ -97,10 +102,19 @@ public class SV02Vo extends SuperVo {
 		this.userid = userid;
 	}
 
+	public List<SV02Vo> getSv02Vos() {
+		return sv02Vos;
+	}
+
+	public void setSv02Vos(List<SV02Vo> sv02Vos) {
+		this.sv02Vos = sv02Vos;
+	}
+
 	@Override
 	public String toString() {
 		return "SV02Vo [seq=" + seq + ", idx=" + idx + ", content=" + content + ", regdate=" + regdate + ", userid="
-				+ userid + ", voted=" + voted + ", totVoted=" + totVoted + ", votedYn=" + votedYn + "]";
+				+ userid + ", voted=" + voted + ", totVoted=" + totVoted + ", votedYn=" + votedYn + ", sv02Vos="
+				+ sv02Vos + "]";
 	}
 
 }

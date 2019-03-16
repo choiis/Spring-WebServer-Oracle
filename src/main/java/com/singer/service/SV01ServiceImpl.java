@@ -52,7 +52,9 @@ public class SV01ServiceImpl implements SV01Service {
 	@Transactional
 	@Override
 	public SV01Vo selectOneSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
-		sv01Dao.clickSV01Vo(sv01Vo);
+		if (sv01Vo.getHit() >= 0) {
+			sv01Dao.clickSV01Vo(sv01Vo);
+		}
 		sv01Vo.setUserid(userid);
 		sv01Vo = sv01Dao.selectOneSV01Vo(sv01Vo);
 

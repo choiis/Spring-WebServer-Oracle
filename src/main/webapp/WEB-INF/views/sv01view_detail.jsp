@@ -19,8 +19,81 @@
 	$(document).ready(function() {
 
 		showSV01One();
+		
+		// 삭제 버튼을 클릭할때 이벤트 발생
+		$("#button_vote").on("click", function(e) {
+			if(!Pre_Save()) {
+				alert("투표해주세요!");
+				return;
+			}
+			
+			if(confirm("투표할까요?")) {
+				
+				var sendData = {};
+					
+				var list = [];
+					
+				if($("#multiselect").val() == 0) { // 단일선택
+					for(var i = 0 ; i < $('input:radio').length ;i++) {
+						if($('input:radio').eq(i).is(':checked')) {
+							var vo = {
+								"seq" : $("#seq").val(),
+								"idx" : $('input:radio').eq(i).val()
+							};
+							list.push(vo);
+							break;
+						}
+					}
+				
+				} else { // 중복선택
+					for(var i = 0 ; i < $('input:checkbox').length ;i++) {
+						if($('input:checkbox').eq(i).is(':checked')) {
+							var vo = {
+								"seq" : $("#seq").val(),
+								"idx" : $('input:checkbox').eq(i).val()
+							};
+							list.push(vo);
+						}
+					}
+				}
+				
+				sendData.sv02Vos = list;
+				
+				gfn_ajaxRequestBody("sv03insert.do", "POST", sendData, function(data) {
+						
+					if(data.response == 1) {
+						if(confirm("투표 완료!")) {
+							location.href='/common/sv01show_detail.do?seq=' 
+							+ $("#seq").val() + '&hit=-1';
+						}	
+					}
+				});
+			}
+		});
+		
 	});
 
+	function Pre_Save() {
+		
+		if($("#multiselect").val() == 0) { // 단일선택
+			for(var i = 0 ; i < $('input:radio').length ;i++) {
+				if($('input:radio').eq(i).is(':checked')) {
+					return true;
+				}
+			}
+		
+			return false;
+		} else { // 중복선택
+			for(var i = 0 ; i < $('input:checkbox').length ;i++) {
+				if($('input:checkbox').eq(i).is(':checked')) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+	}
+	
 	function showSV01One() {
 		
 		var sendData =  {
@@ -29,7 +102,47 @@
 	    };
 		
 		gfn_ajax("sv01selectOne.do","POST" , sendData , function(data) {
-			debugger;
+			var vo = data.vo
+			$("#writer").text(vo.userid);
+			$("#title").text(vo.title);
+			$("#text").text(vo.text);
+			$("#hits").text(vo.hit);
+			$("#multiselect").val(vo.multiselect);
+
+			var html = "";
+			if(vo.votedYn == 0 ) { // 투표안함
+				if(vo.multiselect == 0) { // 단일선택
+					for(var i = 0 ; i < vo.sv02Vos.length ;i++) {
+						html += "<input type='radio' id='rdo' name='rdo' value=" + vo.sv02Vos[i].idx + " /> " +
+						 vo.sv02Vos[i].content + " ";
+					}
+				} else { // 중복선택
+					for(var i = 0 ; i < vo.sv02Vos.length ;i++) {
+						html += "<input type='checkbox' id='chk' name='chk' value=" + vo.sv02Vos[i].idx + " /> " +
+						 vo.sv02Vos[i].content + " ";
+					}
+				}
+				
+				
+			
+			} else { // 투표함
+				$("#button_vote").hide();
+				
+				var totCnt = vo.totCnt;
+				html += "<p>전체 표 ";
+				html += totCnt;
+				html += "</p><br>";
+				for(var i = 0 ; i < vo.sv02Vos.length ;i++) {
+					html += "<div>";
+					html += vo.sv02Vos[i].content;
+					html += "  <span>";
+					html += vo.sv02Vos[i].voted;
+					html += "표 </span>";
+					html += "<div>";
+				}
+				
+			}
+			$("#voteTable").append(html);
 		});
 	};
 	
@@ -46,17 +159,20 @@
 		<form id="form_delete" method="post" action="/common/sp01delete.do">
 			<input type="hidden" id="seq" name="seq" value="${seq}" />
 			<input type="hidden" id="hit" name="hit" value="${hit}" />
+			<input type="hidden" id="multiselect" name="multiselect" />
     	</form>
 		</div>
 		<div id="showDiv">
-			
-				
-    	
+			<div>작성자 :<span id="writer"></span></div>
+			<div>제목 :<span id="title"></span></div>
+			<div>내용 :<span id="text"></span></div>
+			<div>조회수 :<span id="hits"></span></div>
+    		<div id="voteTable">
+    		</div>
     	</div>
-		
+
 		<div class="container">
-		
-		
+			<input id="button_vote" type="button" value="투표">
 		</div>
 	</section>
 	<p>

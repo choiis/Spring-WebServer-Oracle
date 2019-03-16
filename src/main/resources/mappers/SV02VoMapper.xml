@@ -12,7 +12,7 @@
 			values (SEQ_SV01.CURRVAL, #{idx}, #{content}, #{userid}, #{regdate} ) 
 		</insert>
 		
-		<insert id="insertSv03Vo"  parameterType="com.singer.vo.SV03Vo">
+		<insert id="insertSv03Vo"  parameterType="com.singer.vo.SV02Vo">
 			insert into SV03 (seq, idx, userid, regdate)
 			values (#{seq}, #{idx}, #{userid}, #{regdate} ) 
 		</insert>
