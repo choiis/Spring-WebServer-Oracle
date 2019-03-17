@@ -161,8 +161,7 @@ var product_code = {};
 				html += '<tr>';
 	            html += '<td scope="col" width="50" id="seq">' + item.seq + '</td>';
 	            html += '<td scope="col" width="50" id="title"><a href="/common/sp01show_detail.do?seq='+
-	            item.seq +'&title='+ item.title +'&hit=' +
-	            item.hit +'">' + 
+	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
 	            html += '<td scope="col" width="100">' + item.userid + '</td>';
@@ -182,7 +181,7 @@ var product_code = {};
 			
 	        $("#sp01viewTbody").html(html);
 	     	// 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
+	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
 		});
 	};
 </script>

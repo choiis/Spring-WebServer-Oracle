@@ -86,8 +86,7 @@
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
 	            html += '<td scope="col" width="50"><a href="/common/sb01show_detail.do?seq='+
-	            item.seq +'&title='+ item.title +'&hit=' +
-	            item.hit +'">' + 
+	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
 	            html += '<td scope="col" width="100">' + item.userid + '</td>';
@@ -123,9 +122,7 @@
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
 	            html += '<td scope="col" width="50"><a href="/common/sb01show_detail.do?seq='+
-	            item.seq +'&hit=' +
-	            item.hit +'">' + 
-	            
+	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
 	            html += '<td scope="col" width="100">' + item.userid + '</td>';

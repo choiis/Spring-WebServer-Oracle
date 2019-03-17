@@ -18,7 +18,7 @@
 
 	$(document).ready(function() {
 
-		showSV01One();
+		showSV01One(0);
 		
 		// 삭제 버튼을 클릭할때 이벤트 발생
 		$("#button_vote").on("click", function(e) {
@@ -61,8 +61,7 @@
 				
 				gfn_ajaxRequestBody("sv03insert.do", "POST", sendData, function(data) {
 					if(confirm("투표 완료!")) {
-						location.href='/common/sv01show_detail.do?seq=' 
-						+ $("#seq").val() + '&hit=-1';
+						showSV01One(1);
 					}	
 					
 				});
@@ -92,11 +91,11 @@
 		
 	}
 	
-	function showSV01One() {
+	function showSV01One(recall) {
 		
 		var sendData =  {
 	    	"seq" : parseInt($("#seq").val()),
-	    	"hit" : parseInt($("#hit").val())
+	    	"recall" : recall
 	    };
 		
 		gfn_ajax("sv01selectOne.do","POST" , sendData , function(data) {
@@ -156,7 +155,6 @@
 		<div>
 		<form id="form_delete" method="post" action="/common/sp01delete.do">
 			<input type="hidden" id="seq" name="seq" value="${seq}" />
-			<input type="hidden" id="hit" name="hit" value="${hit}" />
 			<input type="hidden" id="multiselect" name="multiselect" />
     	</form>
 		</div>
