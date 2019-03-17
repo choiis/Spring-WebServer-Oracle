@@ -378,3 +378,9 @@ add constraint pk_SV03 primary key(seq, idx, userid);
 
 alter table SV03
 add constraint fk_sv03 foreign key(seq, idx) references SV02(seq, idx) on delete cascade;
+
+CREATE table SE01(
+erroruri varchar2(30) not null,
+errortime varchar2(20) not null,
+errormsg varchar2(100) not null
+);

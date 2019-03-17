@@ -1,5 +1,6 @@
 package com.singer.common;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -11,9 +12,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.singer.dao.ErrorDao;
+import com.singer.vo.ErrorVo;
+
 @ControllerAdvice
 public class CommonExceptionHandler {
 	private static final Log log = LogFactory.getLog(ExceptionHandler.class);
+
+	@Resource(name = "errorDao")
+	private ErrorDao errorDao;
 
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "your message")
@@ -21,6 +28,10 @@ public class CommonExceptionHandler {
 		boolean isAjax = false;
 		log.info("defaultException");
 		log.info(ext.getMessage());
+		
+		ErrorVo errorVo = new ErrorVo(request.getRequestURI(), DateUtil.getTodayTime(), ext.getCause().getMessage());
+		errorDao.insertError(errorVo);
+		
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 			isAjax = true;
 		}
@@ -41,6 +52,10 @@ public class CommonExceptionHandler {
 		boolean isAjax = false;
 		log.info("AppException");
 		log.info(ext.getMessage());
+		
+		ErrorVo errorVo = new ErrorVo(request.getRequestURI(), DateUtil.getTodayTime(), ext.getCause().getMessage());
+		errorDao.insertError(errorVo);
+		
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 			isAjax = true;
 		}
@@ -61,7 +76,10 @@ public class CommonExceptionHandler {
 		boolean isAjax = false;
 		log.info("NoHandlerFoundException");
 		log.info(ext.getMessage());
-
+		
+		ErrorVo errorVo = new ErrorVo(request.getRequestURI(), DateUtil.getTodayTime(), ext.getCause().getMessage());
+		errorDao.insertError(errorVo);
+		
 		String errorURL = request.getRequestURL().toString();
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 			isAjax = true;

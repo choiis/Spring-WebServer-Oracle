@@ -1,16 +1,16 @@
 package com.singer.vo;
 
 public class SuperVo {
-	private String adminyn;
-	private boolean deleteYn;
-	private String showDate;
-	private int totCnt;
-	private int startRownum;
-	private int endRownum;
-	private int nowPage;
-	private int rowPerPage;
-	private int result;
-	private int like;
+	protected String adminyn;
+	protected boolean deleteYn;
+	protected String showDate;
+	protected int totCnt;
+	protected int startRownum;
+	protected int endRownum;
+	protected int nowPage;
+	protected int rowPerPage;
+	protected int result;
+	protected int like;
 
 	public SuperVo() {
 

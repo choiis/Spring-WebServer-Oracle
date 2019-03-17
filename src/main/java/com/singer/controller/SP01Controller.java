@@ -43,7 +43,7 @@ public class SP01Controller {
 	private SP01Service sp01Service;
 
 	@RequestMapping(value = "/sp01.do", method = RequestMethod.GET)
-	public ModelAndView toShowSP01() throws Exception {
+	public ModelAndView showSP01() throws Exception {
 		ModelAndView model = new ModelAndView("/sp01view");
 		log.debug("enter sp01.do");
 
@@ -52,7 +52,7 @@ public class SP01Controller {
 	}
 
 	@RequestMapping(value = "/sp01write.do", method = RequestMethod.GET)
-	public ModelAndView toInsertSP01() throws Exception {
+	public ModelAndView insertSP01() throws Exception {
 		ModelAndView model = new ModelAndView("/sp01insert");
 		log.debug("enter sp01write.do");
 
@@ -62,7 +62,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01insert.do", method = RequestMethod.POST)
-	public ModelAndView toInsertSP01Vo(@ModelAttribute("SP01Vo") SP01Vo sp01Vo, HttpSession session,
+	public ModelAndView insertSP01Vo(@ModelAttribute("SP01Vo") SP01Vo sp01Vo, HttpSession session,
 			MultipartHttpServletRequest request) throws Exception {
 
 		log.debug("enter sp01insert.do");
@@ -98,7 +98,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01show.do", method = RequestMethod.POST)
-	public ResponseEntity<SP01Vo> toSelectSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SP01Vo> selectSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp01show.do");
 		log.debug("SP01Vo : " + sp01Vo);
@@ -120,7 +120,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01showMyList.do", method = RequestMethod.POST)
-	public ResponseEntity<SP01Vo> toSelectMyListSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SP01Vo> selectMyListSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp01showMyList.do");
 		log.debug("SP01Vo : " + sp01Vo);
@@ -143,7 +143,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01showFind.do", method = RequestMethod.POST)
-	public ResponseEntity<SP01Vo> toSelectFindSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SP01Vo> selectFindSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp01showFind.do");
 		log.debug("SP01Vo : " + sp01Vo);
@@ -163,8 +163,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01show_detail.do", method = RequestMethod.GET)
-	public ModelAndView toSelectOneSP01Vo(@ModelAttribute("SP01Vo") SP01Vo sp01Vo, HttpSession session)
-			throws Exception {
+	public ModelAndView selectOneSP01Vo(@ModelAttribute("SP01Vo") SP01Vo sp01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp01show_detail.do");
 		log.debug("SP01Vo : " + sp01Vo);
@@ -182,7 +181,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/selectExplain", method = RequestMethod.GET)
-	public void toSelectExplainSP01Vo(@RequestParam(value = "seq") int seq, @RequestParam(value = "title") String title,
+	public void selectExplainSP01Vo(@RequestParam(value = "seq") int seq, @RequestParam(value = "title") String title,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		log.debug("enter selectExplain.do");
 
@@ -225,7 +224,7 @@ public class SP01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sp01delete.do", method = RequestMethod.POST)
-	public ModelAndView toDeleteSP01Vo(@ModelAttribute("SP01Vo") SP01Vo sp01Vo, HttpSession session) throws Exception {
+	public ModelAndView deleteSP01Vo(@ModelAttribute("SP01Vo") SP01Vo sp01Vo, HttpSession session) throws Exception {
 		log.debug("enter sp01delete.do");
 		log.debug("SP01Vo : " + sp01Vo);
 

@@ -71,4 +71,9 @@
 	delete from MENU
 	where menucd = #{menucd}
 	</delete>
+	
+	<insert id="insertError"  parameterType="com.singer.vo.ErrorVo">
+	insert into SE01
+	values (#{erroruri}, #{errortime}, #{errormsg}) 
+	</insert>
 </mapper>

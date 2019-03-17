@@ -28,7 +28,7 @@ public class SB02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02show.do", method = RequestMethod.POST)
-	public ResponseEntity<SB02Vo> toSelectSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SB02Vo> selectSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sb02show.do");
 		log.debug("sb02Vo : " + sb02Vo);
@@ -53,7 +53,7 @@ public class SB02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02insert.do", method = RequestMethod.POST)
-	public ResponseEntity<SB02Vo> toInsertSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SB02Vo> insertSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sb02insert.do");
 		log.debug("sb02Vo : " + sb02Vo);
@@ -83,7 +83,7 @@ public class SB02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02delete.do", method = RequestMethod.POST)
-	public ResponseEntity<SB02Vo> toDeleteSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SB02Vo> deleteSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
 		log.debug("enter sb02delete.do");
 		log.debug("sb02Vo : " + sb02Vo);
 

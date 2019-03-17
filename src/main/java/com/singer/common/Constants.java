@@ -10,6 +10,12 @@ public class Constants {
 	public static final int ROW_PER_PAGE = 10;
 	/** 성공 코드 */
 	public static final int SUCCESS_CODE = 1;
+	/** 실패 코드 */
+	public static final int FAIL_CODE = 0;
+	/** YES */
+	public static final int YES = 1;
+	/** NO */
+	public static final int NO = 0;
 	/** 로그인 실패 코드 */
 	public static final int ERROR_LOGIN_FAIL = 1001;
 	/** 메일전송 실패 코드 */

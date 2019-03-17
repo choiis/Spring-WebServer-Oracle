@@ -54,4 +54,5 @@ public class CommDao extends SuperDao {
 	public int updateCode(CommVo commVo) throws Exception {
 		return insert(namespace + ".updateCode", commVo);
 	}
+
 }

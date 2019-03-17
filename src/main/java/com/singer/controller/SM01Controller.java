@@ -41,7 +41,7 @@ public class SM01Controller {
 	private SM01Service sm01Service;
 
 	@RequestMapping(value = "/sm01join.do", method = RequestMethod.GET)
-	public ModelAndView toJoinPage() {
+	public ModelAndView joinPage() {
 		log.debug("enter sm01join.do");
 
 		ModelAndView model = new ModelAndView("/join");
@@ -52,7 +52,7 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01insert.do", method = RequestMethod.POST)
-	public ModelAndView toInsertSM01Vo(@ModelAttribute("SM01Vo") SM01Vo sm01Vo, MultipartHttpServletRequest request)
+	public ModelAndView insertSM01Vo(@ModelAttribute("SM01Vo") SM01Vo sm01Vo, MultipartHttpServletRequest request)
 			throws Exception {
 		log.debug("enter sm01join.do");
 		log.debug("sm01Vo : " + sm01Vo);
@@ -83,7 +83,7 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01.do", method = RequestMethod.GET)
-	public ModelAndView toShowSM01() {
+	public ModelAndView showSM01() {
 		ModelAndView model = new ModelAndView("/sm01list");
 		log.debug("enter sm01.do");
 
@@ -93,7 +93,7 @@ public class SM01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm01select.do", method = RequestMethod.POST)
-	public HashMap<String, Object> toSelectSM01Vo(SM01Vo sm01Vo) throws Exception {
+	public HashMap<String, Object> selectSM01Vo(SM01Vo sm01Vo) throws Exception {
 		log.debug("enter sm01select.do");
 		log.debug("sm01Vo : " + sm01Vo);
 		int nowPage = sm01Vo.getNowPage() + 1;
@@ -114,7 +114,7 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01update.do", method = RequestMethod.POST)
-	public ModelAndView toUpateSM01Vo(@ModelAttribute("SM01Vo") SM01Vo sm01Vo, MultipartHttpServletRequest request,
+	public ModelAndView upateSM01Vo(@ModelAttribute("SM01Vo") SM01Vo sm01Vo, MultipartHttpServletRequest request,
 			HttpSession session) throws Exception {
 		log.debug("enter sm01update.do");
 		log.debug("sm01Vo : " + sm01Vo);
@@ -154,7 +154,7 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01selectOne.do", method = RequestMethod.GET)
-	public ModelAndView toSelectOneSM01Vo(HttpSession session) throws Exception {
+	public ModelAndView selectOneSM01Vo(HttpSession session) throws Exception {
 		log.debug("enter sm01selectOne.do");
 
 		SM01Vo sm01Vo = new SM01Vo();
@@ -174,7 +174,7 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01show.do", method = RequestMethod.POST)
-	public ModelAndView toSelectOneSM01Vo(@ModelAttribute("sm01Vo") SM01Vo sm01Vo) throws Exception {
+	public ModelAndView selectOneSM01Vo(@ModelAttribute("sm01Vo") SM01Vo sm01Vo) throws Exception {
 		ModelAndView model = new ModelAndView("/sm01show");
 
 		log.debug("enter sm01show.do");
@@ -191,7 +191,7 @@ public class SM01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/selectPhoto.do", method = RequestMethod.GET)
-	public void toSelectPhotoSM01Vo(@RequestParam(value = "userid") String userid, HttpServletRequest request,
+	public void selectPhotoSM01Vo(@RequestParam(value = "userid") String userid, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter selectPhoto.do");
 

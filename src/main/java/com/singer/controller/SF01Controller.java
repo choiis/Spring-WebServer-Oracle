@@ -38,7 +38,7 @@ public class SF01Controller {
 	private SF01Service sf01Service;
 
 	@RequestMapping(value = "/sf01.do", method = RequestMethod.GET)
-	public ModelAndView toShowSF01() throws Exception {
+	public ModelAndView showSF01() throws Exception {
 		ModelAndView model = new ModelAndView("/sf01view");
 		log.debug("enter sf01.do");
 
@@ -47,7 +47,7 @@ public class SF01Controller {
 	}
 
 	@RequestMapping(value = "/sf01write.do", method = RequestMethod.GET)
-	public ModelAndView toInsertSF01() throws Exception {
+	public ModelAndView insertSF01() throws Exception {
 		ModelAndView model = new ModelAndView("/sf01insert");
 		log.debug("enter sf01write.do");
 
@@ -57,7 +57,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01insert.do", method = RequestMethod.POST)
-	public ModelAndView toInsertSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session,
+	public ModelAndView insertSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session,
 			MultipartHttpServletRequest request) throws Exception {
 		log.debug("enter sf01insert.do");
 		log.debug("sf01Vo : " + sf01Vo);
@@ -94,7 +94,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01show.do", method = RequestMethod.POST)
-	public ResponseEntity<SF01Vo> toSelectSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF01Vo> selectSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01show.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		int nowPage = sf01Vo.getNowPage() + 1;
@@ -115,7 +115,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01showFind.do", method = RequestMethod.POST)
-	public ResponseEntity<SF01Vo> toSelectFindSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF01Vo> selectFindSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01showFind.do");
 		log.debug("sf01Vo : " + sf01Vo);
 
@@ -133,7 +133,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01show_detail.do", method = RequestMethod.GET)
-	public ModelAndView toSelectOneSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session)
+	public ModelAndView selectOneSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session)
 			throws Exception {
 		log.debug("enter sf01show_detail.do");
 		log.debug("sf01Vo : " + sf01Vo);
@@ -150,7 +150,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/selectFile.do", method = RequestMethod.GET)
-	public ModelAndView toSelectPhotoSF01Vo(@RequestParam(value = "seq") int seq,
+	public ModelAndView selectPhotoSF01Vo(@RequestParam(value = "seq") int seq,
 			@RequestParam(value = "regdate") String regdate, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		log.debug("enter selectFile.do");
@@ -173,7 +173,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01delete.do", method = RequestMethod.POST)
-	public ModelAndView toDeleteSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ModelAndView deleteSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01delete.do");
 		log.debug("sf01Vo : " + sf01Vo);
 

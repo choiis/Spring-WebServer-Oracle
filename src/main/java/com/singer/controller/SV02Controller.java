@@ -25,7 +25,7 @@ public class SV02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv03insert.do", method = RequestMethod.POST)
-	public ResponseEntity<SV02Vo> toInsertSV01Vo(@RequestBody SV02Vo sv02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV02Vo> insertSV01Vo(@RequestBody SV02Vo sv02Vo, HttpSession session) throws Exception {
 		log.debug("enter sv03insert.do");
 		log.debug("sv01Vo : " + sv02Vo);
 

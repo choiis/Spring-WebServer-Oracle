@@ -28,7 +28,7 @@ public class SF02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf02show.do", method = RequestMethod.POST)
-	public ResponseEntity<SF02Vo> toSelectSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF02Vo> selectSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sf02show.do");
 		log.debug("sf02Vo : " + sf02Vo);
@@ -51,7 +51,7 @@ public class SF02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf02insert.do", method = RequestMethod.POST)
-	public ResponseEntity<SF02Vo> toInsertSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF02Vo> insertSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sf02insert.do");
 		log.debug("sf02Vo : " + sf02Vo);
@@ -79,7 +79,7 @@ public class SF02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf02delete.do", method = RequestMethod.POST)
-	public ResponseEntity<SF02Vo> toDeleteSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF02Vo> deleteSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
 		log.debug("enter sf02delete.do");
 		log.debug("sf02Vo : " + sf02Vo);
 

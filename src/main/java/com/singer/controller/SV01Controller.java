@@ -10,10 +10,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,7 +30,7 @@ public class SV01Controller {
 	private SV01Service sv01Service;
 
 	@RequestMapping(value = "/sv01.do", method = RequestMethod.GET)
-	public ModelAndView toShowSV01() throws Exception {
+	public ModelAndView showSV01() throws Exception {
 		ModelAndView model = new ModelAndView("/sv01view");
 		log.debug("enter sv01.do");
 
@@ -40,21 +40,19 @@ public class SV01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv01show_detail.do", method = RequestMethod.GET)
-	public ModelAndView toSelectDetailSV01Vo(@RequestParam("seq") int seq, @RequestParam("hit") int hit)
-			throws Exception {
+	public ModelAndView selectDetailSV01Vo(@ModelAttribute SV01Vo sv01Vo) throws Exception {
 		log.debug("enter sv01show_detail.do");
 
 		ModelAndView model = new ModelAndView("/sv01view_detail");
 
-		model.addObject("seq", seq);
-		model.addObject("hit", hit);
+		model.addObject("seq", sv01Vo.getSeq());
 
 		log.debug("exit sv01show_detail.do");
 		return model;
 	}
 
 	@RequestMapping(value = "sv01write.do", method = RequestMethod.GET)
-	public ModelAndView toWriteSV01() throws Exception {
+	public ModelAndView writeSV01() throws Exception {
 		ModelAndView model = new ModelAndView("/sv01insert");
 		log.debug("enter sv01write.do");
 
@@ -64,7 +62,7 @@ public class SV01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv01show.do", method = RequestMethod.POST)
-	public ResponseEntity<SV01Vo> toSelectSV01Vo(SV01Vo sv01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV01Vo> selectSV01Vo(SV01Vo sv01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sv01show.do");
 		log.debug("SV01Vo : " + sv01Vo);
@@ -87,7 +85,7 @@ public class SV01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv01insert.do", method = RequestMethod.POST)
-	public ResponseEntity<SV01Vo> toInsertSV01Vo(@RequestBody SV01Vo sv01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV01Vo> insertSV01Vo(@RequestBody SV01Vo sv01Vo, HttpSession session) throws Exception {
 		log.debug("enter sv01insert.do");
 		log.debug("sv01Vo : " + sv01Vo);
 
@@ -101,7 +99,7 @@ public class SV01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv01selectOne.do", method = RequestMethod.POST)
-	public ResponseEntity<SV01Vo> toSelectOneSV01Vo(SV01Vo sv01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV01Vo> selectOneSV01Vo(SV01Vo sv01Vo, HttpSession session) throws Exception {
 		log.debug("enter sv01selectOne.do");
 		log.debug("sv01Vo : " + sv01Vo);
 		String userid = (String) session.getAttribute("userid");

@@ -9,6 +9,7 @@ public class SV01Vo extends SuperVo {
 	private String userid;
 	private String regdate;
 	private int hit;
+	private int recall;
 
 	private String findText;
 
@@ -26,8 +27,8 @@ public class SV01Vo extends SuperVo {
 		super();
 	}
 
-	public SV01Vo(int seq, String title, String text, String userid, String regdate, int hit, String findText,
-			String sessionid, int multiselect, List<SV01Vo> list, List<SV02Vo> sv02Vos, int votedYn) {
+	public SV01Vo(int seq, String title, String text, String userid, String regdate, int hit, int recall,
+			String findText, String sessionid, int multiselect, List<SV01Vo> list, List<SV02Vo> sv02Vos, int votedYn) {
 		super();
 		this.seq = seq;
 		this.title = title;
@@ -35,6 +36,7 @@ public class SV01Vo extends SuperVo {
 		this.userid = userid;
 		this.regdate = regdate;
 		this.hit = hit;
+		this.recall = recall;
 		this.findText = findText;
 		this.sessionid = sessionid;
 		this.multiselect = multiselect;
@@ -139,11 +141,20 @@ public class SV01Vo extends SuperVo {
 		this.list = list;
 	}
 
+	public int getRecall() {
+		return recall;
+	}
+
+	public void setRecall(int recall) {
+		this.recall = recall;
+	}
+
 	@Override
 	public String toString() {
 		return "SV01Vo [seq=" + seq + ", title=" + title + ", text=" + text + ", userid=" + userid + ", regdate="
-				+ regdate + ", hit=" + hit + ", findText=" + findText + ", sessionid=" + sessionid + ", multiselect="
-				+ multiselect + ", list=" + list + ", sv02Vos=" + sv02Vos + ", votedYn=" + votedYn + "]";
+				+ regdate + ", hit=" + hit + ", recall=" + recall + ", findText=" + findText + ", sessionid="
+				+ sessionid + ", multiselect=" + multiselect + ", list=" + list + ", sv02Vos=" + sv02Vos + ", votedYn="
+				+ votedYn + "]";
 	}
 
 }
