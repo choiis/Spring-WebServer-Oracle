@@ -14,7 +14,7 @@ public abstract class AbstractExcelView extends AbstractView {
 
 	private static final String CONTENT_TYPE_XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-	public AbstractExcelView() {
+	protected AbstractExcelView() {
 
 	}
 

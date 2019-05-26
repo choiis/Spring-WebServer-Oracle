@@ -12,11 +12,11 @@ public class SuperVo {
 	protected int result;
 	protected int like;
 
-	public SuperVo() {
+	protected SuperVo() {
 
 	}
 
-	public SuperVo(String adminyn, boolean deleteYn, String showDate, int totCnt, int startRownum, int endRownum,
+	protected SuperVo(String adminyn, boolean deleteYn, String showDate, int totCnt, int startRownum, int endRownum,
 			int nowPage, int rowPerPage, int result, int like) {
 		super();
 		this.adminyn = adminyn;

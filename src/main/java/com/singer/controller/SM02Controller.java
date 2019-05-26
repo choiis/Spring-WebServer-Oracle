@@ -117,6 +117,6 @@ public class SM02Controller {
 		log.debug("list : " + list);
 		log.debug("exit sm02delete.do");
 
-		return new ResponseEntity<SM02Vo>(sm02Vo, HttpStatus.OK);
+		return new ResponseEntity<SM02Vo>(sm02Vo, HttpStatus.CREATED);
 	}
 }

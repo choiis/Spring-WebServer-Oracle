@@ -94,7 +94,7 @@ public class SV01Controller {
 		sv01Service.insertSV01Vo(sv01Vo, userid);
 
 		log.debug("exit sv01insert.do");
-		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);
+		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.CREATED);
 	}
 
 	@ResponseBody

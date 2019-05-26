@@ -104,7 +104,7 @@ public class CommController {
 		commVo.setCommList(list);
 
 		log.debug("exit insertMenu.do");
-		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
+		return new ResponseEntity<CommVo>(commVo, HttpStatus.CREATED);
 	}
 
 	@ResponseBody
@@ -150,7 +150,7 @@ public class CommController {
 		commVo.setCommList(list);
 
 		log.debug("exit insertCode.do");
-		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
+		return new ResponseEntity<CommVo>(commVo, HttpStatus.CREATED);
 	}
 
 	@ResponseBody

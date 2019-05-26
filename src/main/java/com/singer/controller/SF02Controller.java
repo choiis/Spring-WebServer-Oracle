@@ -74,7 +74,7 @@ public class SF02Controller {
 		}
 		log.debug("list : " + list);
 		log.debug("exit sf02insert.do");
-		return new ResponseEntity<SF02Vo>(sf02Vo, HttpStatus.OK);
+		return new ResponseEntity<SF02Vo>(sf02Vo, HttpStatus.CREATED);
 	}
 
 	@ResponseBody

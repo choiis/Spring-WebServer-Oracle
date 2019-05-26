@@ -77,7 +77,7 @@ public class SP02Controller {
 
 		log.debug("SP02Vo : " + sp02Vo);
 		log.debug("exit sp02insert.do");
-		return new ResponseEntity<SP02Vo>(sp02Vo, HttpStatus.OK);
+		return new ResponseEntity<SP02Vo>(sp02Vo, HttpStatus.CREATED);
 	}
 
 	@ResponseBody

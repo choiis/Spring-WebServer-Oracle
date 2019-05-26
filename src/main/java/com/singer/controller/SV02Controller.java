@@ -33,6 +33,6 @@ public class SV02Controller {
 		sv02Service.insertSv03Vo(sv02Vo, userid);
 
 		log.debug("exit sv03insert.do");
-		return new ResponseEntity<SV02Vo>(sv02Vo, HttpStatus.OK);
+		return new ResponseEntity<SV02Vo>(sv02Vo, HttpStatus.CREATED);
 	}
 }
