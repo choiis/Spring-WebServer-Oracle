@@ -30,7 +30,7 @@ public class SM02Controller {
 	private SM02Service sm02Service;
 
 	@RequestMapping(value = "/sm02.do", method = RequestMethod.GET)
-	public ModelAndView toSM02Vo(@RequestParam(value = "idx", defaultValue = "0") int idx,
+	public ModelAndView showSM02(@RequestParam(value = "idx", defaultValue = "0") int idx,
 			@ModelAttribute("SM02Vo") SM02Vo sM02Vo, HttpSession session) throws Exception {
 		ModelAndView model = new ModelAndView("/sm02view");
 		log.debug("enter sm02.do");

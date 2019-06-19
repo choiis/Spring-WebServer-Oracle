@@ -10,7 +10,12 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
+import com.singer.common.DateUtil;
 
 @Component
 @Aspect
@@ -38,9 +43,21 @@ public class AopAdvice {
 
 		Object result = pjp.proceed();
 		long endTime = System.currentTimeMillis();
-		
+
 		log.debug(pjp.getSignature().getName() + " 실행시간" + (endTime - startTime));
 		return result;
 	}
 
+	@Autowired
+	RedisTemplate<String, Object> redisTemplate;
+
+	@After("execution(* com.singer.controller.*Controller.show*(..))")
+	public void aopShow(JoinPoint pjp) throws Throwable {
+
+		log.debug("aopShow============");
+		// Redis Insert
+		// Hash구조에 Key는 날짜 field는 화면명
+		HashOperations<String, String, Object> hashOp = redisTemplate.opsForHash();
+		hashOp.increment(DateUtil.getToday(), pjp.getSignature().getName(), 1);
+	}
 }
