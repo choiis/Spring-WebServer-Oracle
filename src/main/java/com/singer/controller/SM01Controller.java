@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -93,24 +95,24 @@ public class SM01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm01select.do", method = RequestMethod.POST)
-	public HashMap<String, Object> selectSM01Vo(SM01Vo sm01Vo) throws Exception {
+	public ResponseEntity<SM01Vo> selectSM01Vo(SM01Vo sm01Vo) throws Exception {
 		log.debug("enter sm01select.do");
 		log.debug("sm01Vo : " + sm01Vo);
 		int nowPage = sm01Vo.getNowPage() + 1;
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 
 		List<SM01Vo> list = sm01Service.selectSM01Vo(sm01Vo);
-		hashmap.put("list", list);
+		sm01Vo.setList(list);
+		sm01Vo.setNowPage(nowPage);
 		// 페이징을 위한 카운트
 		if (list.size() != 0) {
-			hashmap.put("size", CommonUtil.getPageCnt(list.get(0).getTotCnt()));
+			sm01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
 		} else {
-			hashmap.put("size", 0);
+			sm01Vo.setTotCnt(0);
 		}
-		hashmap.put("nowPage", nowPage);
+
 		log.debug("list : " + list);
 		log.debug("exit sm01select.do");
-		return hashmap;
+		return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/sm01update.do", method = RequestMethod.POST)

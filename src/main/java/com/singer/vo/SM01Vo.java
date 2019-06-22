@@ -1,5 +1,7 @@
 package com.singer.vo;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class SM01Vo extends SuperVo {
@@ -17,6 +19,8 @@ public class SM01Vo extends SuperVo {
 
 	private String device;
 	private String browser;
+
+	private List<SM01Vo> list;
 
 	public SM01Vo() {
 		super();
@@ -133,6 +137,14 @@ public class SM01Vo extends SuperVo {
 
 	public void setBrowser(String browser) {
 		this.browser = browser;
+	}
+
+	public List<SM01Vo> getList() {
+		return list;
+	}
+
+	public void setList(List<SM01Vo> list) {
+		this.list = list;
 	}
 
 	@Override

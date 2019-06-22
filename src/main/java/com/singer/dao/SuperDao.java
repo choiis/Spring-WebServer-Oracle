@@ -10,6 +10,10 @@ public class SuperDao {
 	@Inject
 	private SqlSession sqlSession;
 
+	protected SuperDao() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@SuppressWarnings("rawtypes")
 	protected List selectList(String statement, Object vo) {
 		return sqlSession.selectList(statement, vo);
