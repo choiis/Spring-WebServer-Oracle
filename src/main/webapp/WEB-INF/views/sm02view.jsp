@@ -99,12 +99,7 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			var sendData = {
-			    "seq" : $("#seq" + idx).text(),
-			    "nowPage" : 1
-		    };
-
-			gfn_ajax("sm02delete.do","POST" , sendData , function(data) {
+			gfn_ajaxRest("sm02delete/" + $("#seq" + idx).text(), "DELETE"  , function(data) {
 				var html = "";
 				// jQuery 유틸리티 메서드 
 				$.each(data.list, function(index, item){
@@ -127,18 +122,13 @@
 	}
 	
 	function showSM02List(nowPage) {
-		
+		var page = 1;
 		if(!gfn_isNull(nowPage)) {
 			page = nowPage;
-		} else {
-			page = 1;
 		}
 		
-		var sendData = {
-			"nowPage" : page
-		};
-		
-		gfn_ajax("sm02show.do","POST" , sendData , function(data) {
+			
+		gfn_ajaxRest("sm02show/" + page, "GET" , function(data) {
 			var html = "";
 			// jQuery 유틸리티 메서드 
 			$.each(data.list, function(index, item){
@@ -168,7 +158,7 @@
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
 		<div class="container">
-		<form id="form" method="post" action="/common/sm02insert.do">
+		<form id="form" method="post" action="/sm02insert.do">
 			<input type="hidden" id="userid" name="userid" value="<%=session.getAttribute("userid")%>">
 			제목:<input type="text" id="title" name="title"> <br>
 			내용<textarea id="text" name="text" rows="5" cols="70"></textarea>

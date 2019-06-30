@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -132,10 +133,11 @@ public class SF01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01show_detail.do", method = RequestMethod.GET)
-	public ModelAndView selectOneSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session)
-			throws Exception {
-		log.debug("enter sf01show_detail.do");
+	@RequestMapping(value = "/sf01show_detail/{seq}", method = RequestMethod.GET)
+	public ModelAndView selectOneSF01Vo(@PathVariable("seq") int seq, HttpSession session) throws Exception {
+		SF01Vo sf01Vo = new SF01Vo();
+		sf01Vo.setSeq(seq);
+		log.debug("enter sf01show_detail");
 		log.debug("sf01Vo : " + sf01Vo);
 
 		ModelAndView model = new ModelAndView("/sf01view_detail");

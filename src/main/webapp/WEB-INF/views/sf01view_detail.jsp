@@ -90,13 +90,7 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			var sendData ={
-		    	"seq" : $("#seq" + idx).text(),
-		    	"seq01" : $("#seq01" + idx).text(),
-	        	"nowPage" : 1
-		    };
-			
-			gfn_ajax("sf02delete.do","POST" , sendData , function(data) {
+			gfn_ajaxRest("sf02delete/" + $("#seq" + idx).text() + "/" + $("#seq01" + idx).text(),"DELETE" , function(data) {
 				var html = "";
 		        for (var i = 0; i < data.list.length; i++) {
 		            html += '<tr>';
@@ -127,12 +121,7 @@
 	
 	function showSF02List(page) {
 		
-		var sendData =  {
-	    	"seq01" : parseInt($("#seq01").val()),
-	    	"nowPage" : page
-	    };
-		
-		gfn_ajax("sf02show.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sf02show/" + parseInt($("#seq01").val()) + "/" + page , "GET" , function(data) {
 			var html = "";
 			
 			for (var i = 0; i < data.list.length; i++) {
@@ -239,7 +228,7 @@
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
 		<div>
-		<form id="form_delete" method="post" action="/common/sf01delete.do">
+		<form id="form_delete" method="post" action="/sf01delete.do">
 						
 			<input type="hidden" id="seq01" name="seq" value="${sf01Vo.seq}" />
 			<input type="hidden" id="title" name="title" value="${sf01Vo.title}" />
@@ -275,11 +264,11 @@
 			</c:choose>
 			
 			<p>파일명 : ${sf01Vo.filename}</p>
-			<a href="/common/selectFile.do?seq=${sf01Vo.seq}&regdate=${sf01Vo.regdate}">파일 받기</a>
+			<a href="/selectFile.do?seq=${sf01Vo.seq}&regdate=${sf01Vo.regdate}">파일 받기</a>
 		</div>
 		
 		<div class="container">
-		<form id="form" method="post"  action="/common/sf02insert.do">
+		<form id="form" method="post"  action="/sf02insert.do">
 				댓글 내용<textarea id="text" name="text" rows="2" cols="40">
 				</textarea>
 				<input type="hidden" id="seq01" name="seq01" value="${sf01Vo.seq}" />

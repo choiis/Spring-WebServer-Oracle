@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,9 +41,11 @@ public class SM02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sm02show.do", method = RequestMethod.POST)
-	public ResponseEntity<SM02Vo> toSelectSM02Vo(SM02Vo sm02Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sm02show/{page}", method = RequestMethod.GET)
+	public ResponseEntity<SM02Vo> toSelectSM02Vo(@PathVariable("page") int page, HttpSession session) throws Exception {
 
+		SM02Vo sm02Vo = new SM02Vo();
+		sm02Vo.setNowPage(page);
 		log.debug("enter sm02show.do");
 		log.debug("sm02Vo : " + sm02Vo);
 
@@ -64,9 +67,11 @@ public class SM02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sm02delete.do", method = RequestMethod.POST)
-	public ResponseEntity<SM02Vo> toDeleteSM02Vo(SM02Vo sm02Vo, HttpSession session) throws Exception {
-
+	@RequestMapping(value = "/sm02delete/{seq}", method = RequestMethod.DELETE)
+	public ResponseEntity<SM02Vo> toDeleteSM02Vo(@PathVariable("seq") int seq, HttpSession session) throws Exception {
+		SM02Vo sm02Vo = new SM02Vo();
+		sm02Vo.setSeq(seq);
+		sm02Vo.setNowPage(1);
 		log.debug("enter sm02delete.do");
 
 		sm02Vo.setUserid((String) session.getAttribute("userid"));

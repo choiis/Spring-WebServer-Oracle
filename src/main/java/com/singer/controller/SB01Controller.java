@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -140,10 +141,11 @@ public class SB01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sb01show_detail.do", method = RequestMethod.GET)
-	public ModelAndView selectOneSB01Vo(@ModelAttribute("SB01Vo") SB01Vo sb01Vo, HttpSession session)
-			throws Exception {
-		log.debug("enter sb01show_detail.do");
+	@RequestMapping(value = "/sb01show_detail/{seq}", method = RequestMethod.GET)
+	public ModelAndView selectOneSB01Vo(@PathVariable("seq") int seq, HttpSession session) throws Exception {
+		SB01Vo sb01Vo = new SB01Vo();
+		sb01Vo.setSeq(seq);
+		log.debug("enter sb01show_detail");
 		log.debug("sb01Vo : " + sb01Vo);
 
 		ModelAndView model = new ModelAndView("/sb01view_detail");
@@ -152,7 +154,7 @@ public class SB01Controller {
 		model.addObject("sb01Vo", sb01Vo);
 
 		log.debug("sb01Vo : " + sb01Vo);
-		log.debug("exit sb01show_detail.do");
+		log.debug("exit sb01show_detail");
 
 		return model;
 	}

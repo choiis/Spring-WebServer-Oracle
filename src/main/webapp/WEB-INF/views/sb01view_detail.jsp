@@ -91,13 +91,7 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			var sendData = {
-		    	"seq" : $("#seq" + idx).text(),
-		    	"seq01" : $("#seq01" + idx).text(),
-	        	"nowPage" : 1
-		    };
-			
-			gfn_ajax("sb02delete.do","POST" , sendData , function(data) {
+			gfn_ajaxRest("sb02delete/" + $("#seq" + idx).text() + "/" + $("#seq01" + idx).text(),"DELETE" , function(data) {
 				var html = "";
 		        for (var i = 0; i < data.list.length; i++) {
 		            html += '<tr>';
@@ -127,12 +121,7 @@
 	
 	function showSB02List(nowPage) {
 		
-		var sendData =  {
-	    	"seq01" : parseInt($("#seq01").val()),
-	    	"nowPage" : nowPage
-	    };
-		
-		gfn_ajax("sb02show.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sb02show/" + parseInt($("#seq01").val()) + "/" + nowPage,"GET" , function(data) {
 			var html = "";
 	        for (var i = 0; i < data.list.length; i++) {
 	        	 html += '<tr>';
@@ -237,7 +226,7 @@
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
 		<div>
-		<form id="form_delete" method="post" action="/common/sb01delete.do">
+		<form id="form_delete" method="post" action="/sb01delete.do">
 						
 			<input type="hidden" id="seq01" name="seq" value="${sb01Vo.seq}" />
 			<input type="hidden" id="title" name="title" value="${sb01Vo.title}" />
@@ -273,12 +262,12 @@
 			</c:choose>
     		
 			<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
-			    <source src="/common/selectVideo.do?seq=${sb01Vo.seq}&title=${sb01Vo.title}" type="video/mp4" />
+			    <source src="/selectVideo.do?seq=${sb01Vo.seq}&title=${sb01Vo.title}" type="video/mp4" />
 			</video>
 		</div>
 		
 		<div class="container">
-		<form id="form" method="post"  action="/common/sb02insert.do">
+		<form id="form" method="post"  action="/sb02insert.do">
 				댓글 내용<textarea id="text" name="text" rows="2" cols="40">
 				</textarea>
 				<input type="hidden" id="seq01" name="seq01" value="${sb01Vo.seq}" />
