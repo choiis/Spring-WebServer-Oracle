@@ -74,7 +74,7 @@
 			gfn_ajaxRequestBody("sv01insert.do", "POST", sendData, function(data) {
 				
 				if(confirm("투표가 등록되었습니다!")) {
-					location.href='/common/sv01.do';
+					location.href='/sv01.do';
 				}
 			});
 		});
@@ -93,7 +93,7 @@
 			<div id="wrapper">
 				<div id="sb01insert" class="animate form">
 					<h4>등록할 파일 정보를 입력해 주세요</h4>
-					<form id="form" method="post" action="/common/sv01insert.do">
+					<form id="form" method="post" action="/sv01insert.do">
 						제목:<input type="text" id="title" name="title"> <br>
 						내용<textarea id="text" name="text" rows="10" cols="40"></textarea>
 						<br>

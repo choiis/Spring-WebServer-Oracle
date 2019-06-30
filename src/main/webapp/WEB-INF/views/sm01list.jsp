@@ -71,7 +71,7 @@ var user_code = {};
 			window.open("", popTitle);
 			
 			frmData.target = popTitle;
-			frmData.action = "/common/sm01show.do";
+			frmData.action = "/sm01show.do";
 			frmData.submit();
 		});
 		
@@ -182,7 +182,7 @@ var user_code = {};
 		
 		</div>
 	</section>
-	<form id="frmData" method="post" action="/common/sm01show.do" style="display:none;">
+	<form id="frmData" method="post" action="/sm01show.do" style="display:none;">
 		<input id="userId" name="userid">
 	</form>
 	<p>

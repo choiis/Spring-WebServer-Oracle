@@ -153,7 +153,7 @@
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
 		<div>
-		<form id="form_delete" method="post" action="/common/sp01delete.do">
+		<form id="form_delete" method="post" action="/sp01delete.do">
 			<input type="hidden" id="seq" name="seq" value="${seq}" />
 			<input type="hidden" id="multiselect" name="multiselect" />
     	</form>

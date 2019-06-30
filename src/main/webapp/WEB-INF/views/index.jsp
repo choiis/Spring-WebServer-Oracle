@@ -68,7 +68,7 @@
 		
 		gfn_ajax("login.do","POST" , sendData , function(data) {
 			if(data.code == 1){
-				location.href='/common/gomain.do';
+				location.href='/gomain.do';
 			} else {
 				alert("아이디와 비밀번호를 확인해 주세요");
 			}
@@ -86,7 +86,7 @@
 			<div id="container_demo">
 				<div id="wrapper">
 					<div id="login" class="animate form">
-						<form id="form" action="/common/login.do" method="post">
+						<form id="form" action="/login.do" method="post">
 							<h1>Log in</h1>
 							<p>
 								<label for="userId" class="userId" data-icon="u"> 아이디를
@@ -104,7 +104,7 @@
 							</p>
 							<div id=jhw align="right">
 								아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp; 
-								<a href="/common/sm01join.do">회원가입</a>
+								<a href="/sm01join.do">회원가입</a>
 								<br> 아이디를 잊으셨나요? &nbsp;&nbsp;&nbsp; <a
 									href="Join/findId.jsp">아이디 찾기</a> <br> 비밀번호를
 								잊으셨나요?&nbsp;&nbsp; <a href="Join/findPw.jsp">비밀번호 찾기</a>

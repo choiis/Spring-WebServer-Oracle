@@ -59,8 +59,8 @@
 			<p>가입일 : ${sM01Vo.regdate}</p>
 			<p>전화번호 : ${sM01Vo.phone}</p>
 			
-			<img id="showTempImage" alt="" src="/common/selectPhoto.do?userid=${sM01Vo.userid}" height="170px" width="150px"/>
-			<form id="form" method="post" action="/common/sendMail.do">
+			<img id="showTempImage" alt="" src="/selectPhoto.do?userid=${sM01Vo.userid}" height="170px" width="150px"/>
+			<form id="form" method="post" action="/sendMail.do">
 			이메일 :<input type="text" id="email" name="email" value='${sM01Vo.email}' disabled><br>
 			이메일 제목 : <input	type="text" id="title" name="title"><br>
 			이메일 내용 : <textarea id="contents" name="contents" rows="10" cols="60"></textarea>

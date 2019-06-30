@@ -21,7 +21,7 @@
 	
 	function init() {
 		alert("로그인 세션이 없습니다");
-		location.href = "/common";
+		location.href = "/";
 	}
 </script>
 	<div class="container">

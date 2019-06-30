@@ -38,13 +38,13 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		String usertype = (String) session.getAttribute("usertype");
 		log.debug("===================== preHandle =========================");
 		// 세션 만료 케이스
-		if ("/common/sessionExpire.do".equals(uri) || "/common".equals(uri)) {
+		if ("/sessionExpire.do".equals(uri) || "/".equals(uri)) {
 			return true;
 		}
 
 		if (userid == null) { // 세션 없음
 			log.debug("login need");
-			response.sendRedirect("/common/sessionExpire.do");
+			response.sendRedirect("/sessionExpire.do");
 			return false;
 		}
 

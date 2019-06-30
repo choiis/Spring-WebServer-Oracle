@@ -160,7 +160,7 @@ var product_code = {};
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50" id="seq">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50" id="title"><a href="/common/sp01show_detail.do?seq='+
+	            html += '<td scope="col" width="50" id="title"><a href="/sp01show_detail.do?seq='+
 	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
@@ -198,7 +198,7 @@ var product_code = {};
 				<div id="sb01insert" class="animate form">
 					<div id="login" class="animate form">
 						<h4>회원 정보를 입력해 주세요</h4>
-						<form id="form" name="updateform" method="post" enctype="multipart/form-data" action="/common/sm01update.do">
+						<form id="form" name="updateform" method="post" enctype="multipart/form-data" action="/sm01update.do">
 							<input type="hidden" id="userid" name="userid" value="${sm01Vo.userid}"> <br>
 							<br> 이름:<input	type="text" id="username" name="username" value="${sm01Vo.username}" maxlength="6">
 							<br> 전화번호:<input type="text" id="phone" name="phone" value="${sm01Vo.phone}" maxlength="14">
@@ -208,7 +208,7 @@ var product_code = {};
 							<button id="save" type="button" >저장</button>
 							<input id="fileInput" type="file" name="imgFile" />				
 						</form>
-						<img id="showTempImage" alt="" name="photo" src="/common/selectPhoto.do?userid=${sm01Vo.userid}" height="170px" width="150px"/>
+						<img id="showTempImage" alt="" name="photo" src="/selectPhoto.do?userid=${sm01Vo.userid}" height="170px" width="150px"/>
 					</div>
 				</div>
 				<table border = "1">

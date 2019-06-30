@@ -23,7 +23,7 @@
 			e.preventDefault();
 			
 			if(confirm("로그아웃 하시겠습니까?")) {
-				location.href = "/common/logout.do";
+				location.href = "/logout.do";
 			} 
 		});
 	});
@@ -51,7 +51,7 @@
         <li class="group">
         <ul>회원 이름 : <%=session.getAttribute("username")%></ul><br>
         <ul>회원 아아디 :<%=session.getAttribute("userid")%></ul><br>
-        <a href = '/common/sm01selectOne.do'>회원정보 변경</a>
+        <a href = '/sm01selectOne.do'>회원정보 변경</a>
         <br>
         <a href="#" id="logout">로그아웃</a>
         <div class="title">게시판 이용</div>

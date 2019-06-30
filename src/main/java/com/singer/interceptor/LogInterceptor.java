@@ -24,9 +24,9 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 		String userid = (String) session.getAttribute("userid");
 		log.debug("===================== postHandle =========================");
 		String uri = request.getRequestURI();
-		if (!"/common/commCode.do".equals(uri) && !"/common/commMenu.do".equals(uri)
-				&& !"/common/commCodeGrp.do".equals(uri) && !"/common/sessionExpire.do".equals(uri)
-				&& !"/common/gomain.do".equals(uri)) {
+		if (!"/commCode.do".equals(uri) && !"/commMenu.do".equals(uri)
+				&& !"/commCodeGrp.do".equals(uri) && !"/sessionExpire.do".equals(uri)
+				&& !"/gomain.do".equals(uri)) {
 			log.debug("addr  : " + request.getRemoteAddr());
 			log.debug("host  : " + request.getRemoteHost());
 			log.debug("port  : " + request.getRemotePort());

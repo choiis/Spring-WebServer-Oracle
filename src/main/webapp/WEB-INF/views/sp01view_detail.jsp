@@ -276,7 +276,7 @@ var product_code = {};
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
 		<div>
-		<form id="form_delete" method="post" action="/common/sp01delete.do">
+		<form id="form_delete" method="post" action="/sp01delete.do">
 						
 			<input type="hidden" id="seq01" name="seq" value="${sp01Vo.seq}" />
 			<input type="hidden" id="title" name="title" value="${sp01Vo.title}" />
@@ -320,11 +320,11 @@ var product_code = {};
 				</c:otherwise>
 			</c:choose>
   
-    		<img id="showExplain" alt="" src="/common/selectExplain.do?seq=${sp01Vo.seq}&title=${sp01Vo.title}" height="170px" width="150px"/>
+    		<img id="showExplain" alt="" src="/selectExplain.do?seq=${sp01Vo.seq}&title=${sp01Vo.title}" height="170px" width="150px"/>
 		</div>
 		
 		<div class="container">
-		<form id="form" method="post"  action="/common/sb02insert.do">
+		<form id="form" method="post"  action="/sb02insert.do">
 				댓글 내용<textarea id="text" name="text" rows="2" cols="40">
 				</textarea>
 				<input type="hidden" id="seq01" name="seq01" value="${sp01Vo.seq}" />

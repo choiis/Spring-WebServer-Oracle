@@ -21,7 +21,7 @@
 	
 	function init() {
 		alert("권한이 없는 메뉴입니다");
-		location.href = "/common/gomain.do";
+		location.href = "/gomain.do";
 	}
 </script>
 	<div class="container">

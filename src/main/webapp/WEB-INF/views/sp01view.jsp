@@ -90,7 +90,7 @@ var product_code = {};
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50"><a href="/common/sp01show_detail.do?seq='+
+	            html += '<td scope="col" width="50"><a href="/sp01show_detail.do?seq='+
 	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
@@ -128,7 +128,7 @@ var product_code = {};
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50"><a href="/common/sp01show_detail.do?seq='+
+	            html += '<td scope="col" width="50"><a href="/sp01show_detail.do?seq='+
 	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
@@ -195,7 +195,7 @@ var product_code = {};
 		<div id="pagenation">
 		
 		</div>
-			<form id="write_form" action="/common/sp01write.do" method="get">
+			<form id="write_form" action="/sp01write.do" method="get">
 			<button id="btn_write_button" type="button" >게시물 등록</button>
 			</form>
 		</div>

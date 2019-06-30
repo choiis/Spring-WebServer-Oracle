@@ -95,7 +95,7 @@
 		var combo ='<option value="" selected>선택</option>';
 		var formData = gfn_jsonSerialize({});
 		$.ajax({
-		    url : '/common/commCodeGrp.do',
+		    url : '/commCodeGrp.do',
 		    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
 		    type : 'post',
 		    dataType : 'json',

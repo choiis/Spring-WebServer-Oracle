@@ -85,7 +85,7 @@
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50"><a href="/common/sb01show_detail.do?seq='+
+	            html += '<td scope="col" width="50"><a href="/sv01show_detail.do?seq='+
 	            item.seq + '">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
@@ -121,7 +121,7 @@
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50"><a href="/common/sv01show_detail.do?seq='+
+	            html += '<td scope="col" width="50"><a href="/sv01show_detail.do?seq='+
 	            item.seq +'">' + 
 	            
 	            item.title + '</a></td>';
@@ -179,7 +179,7 @@
 		<div id="pagenation">
 		
 		</div>
-			<form id="write_form" action="/common/sv01write.do" method="get">
+			<form id="write_form" action="/sv01write.do" method="get">
 			<button id="btn_write_button" type="button" >게시물 등록</button>
 			</form>
 		</div>
