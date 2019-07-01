@@ -162,8 +162,8 @@ public class SP01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01show_detail.do", method = RequestMethod.GET)
-	public ModelAndView selectOneSP01Vo(@ModelAttribute("SP01Vo") SP01Vo sp01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sp01show_detail/{seq}", method = RequestMethod.GET)
+	public ModelAndView selectOneSP01Vo(@ModelAttribute SP01Vo sp01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp01show_detail.do");
 		log.debug("SP01Vo : " + sp01Vo);

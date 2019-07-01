@@ -160,7 +160,7 @@ var product_code = {};
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50" id="seq">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50" id="title"><a href="/sp01show_detail.do?seq='+
+	            html += '<td scope="col" width="50" id="title"><a href="/sp01show_detail/'+
 	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
@@ -208,7 +208,7 @@ var product_code = {};
 							<button id="save" type="button" >저장</button>
 							<input id="fileInput" type="file" name="imgFile" />				
 						</form>
-						<img id="showTempImage" alt="" name="photo" src="/selectPhoto.do?userid=${sm01Vo.userid}" height="170px" width="150px"/>
+						<img id="showTempImage" alt="" name="photo" src="/selectPhoto/${sm01Vo.userid}" height="170px" width="150px"/>
 					</div>
 				</div>
 				<table border = "1">

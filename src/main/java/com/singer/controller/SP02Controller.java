@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,8 +28,8 @@ public class SP02Controller {
 	private SP02Service sp02Service;
 
 	@ResponseBody
-	@RequestMapping(value = "/sp02show.do", method = RequestMethod.POST)
-	public ResponseEntity<SP02Vo> selectSP02Vo(SP02Vo sp02Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sp02show/{seq01}/{nowPage}", method = RequestMethod.POST)
+	public ResponseEntity<SP02Vo> selectSP02Vo(@ModelAttribute SP02Vo sp02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp02show.do");
 		log.debug("SP02Vo : " + sp02Vo);
@@ -81,8 +82,8 @@ public class SP02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp02delete.do", method = RequestMethod.POST)
-	public ResponseEntity<SP02Vo> deleteSP02Vo(SP02Vo sp02Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sp02delete/{seq}/{seq01}", method = RequestMethod.POST)
+	public ResponseEntity<SP02Vo> deleteSP02Vo(@ModelAttribute SP02Vo sp02Vo, HttpSession session) throws Exception {
 		log.debug("enter sp02delete.do");
 		log.debug("SP02Vo : " + sp02Vo);
 

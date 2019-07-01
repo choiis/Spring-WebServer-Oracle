@@ -22,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -192,14 +191,10 @@ public class SM01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/selectPhoto.do", method = RequestMethod.GET)
-	public void selectPhotoSM01Vo(@RequestParam(value = "userid") String userid, HttpServletRequest request,
+	@RequestMapping(value = "/selectPhoto/{userid}", method = RequestMethod.GET)
+	public void selectPhotoSM01Vo(@ModelAttribute SM01Vo sm01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter selectPhoto.do");
-
-		SM01Vo sm01Vo = new SM01Vo();
-		sm01Vo.setUserid(userid);
-
 		log.debug("sm01Vo : " + sm01Vo);
 
 		HashMap<String, Object> hashMap = sm01Service.selectImage(sm01Vo);

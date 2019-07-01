@@ -20,10 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -99,8 +97,8 @@ public class SB01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sb01show.do", method = RequestMethod.POST)
-	public ResponseEntity<SB01Vo> selectSB01Vo(SB01Vo sb01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sb01show/{nowPage}", method = RequestMethod.POST)
+	public ResponseEntity<SB01Vo> selectSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sb01show.do");
 		log.debug("sb01Vo : " + sb01Vo);
@@ -142,9 +140,7 @@ public class SB01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb01show_detail/{seq}", method = RequestMethod.GET)
-	public ModelAndView selectOneSB01Vo(@PathVariable("seq") int seq, HttpSession session) throws Exception {
-		SB01Vo sb01Vo = new SB01Vo();
-		sb01Vo.setSeq(seq);
+	public ModelAndView selectOneSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpSession session) throws Exception {
 		log.debug("enter sb01show_detail");
 		log.debug("sb01Vo : " + sb01Vo);
 
@@ -160,15 +156,10 @@ public class SB01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/selectVideo", method = RequestMethod.GET)
-	public void selectPhotoSB01Vo(@RequestParam(value = "seq") int seq, @RequestParam(value = "title") String title,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value = "/selectVideo/{seq}/{title}", method = RequestMethod.GET)
+	public void selectVideoSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		log.debug("enter selectVideo.do");
-
-		SB01Vo sb01Vo = new SB01Vo();
-		sb01Vo.setSeq(seq);
-		sb01Vo.setTitle(title);
-
 		HashMap<String, Object> hashMap = sb01Service.selectVideo(sb01Vo);
 
 		InputStream is = null;

@@ -114,13 +114,7 @@ var product_code = {};
 		
 		if(confirm("삭제할까요?")) {
 			
-			var sendData = {
-		    	"seq" : $("#seq" + idx).text(),
-		    	"seq01" : $("#seq01" + idx).text(),
-	        	"nowPage" : 1
-		    };
-			
-			gfn_ajax("sp02delete.do","POST" , sendData , function(data) {
+			gfn_ajaxRest("sp02delete/" + $("#seq" + idx).text() + "/" + $("#seq01" + idx).text(),"DELETE" , function(data) {
 				var html = "";
 		        for (var i = 0; i < data.list.length; i++) {
 		            html += '<tr>';
@@ -148,14 +142,9 @@ var product_code = {};
 		}
 	}
 	
-	function showSP02List(nowPage) {
-		
-		var sendData =  {
-	    	"seq01" : parseInt($("#seq01").val()),
-	    	"nowPage" : nowPage
-	    };
-		
-		gfn_ajax("sp02show.do","POST" , sendData , function(data) {
+	function showSP02List(page) {
+
+		gfn_ajaxRest("sp02show/" + parseInt($("#seq01").val()) + "/" + page , "GET" , function(data) {
 			var html = "";
 	        for (var i = 0; i < data.list.length; i++) {
 	        	 html += '<tr>';

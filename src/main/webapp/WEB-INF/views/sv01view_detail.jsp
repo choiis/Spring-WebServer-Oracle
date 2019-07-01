@@ -93,12 +93,7 @@
 	
 	function showSV01One(recall) {
 		
-		var sendData =  {
-	    	"seq" : parseInt($("#seq").val()),
-	    	"recall" : recall
-	    };
-		
-		gfn_ajax("sv01selectOne.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sv01select/" + parseInt($("#seq").val()) + "/" + recall, "GET" , function(data) {
 		
 			$("#writer").text(data.userid);
 			$("#title").text(data.title);

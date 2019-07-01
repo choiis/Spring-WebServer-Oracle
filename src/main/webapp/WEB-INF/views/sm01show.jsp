@@ -59,7 +59,7 @@
 			<p>가입일 : ${sM01Vo.regdate}</p>
 			<p>전화번호 : ${sM01Vo.phone}</p>
 			
-			<img id="showTempImage" alt="" src="/selectPhoto.do?userid=${sM01Vo.userid}" height="170px" width="150px"/>
+			<img id="showTempImage" alt="" src="/selectPhoto/${sM01Vo.userid}" height="170px" width="150px"/>
 			<form id="form" method="post" action="/sendMail.do">
 			이메일 :<input type="text" id="email" name="email" value='${sM01Vo.email}' disabled><br>
 			이메일 제목 : <input	type="text" id="title" name="title"><br>

@@ -39,7 +39,7 @@ public class SV01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sv01show_detail.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sv01show_detail/{seq}", method = RequestMethod.GET)
 	public ModelAndView selectDetailSV01Vo(@ModelAttribute SV01Vo sv01Vo) throws Exception {
 		log.debug("enter sv01show_detail.do");
 
@@ -98,8 +98,8 @@ public class SV01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sv01selectOne.do", method = RequestMethod.POST)
-	public ResponseEntity<SV01Vo> selectOneSV01Vo(SV01Vo sv01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sv01select/{seq}/{recall}", method = RequestMethod.GET)
+	public ResponseEntity<SV01Vo> selectOneSV01Vo(@ModelAttribute SV01Vo sv01Vo, HttpSession session) throws Exception {
 		log.debug("enter sv01selectOne.do");
 		log.debug("sv01Vo : " + sv01Vo);
 		String userid = (String) session.getAttribute("userid");

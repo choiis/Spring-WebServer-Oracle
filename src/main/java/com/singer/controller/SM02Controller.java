@@ -11,10 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,8 +29,7 @@ public class SM02Controller {
 	private SM02Service sm02Service;
 
 	@RequestMapping(value = "/sm02.do", method = RequestMethod.GET)
-	public ModelAndView showSM02(@RequestParam(value = "idx", defaultValue = "0") int idx,
-			@ModelAttribute("SM02Vo") SM02Vo sM02Vo, HttpSession session) throws Exception {
+	public ModelAndView showSM02(HttpSession session) throws Exception {
 		ModelAndView model = new ModelAndView("/sm02view");
 		log.debug("enter sm02.do");
 
@@ -42,11 +39,9 @@ public class SM02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02show/{page}", method = RequestMethod.GET)
-	public ResponseEntity<SM02Vo> toSelectSM02Vo(@PathVariable("page") int page, HttpSession session) throws Exception {
+	public ResponseEntity<SM02Vo> toSelectSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
 
-		SM02Vo sm02Vo = new SM02Vo();
-		sm02Vo.setNowPage(page);
-		log.debug("enter sm02show.do");
+		log.debug("enter sm02show");
 		log.debug("sm02Vo : " + sm02Vo);
 
 		sm02Vo.setUserid((String) session.getAttribute("userid"));
@@ -68,9 +63,7 @@ public class SM02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02delete/{seq}", method = RequestMethod.DELETE)
-	public ResponseEntity<SM02Vo> toDeleteSM02Vo(@PathVariable("seq") int seq, HttpSession session) throws Exception {
-		SM02Vo sm02Vo = new SM02Vo();
-		sm02Vo.setSeq(seq);
+	public ResponseEntity<SM02Vo> toDeleteSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
 		sm02Vo.setNowPage(1);
 		log.debug("enter sm02delete.do");
 

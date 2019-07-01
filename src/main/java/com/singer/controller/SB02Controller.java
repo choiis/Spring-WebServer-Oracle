@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,12 +28,8 @@ public class SB02Controller {
 	private SB02Service sb02Service;
 
 	@ResponseBody
-	@RequestMapping(value = "/sb02show/{seq01}/{nowPage", method = RequestMethod.GET)
-	public ResponseEntity<SB02Vo> selectSB02Vo(@PathVariable("seq01") int seq01, @PathVariable("nowPage") int nowPage,
-			HttpSession session) throws Exception {
-		SB02Vo sb02Vo = new SB02Vo();
-		sb02Vo.setSeq01(seq01);
-		sb02Vo.setNowPage(nowPage);
+	@RequestMapping(value = "/sb02show/{seq01}/{nowPage}", method = RequestMethod.GET)
+	public ResponseEntity<SB02Vo> selectSB02Vo(@ModelAttribute SB02Vo sb02Vo, HttpSession session) throws Exception {
 		log.debug("enter sb02show.do");
 		log.debug("sb02Vo : " + sb02Vo);
 
@@ -87,11 +83,7 @@ public class SB02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02delete/{seq}/{seq01}", method = RequestMethod.GET)
-	public ResponseEntity<SB02Vo> deleteSB02Vo(@PathVariable("seq") int seq, @PathVariable("seq01") int seq01,
-			HttpSession session) throws Exception {
-		SB02Vo sb02Vo = new SB02Vo();
-		sb02Vo.setSeq(seq);
-		sb02Vo.setSeq01(seq01);
+	public ResponseEntity<SB02Vo> deleteSB02Vo(@ModelAttribute SB02Vo sb02Vo, HttpSession session) throws Exception {
 		sb02Vo.setNowPage(1);
 		log.debug("enter sb02delete.do");
 		log.debug("sb02Vo : " + sb02Vo);

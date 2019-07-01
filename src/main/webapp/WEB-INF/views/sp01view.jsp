@@ -90,7 +90,7 @@ var product_code = {};
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50"><a href="/sp01show_detail.do?seq='+
+	            html += '<td scope="col" width="50"><a href="/sp01show_detail/'+
 	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
@@ -128,7 +128,7 @@ var product_code = {};
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50"><a href="/sp01show_detail.do?seq='+
+	            html += '<td scope="col" width="50"><a href="/sp01show_detail/'+
 	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';

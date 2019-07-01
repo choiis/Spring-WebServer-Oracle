@@ -262,7 +262,7 @@
 			</c:choose>
     		
 			<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
-			    <source src="/selectVideo.do?seq=${sb01Vo.seq}&title=${sb01Vo.title}" type="video/mp4" />
+			    <source src="/selectVideo/${sb01Vo.seq}/${sb01Vo.title}" type="video/mp4" />
 			</video>
 		</div>
 		
