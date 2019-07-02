@@ -36,7 +36,7 @@ public class SF01ServiceImpl implements SF01Service {
 	public List<SF01Vo> selectSF01Vo(SF01Vo sf01vo) throws Exception {
 
 		int nowPage = sf01vo.getNowPage();
-		sf01vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE);
+		sf01vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE + 1);
 		sf01vo.setEndRownum(nowPage * Constants.ROW_PER_PAGE);
 
 		return sf01Dao.selectSF01Vo(sf01vo);

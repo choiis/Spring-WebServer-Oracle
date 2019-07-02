@@ -34,9 +34,8 @@ public class SF02ServiceImpl implements SF02Service {
 	public List<SF02Vo> selectSF02Vo(SF02Vo sf02Vo, String userid) throws Exception {
 
 		int nowPage = sf02Vo.getNowPage();
-
-		sf02Vo.setNowPage(nowPage);
-		sf02Vo.setRowPerPage(Constants.ROW_PER_PAGE);
+		sf02Vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE + 1);
+		sf02Vo.setEndRownum(nowPage * Constants.ROW_PER_PAGE);
 
 		List<SF02Vo> list = sf02Dao.selectSF02Vo(sf02Vo);
 

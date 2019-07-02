@@ -26,19 +26,28 @@
 		</update>
 		
 		<select id="select" resultType="com.singer.vo.SB02Vo"  parameterType="com.singer.vo.SB02Vo">
-		select * from
-			(select 
-				seq as seq,
-				ceil(row_number() over(order by regdate desc) / #{rowPerPage} ) as nowPage,
-        		seq01 as seq01,
-				text as text, 
-				userid as userid,  
-				regdate as regdate,
-				good as good,
-				count(*) over() as totCnt
-			 from SB02 
- 			where seq01 = #{seq01}
-		)	where nowPage = #{nowPage}
+		
+			<![CDATA[
+			select T.* ,
+ 				 (select count(*) /*+ INDEX_FFS(SB02 IDX_SB02_1)*/
+  				from SB02 
+  				where seq01 = #{seq01}
+  			) as totCnt
+			from
+				(select  /*+ INDEX_DESC(SB02 IDX_SB02_1)*/
+        			rownum as rown,
+					seq as seq,
+        			seq01 as seq01,
+					text as text, 
+					userid as userid,  
+					regdate as regdate,
+					good as good,
+				 from SB02 
+ 				where seq01 = #{seq01}
+				and rownum <= #{endRownum}
+    			) T
+    		where T.rown >= #{startRownum}
+    		]]>
 		</select>
 		
 		<delete id="delete" parameterType="com.singer.vo.SB02Vo">

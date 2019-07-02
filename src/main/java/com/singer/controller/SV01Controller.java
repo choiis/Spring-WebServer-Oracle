@@ -66,7 +66,6 @@ public class SV01Controller {
 
 		log.debug("enter sv01show.do");
 		log.debug("SV01Vo : " + sv01Vo);
-		int nowPage = sv01Vo.getNowPage() + 1;
 
 		List<SV01Vo> list = sv01Service.selectSV01Vo(sv01Vo);
 		sv01Vo.setList(list);
@@ -77,7 +76,6 @@ public class SV01Controller {
 		} else {
 			sv01Vo.setTotCnt(0);
 		}
-		sv01Vo.setNowPage(nowPage);
 		log.debug("list : " + list);
 		log.debug("exit sv01show.do");
 		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);

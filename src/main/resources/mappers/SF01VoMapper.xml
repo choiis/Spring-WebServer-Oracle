@@ -65,34 +65,32 @@
 		</select>
 		
 		<select id="select" resultType="com.singer.vo.SF01Vo"  parameterType="com.singer.vo.SF01Vo">
-		select S1.*
-			 from (
-			 
-			select 
-				rownum as rown,
-				s1.seq as seq,
-				s1.title as title, 
-				s1.text as text, 
-				s1.userid as userid,  
-				s1.regdate as regdate,
-				s1.hit as hit, 
-				s1.good as good,
-				count(*) over() as totCnt,
-        		(select count(*) 
-        				from SF02 s2
-        			where s1.seq = s2.seq01
-        		) as reply
-			 from SF01 s1
-			 where 1=1
-			 <if test="title != null">
-			 	and title like #{title} || '%'
-			 </if>
-			 <if test="userid != null">
-			 	and userid = #{userid}
-			 </if>
-			 order by seq desc , regdate desc
-			) S1 where S1.rown between 
-		#{startRownum} + 1 and #{endRownum}
+		<![CDATA[
+			select T.*,
+  				(select count(*) 
+        			from SF02 s2
+        			where T.seq = s2.seq01
+      			) as reply,
+      			(select count(*) /*+ INDEX_FFS(SF01 IDX_SF01_1)*/
+  					from SF01 
+  				) as totCnt
+      			from
+  				(select S1.*
+				 from (
+					select /*+ index_desc(SF01 IDX_SF01_1)*/
+					rownum as rown,
+					seq as seq,
+					title as title, 
+					text as text, 
+					userid as userid,  
+					regdate as regdate,
+					hit as hit, 
+					good as good
+			 	from SF01 
+				) S1 where S1.rown between 
+			#{startRownum} and #{endRownum}
+  			) T
+  			]]>
 		</select>
 		
 		<delete id="delete" parameterType="com.singer.vo.SF01Vo">

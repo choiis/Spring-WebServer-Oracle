@@ -102,7 +102,6 @@ public class SP01Controller {
 
 		log.debug("enter sp01show.do");
 		log.debug("SP01Vo : " + sp01Vo);
-		int nowPage = sp01Vo.getNowPage() + 1;
 
 		List<SP01Vo> list = sp01Service.selectSP01Vo(sp01Vo);
 		sp01Vo.setList(list);
@@ -112,7 +111,6 @@ public class SP01Controller {
 		} else {
 			sp01Vo.setTotCnt(0);
 		}
-		sp01Vo.setNowPage(nowPage);
 		log.debug("list : " + list);
 		log.debug("exit sp01show.do");
 		return new ResponseEntity<SP01Vo>(sp01Vo, HttpStatus.OK);

@@ -96,7 +96,6 @@ public class SF01Controller {
 	public ResponseEntity<SF01Vo> selectSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01show.do");
 		log.debug("sf01Vo : " + sf01Vo);
-		int nowPage = sf01Vo.getNowPage() + 1;
 		List<SF01Vo> list = sf01Service.selectSF01Vo(sf01Vo);
 		sf01Vo.setList(list);
 
@@ -106,7 +105,6 @@ public class SF01Controller {
 		} else {
 			sf01Vo.setTotCnt(0);
 		}
-		sf01Vo.setNowPage(nowPage);
 		log.debug("list : " + list);
 		log.debug("exit sf01show.do");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);

@@ -34,9 +34,8 @@ public class SB02ServiceImpl implements SB02Service {
 	public List<SB02Vo> selectSB02Vo(SB02Vo sb02Vo, String userid) throws Exception {
 
 		int nowPage = sb02Vo.getNowPage();
-
-		sb02Vo.setNowPage(nowPage);
-		sb02Vo.setRowPerPage(Constants.ROW_PER_PAGE);
+		sb02Vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE + 1);
+		sb02Vo.setEndRownum(nowPage * Constants.ROW_PER_PAGE);
 
 		List<SB02Vo> list = sb02Dao.selectSB02Vo(sb02Vo);
 

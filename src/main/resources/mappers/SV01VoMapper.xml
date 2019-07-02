@@ -48,26 +48,31 @@
 		</select>
 		
 		<select id="select" resultType="com.singer.vo.SV01Vo"  parameterType="com.singer.vo.SV01Vo">
-		select S1.*
-			 from (
-			select 
-				s1.seq as seq,
-				ceil(row_number() over(order by regdate desc) / #{rowPerPage} ) as nowPage,
-				s1.title as title, 
-				s1.text as text, 
-				s1.userid as userid,  
-				s1.regdate as regdate,
-				s1.hit as hit,
-				count(*) over() as totCnt
-			 from SV01 s1
-			 where 1=1
-			 <if test="title != null">
-			 	and title like #{title} || '%'
-			 </if>
-			 <if test="userid != null">
-			 	and userid = #{userid}
-			 </if>
-			) S1 where S1.nowPage = #{nowPage}
+				<![CDATA[
+			select T.*,
+  				(select count(*) 
+        			from SV03 s3
+        			where T.seq = s3.seq
+      			) as votedCnt,
+      			(select count(*) /*+ INDEX_FFS(SV01 IDX_SV01_1)*/
+  					from SV01 
+  				) as totCnt
+      			from
+  				(select S1.*
+				 from (
+					select /*+ index_desc(SV01 IDX_SV01_1)*/
+					rownum as rown,
+					seq as seq,
+					title as title, 
+					text as text, 
+					userid as userid,  
+					regdate as regdate,
+					hit as hit
+			 	from SV01 
+				) S1 where S1.rown between 
+			#{startRownum} and #{endRownum}
+  			) T
+  			]]>
 		</select>
 		
 		<delete id="delete" parameterType="com.singer.vo.SV01Vo">

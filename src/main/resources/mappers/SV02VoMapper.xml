@@ -25,7 +25,8 @@
 		</update>
 		
 		<select id="select" resultType="com.singer.vo.SV02Vo"  parameterType="com.singer.vo.SV02Vo">
-			select 
+			<![CDATA[
+			select /*+ INDEX(SV03 PK_SV03)*/
 				s2.seq as seq,
 				s2.idx as idx, 
 				s2.content as content,
@@ -36,13 +37,16 @@
         		) as voted
 			 from SV02 s2
 			 where s2.seq = #{seq}
+			  ]]>
 		</select>
 		
 		<select id="selectTot" resultType="java.lang.Integer"  parameterType="com.singer.vo.SV02Vo">
-			select 
+			<![CDATA[
+			select /*+ INDEX(SV03 PK_SV03)*/
 				count(*) as totVoted
 				from SV03
 			 where seq = #{seq}
+			 ]]>
 		</select>
 		
 		<delete id="delete" parameterType="com.singer.vo.SV02Vo">
