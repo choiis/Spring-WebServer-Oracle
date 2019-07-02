@@ -105,17 +105,12 @@
 	function showSV01List(nowPage) {
 		console.log("showSV01List");
 		
+		var page = 1;
 		if(!gfn_isNull(nowPage)) {
 			page = nowPage;
-		} else {
-			page = 1;
 		}
 		
-		var sendData = {
-			"nowPage" : page
-		};
-		
-		gfn_ajax("sv01show.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sv01show/" + page, "GET" , function(data) {
 
 			var html = "";
 			$.each(data.list, function(index, item) {

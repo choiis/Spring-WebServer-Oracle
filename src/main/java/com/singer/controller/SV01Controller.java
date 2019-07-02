@@ -61,8 +61,8 @@ public class SV01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sv01show.do", method = RequestMethod.POST)
-	public ResponseEntity<SV01Vo> selectSV01Vo(SV01Vo sv01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sv01show/{nowPage}", method = RequestMethod.GET)
+	public ResponseEntity<SV01Vo> selectSV01Vo(@ModelAttribute SV01Vo sv01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sv01show.do");
 		log.debug("SV01Vo : " + sv01Vo);

@@ -106,17 +106,12 @@
 	function showSF01List(nowPage) {
 		console.log("showSF01List");
 		
+		var page = 1;
 		if(!gfn_isNull(nowPage)) {
 			page = nowPage;
-		} else {
-			page = 1;
 		}
 		
-		var sendData = {
-			"nowPage" : page
-		};
-		
-		gfn_ajax("sf01show.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sf01show/" + page, "GET" , function(data) {
 
 			var html = "";
 			$.each(data.list, function(index, item) {

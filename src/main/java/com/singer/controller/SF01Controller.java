@@ -92,10 +92,11 @@ public class SF01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01show.do", method = RequestMethod.POST)
-	public ResponseEntity<SF01Vo> selectSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sf01show/{nowPage}", method = RequestMethod.GET)
+	public ResponseEntity<SF01Vo> selectSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01show.do");
 		log.debug("sf01Vo : " + sf01Vo);
+
 		List<SF01Vo> list = sf01Service.selectSF01Vo(sf01Vo);
 		sf01Vo.setList(list);
 

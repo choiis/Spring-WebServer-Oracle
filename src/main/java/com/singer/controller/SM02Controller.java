@@ -38,7 +38,7 @@ public class SM02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sm02show/{page}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm02show/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SM02Vo> toSelectSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sm02show");
