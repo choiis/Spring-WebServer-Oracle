@@ -70,7 +70,7 @@
 			<div id="wrapper">
 				<div id="sp01insert" class="animate form">
 					<h4>등록할 파일 정보를 입력해 주세요</h4>
-					<form id="form" method="post" enctype="multipart/form-data" action="/sp01insert.do">
+					<form id="form" method="post" enctype="multipart/form-data" action="/sp01">
 						제목:<input type="text" id="title" name="title"> <br>
 						상품유형:<select id="ptype" name="ptype">
 						</select><br>

@@ -38,7 +38,7 @@ public class SM02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sm02show/{nowPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm02/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SM02Vo> toSelectSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sm02show");
@@ -62,7 +62,7 @@ public class SM02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sm02delete/{seq}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/sm02/{seq}", method = RequestMethod.DELETE)
 	public ResponseEntity<SM02Vo> toDeleteSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
 		sm02Vo.setNowPage(1);
 		log.debug("enter sm02delete.do");
@@ -91,7 +91,7 @@ public class SM02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sm02insert.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/sm02", method = RequestMethod.POST)
 	public ResponseEntity<SM02Vo> toInsertSM02Vo(SM02Vo sm02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sm02insert.do");
@@ -113,7 +113,7 @@ public class SM02Controller {
 			sm02Vo.setNowPage(0);
 		}
 		log.debug("list : " + list);
-		log.debug("exit sm02delete.do");
+		log.debug("exit sm02insert.do");
 
 		return new ResponseEntity<SM02Vo>(sm02Vo, HttpStatus.CREATED);
 	}

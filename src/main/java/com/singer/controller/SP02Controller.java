@@ -28,7 +28,7 @@ public class SP02Controller {
 	private SP02Service sp02Service;
 
 	@ResponseBody
-	@RequestMapping(value = "/sp02show/{seq01}/{nowPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sp02/{seq01}/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SP02Vo> selectSP02Vo(@ModelAttribute SP02Vo sp02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp02show.do");
@@ -53,7 +53,7 @@ public class SP02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp02insert.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/sp02", method = RequestMethod.POST)
 	public ResponseEntity<SP02Vo> insertSP02Vo(SP02Vo sp02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp02insert.do");
@@ -82,7 +82,7 @@ public class SP02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp02delete/{seq}/{seq01}", method = RequestMethod.POST)
+	@RequestMapping(value = "/sp02/{seq}/{seq01}", method = RequestMethod.POST)
 	public ResponseEntity<SP02Vo> deleteSP02Vo(@ModelAttribute SP02Vo sp02Vo, HttpSession session) throws Exception {
 		log.debug("enter sp02delete.do");
 		log.debug("SP02Vo : " + sp02Vo);

@@ -46,7 +46,7 @@
 			    "nowPage" : 1
 		    };
 
-			gfn_ajax("sm02insert.do","POST" , sendData , function(data) {
+			gfn_ajax("sm02","POST" , sendData , function(data) {
 				var html = "";
 
 				// jQuery 유틸리티 메서드 
@@ -99,7 +99,7 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			gfn_ajaxRest("sm02delete/" + $("#seq" + idx).text(), "DELETE"  , function(data) {
+			gfn_ajaxRest("sm02/" + $("#seq" + idx).text(), "DELETE"  , function(data) {
 				var html = "";
 				// jQuery 유틸리티 메서드 
 				$.each(data.list, function(index, item){
@@ -128,7 +128,7 @@
 		}
 		
 			
-		gfn_ajaxRest("sm02show/" + page, "GET" , function(data) {
+		gfn_ajaxRest("sm02/" + page, "GET" , function(data) {
 			var html = "";
 			// jQuery 유틸리티 메서드 
 			$.each(data.list, function(index, item){

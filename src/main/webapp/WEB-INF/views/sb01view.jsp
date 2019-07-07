@@ -110,7 +110,7 @@
 			page = nowPage;
 		}
 		
-		gfn_ajaxRest("sb01show/" + page, "GET" , function(data) {
+		gfn_ajaxRest("sb01/" + page, "GET" , function(data) {
 
 			var html = "";
 			$.each(data.list, function(index, item) {

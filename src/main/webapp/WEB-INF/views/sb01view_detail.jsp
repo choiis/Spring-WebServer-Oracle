@@ -91,7 +91,7 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			gfn_ajaxRest("sb02delete/" + $("#seq" + idx).text() + "/" + $("#seq01" + idx).text(),"DELETE" , function(data) {
+			gfn_ajaxRest("sb02/" + $("#seq" + idx).text() + "/" + $("#seq01" + idx).text(),"DELETE" , function(data) {
 				var html = "";
 		        for (var i = 0; i < data.list.length; i++) {
 		            html += '<tr>';
@@ -121,7 +121,7 @@
 	
 	function showSB02List(nowPage) {
 		
-		gfn_ajaxRest("sb02show/" + parseInt($("#seq01").val()) + "/" + nowPage,"GET" , function(data) {
+		gfn_ajaxRest("sb02/" + parseInt($("#seq01").val()) + "/" + nowPage,"GET" , function(data) {
 			var html = "";
 	        for (var i = 0; i < data.list.length; i++) {
 	        	 html += '<tr>';
@@ -156,7 +156,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajax("sb02insert.do","POST" , sendData , function(data) {
+		gfn_ajax("sb02","POST" , sendData , function(data) {
 			var html = "";
 	        for (var i = 0; i < data.list.length; i++) {
 	            html += '<tr>';
@@ -185,14 +185,7 @@
 	
 	function like_sb01() {
 	
-		var sendData = {
-			"seq" : parseInt($("#seq01").val()),
-        	"title" : $("#title").val(),
-			"good" : parseInt($("#good").text())
-        	
-        };
-		
-		gfn_ajax("sb01like.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sb01like/" + parseInt($("#seq01").val()), "PUT", function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.like);
 				$("#button_like").attr('disabled', true);
@@ -203,13 +196,7 @@
 	
 	function hate_sb01() {
 		
-		var sendData = {
-			"seq" : parseInt($("#seq01").val()),
-        	"title" : $("#title").val(),
-			"good" : parseInt($("#good").text())
-        };
-		
-		gfn_ajax("sb01hate.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sb01hate/" + parseInt($("#seq01").val()), "PUT" , function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.like);
 				$("#button_hate").attr('disabled', true);

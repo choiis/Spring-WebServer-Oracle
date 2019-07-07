@@ -28,7 +28,7 @@ public class SF02Controller {
 	private SF02Service sf02Service;
 
 	@ResponseBody
-	@RequestMapping(value = "/sf02show/{seq01}/{nowPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sf02/{seq01}/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SF02Vo> selectSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sf02show.do");
@@ -51,7 +51,7 @@ public class SF02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf02insert.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/sf02", method = RequestMethod.POST)
 	public ResponseEntity<SF02Vo> insertSF02Vo(SF02Vo sf02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sf02insert.do");
@@ -79,7 +79,7 @@ public class SF02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf02delete/{seq}/{seq01}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/sf02/{seq}/{seq01}", method = RequestMethod.DELETE)
 	public ResponseEntity<SF02Vo> deleteSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpSession session) throws Exception {
 		sf02Vo.setNowPage(1);
 		log.debug("enter sf02delete.do");

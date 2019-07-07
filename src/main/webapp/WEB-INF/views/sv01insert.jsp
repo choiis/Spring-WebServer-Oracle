@@ -71,7 +71,7 @@
 			}
 			sendData.sv02Vos = list;
 			
-			gfn_ajaxRequestBody("sv01insert.do", "POST", sendData, function(data) {
+			gfn_ajaxRequestBody("sv01", "POST", sendData, function(data) {
 				
 				if(confirm("투표가 등록되었습니다!")) {
 					location.href='/sv01.do';

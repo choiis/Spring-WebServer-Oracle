@@ -67,7 +67,7 @@
 			<div id="wrapper">
 				<div id="sb01insert" class="animate form">
 					<h4>동영상 정보를 입력해 주세요</h4>
-					<form id="form" method="post" enctype="multipart/form-data" action="/sb01insert.do">
+					<form id="form" method="post" enctype="multipart/form-data" action="/sb01">
 						제목:<input type="text" id="title" name="title"> <br>
 						내용<textarea id="text" name="text" rows="10" cols="40"></textarea>
 						<button id="btn_insert_button" type="button" >저장</button>

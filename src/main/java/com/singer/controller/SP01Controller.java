@@ -61,7 +61,7 @@ public class SP01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01insert.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/sp01", method = RequestMethod.POST)
 	public ModelAndView insertSP01Vo(@ModelAttribute("SP01Vo") SP01Vo sp01Vo, HttpSession session,
 			MultipartHttpServletRequest request) throws Exception {
 

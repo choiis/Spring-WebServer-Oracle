@@ -55,7 +55,7 @@ public class SF01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01insert.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/sf01", method = RequestMethod.POST)
 	public ModelAndView insertSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session,
 			MultipartHttpServletRequest request) throws Exception {
 		log.debug("enter sf01insert.do");
@@ -92,7 +92,7 @@ public class SF01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01show/{nowPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sf01/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SF01Vo> selectSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01show.do");
 		log.debug("sf01Vo : " + sf01Vo);
@@ -179,8 +179,8 @@ public class SF01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01like.do", method = RequestMethod.POST)
-	public ResponseEntity<SF01Vo> likeSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sf01like/{seq}", method = RequestMethod.PUT)
+	public ResponseEntity<SF01Vo> likeSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01like.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		String sessionid = (String) session.getAttribute("userid");
@@ -193,8 +193,8 @@ public class SF01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01hate.do", method = RequestMethod.POST)
-	public ResponseEntity<SF01Vo> hateSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sf01hate/{seq}", method = RequestMethod.PUT)
+	public ResponseEntity<SF01Vo> hateSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01hate.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		String sessionid = (String) session.getAttribute("userid");
