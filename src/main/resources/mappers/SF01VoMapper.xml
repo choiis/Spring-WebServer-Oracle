@@ -20,16 +20,14 @@
 		
 		<update id="like" parameterType="com.singer.vo.SF01Vo">
 			update SF01 
-			set good = #{good} + 1
+			set good = (select good from SF01 where seq = #{seq}) + 1
 			where seq = #{seq}
-			and title = #{title}
 		</update>
 		
 		<update id="hate" parameterType="com.singer.vo.SF01Vo">
 			update SF01 
-			set good = #{good} - 1
+			set good = (select good from SF01 where seq = #{seq}) - 1
 			where seq = #{seq}
-			and title = #{title}
 		</update>
 		
 		<update id="click" parameterType="com.singer.vo.SF01Vo">
@@ -96,7 +94,6 @@
 		<delete id="delete" parameterType="com.singer.vo.SF01Vo">
 			delete from SF01
 			where seq = #{seq}
-			and title = #{title}
 		</delete>
 		
 		<update id="insertFile" parameterType="java.util.HashMap">

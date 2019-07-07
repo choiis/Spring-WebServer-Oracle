@@ -46,16 +46,14 @@
 		
 		<update id="like" parameterType="com.singer.vo.SP01Vo">
 			update SP01 
-			set good = #{good} + 1
+			set good = (select good from SB01 where seq = #{seq}) + 1 
 			where seq = #{seq}
-			and title = #{title}
 		</update>
 		
 		<update id="hate" parameterType="com.singer.vo.SP01Vo">
 			update SP01 
-			set good = #{good} - 1
+			set good = (select good from SB01 where seq = #{seq}) - 1 
 			where seq = #{seq}
-			and title = #{title}
 		</update>
 		
 		<update id="click" parameterType="com.singer.vo.SP01Vo">
