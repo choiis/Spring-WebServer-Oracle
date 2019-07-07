@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.singer.common.Constants;
 import com.singer.common.DateUtil;
 import com.singer.dao.SF01Dao;
 import com.singer.dao.SF02Dao;
@@ -35,18 +34,11 @@ public class SF01ServiceImpl implements SF01Service {
 	@Override
 	public List<SF01Vo> selectSF01Vo(SF01Vo sf01vo) throws Exception {
 
-		int nowPage = sf01vo.getNowPage();
-		sf01vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE + 1);
-		sf01vo.setEndRownum(nowPage * Constants.ROW_PER_PAGE);
-
 		return sf01Dao.selectSF01Vo(sf01vo);
 	}
 
 	@Override
 	public List<SF01Vo> selectFindSF01Vo(SF01Vo sf01vo) throws Exception {
-		int nowPage = sf01vo.getNowPage();
-		sf01vo.setStartRownum(nowPage * Constants.ROW_PER_PAGE);
-		sf01vo.setEndRownum((nowPage + 1) * Constants.ROW_PER_PAGE);
 
 		if (sf01vo.getSelection() == 1) { // 제목으로 검색
 			sf01vo.setTitle(sf01vo.getFindText());

@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.singer.common.Constants;
 import com.singer.common.DateUtil;
 import com.singer.dao.SP02Dao;
 import com.singer.vo.SP02Vo;
@@ -32,11 +31,6 @@ public class SP02ServiceImpl implements SP02Service {
 
 	@Override
 	public List<SP02Vo> selectSP02Vo(SP02Vo sp02Vo, String userid) throws Exception {
-
-		int nowPage = sp02Vo.getNowPage();
-
-		sp02Vo.setNowPage(nowPage);
-		sp02Vo.setRowPerPage(Constants.ROW_PER_PAGE);
 
 		List<SP02Vo> list = sp02Dao.selectSP02Vo(sp02Vo);
 

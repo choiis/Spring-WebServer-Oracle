@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.singer.common.Constants;
 import com.singer.common.DateUtil;
 import com.singer.dao.SM02Dao;
 import com.singer.vo.SM02Vo;
@@ -28,10 +27,6 @@ public class SM02ServiceImpl implements SM02Service {
 	@Transactional
 	@Override
 	public List<SM02Vo> selectSM02Vo(SM02Vo sm02Vo) throws Exception {
-
-		int nowPage = sm02Vo.getNowPage();
-		sm02Vo.setNowPage(nowPage);
-		sm02Vo.setRowPerPage(Constants.ROW_PER_PAGE);
 
 		return sm02Dao.selectSM02Vo(sm02Vo);
 	}

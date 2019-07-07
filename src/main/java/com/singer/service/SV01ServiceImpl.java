@@ -45,9 +45,7 @@ public class SV01ServiceImpl implements SV01Service {
 
 	@Override
 	public List<SV01Vo> selectSV01Vo(SV01Vo sv01Vo) throws Exception {
-		int nowPage = sv01Vo.getNowPage();
-		sv01Vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE + 1);
-		sv01Vo.setEndRownum(nowPage * Constants.ROW_PER_PAGE);
+
 		return sv01Dao.selectSV01Vo(sv01Vo);
 	}
 

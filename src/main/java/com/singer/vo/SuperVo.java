@@ -1,5 +1,7 @@
 package com.singer.vo;
 
+import com.singer.common.Constants;
+
 public class SuperVo {
 	protected String adminyn;
 	protected boolean deleteYn;
@@ -13,7 +15,7 @@ public class SuperVo {
 	protected int like;
 
 	protected SuperVo() {
-
+		this.rowPerPage = Constants.ROW_PER_PAGE;
 	}
 
 	protected SuperVo(String adminyn, boolean deleteYn, String showDate, int totCnt, int startRownum, int endRownum,
@@ -26,7 +28,7 @@ public class SuperVo {
 		this.startRownum = startRownum;
 		this.endRownum = endRownum;
 		this.nowPage = nowPage;
-		this.rowPerPage = rowPerPage;
+		this.rowPerPage = Constants.ROW_PER_PAGE;
 		this.result = result;
 		this.like = like;
 	}
@@ -85,6 +87,8 @@ public class SuperVo {
 
 	public void setNowPage(int nowPage) {
 		this.nowPage = nowPage;
+		this.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE + 1);
+		this.setEndRownum(nowPage * Constants.ROW_PER_PAGE);
 	}
 
 	public int getRowPerPage() {

@@ -28,7 +28,7 @@ public class SP02Controller {
 	private SP02Service sp02Service;
 
 	@ResponseBody
-	@RequestMapping(value = "/sp02show/{seq01}/{nowPage}", method = RequestMethod.POST)
+	@RequestMapping(value = "/sp02show/{seq01}/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SP02Vo> selectSP02Vo(@ModelAttribute SP02Vo sp02Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sp02show.do");
