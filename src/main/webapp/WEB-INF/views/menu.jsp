@@ -54,11 +54,7 @@ var user_code = {};
 			if(confirm("삭제하시겠습니까 ??")) {
 				var tr = $(this).parent().parent("tr");
 
-				var sendData = {
-					menucd : tr.children("td#menucd").text(),
-					menunm : tr.children("td#nm").children("input#menunm").val()
-				};
-				gfn_ajax("deleteMenu.do","POST" , sendData , function(data) {
+				gfn_ajaxRest("commMenu/" + tr.children("td#menucd").text(), "DELETE" , function(data) {
 					var html = "";
 			       	
 			        $.each(data.commList, function(index, item) {
@@ -145,8 +141,7 @@ var user_code = {};
 	function showMenuList() {
 		console.log("showMenuList");
 		
-		var sendData = {};
-		gfn_ajax("commMenu.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("commMenu", "GET" , function(data) {
 			var html = "";
 	       	
 	        $.each(data.commList, function(index, item) {

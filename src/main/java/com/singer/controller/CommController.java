@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,8 +31,9 @@ public class CommController {
 	private CommService commService;
 
 	@ResponseBody
-	@RequestMapping(value = "/commCode.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toSelectCommCode(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/commCode/{codegrp}", method = RequestMethod.GET)
+	public ResponseEntity<CommVo> toSelectCommCode(@ModelAttribute CommVo commVo, HttpSession session)
+			throws Exception {
 
 		log.debug("enter commCode.do");
 		log.debug("CommVo : " + commVo);
@@ -45,8 +46,9 @@ public class CommController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/commCodeGrp.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toSelectCommCodeGrp(CommVo commVo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/commCodeGrp", method = RequestMethod.GET)
+	public ResponseEntity<CommVo> toSelectCommCodeGrp(@ModelAttribute CommVo commVo, HttpSession session)
+			throws Exception {
 
 		log.debug("enter commCodeGrp.do");
 		log.debug("CommVo : " + commVo);
@@ -59,8 +61,8 @@ public class CommController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/commMenu.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toSelectMenu(CommVo commVo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/commMenu", method = RequestMethod.GET)
+	public ResponseEntity<CommVo> toSelectMenu(@ModelAttribute CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter commMenu.do");
 		log.debug("CommVo : " + commVo);
@@ -108,8 +110,8 @@ public class CommController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/deleteMenu.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toDeleteMenu(CommVo commVo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/commMenu/{menucd}", method = RequestMethod.DELETE)
+	public ResponseEntity<CommVo> toDeleteMenu(@ModelAttribute CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter deleteMenu.do");
 		log.debug("CommVo : " + commVo);
@@ -154,8 +156,8 @@ public class CommController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/deleteCode.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toDeleteCode(CommVo commVo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/commCode/{codegrp}/{codecd}", method = RequestMethod.DELETE)
+	public ResponseEntity<CommVo> toDeleteCode(@ModelAttribute CommVo commVo, HttpSession session) throws Exception {
 
 		log.debug("enter deleteCode.do");
 		log.debug("CommVo : " + commVo);

@@ -30,9 +30,7 @@
 	
 	function selectMenu() {
 		
-		var sendData = {};
-		
-		gfn_ajax("commMenu.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("commMenu","GET" , function(data) {
 			var html = "";
 	       	
 	        $.each(data.commList, function(index, item) {

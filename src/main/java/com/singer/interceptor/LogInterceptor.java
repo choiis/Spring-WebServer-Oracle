@@ -10,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.singer.common.DateUtil;
 import com.singer.dao.CommDao;
 
 public class LogInterceptor extends HandlerInterceptorAdapter {
@@ -20,22 +19,24 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		HttpSession session = request.getSession();
-		String userid = (String) session.getAttribute("userid");
+	//	HttpSession session = request.getSession();
+	//	String userid = (String) session.getAttribute("userid");
 		log.debug("===================== postHandle =========================");
 		String uri = request.getRequestURI();
-		if (!"/commCode.do".equals(uri) && !"/commMenu.do".equals(uri)
-				&& !"/commCodeGrp.do".equals(uri) && !"/sessionExpire.do".equals(uri)
+		if (!"/commCode.do".equals(uri) && !"/commMenu".equals(uri)
+				&& !"/commCodeGrp".equals(uri) && !"/sessionExpire.do".equals(uri)
 				&& !"/gomain.do".equals(uri)) {
-			log.debug("addr  : " + request.getRemoteAddr());
-			log.debug("host  : " + request.getRemoteHost());
-			log.debug("port  : " + request.getRemotePort());
-			log.debug("method  : " + request.getMethod());
-			log.debug("uri : " + uri);
-			log.debug("protocol : " + request.getProtocol());
-			log.debug("servletpath : " + request.getServletPath());
-			log.debug("userid : " + userid);
-			log.debug("time" + DateUtil.getTodayTime());
+//			
+//			log.debug("addr  : " + request.getRemoteAddr());
+//			log.debug("host  : " + request.getRemoteHost());
+//			log.debug("port  : " + request.getRemotePort());
+//			log.debug("method  : " + request.getMethod());
+//			log.debug("uri : " + uri);
+//			log.debug("protocol : " + request.getProtocol());
+//			log.debug("servletpath : " + request.getServletPath());
+//			log.debug("userid : " + userid);
+//			log.debug("time" + DateUtil.getTodayTime());
+//			
 
 		}
 	}

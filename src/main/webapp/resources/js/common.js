@@ -335,13 +335,10 @@ $(document).ready(function() {
 	/** select box 셋팅*/
 	gfn_selectList = function(codeGrpCd , id) {
 		var combo ='<option value="" selected>선택</option>';
-		var formData = JSON.stringify({codegrp:codeGrpCd});
+
 		$.ajax({
-		    url : '/commCode.do',
-		    contentType:"application/json;charset=UTF-8",
-		    type : 'post',
-		    dataType : 'json',
-		    data : formData,
+		    url : "commCode/" + codeGrpCd,
+		    type : "GET",
 		    success : function(data) {
 		    	if(!gfn_isNull(data.commList)){
 		    		if(data.commList.length > 0) {
@@ -352,10 +349,12 @@ $(document).ready(function() {
 		    		}
 		    	}
 		    },
-		    error : function(request, status, error) {
-		        console.log("code:" + request.status + "\n" + "error:" + error);
+		    error : function(data, status, error) {
+		    	var errorData = JSON.parse(data.responseText);
+		    	alert(errorData.errorCode + " " + errorData.errorMsg);
 		    }
 		});
+	
 	}
 	
 	/** select box 셋팅*/
@@ -375,22 +374,20 @@ $(document).ready(function() {
 	
 	/** 공통 코드 조회*/	
 	gfn_getCommCode = function(codeGrpCd) {
-		var formData = JSON.stringify({codegrp:codeGrpCd});
 		var common_code;
+		
 		$.ajax({
-		    url : '/commCode.do',
-		    contentType:"application/json;charset=UTF-8",
-		    type : 'post',
-		    dataType : 'json',
-		    async : false,
-		    data : formData,
+		    url : "commCode/" + codeGrpCd,
+		    type : "GET",
 		    success : function(data) {
 		    	common_code = data.commList;
 		    },
-		    error : function(request, status, error) {
-		        console.log("code:" + request.status + "\n" + "error:" + error);
+		    error : function(data, status, error) {
+		    	var errorData = JSON.parse(data.responseText);
+		    	alert(errorData.errorCode + " " + errorData.errorMsg);
 		    }
-		});	
+		});
+		
 		return common_code;
 	}
 	

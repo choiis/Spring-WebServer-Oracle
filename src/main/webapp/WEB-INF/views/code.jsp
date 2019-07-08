@@ -67,11 +67,7 @@
 			if(confirm("삭제하시겠습니까 ??")) {
 				var tr = $(this).parent().parent("tr");
 
-				var sendData = {
-					codecd : tr.children("td#codecd").text(),
-					codegrp :$("#code_grp").val()
-				};
-				gfn_ajax("deleteCode.do","POST" , sendData , function(data) {
+				gfn_ajaxRest("commCode/" + $("#code_grp").val() + "/" + tr.children("td#codecd").text(), "DELETE" , function(data) {
 					var html = "";
 			       	
 			        $.each(data.commList, function(index, item) {
@@ -93,26 +89,16 @@
 	/** select box 셋팅*/
 	selectGrpList = function(id) {
 		var combo ='<option value="" selected>선택</option>';
-		var formData = gfn_jsonSerialize({});
-		$.ajax({
-		    url : '/commCodeGrp.do',
-		    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
-		    type : 'post',
-		    dataType : 'json',
-		    data : formData,
-		    success : function(data) {
-		    	if(!gfn_isNull(data.commList)){
-		    		if(data.commList.length > 0) {
-		    			for(var i = 0 ; i < data.commList.length ;i++) {
-		    				combo += '<option value=' + data.commList[i].codegrp + '>' + data.commList[i].codegrpnm + '</option>';
-		    			}
-		    			$("#" + id + "").append(combo);
-		    		}
-		    	}
-		    },
-		    error : function(request, status, error) {
-		        console.log("code:" + request.status + "\n" + "error:" + error);
-		    }
+		
+		gfn_ajaxRest("commCodeGrp", "GET" , function(data) {
+			if(!gfn_isNull(data.commList)){
+	    		if(data.commList.length > 0) {
+	    			for(var i = 0 ; i < data.commList.length ;i++) {
+	    				combo += '<option value=' + data.commList[i].codegrp + '>' + data.commList[i].codegrpnm + '</option>';
+	    			}
+	    			$("#" + id + "").append(combo);
+	    		}
+	    	}
 		});
 	}
 	
