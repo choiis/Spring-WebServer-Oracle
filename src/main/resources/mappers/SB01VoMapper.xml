@@ -93,7 +93,6 @@
 		<delete id="delete" parameterType="com.singer.vo.SB01Vo">
 			delete from SB01
 			where seq = #{seq}
-			and title = #{title}
 		</delete>
 		
 		<update id="insertVideo" parameterType="java.util.HashMap">

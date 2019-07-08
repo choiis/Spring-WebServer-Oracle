@@ -192,16 +192,16 @@ public class SB01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sb01delete.do", method = RequestMethod.POST)
-	public ModelAndView deleteSB01Vo(@ModelAttribute("SB01Vo") SB01Vo sb01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sb01/{seq}", method = RequestMethod.DELETE)
+	public ResponseEntity<SB01Vo> deleteSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpSession session) throws Exception {
 		log.debug("enter sb01delete.do");
 		log.debug("sb01Vo : " + sb01Vo);
 
 		sb01Service.deleteSB01Vo(sb01Vo);
 
-		ModelAndView model = new ModelAndView("/sb01view");
-		log.debug("exit sb01delete.do");
-		return model;
+		sb01Vo.setResult(Constants.SUCCESS_CODE);
+		log.debug("exit sf01delete.do");
+		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody

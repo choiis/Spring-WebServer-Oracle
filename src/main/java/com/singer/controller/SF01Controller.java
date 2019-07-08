@@ -164,18 +164,16 @@ public class SF01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01delete.do", method = RequestMethod.POST)
-	public ModelAndView deleteSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sf01/{seq}", method = RequestMethod.DELETE)
+	public ResponseEntity<SF01Vo> deleteSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
 		log.debug("enter sf01delete.do");
 		log.debug("sf01Vo : " + sf01Vo);
 
 		sf01Service.deleteSF01Vo(sf01Vo);
 
-		ModelAndView model = new ModelAndView("/sf01view");
-
+		sf01Vo.setResult(Constants.SUCCESS_CODE);
 		log.debug("exit sf01delete.do");
-
-		return model;
+		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody

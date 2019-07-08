@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.CommonUtil;
+import com.singer.common.Constants;
 import com.singer.service.SV01Service;
 import com.singer.vo.SV01Vo;
 
@@ -61,7 +62,7 @@ public class SV01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sv01show/{nowPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sv01/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SV01Vo> selectSV01Vo(@ModelAttribute SV01Vo sv01Vo, HttpSession session) throws Exception {
 
 		log.debug("enter sv01show.do");
@@ -96,7 +97,7 @@ public class SV01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sv01select/{seq}/{recall}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sv01One/{seq}/{recall}", method = RequestMethod.GET)
 	public ResponseEntity<SV01Vo> selectOneSV01Vo(@ModelAttribute SV01Vo sv01Vo, HttpSession session) throws Exception {
 		log.debug("enter sv01selectOne.do");
 		log.debug("sv01Vo : " + sv01Vo);
@@ -104,6 +105,19 @@ public class SV01Controller {
 
 		sv01Vo = sv01Service.selectOneSV01Vo(sv01Vo, userid);
 		log.debug("exit sv01selectOne.do");
+		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "sv01/{seq}", method = RequestMethod.DELETE)
+	public ResponseEntity<SV01Vo> deleteSV01Vo(@ModelAttribute SV01Vo sv01Vo, HttpSession session) throws Exception {
+		log.debug("enter sv01delete.do");
+		log.debug("SP01Vo : " + sv01Vo);
+
+		sv01Service.deleteSV01Vo(sv01Vo);
+
+		sv01Vo.setResult(Constants.SUCCESS_CODE);
+		log.debug("exit sv01delete.do");
 		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);
 	}
 }

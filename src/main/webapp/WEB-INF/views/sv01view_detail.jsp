@@ -68,6 +68,18 @@
 			}
 		});
 		
+		// 삭제 버튼을 클릭할때 이벤트 발생
+		$("#button_delete").on("click", function(e) {
+			if(confirm("삭제할까요?")) {
+				
+				gfn_ajaxRest("sv01/" + parseInt($("#seq").val()), "DELETE" , function(data) {
+					if(data.result) {
+						location.href='/sv01.do';		
+					}
+				});		
+			}
+		});
+		
 	});
 
 	function Pre_Save() {
@@ -93,7 +105,7 @@
 	
 	function showSV01One(recall) {
 		
-		gfn_ajaxRest("sv01select/" + parseInt($("#seq").val()) + "/" + recall, "GET" , function(data) {
+		gfn_ajaxRest("sv01One/" + parseInt($("#seq").val()) + "/" + recall, "GET" , function(data) {
 		
 			$("#writer").text(data.userid);
 			$("#title").text(data.title);
@@ -148,9 +160,10 @@
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
 		<div>
-		<form id="form_delete" method="post" action="/sp01delete.do">
+		<form id="form_delete">
 			<input type="hidden" id="seq" name="seq" value="${seq}" />
 			<input type="hidden" id="multiselect" name="multiselect" />
+			
     	</form>
 		</div>
 		<div id="showDiv">

@@ -157,7 +157,6 @@
 		<delete id="delete" parameterType="com.singer.vo.SP01Vo">
 			delete from SP01
 			where seq = #{seq}
-			and title = #{title}
 		</delete>
 		
 		<update id="insertExplain" parameterType="java.util.HashMap">

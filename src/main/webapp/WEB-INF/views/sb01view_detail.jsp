@@ -32,7 +32,12 @@
 		// 삭제 버튼을 클릭할때 이벤트 발생
 		$("#button_delete").on("click", function(e) {
 			if(confirm("삭제할까요?")) {
-				$("#form_delete").submit();	
+				
+				gfn_ajaxRest("sb01/" + parseInt($("#seq01").val()), "DELETE" , function(data) {
+					if(data.result) {
+						location.href='/sb01.do';		
+					}
+				});
 			}
 		});
 		
@@ -213,7 +218,7 @@
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
 		<div>
-		<form id="form_delete" method="post" action="/sb01delete.do">
+		<form id="form_delete">
 						
 			<input type="hidden" id="seq01" name="seq" value="${sb01Vo.seq}" />
 			<input type="hidden" id="title" name="title" value="${sb01Vo.title}" />
