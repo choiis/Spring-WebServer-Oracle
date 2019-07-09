@@ -25,7 +25,7 @@
 	        	"contents" : $("#contents").val()
 	        };
 		
-			gfn_ajax("sendMail.do","POST" , sendData , function(data) {
+			gfn_ajax("sendMail","POST" , sendData , function(data) {
 				if(data == 1011) {
 					alert("메일 전송 실패!");
 				} else {
@@ -60,7 +60,7 @@
 			<p>전화번호 : ${sM01Vo.phone}</p>
 			
 			<img id="showTempImage" alt="" src="/selectPhoto/${sM01Vo.userid}" height="170px" width="150px"/>
-			<form id="form" method="post" action="/sendMail.do">
+			<form id="form" method="post" action="/sendMail">
 			이메일 :<input type="text" id="email" name="email" value='${sM01Vo.email}' disabled><br>
 			이메일 제목 : <input	type="text" id="title" name="title"><br>
 			이메일 내용 : <textarea id="contents" name="contents" rows="10" cols="60"></textarea>

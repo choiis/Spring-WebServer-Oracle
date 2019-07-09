@@ -28,12 +28,9 @@ public class SM02Controller {
 	@Resource(name = "sm02Service")
 	private SM02Service sm02Service;
 
-	@RequestMapping(value = "/sm02.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm02page", method = RequestMethod.GET)
 	public ModelAndView showSM02(HttpSession session) throws Exception {
 		ModelAndView model = new ModelAndView("/sm02view");
-		log.debug("enter sm02.do");
-
-		log.debug("exit sm02.do");
 		return model;
 	}
 

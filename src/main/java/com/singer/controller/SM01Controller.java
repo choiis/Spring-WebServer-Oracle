@@ -83,12 +83,9 @@ public class SM01Controller {
 		return model;
 	}
 
-	@RequestMapping(value = "/sm01.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm01page", method = RequestMethod.GET)
 	public ModelAndView showSM01() {
 		ModelAndView model = new ModelAndView("/sm01list");
-		log.debug("enter sm01.do");
-
-		log.debug("exit sm01.do");
 		return model;
 	}
 
@@ -154,10 +151,8 @@ public class SM01Controller {
 		return model;
 	}
 
-	@RequestMapping(value = "/sm01selectOne.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm01change", method = RequestMethod.GET)
 	public ModelAndView selectOneSM01Vo(HttpSession session) throws Exception {
-		log.debug("enter sm01selectOne.do");
-
 		SM01Vo sm01Vo = new SM01Vo();
 
 		ModelAndView model = new ModelAndView("/sm01update");
@@ -170,7 +165,6 @@ public class SM01Controller {
 
 		model.addObject("sm01Vo", sm01Vo);
 
-		log.debug("exit sm01selectOne.do");
 		return model;
 	}
 

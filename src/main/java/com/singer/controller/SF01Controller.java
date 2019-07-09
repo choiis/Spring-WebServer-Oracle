@@ -36,12 +36,9 @@ public class SF01Controller {
 	@Resource(name = "sf01Service")
 	private SF01Service sf01Service;
 
-	@RequestMapping(value = "/sf01.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sf01page", method = RequestMethod.GET)
 	public ModelAndView showSF01() throws Exception {
 		ModelAndView model = new ModelAndView("/sf01view");
-		log.debug("enter sf01.do");
-
-		log.debug("exit sf01.do");
 		return model;
 	}
 
@@ -146,7 +143,7 @@ public class SF01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/selectFile/{seq}/{regdate}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sf01File/{seq}/{regdate}", method = RequestMethod.GET)
 	public ModelAndView selectFileSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter selectFile.do");

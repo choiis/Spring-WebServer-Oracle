@@ -30,14 +30,14 @@ CREATE table MENU (
 alter table MENU
 add constraint pk_MENU primary key(menucd);
 
-insert into MENU values('01','코드관리','/code.do','01','admin','20180901','admin','20180901')
-insert into MENU values('02','공지사항','/command.do','02','admin','20180901','admin','20180901')
-insert into MENU values('03','회원관리','/sm01.do','02','admin','20180901','admin','20180901')
-insert into MENU values('04','노래 동영상','/sb01.do','04','admin','20180901','admin','20180901')
-insert into MENU values('05','파일 게시판','/sf01.do','04','admin','20180901','admin','20180901')
-insert into MENU values('06','상품 거래','/sp01.do','04','admin','20180901','admin','20180901')
-insert into MENU values('07','투표 게시판','/sv01.do','04','admin','20180901','admin','20180901')
-insert into MENU values('08','나의 메모장','/sm02.do','04','admin','20180901','admin','20180901')
+insert into MENU values('01','코드관리','/codepage','01','admin','20180901','admin','20180901')
+insert into MENU values('02','공지사항','/commandpage','02','admin','20180901','admin','20180901')
+insert into MENU values('03','회원관리','/sm01page','02','admin','20180901','admin','20180901')
+insert into MENU values('04','노래 동영상','/sb01page','04','admin','20180901','admin','20180901')
+insert into MENU values('05','파일 게시판','/sf01page','04','admin','20180901','admin','20180901')
+insert into MENU values('06','상품 거래','/sp01page','04','admin','20180901','admin','20180901')
+insert into MENU values('07','투표 게시판','/sv01page','04','admin','20180901','admin','20180901')
+insert into MENU values('08','나의 메모장','/sm02page','04','admin','20180901','admin','20180901')
 
 CREATE table CODE_GRP (
 codegrp varchar2(5) not null,

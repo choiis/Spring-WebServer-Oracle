@@ -27,9 +27,8 @@ public class MailController {
 	private final Log log = LogFactory.getLog(MailController.class);
 
 	@ResponseBody
-	@RequestMapping(value = "/sendMail.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
 	public int sendMail(ModelAndView modelAndView, MailVo mailVo, HttpServletResponse response) {
-		log.debug("enter sendMail.do");
 		log.debug("mailVo : " + mailVo);
 
 		String setfrom = "choiis120@naver.com";
@@ -47,11 +46,10 @@ public class MailController {
 
 		} catch (Exception e) {
 			log.debug("MAIL FAIL");
-			log.debug("exit sendMail.do");
 			return Constants.ERROR_LOGIN_FAIL;
 		}
 		log.debug("MAIL SUCCESS");
-		log.debug("exit sendMail.do");
+		;
 		return Constants.SUCCESS_CODE;
 	}
 }

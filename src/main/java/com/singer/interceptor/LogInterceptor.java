@@ -3,7 +3,6 @@ package com.singer.interceptor;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,7 +22,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 	//	String userid = (String) session.getAttribute("userid");
 		log.debug("===================== postHandle =========================");
 		String uri = request.getRequestURI();
-		if (!"/commCode.do".equals(uri) && !"/commMenu".equals(uri)
+		if (!uri.contains("/commCode") && !"/commMenu".equals(uri)
 				&& !"/commCodeGrp".equals(uri) && !"/sessionExpire.do".equals(uri)
 				&& !"/gomain.do".equals(uri)) {
 //			

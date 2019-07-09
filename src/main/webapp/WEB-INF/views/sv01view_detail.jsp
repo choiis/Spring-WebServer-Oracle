@@ -59,7 +59,7 @@
 				
 				sendData.sv02Vos = list;
 				
-				gfn_ajaxRequestBody("sv03insert.do", "POST", sendData, function(data) {
+				gfn_ajaxRequestBody("sv03", "POST", sendData, function(data) {
 					if(confirm("투표 완료!")) {
 						showSV01One(1);
 					}	
@@ -74,7 +74,7 @@
 				
 				gfn_ajaxRest("sv01/" + parseInt($("#seq").val()), "DELETE" , function(data) {
 					if(data.result) {
-						location.href='/sv01.do';		
+						location.href='/sv01page';		
 					}
 				});		
 			}

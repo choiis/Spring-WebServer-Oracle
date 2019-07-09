@@ -35,7 +35,7 @@
 				
 				gfn_ajaxRest("sb01/" + parseInt($("#seq01").val()), "DELETE" , function(data) {
 					if(data.result) {
-						location.href='/sb01.do';		
+						location.href='/sb01page';		
 					}
 				});
 			}
@@ -254,7 +254,7 @@
 			</c:choose>
     		
 			<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
-			    <source src="/selectVideo/${sb01Vo.seq}/${sb01Vo.title}" type="video/mp4" />
+			    <source src="/sb01Video/${sb01Vo.seq}/${sb01Vo.title}" type="video/mp4" />
 			</video>
 		</div>
 		

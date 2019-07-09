@@ -30,12 +30,9 @@ public class SV01Controller {
 	@Resource(name = "sv01Service")
 	private SV01Service sv01Service;
 
-	@RequestMapping(value = "/sv01.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sv01page", method = RequestMethod.GET)
 	public ModelAndView showSV01() throws Exception {
 		ModelAndView model = new ModelAndView("/sv01view");
-		log.debug("enter sv01.do");
-
-		log.debug("exit sv01.do");
 		return model;
 	}
 

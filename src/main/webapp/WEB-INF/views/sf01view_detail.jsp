@@ -34,7 +34,7 @@
 				
 				gfn_ajaxRest("sf01/" + parseInt($("#seq01").val()), "DELETE" , function(data) {
 					if(data.result) {
-						location.href='/sf01.do';		
+						location.href='/sf01page';		
 					}
 				});		
 			}
@@ -256,7 +256,7 @@
 			</c:choose>
 			
 			<p>파일명 : ${sf01Vo.filename}</p>
-			<a href="/selectFile/${sf01Vo.seq}/${sf01Vo.regdate}">파일 받기</a>
+			<a href="/sf01File/${sf01Vo.seq}/${sf01Vo.regdate}">파일 받기</a>
 		</div>
 		
 		<div class="container">

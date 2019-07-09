@@ -42,12 +42,9 @@ public class SB01Controller {
 	@Resource(name = "sb01Service")
 	private SB01Service sb01Service;
 
-	@RequestMapping(value = "/sb01.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sb01page", method = RequestMethod.GET)
 	public ModelAndView showSB01() throws Exception {
 		ModelAndView model = new ModelAndView("/sb01view");
-		log.debug("enter sb01.do");
-
-		log.debug("exit sb01.do");
 		return model;
 	}
 
@@ -154,7 +151,7 @@ public class SB01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/selectVideo/{seq}/{title}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sb01Video/{seq}/{title}", method = RequestMethod.GET)
 	public void selectVideoSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter selectVideo.do");

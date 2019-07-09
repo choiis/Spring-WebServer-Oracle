@@ -34,14 +34,11 @@ public class CommController {
 	@RequestMapping(value = "/commCode/{codegrp}", method = RequestMethod.GET)
 	public ResponseEntity<CommVo> toSelectCommCode(@ModelAttribute CommVo commVo, HttpSession session)
 			throws Exception {
-
-		log.debug("enter commCode.do");
 		log.debug("CommVo : " + commVo);
 
 		List<CommVo> list = commService.selectCode(commVo);
 		commVo.setCommList(list);
 
-		log.debug("exit sb01show.do");
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 
@@ -75,7 +72,7 @@ public class CommController {
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/menu.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/menupage", method = RequestMethod.GET)
 	public ModelAndView toShowmenu() throws Exception {
 		ModelAndView model = new ModelAndView("/menu");
 		log.debug("enter menu.do");
@@ -84,12 +81,9 @@ public class CommController {
 		return model;
 	}
 
-	@RequestMapping(value = "/code.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/codepage", method = RequestMethod.GET)
 	public ModelAndView toShowcode() throws Exception {
 		ModelAndView model = new ModelAndView("/code");
-		log.debug("enter code.do");
-
-		log.debug("exit code.do");
 		return model;
 	}
 

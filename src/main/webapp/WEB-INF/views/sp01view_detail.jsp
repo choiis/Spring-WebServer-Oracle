@@ -57,7 +57,7 @@ var product_code = {};
 			if(confirm("삭제할까요?")) {
 				gfn_ajaxRest("sp01/" + parseInt($("#seq01").val()), "DELETE" , function(data) {
 					if(data.result) {
-						location.href='/sp01.do';		
+						location.href='/sp01page';		
 					}
 				});
 			}
