@@ -45,6 +45,14 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig" />
+	
+	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="usePool" value="true"/>
+		<property name="hostName" value="${global.redis.server}"/>
+		<property name="port" value="${global.redis.port}"/>
+	</bean>
 	<tx:annotation-driven />
 	
 </beans>
