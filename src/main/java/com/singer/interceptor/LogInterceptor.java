@@ -23,8 +23,8 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 		log.debug("===================== postHandle =========================");
 		String uri = request.getRequestURI();
 		if (!uri.contains("/commCode") && !"/commMenu".equals(uri)
-				&& !"/commCodeGrp".equals(uri) && !"/sessionExpire.do".equals(uri)
-				&& !"/gomain.do".equals(uri)) {
+				&& !"/commCodeGrp".equals(uri) && !"/sessionExpire".equals(uri)
+				&& !"/main".equals(uri)) {
 //			
 //			log.debug("addr  : " + request.getRemoteAddr());
 //			log.debug("host  : " + request.getRemoteHost());

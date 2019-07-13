@@ -38,18 +38,18 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		String usertype = (String) session.getAttribute("usertype");
 		log.debug("===================== preHandle =========================");
 		// 세션 만료 케이스
-		if ("/sessionExpire.do".equals(uri) || "/".equals(uri)) {
+		if ("/sessionExpire".equals(uri) || "/".equals(uri)) {
 			return true;
 		}
 
 		if (userid == null) { // 세션 없음
 			log.debug("login need");
-			response.sendRedirect("/sessionExpire.do");
+			response.sendRedirect("/sessionExpire");
 			return false;
 		}
 
 		// 초기 로그인 케이스 아니면
-		if (!"/common/gomain.do".equals(uri)) {
+		if (!"/main".equals(uri)) {
 			CommVo commVo = new CommVo();
 			commVo.setMenuurl(uri);
 			List<CommVo> list = commDao.checkMenuAuth(commVo);
@@ -60,7 +60,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				int comp = usertype.compareTo(list.get(0).getAuthlevel());
 				if (comp > 0) { // 권한 없는 메뉴 uri로 접속시
 					log.debug("use denied");
-					response.sendRedirect("/common/authExpire.do");
+					response.sendRedirect("/authExpire");
 					return false;
 				}
 

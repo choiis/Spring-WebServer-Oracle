@@ -176,13 +176,10 @@ public class CommController {
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/authExpire.do")
+	@RequestMapping(value = "/authExpire")
 	public ModelAndView authExpire() throws Exception {
-		log.debug("enter authExpire.do");
 
 		ModelAndView model = new ModelAndView("/authExpire");
-
-		log.debug("exit authExpire.do");
 
 		return model;
 	}

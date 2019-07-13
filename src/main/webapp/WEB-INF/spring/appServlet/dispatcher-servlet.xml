@@ -52,7 +52,7 @@
 			<mapping path="/**" />
 			<exclude-mapping path="/sm01join.do"/>
 			<exclude-mapping path="/sm01insert.do"/>
-			<exclude-mapping path="/login.do"/>
+			<exclude-mapping path="/login"/>
 			<beans:ref bean="sessionInterceptor" />
 		</interceptor>
 		
@@ -60,7 +60,7 @@
 			<mapping path="/**" />
 			<exclude-mapping path="/sm01join.do"/>
 			<exclude-mapping path="/sm01insert.do"/>
-			<exclude-mapping path="/login.do"/>
+			<exclude-mapping path="/login"/>
 			<beans:ref bean="logInterceptor" />
 		</interceptor>
 	</interceptors>

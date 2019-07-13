@@ -21,7 +21,7 @@
 	
 	function init() {
 		alert("서버 에러가 발생하였습니다");
-		// location.href = "/common/gomain.do";
+		// location.href = "/gomain";
 	}
 </script>
 	<div class="container">

@@ -66,9 +66,9 @@
         	"device" : gfn_getDevice()
         };
 		
-		gfn_ajax("login.do","POST" , sendData , function(data) {
+		gfn_ajax("login","POST" , sendData , function(data) {
 			if(data.code == 1){
-				location.href='/gomain.do';
+				location.href='/main';
 			} else {
 				alert("아이디와 비밀번호를 확인해 주세요");
 			}
@@ -86,7 +86,7 @@
 			<div id="container_demo">
 				<div id="wrapper">
 					<div id="login" class="animate form">
-						<form id="form" action="/login.do" method="post">
+						<form id="form" action="/login" method="post">
 							<h1>Log in</h1>
 							<p>
 								<label for="userId" class="userId" data-icon="u"> 아이디를

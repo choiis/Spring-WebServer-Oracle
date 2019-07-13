@@ -33,9 +33,8 @@ public class LoginController {
 	@Resource(name = "sl01Service")
 	private SL01Service sl01Service;
 
-	@RequestMapping(value = "/logout.do")
+	@RequestMapping(value = "/logout")
 	public ModelAndView logout(HttpSession session) throws Exception {
-		log.debug("enter logout.do");
 
 		ModelAndView model = new ModelAndView("/index");
 
@@ -51,16 +50,13 @@ public class LoginController {
 
 		model.addObject("message", "로그아웃!");
 
-		log.debug("exit logout.do");
-
 		return model;
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public HashMap<String, Object> login(SM01Vo sm01Vo, HttpSession session, HttpServletRequest request)
 			throws Exception {
-		log.debug("enter login.do");
 		log.debug("sm01Vo : " + sm01Vo);
 
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
@@ -72,7 +68,6 @@ public class LoginController {
 
 			hashMap.put("code", Constants.ERROR_LOGIN_FAIL);
 			log.debug("code : " + Constants.ERROR_LOGIN_FAIL);
-			log.debug("exit login.do");
 
 			return hashMap;
 		} else {
@@ -97,30 +92,23 @@ public class LoginController {
 			hashMap.put("code", Constants.SUCCESS_CODE);
 
 			log.debug("code : " + Constants.SUCCESS_CODE);
-			log.debug("exit login.do");
 			return hashMap;
 		}
 
 	}
 
-	@RequestMapping(value = "/gomain.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView goMain() throws Exception {
 		ModelAndView model = new ModelAndView("/main");
 
-		log.debug("enter gomain.do");
-
-		log.debug("exit gomain.do");
 
 		return model;
 	}
 
-	@RequestMapping(value = "/sessionExpire.do")
+	@RequestMapping(value = "/sessionExpire")
 	public ModelAndView sessionExpire() throws Exception {
-		log.debug("enter sessionExpire.do");
 
 		ModelAndView model = new ModelAndView("/sessionExpire");
-
-		log.debug("exit sessionExpire.do");
 
 		return model;
 	}
