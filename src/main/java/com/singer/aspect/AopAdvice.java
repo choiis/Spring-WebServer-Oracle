@@ -12,20 +12,19 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.RedisConnectionFailureException;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.singer.common.DateUtil;
-import com.singer.dao.ErrorDao;
-import com.singer.vo.ErrorVo;
+import com.singer.redis.RedisDao;
 
 @Component
 @Aspect
 public class AopAdvice {
+
 	private final Log log = LogFactory.getLog(AopAdvice.class);
+
+	@Resource(name = "redisDao")
+	private RedisDao redisDao;
 
 	@After("execution(* com.singer.service.*Impl.*(..))")
 	public void aopService(JoinPoint joinPoint) {
@@ -35,6 +34,8 @@ public class AopAdvice {
 		log.debug(sg.getName());
 		log.debug(sg.getDeclaringTypeName());
 		log.debug(joinPoint.getTarget());
+
+		redisDao.zSetIncre("impl", sg.getName());
 	}
 
 	@Around("execution(* com.singer.dao.*Dao.*(..))")
@@ -51,25 +52,9 @@ public class AopAdvice {
 		return result;
 	}
 
-	@Autowired
-	RedisTemplate<String, Object> redisTemplate;
-
-	@Resource(name = "errorDao")
-	private ErrorDao errorDao;
-
 	@After("execution(* com.singer.controller.*Controller.show*(..))")
 	public void aopShow(JoinPoint pjp) {
-		try {
-			// Redis Insert
-			// Hash구조에 Key는 날짜 field는 화면명
-			HashOperations<String, String, Object> hashOp = redisTemplate.opsForHash();
-			hashOp.increment(DateUtil.getToday(), pjp.getSignature().getName(), 1);
-		} catch (RedisConnectionFailureException e) {
-			log.debug("RedisConnectionFailureException");
-			ErrorVo errorVo = new ErrorVo(pjp.getSignature().getName(), DateUtil.getTodayTime(),
-					"RedisConnectionFailureException");
-			errorDao.insertError(errorVo);
-		}
+		redisDao.hmSetIncre(DateUtil.getToday(), pjp.getSignature().getName());
 
 	}
 }
