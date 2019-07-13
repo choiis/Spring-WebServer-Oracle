@@ -31,7 +31,7 @@ public class MailController {
 	public int sendMail(ModelAndView modelAndView, MailVo mailVo, HttpServletResponse response) {
 		log.debug("mailVo : " + mailVo);
 
-		String setfrom = "choiis120@naver.com";
+		String setfrom = "mailSender";
 
 		try {
 			MimeMessage message = mailSender.createMimeMessage();

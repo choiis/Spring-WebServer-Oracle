@@ -15,16 +15,14 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${global.mail.host}" />
 		<property name="port" value="${global.mail.port}" />
-		<property name="username" value="${global.mail.username}" />
-		<property name="password" value="${global.mail.password}" />
 		<!-- email 요청시는 SMTP -->
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.transport.protocol">smtp</prop>
-				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">false</prop>
+				<prop key="mail.smtp.starttls.enable">false</prop>
 				<prop key="mail.debug">true</prop>
-				<prop key="mail.smtp.ssl.enable">true</prop>
+				<prop key="mail.smtp.ssl.enable">false</prop>
 			</props>
 		</property>
 	</bean>
