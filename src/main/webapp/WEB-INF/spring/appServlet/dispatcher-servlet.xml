@@ -50,16 +50,16 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/**" />
-			<exclude-mapping path="/sm01join.do"/>
-			<exclude-mapping path="/sm01insert.do"/>
+			<exclude-mapping path="/sm01joinPage"/>
+			<exclude-mapping path="/sm01"/>
 			<exclude-mapping path="/login"/>
 			<beans:ref bean="sessionInterceptor" />
 		</interceptor>
 		
 		<interceptor>
 			<mapping path="/**" />
-			<exclude-mapping path="/sm01join.do"/>
-			<exclude-mapping path="/sm01insert.do"/>
+			<exclude-mapping path="/sm01joinPage"/>
+			<exclude-mapping path="/sm01"/>
 			<exclude-mapping path="/login"/>
 			<beans:ref bean="logInterceptor" />
 		</interceptor>

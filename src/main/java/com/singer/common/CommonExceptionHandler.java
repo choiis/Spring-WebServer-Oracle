@@ -37,9 +37,9 @@ public class CommonExceptionHandler {
 		}
 		ModelAndView mv = null;
 		if (isAjax) {
-			mv = new ModelAndView("forward:/error.do");
+			mv = new ModelAndView("forward:/error");
 		} else {
-			mv = new ModelAndView("forward:/forwardError.do");
+			mv = new ModelAndView("forward:/forwardError");
 		}
 
 		mv.addObject("errorCode", "500");
@@ -61,9 +61,9 @@ public class CommonExceptionHandler {
 		}
 		ModelAndView mv = null;
 		if (isAjax) {
-			mv = new ModelAndView("forward:/error.do");
+			mv = new ModelAndView("forward:/error");
 		} else {
-			mv = new ModelAndView("forward:/forwardError.do");
+			mv = new ModelAndView("forward:/forwardError");
 		}
 
 		mv.addObject("errorCode", "500");
@@ -86,9 +86,9 @@ public class CommonExceptionHandler {
 		}
 		ModelAndView mv = null;
 		if (isAjax) {
-			mv = new ModelAndView("forward:/error.do");
+			mv = new ModelAndView("forward:/error");
 		} else {
-			mv = new ModelAndView("forward:/forwardError.do");
+			mv = new ModelAndView("forward:/forwardError");
 		}
 
 		mv.addObject("errorCode", "500");

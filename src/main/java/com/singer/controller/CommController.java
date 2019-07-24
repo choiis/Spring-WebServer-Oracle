@@ -184,27 +184,23 @@ public class CommController {
 		return model;
 	}
 
-	@RequestMapping(value = "/error.do")
+	@RequestMapping(value = "/error")
 	public ResponseEntity<CommVo> errorJson(CommVo commVo, HttpServletRequest request) {
-		log.debug("enter error.do");
 
 		commVo.setErrorCode((String) request.getAttribute("errorCode"));
 		commVo.setErrorMsg((String) request.getAttribute("errorMsg"));
 
-		log.debug("exit error.do");
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@RequestMapping(value = "/forwardError.do")
+	@RequestMapping(value = "/forwardError")
 	public ModelAndView forwardError(HttpServletRequest request) throws Exception {
-		log.debug("enter forwardError.do");
 
 		ModelAndView mv = new ModelAndView("/forwardError");
 		String errorCode = (String) request.getAttribute("errorCode");
 		String errorMsg = (String) request.getAttribute("errorMsg");
 		mv.addObject("errorCode", errorCode);
 		mv.addObject("errorMsg", errorMsg);
-		log.debug("exit forwardError.do");
 		return mv;
 	}
 }

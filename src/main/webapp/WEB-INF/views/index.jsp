@@ -104,7 +104,7 @@
 							</p>
 							<div id=jhw align="right">
 								아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp; 
-								<a href="/sm01join.do">회원가입</a>
+								<a href="/sm01joinPage">회원가입</a>
 								<br> 아이디를 잊으셨나요? &nbsp;&nbsp;&nbsp; <a
 									href="Join/findId.jsp">아이디 찾기</a> <br> 비밀번호를
 								잊으셨나요?&nbsp;&nbsp; <a href="Join/findPw.jsp">비밀번호 찾기</a>

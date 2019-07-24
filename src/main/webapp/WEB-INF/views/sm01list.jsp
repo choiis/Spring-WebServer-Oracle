@@ -18,8 +18,8 @@ var user_code = {};
 	$(document).ready(function() {
 
 		user_code = gfn_getCommCode("U001");
+		showSM01List();	
 		
-		showSM01List();
 		// 찾기 버튼 클릭
 		$("#btn_findText_button").on("click", function(e) {
 			// 검색 함수
@@ -71,7 +71,7 @@ var user_code = {};
 			window.open("", popTitle);
 			
 			frmData.target = popTitle;
-			frmData.action = "/sm01show.do";
+			frmData.action = "/sm01show";
 			frmData.submit();
 		});
 		
@@ -102,7 +102,8 @@ var user_code = {};
 	            html += '<td >' + item.regdate + '</td>';
 	            html += '<td >' + item.phone + '</td>';
 	            html += '<td >' + item.email + '</td>';
-	            html += '<td >' + gfn_getCommCodeNm(user_code,item.usertype) + '</td>';
+	          	html += '<td >' + gfn_getCommCodeNm(user_code,item.usertype) + '</td>';
+	            html += '<td >' + item.usertype + '</td>';
 	            html += '</tr>';
 			});
 			
@@ -114,18 +115,12 @@ var user_code = {};
 	
 	function showSM01List(nowPage) {
 		console.log("showSM01List");
-		
+		var page = 1;
 		if(!gfn_isNull(nowPage)) {
 			page = nowPage;
-		} else {
-			page = 1;
 		}
-		
-		var sendData = {
-			"nowPage" : page
-		};
-		
-		gfn_ajax("sm01select.do","POST" , sendData , function(data) {
+
+		gfn_ajaxRest("sm01/" + page, "GET"  , function(data) {
 
 			var html = "";
 			$.each(data.list, function(index, item) {
@@ -136,8 +131,8 @@ var user_code = {};
 	            html += '<td >' + item.regdate + '</td>';
 	            html += '<td >' + item.phone + '</td>';
 	            html += '<td >' + item.email + '</td>';
-	            html += '<td >' + gfn_getCommCodeNm(user_code,item.usertype) + '</td>';
-	            html += '</tr>';
+	          	html += '<td >' + gfn_getCommCodeNm(user_code,item.usertype) + '</td>';
+				html += '</tr>';
 			});
 			
 	        $("#sm01viewTbody").html(html);

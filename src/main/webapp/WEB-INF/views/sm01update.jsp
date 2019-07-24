@@ -198,7 +198,7 @@ var product_code = {};
 				<div id="sb01insert" class="animate form">
 					<div id="login" class="animate form">
 						<h4>회원 정보를 입력해 주세요</h4>
-						<form id="form" name="updateform" method="post" enctype="multipart/form-data" action="/sm01update.do">
+						<form id="form" name="updateform" method="post" enctype="multipart/form-data" action="/sm01update">
 							<input type="hidden" id="userid" name="userid" value="${sm01Vo.userid}"> <br>
 							<br> 이름:<input	type="text" id="username" name="username" value="${sm01Vo.username}" maxlength="6">
 							<br> 전화번호:<input type="text" id="phone" name="phone" value="${sm01Vo.phone}" maxlength="14">

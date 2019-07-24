@@ -41,21 +41,17 @@ public class SM01Controller {
 	@Resource(name = "sm01Service")
 	private SM01Service sm01Service;
 
-	@RequestMapping(value = "/sm01join.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm01joinPage", method = RequestMethod.GET)
 	public ModelAndView joinPage() {
-		log.debug("enter sm01join.do");
 
 		ModelAndView model = new ModelAndView("/join");
-
-		log.debug("exit sm01join.do");
 
 		return model;
 	}
 
-	@RequestMapping(value = "/sm01insert.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/sm01", method = RequestMethod.POST)
 	public ModelAndView insertSM01Vo(@ModelAttribute("SM01Vo") SM01Vo sm01Vo, MultipartHttpServletRequest request)
 			throws Exception {
-		log.debug("enter sm01join.do");
 		log.debug("sm01Vo : " + sm01Vo);
 
 		ModelAndView model = new ModelAndView("/index");
@@ -79,7 +75,6 @@ public class SM01Controller {
 
 		sm01Service.insertImage(putHash);
 
-		log.debug("exit sm01join.do");
 		return model;
 	}
 
@@ -90,9 +85,8 @@ public class SM01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sm01select.do", method = RequestMethod.POST)
-	public ResponseEntity<SM01Vo> selectSM01Vo(SM01Vo sm01Vo) throws Exception {
-		log.debug("enter sm01select.do");
+	@RequestMapping(value = "/sm01/{nowPage}", method = RequestMethod.GET)
+	public ResponseEntity<SM01Vo> selectSM01Vo(@ModelAttribute SM01Vo sm01Vo) throws Exception {
 		log.debug("sm01Vo : " + sm01Vo);
 		int nowPage = sm01Vo.getNowPage() + 1;
 
@@ -107,14 +101,12 @@ public class SM01Controller {
 		}
 
 		log.debug("list : " + list);
-		log.debug("exit sm01select.do");
 		return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/sm01update.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/sm01update", method = RequestMethod.POST)
 	public ModelAndView upateSM01Vo(@ModelAttribute("SM01Vo") SM01Vo sm01Vo, MultipartHttpServletRequest request,
 			HttpSession session) throws Exception {
-		log.debug("enter sm01update.do");
 		log.debug("sm01Vo : " + sm01Vo);
 
 		sm01Vo = sm01Service.updateSM01Vo(sm01Vo);
@@ -147,7 +139,6 @@ public class SM01Controller {
 
 		model.addObject("sm01Vo", sm01Vo);
 
-		log.debug("exit sm01update.do");
 		return model;
 	}
 
@@ -168,18 +159,16 @@ public class SM01Controller {
 		return model;
 	}
 
-	@RequestMapping(value = "/sm01show.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/sm01show", method = RequestMethod.POST)
 	public ModelAndView selectOneSM01Vo(@ModelAttribute("sm01Vo") SM01Vo sm01Vo) throws Exception {
 		ModelAndView model = new ModelAndView("/sm01show");
 
-		log.debug("enter sm01show.do");
 		log.debug("sm01Vo : " + sm01Vo);
 
 		sm01Vo = sm01Service.selectOneSM01Vo(sm01Vo);
 		model.addObject("sM01Vo", sm01Vo);
 
 		log.debug("sm01Vo : " + sm01Vo);
-		log.debug("exit sm01show.do");
 
 		return model;
 	}

@@ -88,7 +88,7 @@
 				<div id="wrapper">
 					<div id="login" class="animate form">
 						<h4>회원 정보를 입력해 주세요</h4>
-						<form id="form" method="post" enctype="multipart/form-data" action="/sm01insert.do">
+						<form id="form" method="post" enctype="multipart/form-data" action="/sm01">
 							아이디:<input type="text" id="userid" name="userid"  maxlength="12"> <br>
 							<br> 비밀번호:<input type="password" id="passwd" name="passwd"  maxlength="10"> 
 							<br> 이름:<input	type="text" id="username" name="username"  maxlength="6">
