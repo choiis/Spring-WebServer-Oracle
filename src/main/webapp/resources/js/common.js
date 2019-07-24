@@ -339,6 +339,7 @@ $(document).ready(function() {
 		$.ajax({
 		    url : "commCode/" + codeGrpCd,
 		    type : "GET",
+		    async: false,
 		    success : function(data) {
 		    	if(!gfn_isNull(data.commList)){
 		    		if(data.commList.length > 0) {
@@ -379,6 +380,7 @@ $(document).ready(function() {
 		$.ajax({
 		    url : "commCode/" + codeGrpCd,
 		    type : "GET",
+		    async: false,
 		    success : function(data) {
 		    	common_code = data.commList;
 		    },
