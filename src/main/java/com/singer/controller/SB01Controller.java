@@ -48,12 +48,9 @@ public class SB01Controller {
 		return model;
 	}
 
-	@RequestMapping(value = "/sb01write.do", method = RequestMethod.GET)
-	public ModelAndView writeSB01() throws Exception {
+	@RequestMapping(value = "/sb01insertPage", method = RequestMethod.GET)
+	public ModelAndView insertPageSB01() throws Exception {
 		ModelAndView model = new ModelAndView("/sb01insert");
-		log.debug("enter sb01write.do");
-
-		log.debug("exit sb01write.do");
 		return model;
 	}
 

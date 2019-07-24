@@ -179,11 +179,11 @@
 		<div id="pagenation">
 		
 		</div>
-			<form id="write_form" action="/sb01write.do" method="get">
+			<form id="write_form" action="/sb01insertPage" method="get">
 			<button id="btn_write_button" type="button" >게시물 등록</button>
 			</form>
 		</div>
-		<a href="/excelDown.do">엑셀 다운</a>
+		<a href="/excelDown">엑셀 다운</a>
 	</section>
 	<p>
 	<footer> <jsp:include page="footer.jsp" /> </footer>

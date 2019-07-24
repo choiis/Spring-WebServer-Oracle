@@ -174,7 +174,7 @@
 		<div id="pagenation">
 		
 		</div>
-			<form id="write_form" action="/sv01write.do" method="get">
+			<form id="write_form" action="/sv01insertPage" method="get">
 			<button id="btn_write_button" type="button" >게시물 등록</button>
 			</form>
 		</div>

@@ -22,10 +22,10 @@ public class ExcelController {
 	@Resource(name = "sb01Service")
 	private SB01Service sb01Service;
 
-	@RequestMapping(value = "/excelDown.do")
+	@RequestMapping(value = "/excelDown")
 	public String getExcelList(SB01Vo sb01Vo, Map<String, Object> modelMap, HttpServletResponse response)
 			throws Exception {
-		log.debug("enter excelDown.do");
+		log.debug("enter excelDown");
 
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/vnd.ms-excel");
@@ -38,7 +38,7 @@ public class ExcelController {
 		modelMap.put("excelList", excelList);
 		modelMap.put("excelType", "board");
 
-		log.debug("exit excelDown.do");
+		log.debug("exit excelDown");
 
 		return "excelView";
 	}

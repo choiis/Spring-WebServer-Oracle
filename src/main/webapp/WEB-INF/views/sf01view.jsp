@@ -180,7 +180,7 @@
 		<div id="pagenation">
 		
 		</div>
-			<form id="write_form" action="/sf01write.do" method="get">
+			<form id="write_form" action="/sf01insertPage" method="get">
 			<button id="btn_write_button" type="button" >게시물 등록</button>
 			</form>
 		</div>
