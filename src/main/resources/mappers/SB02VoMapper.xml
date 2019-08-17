@@ -41,7 +41,7 @@
 					text as text, 
 					userid as userid,  
 					regdate as regdate,
-					good as good,
+					good as good
 				 from SB02 
  				where seq01 = #{seq01}
 				and rownum <= #{endRownum}

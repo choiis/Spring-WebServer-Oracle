@@ -1,8 +1,6 @@
 package com.singer.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.singer.vo.SB01Vo;
 
@@ -23,7 +21,5 @@ public interface SB01Service {
 
 	public int deleteSB01Vo(SB01Vo sb01Vo) throws Exception;
 
-	public int insertVideo(Map<String, Object> hashMap) throws Exception;
-
-	public HashMap<String, Object> selectVideo(SB01Vo sb01Vo) throws Exception;
+	public SB01Vo selectVideo(SB01Vo sb01Vo) throws Exception;
 }

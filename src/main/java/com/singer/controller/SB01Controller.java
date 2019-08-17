@@ -2,9 +2,9 @@ package com.singer.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,8 +32,6 @@ import com.singer.common.Constants;
 import com.singer.service.SB01Service;
 import com.singer.vo.SB01Vo;
 
-import oracle.sql.BLOB;
-
 @Controller("sB01Controller")
 public class SB01Controller {
 
@@ -41,6 +39,8 @@ public class SB01Controller {
 
 	@Resource(name = "sb01Service")
 	private SB01Service sb01Service;
+
+	private String SAVE_PATH = "C:\\videoDown";
 
 	@RequestMapping(value = "/sb01page", method = RequestMethod.GET)
 	public ModelAndView showSB01() throws Exception {
@@ -67,22 +67,18 @@ public class SB01Controller {
 
 		String userid = (String) session.getAttribute("userid");
 		sb01Vo.setUserid(userid);
-		String title = sb01Vo.getTitle();
 		while (itr.hasNext()) {
 			video = request.getFile(itr.next());
 		}
+		sb01Vo.setVideo(video.getOriginalFilename());
 
-		int cnt = sb01Service.insertSB01Vo(sb01Vo);
+		sb01Service.insertSB01Vo(sb01Vo);
 
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		HashMap<String, Object> putHash = new HashMap<String, Object>();
-		putHash.put("userid", userid);
-		putHash.put("title", title);
-		putHash.put("video", video.getBytes());
-		int ok = sb01Service.insertVideo(putHash);
-
-		hashmap.put("result", cnt);
-		hashmap.put("ok", ok);
+		File dir = new File(SAVE_PATH);
+		dir.mkdir();
+		FileOutputStream fos = new FileOutputStream(SAVE_PATH + "/" + video.getOriginalFilename());
+		fos.write(video.getBytes());
+		fos.close();
 
 		ModelAndView model = new ModelAndView("/sb01view");
 
@@ -152,12 +148,12 @@ public class SB01Controller {
 	public void selectVideoSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter selectVideo.do");
-		HashMap<String, Object> hashMap = sb01Service.selectVideo(sb01Vo);
+		sb01Vo = sb01Service.selectVideo(sb01Vo);
 
 		InputStream is = null;
 		try {
 			// 동영상 없을때
-			if (CommonUtil.isNull(hashMap)) {
+			if (CommonUtil.isNull(sb01Vo.getVideo())) {
 				String video_path = request.getSession().getServletContext().getRealPath("/resources/video/hyeri.mp4");
 				File file = new File(video_path);
 				is = new FileInputStream(file);
@@ -165,9 +161,9 @@ public class SB01Controller {
 				IOUtils.copy(is, response.getOutputStream());
 			} else { // 동영상 불러오기 성공시
 
-				BLOB images = (BLOB) hashMap.get("VIDEO");
-
-				is = images.getBinaryStream();
+				// BLOB images = (BLOB) hashMap.get("VIDEO");
+				File file = new File(SAVE_PATH + "/" + sb01Vo.getVideo());
+				is = new FileInputStream(file);
 
 				IOUtils.copy(is, response.getOutputStream());
 			}
@@ -191,6 +187,10 @@ public class SB01Controller {
 		log.debug("enter sb01delete.do");
 		log.debug("sb01Vo : " + sb01Vo);
 
+		sb01Vo = sb01Service.selectVideo(sb01Vo);
+
+		File file = new File(SAVE_PATH + "/" + sb01Vo.getVideo());
+		file.delete();
 		sb01Service.deleteSB01Vo(sb01Vo);
 
 		sb01Vo.setResult(Constants.SUCCESS_CODE);

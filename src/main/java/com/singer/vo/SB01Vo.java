@@ -12,7 +12,7 @@ public class SB01Vo extends SuperVo {
 	private String regdate;
 	private int hit;
 	private int good;
-	private MultipartFile video;
+	private String video;
 	private int reply;
 	private int selection;
 	private String findText;
@@ -26,28 +26,6 @@ public class SB01Vo extends SuperVo {
 
 	public SB01Vo() {
 		super();
-	}
-
-	public SB01Vo(int seq, String title, String text, String userid, String regdate, int hit, int good,
-			MultipartFile video, int reply, int selection, String findText, String sessionid, String datelog,
-			String goodlog, String hatelog, List<SB01Vo> list) {
-		super();
-		this.seq = seq;
-		this.title = title;
-		this.text = text;
-		this.userid = userid;
-		this.regdate = regdate;
-		this.hit = hit;
-		this.good = good;
-		this.video = video;
-		this.reply = reply;
-		this.selection = selection;
-		this.findText = findText;
-		this.sessionid = sessionid;
-		this.datelog = datelog;
-		this.goodlog = goodlog;
-		this.hatelog = hatelog;
-		this.list = list;
 	}
 
 	public int getSeq() {
@@ -106,11 +84,11 @@ public class SB01Vo extends SuperVo {
 		this.good = good;
 	}
 
-	public MultipartFile getVideo() {
+	public String getVideo() {
 		return video;
 	}
 
-	public void setVideo(MultipartFile video) {
+	public void setVideo(String video) {
 		this.video = video;
 	}
 

@@ -7,8 +7,8 @@
 
 <mapper namespace="com.singer.mappers.SB01">		
 		<insert id="insert"  parameterType="com.singer.vo.SB01Vo">
-			insert into SB01 (seq, title, text, userid, regdate)
-			values (SEQ_SB01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}) 
+			insert into SB01 (seq, title, text, userid, regdate, video)
+			values (SEQ_SB01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{video}) 
 		</insert>
 		
 		<update id="update" parameterType="com.singer.vo.SB01Vo">
@@ -95,15 +95,8 @@
 			where seq = #{seq}
 		</delete>
 		
-		<update id="insertVideo" parameterType="java.util.HashMap">
-			update SB01 
-			set video = #{video}
-			where title = #{title}
-			and userid = #{userid}
-		</update>
-		
-		<select id="selectVideo" parameterType="com.singer.vo.SB01Vo" resultType="java.util.Map">
-			select video from SB01 
+		<select id="selectVideo" resultType="com.singer.vo.SB01Vo"  parameterType="com.singer.vo.SB01Vo">
+			select seq,video from SB01 
 			where seq = #{seq}
 		</select>
 		

@@ -1,8 +1,6 @@
 package com.singer.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -112,13 +110,9 @@ public class SB01ServiceImpl implements SB01Service {
 		return sb01Dao.deleteSB01Vo(sb01Vo);
 	}
 
-	@Override
-	public int insertVideo(Map<String, Object> hashMap) throws Exception {
-		return sb01Dao.insertVideo(hashMap);
-	}
 
 	@Override
-	public HashMap<String, Object> selectVideo(SB01Vo sb01Vo) throws Exception {
+	public SB01Vo selectVideo(SB01Vo sb01Vo) throws Exception {
 		return sb01Dao.selectVideo(sb01Vo);
 	}
 
