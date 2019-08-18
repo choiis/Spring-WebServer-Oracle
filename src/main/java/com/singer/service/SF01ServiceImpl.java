@@ -1,19 +1,23 @@
 package com.singer.service;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.singer.common.Constants;
 import com.singer.common.DateUtil;
 import com.singer.dao.SF01Dao;
 import com.singer.dao.SF02Dao;
 import com.singer.vo.SF01Vo;
 import com.singer.vo.SF02Vo;
+
+import oracle.sql.BLOB;
 
 @Service("sf01Service")
 public class SF01ServiceImpl implements SF01Service {
@@ -23,12 +27,31 @@ public class SF01ServiceImpl implements SF01Service {
 	@Resource(name = "sf02Dao")
 	private SF02Dao sf02Dao;
 
+	@Transactional
 	@Override
-	public int insertSF01Vo(SF01Vo sf01vo) throws Exception {
+	public int insertSF01Vo(SF01Vo sf01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
 
-		sf01vo.setRegdate(DateUtil.getTodayTime());
+		MultipartFile file = null;
+		Iterator<String> itr = request.getFileNames();
+		sf01Vo.setUserid(userid);
+		sf01Vo.setRegdate(DateUtil.getTodayTime());
+		String title = sf01Vo.getTitle();
+		while (itr.hasNext()) {
+			file = request.getFile(itr.next());
+		}
 
-		return sf01Dao.insertSF01Vo(sf01vo);
+		sf01Vo.setFilename(file.getOriginalFilename());
+
+		sf01Dao.insertSF01Vo(sf01Vo);
+
+		HashMap<String, Object> putHash = new HashMap<String, Object>();
+		putHash.put("userid", userid);
+		putHash.put("title", title);
+
+		putHash.put("fileblob", file.getBytes());
+		int ok = sf01Dao.insertFile(putHash);
+
+		return ok;
 	}
 
 	@Override
@@ -73,7 +96,7 @@ public class SF01ServiceImpl implements SF01Service {
 
 	@Transactional
 	@Override
-	public int likeSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
+	public SF01Vo likeSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
 		int like = sf01Vo.getGood() + 1;
 		sf01Dao.likeSF01Vo(sf01Vo);
 
@@ -82,22 +105,25 @@ public class SF01ServiceImpl implements SF01Service {
 
 		sf01Dao.likelogSF01Vo(sf01Vo);
 
-		return like;
+		sf01Vo.setResult(Constants.SUCCESS_CODE);
+		sf01Vo.setLike(like);
+		return sf01Vo;
 	}
 
 	@Transactional
 	@Override
-	public int hateSF01Vo(SF01Vo sf01vo, String sessionid) throws Exception {
-		int like = sf01vo.getGood() - 1;
+	public SF01Vo hateSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
+		int like = sf01Vo.getGood() - 1;
+		sf01Dao.hateSF01Vo(sf01Vo);
 
-		sf01Dao.hateSF01Vo(sf01vo);
+		sf01Vo.setSessionid(sessionid);
+		sf01Vo.setDatelog(DateUtil.getTodayTime());
 
-		sf01vo.setSessionid(sessionid);
-		sf01vo.setDatelog(DateUtil.getTodayTime());
+		sf01Dao.hatelogSF01Vo(sf01Vo);
 
-		sf01Dao.hatelogSF01Vo(sf01vo);
-
-		return like;
+		sf01Vo.setResult(Constants.SUCCESS_CODE);
+		sf01Vo.setLike(like);
+		return sf01Vo;
 	}
 
 	@Transactional
@@ -113,13 +139,17 @@ public class SF01ServiceImpl implements SF01Service {
 	}
 
 	@Override
-	public int insertFile(Map<String, Object> hashMap) throws Exception {
-		return sf01Dao.insertFile(hashMap);
-	}
-
-	@Override
 	public HashMap<String, Object> selectFile(SF01Vo SF01Vo) throws Exception {
-		return sf01Dao.selectFile(SF01Vo);
+
+		HashMap<String, Object> hashMap = sf01Dao.selectFile(SF01Vo);
+
+		String filename = (String) hashMap.get("FILENAME");
+		BLOB fileblob = (BLOB) hashMap.get("FILEBLOB");
+
+		hashMap.put("fileblob", fileblob);
+		hashMap.put("filename", filename);
+
+		return hashMap;
 	}
 
 }

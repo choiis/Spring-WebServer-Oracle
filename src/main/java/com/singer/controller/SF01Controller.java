@@ -1,7 +1,6 @@
 package com.singer.controller;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -18,15 +17,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.service.SF01Service;
 import com.singer.vo.SF01Vo;
-import oracle.sql.BLOB;
 
 @Controller("sF01Controller")
 public class SF01Controller {
@@ -55,30 +51,9 @@ public class SF01Controller {
 		log.debug("enter sf01insert.do");
 		log.debug("sf01Vo : " + sf01Vo);
 
-		MultipartFile file = null;
-		Iterator<String> itr = request.getFileNames();
-
 		String userid = (String) session.getAttribute("userid");
-		sf01Vo.setUserid(userid);
-		String title = sf01Vo.getTitle();
-		while (itr.hasNext()) {
-			file = request.getFile(itr.next());
-		}
 
-		sf01Vo.setFilename(file.getOriginalFilename());
-
-		int cnt = sf01Service.insertSF01Vo(sf01Vo);
-
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		HashMap<String, Object> putHash = new HashMap<String, Object>();
-		putHash.put("userid", userid);
-		putHash.put("title", title);
-
-		putHash.put("fileblob", file.getBytes());
-		int ok = sf01Service.insertFile(putHash);
-
-		hashmap.put("result", cnt);
-		hashmap.put("ok", ok);
+		sf01Service.insertSF01Vo(sf01Vo, request, userid);
 
 		ModelAndView model = new ModelAndView("/sf01view");
 		log.debug("exit sf01insert.do");
@@ -94,12 +69,6 @@ public class SF01Controller {
 		List<SF01Vo> list = sf01Service.selectSF01Vo(sf01Vo);
 		sf01Vo.setList(list);
 
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sf01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-		} else {
-			sf01Vo.setTotCnt(0);
-		}
 		log.debug("list : " + list);
 		log.debug("exit sf01show.do");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
@@ -113,11 +82,7 @@ public class SF01Controller {
 
 		List<SF01Vo> list = sf01Service.selectFindSF01Vo(sf01Vo);
 		sf01Vo.setList(list);
-		if (list.size() != 0) {
-			sf01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-		} else {
-			sf01Vo.setTotCnt(0);
-		}
+
 		log.debug("list : " + list);
 		log.debug("exit sf01showFind.do");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
@@ -143,17 +108,9 @@ public class SF01Controller {
 	@RequestMapping(value = "/sf01File/{seq}/{regdate}", method = RequestMethod.GET)
 	public ModelAndView selectFileSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		log.debug("enter selectFile.do");
 		log.debug("sf01Vo : " + sf01Vo);
-		HashMap<String, Object> hashMap = sf01Service.selectFile(sf01Vo);
+		HashMap<String, Object> downloadFile = sf01Service.selectFile(sf01Vo);
 
-		String filename = (String) hashMap.get("FILENAME");
-		BLOB fileblob = (BLOB) hashMap.get("FILEBLOB");
-
-		HashMap<String, Object> downloadFile = new HashMap<String, Object>();
-		downloadFile.put("fileblob", fileblob);
-		downloadFile.put("filename", filename);
-		log.debug("exit selectFile.do");
 		return new ModelAndView("blobdownloadView", "downloadFile", downloadFile);
 	}
 
@@ -176,10 +133,8 @@ public class SF01Controller {
 		log.debug("enter sf01like.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		String sessionid = (String) session.getAttribute("userid");
-		int like = sf01Service.likeSF01Vo(sf01Vo, sessionid);
+		sf01Vo = sf01Service.likeSF01Vo(sf01Vo, sessionid);
 
-		sf01Vo.setResult(Constants.SUCCESS_CODE);
-		sf01Vo.setLike(like);
 		log.debug("exit sf01like.do");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
@@ -190,10 +145,8 @@ public class SF01Controller {
 		log.debug("enter sf01hate.do");
 		log.debug("sf01Vo : " + sf01Vo);
 		String sessionid = (String) session.getAttribute("userid");
-		int like = sf01Service.hateSF01Vo(sf01Vo, sessionid);
+		sf01Vo = sf01Service.hateSF01Vo(sf01Vo, sessionid);
 
-		sf01Vo.setResult(Constants.SUCCESS_CODE);
-		sf01Vo.setLike(like);
 		log.debug("exit sf01hate.do");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}

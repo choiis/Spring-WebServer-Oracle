@@ -2,10 +2,8 @@ package com.singer.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -23,11 +21,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.service.SB01Service;
 import com.singer.vo.SB01Vo;
@@ -39,8 +35,6 @@ public class SB01Controller {
 
 	@Resource(name = "sb01Service")
 	private SB01Service sb01Service;
-
-	private String SAVE_PATH = "C:\\videoDown";
 
 	@RequestMapping(value = "/sb01page", method = RequestMethod.GET)
 	public ModelAndView showSB01() throws Exception {
@@ -59,30 +53,15 @@ public class SB01Controller {
 	public ModelAndView insertSB01Vo(@ModelAttribute("SB01Vo") SB01Vo sb01Vo, HttpSession session,
 			MultipartHttpServletRequest request) throws Exception {
 
-		log.debug("enter sb01insert.do");
 		log.debug("sb01Vo : " + sb01Vo);
-
-		MultipartFile video = null;
-		Iterator<String> itr = request.getFileNames();
 
 		String userid = (String) session.getAttribute("userid");
 		sb01Vo.setUserid(userid);
-		while (itr.hasNext()) {
-			video = request.getFile(itr.next());
-		}
-		sb01Vo.setVideo(video.getOriginalFilename());
 
-		sb01Service.insertSB01Vo(sb01Vo);
-
-		File dir = new File(SAVE_PATH);
-		dir.mkdir();
-		FileOutputStream fos = new FileOutputStream(SAVE_PATH + "/" + video.getOriginalFilename());
-		fos.write(video.getBytes());
-		fos.close();
+		sb01Service.insertSB01Vo(sb01Vo, request);
 
 		ModelAndView model = new ModelAndView("/sb01view");
 
-		log.debug("exit sb01insert.do");
 		return model;
 	}
 
@@ -95,12 +74,7 @@ public class SB01Controller {
 
 		List<SB01Vo> list = sb01Service.selectSB01Vo(sb01Vo);
 		sb01Vo.setList(list);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sb01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-		} else {
-			sb01Vo.setTotCnt(0);
-		}
+
 		log.debug("list : " + list);
 		log.debug("exit sb01show.do");
 		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
@@ -115,12 +89,7 @@ public class SB01Controller {
 
 		List<SB01Vo> list = sb01Service.selectFindSB01Vo(sb01Vo);
 		sb01Vo.setList(list);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sb01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-		} else {
-			sb01Vo.setTotCnt(0);
-		}
+
 		log.debug("list : " + list);
 		log.debug("exit sb01showFind.do");
 		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
@@ -148,25 +117,12 @@ public class SB01Controller {
 	public void selectVideoSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter selectVideo.do");
-		sb01Vo = sb01Service.selectVideo(sb01Vo);
+		File file = sb01Service.selectVideo(sb01Vo, request);
 
 		InputStream is = null;
 		try {
-			// 동영상 없을때
-			if (CommonUtil.isNull(sb01Vo.getVideo())) {
-				String video_path = request.getSession().getServletContext().getRealPath("/resources/video/hyeri.mp4");
-				File file = new File(video_path);
-				is = new FileInputStream(file);
-
-				IOUtils.copy(is, response.getOutputStream());
-			} else { // 동영상 불러오기 성공시
-
-				// BLOB images = (BLOB) hashMap.get("VIDEO");
-				File file = new File(SAVE_PATH + "/" + sb01Vo.getVideo());
-				is = new FileInputStream(file);
-
-				IOUtils.copy(is, response.getOutputStream());
-			}
+			is = new FileInputStream(file);
+			IOUtils.copy(is, response.getOutputStream());
 		} catch (IOException e) {
 
 		} finally {
@@ -187,10 +143,6 @@ public class SB01Controller {
 		log.debug("enter sb01delete.do");
 		log.debug("sb01Vo : " + sb01Vo);
 
-		sb01Vo = sb01Service.selectVideo(sb01Vo);
-
-		File file = new File(SAVE_PATH + "/" + sb01Vo.getVideo());
-		file.delete();
 		sb01Service.deleteSB01Vo(sb01Vo);
 
 		sb01Vo.setResult(Constants.SUCCESS_CODE);
@@ -204,10 +156,9 @@ public class SB01Controller {
 		log.debug("enter sb01like.do");
 		log.debug("sb01Vo : " + sb01Vo);
 		String sessionid = (String) session.getAttribute("userid");
-		int like = sb01Service.likeSB01Vo(sb01Vo, sessionid);
 
-		sb01Vo.setResult(Constants.SUCCESS_CODE);
-		sb01Vo.setLike(like);
+		sb01Vo = sb01Service.likeSB01Vo(sb01Vo, sessionid);
+
 		log.debug("exit sb01like.do");
 		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
 	}
@@ -218,10 +169,8 @@ public class SB01Controller {
 		log.debug("enter sb01hate.do");
 		log.debug("sb01Vo : " + sb01Vo);
 		String sessionid = (String) session.getAttribute("userid");
-		int like = sb01Service.hateSB01Vo(sb01Vo, sessionid);
+		sb01Vo = sb01Service.hateSB01Vo(sb01Vo, sessionid);
 
-		sb01Vo.setResult(Constants.SUCCESS_CODE);
-		sb01Vo.setLike(like);
 		log.debug("exit sb01hate.do");
 		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
 	}

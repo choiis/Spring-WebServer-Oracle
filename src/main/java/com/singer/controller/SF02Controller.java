@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.singer.common.CommonUtil;
 import com.singer.service.SF02Service;
 import com.singer.vo.SF02Vo;
 
@@ -38,13 +37,6 @@ public class SF02Controller {
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);
 		sf02Vo.setList(list);
 
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sf02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-		} else {
-			sf02Vo.setTotCnt(0);
-		}
-
 		log.debug("list : " + list);
 		log.debug("exit sf02show.do");
 		return new ResponseEntity<SF02Vo>(sf02Vo, HttpStatus.OK);
@@ -65,14 +57,7 @@ public class SF02Controller {
 
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);
 		sf02Vo.setList(list);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sf02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-			sf02Vo.setNowPage(list.get(0).getNowPage());
-		} else {
-			sf02Vo.setTotCnt(0);
-			sf02Vo.setNowPage(0);
-		}
+
 		log.debug("list : " + list);
 		log.debug("exit sf02insert.do");
 		return new ResponseEntity<SF02Vo>(sf02Vo, HttpStatus.CREATED);
@@ -90,14 +75,6 @@ public class SF02Controller {
 		String userid = (String) session.getAttribute("userid");
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);
 		sf02Vo.setList(list);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sf02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-			sf02Vo.setNowPage(list.get(0).getNowPage());
-		} else {
-			sf02Vo.setTotCnt(0);
-			sf02Vo.setNowPage(0);
-		}
 
 		log.debug("list : " + list);
 		log.debug("exit sf02delete.do");
