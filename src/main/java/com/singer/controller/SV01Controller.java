@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.service.SV01Service;
 import com.singer.vo.SV01Vo;
@@ -65,12 +64,6 @@ public class SV01Controller {
 		List<SV01Vo> list = sv01Service.selectSV01Vo(sv01Vo);
 		sv01Vo.setList(list);
 
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sv01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-		} else {
-			sv01Vo.setTotCnt(0);
-		}
 		log.debug("list : " + list);
 		log.debug("exit sv01show.do");
 		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);

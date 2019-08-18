@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.singer.common.CommonUtil;
 import com.singer.service.SM02Service;
 import com.singer.vo.SM02Vo;
 
@@ -44,14 +43,6 @@ public class SM02Controller {
 		sm02Vo.setUserid((String) session.getAttribute("userid"));
 		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo);
 		sm02Vo.setList(list);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sm02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-			sm02Vo.setNowPage(list.get(0).getNowPage());
-		} else {
-			sm02Vo.setTotCnt(0);
-			sm02Vo.setNowPage(0);
-		}
 
 		log.debug("list : " + list);
 		log.debug("exit sm02show.do");
@@ -72,14 +63,6 @@ public class SM02Controller {
 		sm02Vo.setUserid((String) session.getAttribute("userid"));
 		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo);
 		sm02Vo.setList(list);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sm02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-			sm02Vo.setNowPage(list.get(0).getNowPage());
-		} else {
-			sm02Vo.setTotCnt(0);
-			sm02Vo.setNowPage(0);
-		}
 
 		log.debug("list : " + list);
 		log.debug("exit sm02delete.do");
@@ -91,8 +74,6 @@ public class SM02Controller {
 	@RequestMapping(value = "/sm02", method = RequestMethod.POST)
 	public ResponseEntity<SM02Vo> toInsertSM02Vo(SM02Vo sm02Vo, HttpSession session) throws Exception {
 
-		log.debug("enter sm02insert.do");
-
 		sm02Vo.setUserid((String) session.getAttribute("userid"));
 
 		log.debug("sm02Vo : " + sm02Vo);
@@ -101,16 +82,6 @@ public class SM02Controller {
 
 		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo);
 		sm02Vo.setList(list);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sm02Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-			sm02Vo.setNowPage(list.get(0).getNowPage());
-		} else {
-			sm02Vo.setTotCnt(0);
-			sm02Vo.setNowPage(0);
-		}
-		log.debug("list : " + list);
-		log.debug("exit sm02insert.do");
 
 		return new ResponseEntity<SM02Vo>(sm02Vo, HttpStatus.CREATED);
 	}
