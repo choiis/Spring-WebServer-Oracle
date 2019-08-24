@@ -98,13 +98,7 @@ public class SP01Controller {
 		log.debug("SP01Vo : " + sp01Vo);
 
 		List<SP01Vo> list = sp01Service.selectSP01Vo(sp01Vo);
-		sp01Vo.setList(list);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sp01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-		} else {
-			sp01Vo.setTotCnt(0);
-		}
+
 		log.debug("list : " + list);
 		log.debug("exit sp01show.do");
 		return new ResponseEntity<SP01Vo>(sp01Vo, HttpStatus.OK);
@@ -116,18 +110,12 @@ public class SP01Controller {
 
 		log.debug("enter sp01showMyList.do");
 		log.debug("SP01Vo : " + sp01Vo);
-		int nowPage = sp01Vo.getNowPage() + 1;
+
 		String userid = (String) session.getAttribute("userid");
 		sp01Vo.setUserid(userid);
 		List<SP01Vo> list = sp01Service.selectMyList(sp01Vo, userid);
 		sp01Vo.setList(list);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sp01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-		} else {
-			sp01Vo.setTotCnt(0);
-		}
-		sp01Vo.setNowPage(nowPage);
+
 		log.debug("list : " + list);
 		log.debug("exit sp01showMyList.do");
 		return new ResponseEntity<SP01Vo>(sp01Vo, HttpStatus.OK);
@@ -142,12 +130,7 @@ public class SP01Controller {
 
 		List<SP01Vo> list = sp01Service.selectFindSP01Vo(sp01Vo);
 		sp01Vo.setList(list);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sp01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-		} else {
-			sp01Vo.setTotCnt(0);
-		}
+
 		log.debug("list : " + list);
 		log.debug("exit sp01showFind.do");
 		return new ResponseEntity<SP01Vo>(sp01Vo, HttpStatus.OK);
@@ -233,10 +216,8 @@ public class SP01Controller {
 		log.debug("enter sp01like.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		String sessionid = (String) session.getAttribute("userid");
-		int like = sp01Service.likeSP01Vo(sp01Vo, sessionid);
+		sp01Vo = sp01Service.likeSP01Vo(sp01Vo, sessionid);
 
-		sp01Vo.setResult(Constants.SUCCESS_CODE);
-		sp01Vo.setLike(like);
 		log.debug("exit sp01like.do");
 		return new ResponseEntity<SP01Vo>(sp01Vo, HttpStatus.OK);
 	}
@@ -247,9 +228,9 @@ public class SP01Controller {
 		log.debug("enter sp01hate.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		String sessionid = (String) session.getAttribute("userid");
-		int like = sp01Service.hateSP01Vo(sp01Vo, sessionid);
-		sp01Vo.setResult(Constants.SUCCESS_CODE);
-		sp01Vo.setLike(like);
+
+		sp01Vo = sp01Service.hateSP01Vo(sp01Vo, sessionid);
+
 		log.debug("exit sp01hate.do");
 		return new ResponseEntity<SP01Vo>(sp01Vo, HttpStatus.OK);
 	}

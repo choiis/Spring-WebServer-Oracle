@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.singer.common.CommonUtil;
+
 public class SM01Vo extends SuperVo {
 
 	private String userid;
@@ -145,6 +147,13 @@ public class SM01Vo extends SuperVo {
 
 	public void setList(List<SM01Vo> list) {
 		this.list = list;
+		super.setNowPage(super.getNowPage() + 1);
+		// 페이징을 위한 카운트
+		if (list.size() != 0) {
+			super.setTotCnt(CommonUtil.getPageCnt(this.list.get(0).getTotCnt()));
+		} else {
+			super.setTotCnt(0);
+		}
 	}
 
 	@Override

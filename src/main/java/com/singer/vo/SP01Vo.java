@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.singer.common.CommonUtil;
+
 public class SP01Vo extends SuperVo {
 	private int seq;
 	private String title;
@@ -206,6 +208,12 @@ public class SP01Vo extends SuperVo {
 
 	public void setList(List<SP01Vo> list) {
 		this.list = list;
+		// 페이징을 위한 카운트
+		if (this.list.size() != 0) {
+			super.setTotCnt(CommonUtil.getPageCnt(this.list.get(0).getTotCnt()));
+		} else {
+			super.setTotCnt(0);
+		}
 	}
 
 	@Override

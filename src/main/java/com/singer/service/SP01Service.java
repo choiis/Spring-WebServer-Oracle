@@ -25,9 +25,9 @@ public interface SP01Service {
 
 	public int cancelSP01Vo(SP01Vo sp01Vo) throws Exception;
 
-	public int likeSP01Vo(SP01Vo sp01Vo, String sessionid) throws Exception;
+	public SP01Vo likeSP01Vo(SP01Vo sp01Vo, String sessionid) throws Exception;
 
-	public int hateSP01Vo(SP01Vo sp01Vo, String sessionid) throws Exception;
+	public SP01Vo hateSP01Vo(SP01Vo sp01Vo, String sessionid) throws Exception;
 
 	public int deleteSP01Vo(SP01Vo sp01Vo) throws Exception;
 

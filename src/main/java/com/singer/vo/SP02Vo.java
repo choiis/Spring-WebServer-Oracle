@@ -2,6 +2,8 @@ package com.singer.vo;
 
 import java.util.List;
 
+import com.singer.common.CommonUtil;
+
 public class SP02Vo extends SuperVo {
 
 	private int seq;
@@ -82,6 +84,15 @@ public class SP02Vo extends SuperVo {
 
 	public void setList(List<SP02Vo> list) {
 		this.list = list;
+
+		// 페이징을 위한 카운트
+		if (this.list.size() != 0) {
+			super.setTotCnt(CommonUtil.getPageCnt(this.list.get(0).getTotCnt()));
+			super.setNowPage(this.list.get(0).getNowPage());
+		} else {
+			super.setTotCnt(0);
+			super.setNowPage(0);
+		}
 	}
 
 	@Override

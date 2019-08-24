@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.singer.common.CommonUtil;
 import com.singer.service.SM01Service;
 import com.singer.vo.SM01Vo;
 
@@ -63,17 +62,9 @@ public class SM01Controller {
 	@RequestMapping(value = "/sm01/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SM01Vo> selectSM01Vo(@ModelAttribute SM01Vo sm01Vo) throws Exception {
 		log.debug("sm01Vo : " + sm01Vo);
-		int nowPage = sm01Vo.getNowPage() + 1;
 
 		List<SM01Vo> list = sm01Service.selectSM01Vo(sm01Vo);
 		sm01Vo.setList(list);
-		sm01Vo.setNowPage(nowPage);
-		// 페이징을 위한 카운트
-		if (list.size() != 0) {
-			sm01Vo.setTotCnt(CommonUtil.getPageCnt(list.get(0).getTotCnt()));
-		} else {
-			sm01Vo.setTotCnt(0);
-		}
 
 		log.debug("list : " + list);
 		return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
