@@ -17,6 +17,6 @@
 
 	<import resource="classpath:conf/spring/context-*.xml"/>
 
-	<context:property-placeholder location="classpath:/conf/property/*.properties"/>
+	<context:property-placeholder location="classpath:/conf/property/global.properties"/>
 	<aop:config/>
 </beans>

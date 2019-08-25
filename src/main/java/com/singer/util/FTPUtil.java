@@ -29,6 +29,8 @@ public class FTPUtil {
 
 	private String password = "qw1324..";
 
+	private String path = "C://downFTP";
+
 	private FTPUtil() {
 
 		ftp = new FTPClient();
@@ -61,7 +63,7 @@ public class FTPUtil {
 	}
 
 	public File downFile(String fileName) {
-		File file = new File(fileName);
+		File file = new File(path, fileName);
 		BufferedOutputStream os = null;
 		try {
 			os = new BufferedOutputStream(new FileOutputStream(file));

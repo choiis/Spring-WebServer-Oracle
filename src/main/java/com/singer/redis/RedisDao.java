@@ -37,7 +37,8 @@ public class RedisDao {
 			ZSetOperations<String, Object> zsetOp = redisTemplate.opsForZSet();
 			zsetOp.add(key, value, score);
 		} catch (RedisConnectionFailureException e) {
-			log.debug("RedisConnectionFailureException");
+			ErrorVo errorVo = new ErrorVo(value, DateUtil.getTodayTime(), "zSet");
+			errorDao.insertError(errorVo);
 		}
 	}
 
@@ -46,7 +47,8 @@ public class RedisDao {
 			ZSetOperations<String, Object> zsetOp = redisTemplate.opsForZSet();
 			zsetOp.incrementScore(key, value, 1);
 		} catch (RedisConnectionFailureException e) {
-			log.debug("RedisConnectionFailureException");
+			ErrorVo errorVo = new ErrorVo(value, DateUtil.getTodayTime(), "zSetIncre");
+			errorDao.insertError(errorVo);
 		}
 	}
 
@@ -58,8 +60,7 @@ public class RedisDao {
 			// Hash구조에 Key는 날짜 field는 화면명
 			hashOp.increment(key, field, 1);
 		} catch (RedisConnectionFailureException e) {
-			log.debug("RedisConnectionFailureException");
-			ErrorVo errorVo = new ErrorVo(field, DateUtil.getTodayTime(), "RedisConnectionFailureException");
+			ErrorVo errorVo = new ErrorVo(field, DateUtil.getTodayTime(), "hmSetIncre");
 			errorDao.insertError(errorVo);
 		}
 	}
@@ -72,9 +73,21 @@ public class RedisDao {
 			// Hash구조에 Key는 날짜 field는 화면명
 			hashOp.put(key, field, number);
 		} catch (RedisConnectionFailureException e) {
-			log.debug("RedisConnectionFailureException");
-			ErrorVo errorVo = new ErrorVo(field, DateUtil.getTodayTime(), "RedisConnectionFailureException");
+			ErrorVo errorVo = new ErrorVo(field, DateUtil.getTodayTime(), "hmSet");
 			errorDao.insertError(errorVo);
+		}
+	}
+
+	// hkeys key
+	public Set<String> getHashValue(String key) {
+
+		HashOperations<String, String, Object> hashOp = redisTemplate.opsForHash();
+		try {
+			Set<String> keys = hashOp.keys(key);
+			log.debug("hkeys " + key);
+			return keys;
+		} catch (Exception e) {
+			return null;
 		}
 	}
 
@@ -83,8 +96,8 @@ public class RedisDao {
 
 		HashOperations<String, String, Object> hashOp = redisTemplate.opsForHash();
 		try {
-
 			int result = Integer.parseInt((String) hashOp.get(key, hashKey));
+			log.debug("hmget " + key + " " + hashKey);
 			return result;
 		} catch (Exception e) {
 			return 0;
@@ -93,16 +106,18 @@ public class RedisDao {
 	}
 
 	// zrevrange key 0 -1 withscores
-	public void getSortedSet(String key) {
+	public Vector<SortedSetVo> getSortedSet(String key) {
 
 		ZSetOperations<String, Object> zsetOp = redisTemplate.opsForZSet();
 		Set<TypedTuple<Object>> sortedSet = zsetOp.reverseRangeWithScores(key, 0, -1);
 
 		Iterator<TypedTuple<Object>> iter = sortedSet.iterator();
 		Vector<SortedSetVo> vector = new Vector<SortedSetVo>();
+		log.debug("zrange " + key + " 0 -1 withscores");
 		while (iter.hasNext()) {
 			TypedTuple<Object> typedTuple = iter.next();
 			vector.add(new SortedSetVo((String) typedTuple.getValue(), typedTuple.getScore()));
 		}
+		return vector;
 	}
 }
