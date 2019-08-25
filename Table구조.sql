@@ -192,7 +192,7 @@ create table SF01(
   hit number(4)  default 0 not null ,
   good number(4) default 0 not null ,
   filename varchar2(100) not null,
-  fileblob blob
+  ftpfilename varchar2(100) not null
 );
 
 alter table SF01

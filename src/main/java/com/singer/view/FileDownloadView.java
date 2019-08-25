@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
+
+import oracle.sql.BLOB;
 
 public class FileDownloadView extends AbstractView {
 	public FileDownloadView() {
@@ -24,11 +27,15 @@ public class FileDownloadView extends AbstractView {
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
 
-		File file = (File) model.get("downloadFile");
+		HashMap<String, Object> downloadFile = (HashMap<String, Object>) model.get("downloadFile");
+
+		File file = (File) downloadFile.get("downfile");
+		String fileName = (String) downloadFile.get("filename");
+		
 		res.setContentType(getContentType());
 		res.setContentLength((int) file.length());
 		res.setHeader("Content-Disposition",
-				"attachment; filename=\"" + java.net.URLEncoder.encode(file.getName(), "utf-8") + "\";");
+				"attachment; filename=\"" + java.net.URLEncoder.encode(fileName, "utf-8") + "\";");
 		res.setHeader("Content-Transfer-Encoding", "binary");
 		OutputStream out = res.getOutputStream();
 		FileInputStream fis = null;

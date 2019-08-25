@@ -111,7 +111,7 @@ public class SF01Controller {
 		log.debug("sf01Vo : " + sf01Vo);
 		HashMap<String, Object> downloadFile = sf01Service.selectFile(sf01Vo);
 
-		return new ModelAndView("blobdownloadView", "downloadFile", downloadFile);
+		return new ModelAndView("filedownloadView", "downloadFile", downloadFile);
 	}
 
 	@ResponseBody

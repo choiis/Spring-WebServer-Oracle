@@ -20,5 +20,6 @@
 
 	<bean name="excelView" class="com.singer.view.ExcelView" />
 	<bean name="blobdownloadView" class="com.singer.view.BlobDownloadView" />
+	<bean name="filedownloadView" class="com.singer.view.FileDownloadView" />
 	
 </beans>

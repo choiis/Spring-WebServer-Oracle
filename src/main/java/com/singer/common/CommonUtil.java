@@ -172,4 +172,17 @@ public class CommonUtil {
 		else
 			return false;
 	}
+
+	/**
+	 * 파일명 확장자 추출
+	 */
+	public static String getExtensionName(String fileName) {
+		int idx = fileName.lastIndexOf(".");
+		if (idx != -1) {
+			String ext = fileName.substring(idx + 1);
+			return ext;
+		} else {
+			return null;
+		}
+	}
 }

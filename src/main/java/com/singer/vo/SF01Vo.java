@@ -2,8 +2,6 @@ package com.singer.vo;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.singer.common.CommonUtil;
 
 public class SF01Vo extends SuperVo {
@@ -15,7 +13,7 @@ public class SF01Vo extends SuperVo {
 	private int hit;
 	private int good;
 	private String filename;
-	private MultipartFile fileblob;
+	private String ftpfilename;
 	private int reply;
 	private int selection;
 	private String findText;
@@ -32,7 +30,7 @@ public class SF01Vo extends SuperVo {
 	}
 
 	public SF01Vo(int seq, String title, String text, String userid, String regdate, int hit, int good, String filename,
-			MultipartFile fileblob, int reply, int selection, String findText, String sessionid, String datelog,
+			String ftpfilename, int reply, int selection, String findText, String sessionid, String datelog,
 			String goodlog, String hatelog, List<SF01Vo> list) {
 		super();
 		this.seq = seq;
@@ -43,7 +41,7 @@ public class SF01Vo extends SuperVo {
 		this.hit = hit;
 		this.good = good;
 		this.filename = filename;
-		this.fileblob = fileblob;
+		this.ftpfilename = ftpfilename;
 		this.reply = reply;
 		this.selection = selection;
 		this.findText = findText;
@@ -118,12 +116,12 @@ public class SF01Vo extends SuperVo {
 		this.filename = filename;
 	}
 
-	public MultipartFile getFileblob() {
-		return fileblob;
+	public String getFtpfilename() {
+		return ftpfilename;
 	}
 
-	public void setFileblob(MultipartFile fileblob) {
-		this.fileblob = fileblob;
+	public void setFtpfilename(String ftpfilename) {
+		this.ftpfilename = ftpfilename;
 	}
 
 	public int getReply() {
@@ -199,10 +197,10 @@ public class SF01Vo extends SuperVo {
 	@Override
 	public String toString() {
 		return "SF01Vo [seq=" + seq + ", title=" + title + ", text=" + text + ", userid=" + userid + ", regdate="
-				+ regdate + ", hit=" + hit + ", good=" + good + ", filename=" + filename + ", fileblob=" + fileblob
-				+ ", reply=" + reply + ", selection=" + selection + ", findText=" + findText + ", sessionid="
-				+ sessionid + ", datelog=" + datelog + ", goodlog=" + goodlog + ", hatelog=" + hatelog + ", list="
-				+ list + "]";
+				+ regdate + ", hit=" + hit + ", good=" + good + ", filename=" + filename + ", ftpfilename="
+				+ ftpfilename + ", reply=" + reply + ", selection=" + selection + ", findText=" + findText
+				+ ", sessionid=" + sessionid + ", datelog=" + datelog + ", goodlog=" + goodlog + ", hatelog=" + hatelog
+				+ ", list=" + list + "]";
 	}
 
 }

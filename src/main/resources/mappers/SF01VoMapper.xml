@@ -7,8 +7,8 @@
 
 <mapper namespace="com.singer.mappers.SF01">		
 		<insert id="insert"  parameterType="com.singer.vo.SF01Vo">
-			insert into SF01 (seq, title, text, userid, regdate, filename)
-			values (SEQ_SF01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{filename}) 
+			insert into SF01 (seq, title, text, userid, regdate, filename, ftpfilename)
+			values (SEQ_SF01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{filename}, #{ftpfilename}) 
 		</insert>
 		
 		<update id="update" parameterType="com.singer.vo.SF01Vo">
@@ -96,19 +96,13 @@
 			where seq = #{seq}
 		</delete>
 		
-		<update id="insertFile" parameterType="java.util.HashMap">
-			update SF01 
-			set fileblob = #{fileblob}
-			where title = #{title}
-			and userid = #{userid}
-		</update>
-		
-		<select id="selectFile" parameterType="com.singer.vo.SF01Vo" resultType="java.util.Map">
-			select filename as filename,
-				fileblob as fileblob
+		<select id="selectFile" parameterType="com.singer.vo.SF01Vo" resultType="com.singer.vo.SF01Vo">
+			select 
+				seq as seq,
+				filename as filename,
+				ftpfilename as ftpfilename
 			 from SF01 
 			where seq = #{seq}
-			and regdate = #{regdate}
 		</select>
 		
 		<update id="likelog" parameterType="com.singer.vo.SF01Vo">

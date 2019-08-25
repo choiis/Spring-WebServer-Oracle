@@ -1,8 +1,6 @@
 package com.singer.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -46,13 +44,8 @@ public class SF01Dao extends SuperDao {
 		return delete(namespace + ".delete", SF01Vo);
 	}
 
-	public int insertFile(Map<String, Object> hashMap) throws Exception {
-		return update(namespace + ".insertFile", hashMap);
-	}
-
-	@SuppressWarnings("unchecked")
-	public HashMap<String, Object> selectFile(SF01Vo SF01Vo) throws Exception {
-		return (HashMap<String, Object>) selectOne(namespace + ".selectFile", SF01Vo);
+	public SF01Vo selectFile(SF01Vo SF01Vo) throws Exception {
+		return (SF01Vo) selectOne(namespace + ".selectFile", SF01Vo);
 	}
 
 	public int likelogSF01Vo(SF01Vo SF01Vo) throws Exception {

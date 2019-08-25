@@ -1,5 +1,6 @@
 package com.singer.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -10,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
 import com.singer.dao.SF01Dao;
 import com.singer.dao.SF02Dao;
+import com.singer.util.FTPUtil;
 import com.singer.vo.SF01Vo;
 import com.singer.vo.SF02Vo;
-
-import oracle.sql.BLOB;
 
 @Service("sf01Service")
 public class SF01ServiceImpl implements SF01Service {
@@ -35,21 +36,20 @@ public class SF01ServiceImpl implements SF01Service {
 		Iterator<String> itr = request.getFileNames();
 		sf01Vo.setUserid(userid);
 		sf01Vo.setRegdate(DateUtil.getTodayTime());
-		String title = sf01Vo.getTitle();
+
 		while (itr.hasNext()) {
 			file = request.getFile(itr.next());
 		}
+		String filename = file.getOriginalFilename();
+		sf01Vo.setFilename(filename);
 
-		sf01Vo.setFilename(file.getOriginalFilename());
+		String ftpfilename = sf01Vo.getRegdate() + "." + CommonUtil.getExtensionName(filename);
 
-		sf01Dao.insertSF01Vo(sf01Vo);
+		sf01Vo.setFtpfilename(ftpfilename);
+		int ok = sf01Dao.insertSF01Vo(sf01Vo);
 
-		HashMap<String, Object> putHash = new HashMap<String, Object>();
-		putHash.put("userid", userid);
-		putHash.put("title", title);
-
-		putHash.put("fileblob", file.getBytes());
-		int ok = sf01Dao.insertFile(putHash);
+		FTPUtil ftp = FTPUtil.getInstance();
+		ftp.sendFile(ftpfilename, file);
 
 		return ok;
 	}
@@ -128,26 +128,33 @@ public class SF01ServiceImpl implements SF01Service {
 
 	@Transactional
 	@Override
-	public int deleteSF01Vo(SF01Vo sf01vo) throws Exception {
+	public int deleteSF01Vo(SF01Vo sf01Vo) throws Exception {
 
 		SF02Vo sf02Vo = new SF02Vo();
-		sf02Vo.setSeq01(sf01vo.getSeq());
+		sf02Vo.setSeq01(sf01Vo.getSeq());
 
 		sf02Dao.delete_seqSF02Vo(sf02Vo);
 
-		return sf01Dao.deleteSF01Vo(sf01vo);
+		sf01Vo = sf01Dao.selectFile(sf01Vo);
+		FTPUtil ftp = FTPUtil.getInstance();
+		ftp.deleteFile(sf01Vo.getFtpfilename());
+
+		return sf01Dao.deleteSF01Vo(sf01Vo);
 	}
 
 	@Override
-	public HashMap<String, Object> selectFile(SF01Vo SF01Vo) throws Exception {
+	public HashMap<String, Object> selectFile(SF01Vo sf01Vo) throws Exception {
 
-		HashMap<String, Object> hashMap = sf01Dao.selectFile(SF01Vo);
+		sf01Vo = sf01Dao.selectFile(sf01Vo);
 
-		String filename = (String) hashMap.get("FILENAME");
-		BLOB fileblob = (BLOB) hashMap.get("FILEBLOB");
+		String filename = sf01Vo.getFtpfilename();
+		FTPUtil ftp = FTPUtil.getInstance();
+		File downloadFile = ftp.downFile(filename);
 
-		hashMap.put("fileblob", fileblob);
-		hashMap.put("filename", filename);
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+		hashMap.put("downfile", downloadFile);
+		hashMap.put("filename", sf01Vo.getFilename());
 
 		return hashMap;
 	}
