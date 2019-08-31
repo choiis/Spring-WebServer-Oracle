@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,13 +48,11 @@ public class CommController {
 	public ResponseEntity<CommVo> toSelectCommCodeGrp(@ModelAttribute CommVo commVo, HttpSession session)
 			throws Exception {
 
-		log.debug("enter commCodeGrp.do");
 		log.debug("CommVo : " + commVo);
 
 		List<CommVo> list = commService.selectCodeGrp(commVo);
 		commVo.setCommList(list);
 
-		log.debug("exit commCodeGrp.do");
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 
@@ -61,23 +60,18 @@ public class CommController {
 	@RequestMapping(value = "/commMenu", method = RequestMethod.GET)
 	public ResponseEntity<CommVo> toSelectMenu(@ModelAttribute CommVo commVo, HttpSession session) throws Exception {
 
-		log.debug("enter commMenu.do");
 		log.debug("CommVo : " + commVo);
 
 		String authlevel = (String) session.getAttribute("usertype");
 		List<CommVo> list = commService.selectMenu(commVo, authlevel);
 		commVo.setCommList(list);
 
-		log.debug("exit commMenu.do");
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/menupage", method = RequestMethod.GET)
 	public ModelAndView toShowmenu() throws Exception {
 		ModelAndView model = new ModelAndView("/menu");
-		log.debug("enter menu.do");
-
-		log.debug("exit menu.do");
 		return model;
 	}
 
@@ -88,10 +82,9 @@ public class CommController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/insertMenu.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toInsertMenu(CommVo commVo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/commMenu", method = RequestMethod.POST)
+	public ResponseEntity<CommVo> toInsertMenu(@RequestBody CommVo commVo, HttpSession session) throws Exception {
 
-		log.debug("enter insertMenu.do");
 		log.debug("CommVo : " + commVo);
 
 		String authlevel = (String) session.getAttribute("usertype");
@@ -99,7 +92,6 @@ public class CommController {
 		List<CommVo> list = commService.insertMenu(commVo, userid, authlevel);
 		commVo.setCommList(list);
 
-		log.debug("exit insertMenu.do");
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.CREATED);
 	}
 
@@ -119,10 +111,9 @@ public class CommController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/updateMenu.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toUpdateMenu(CommVo commVo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/commMenu", method = RequestMethod.PUT)
+	public ResponseEntity<CommVo> toUpdateMenu(@RequestBody CommVo commVo, HttpSession session) throws Exception {
 
-		log.debug("enter updateMenu.do");
 		log.debug("CommVo : " + commVo);
 
 		String authlevel = (String) session.getAttribute("usertype");
@@ -130,22 +121,19 @@ public class CommController {
 		List<CommVo> list = commService.updateMenu(commVo, userid, authlevel);
 		commVo.setCommList(list);
 
-		log.debug("exit updateMenu.do");
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/insertCode.do", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toInsertCode(CommVo commVo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/commCode", method = RequestMethod.POST)
+	public ResponseEntity<CommVo> toInsertCode(@RequestBody CommVo commVo, HttpSession session) throws Exception {
 
-		log.debug("enter insertCode.do");
 		log.debug("CommVo : " + commVo);
 
 		String userid = (String) session.getAttribute("userid");
 		List<CommVo> list = commService.insertCode(commVo, userid);
 		commVo.setCommList(list);
 
-		log.debug("exit insertCode.do");
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.CREATED);
 	}
 
@@ -153,26 +141,22 @@ public class CommController {
 	@RequestMapping(value = "/commCode/{codegrp}/{codecd}", method = RequestMethod.DELETE)
 	public ResponseEntity<CommVo> toDeleteCode(@ModelAttribute CommVo commVo, HttpSession session) throws Exception {
 
-		log.debug("enter deleteCode.do");
 		log.debug("CommVo : " + commVo);
 
 		List<CommVo> list = commService.deleteCode(commVo);
 		commVo.setCommList(list);
 
-		log.debug("exit deleteCode.do");
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/updateCode.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/commCode", method = RequestMethod.PUT)
 	public ResponseEntity<CommVo> toUpdateCode(CommVo commVo, HttpSession session) throws Exception {
 
-		log.debug("enter updateCode.do");
 		log.debug("CommVo : " + commVo);
 
 		commService.updateCode(commVo);
 
-		log.debug("exit updateCode.do");
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 

@@ -55,7 +55,7 @@
 					codenm : tr.children("td#nm").children("input#codenm").val(),
 					codegrp :$("#code_grp").val()
 				};
-				gfn_ajax("updateCode.do","POST" , sendData , function(data) {
+				gfn_ajaxRequestBody("commCode.do","POST" , sendData , function(data) {
 						
 				});	
 			}
@@ -131,7 +131,7 @@
 			codenm :$("#input_codenm").val()
 		};
 		
-		gfn_ajax("insertCode.do","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("commCode","POST" , sendData , function(data) {
 			var html = "";
 	       	
 	        $.each(data.commList, function(index, item) {

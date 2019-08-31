@@ -41,7 +41,7 @@ var user_code = {};
 					menuurl : tr.children("td#url").children("input#menuurl").val(),
 					authlevel : tr.children("td#level").children("select#authlevel").val()
 				};
-				gfn_ajax("updateMenu.do","POST" , sendData , function(data) {
+				gfn_ajaxRequestBody("commMenu","PUT" , sendData , function(data) {
 					if(data.result == 1){
 					}
 				});	
@@ -120,7 +120,7 @@ var user_code = {};
 			authlevel :$("#input_authlevel").val()
 		};
 		
-		gfn_ajax("insertMenu.do","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("commMenu","POST" , sendData , function(data) {
 			var html = "";
 	       	
 	        $.each(data.commList, function(index, item) {
