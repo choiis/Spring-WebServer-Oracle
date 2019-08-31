@@ -5,35 +5,52 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+@Component
 public class FTPUtil {
 
 	private final Log log = LogFactory.getLog(FTPUtil.class);
 
-	private static final FTPUtil INSTANCE = new FTPUtil();
+	@Resource(name = "properties")
+	private Properties properties;
 
-	private FTPClient ftp;
+	private String ftpIp; // FTP 가상머신 서버의 ip
 
-	private String ftpIp = "127.0.0.1"; // FTP 가상머신 서버의 ip
+	private int port;
 
-	private int port = 21;
+	private String username;
 
-	private String id = "FTPClient";
+	private String password;
 
-	private String password = "qw1324..";
+	private String path;
 
-	private String path = "C://downFTP";
+	@PostConstruct
+	public void init() {
+		ftpIp = properties.getProperty("global.ftp.server");
+		port = Integer.parseInt(properties.getProperty("global.ftp.port"));
+		username = properties.getProperty("global.ftp.username");
+		password = properties.getProperty("global.ftp.password");
+		path = properties.getProperty("global.ftp.path");
+	}
 
 	private FTPUtil() {
 
-		ftp = new FTPClient();
+	}
+
+	private FTPClient initFTPClient() {
+		FTPClient ftp = new FTPClient();
 		ftp.setControlEncoding("UTF-8");
 		try {
 
@@ -45,46 +62,55 @@ public class FTPUtil {
 				System.exit(1);
 			}
 
-			if (!ftp.login(id, password)) {
+			if (!ftp.login(username, password)) {
 				ftp.logout();
 			}
 
 			ftp.setFileType(FTP.BINARY_FILE_TYPE);
 			ftp.enterLocalPassiveMode();
-
 		} catch (IOException e) {
-			// TODO: handle exception
-		}
 
+		}
+		return ftp;
 	}
 
-	public static FTPUtil getInstance() {
-		return INSTANCE;
+	private void closeFTPClient(FTPClient ftp) {
+		if (ftp.isConnected()) {
+			try {
+				ftp.disconnect();
+			} catch (IOException e) {
+			}
+		}
 	}
 
 	public File downFile(String fileName) {
+		FTPClient ftp = initFTPClient();
 		File file = new File(path, fileName);
 		BufferedOutputStream os = null;
+
 		try {
+
 			os = new BufferedOutputStream(new FileOutputStream(file));
 			ftp.retrieveFile(fileName, os);
-
 		} catch (IOException e) {
+
 		} finally {
 			if (os != null) {
 				try {
 					os.close();
-				} catch (Exception e2) {
+				} catch (IOException e) {
 				}
 			}
+			closeFTPClient(ftp);
 		}
 		return file;
 	}
 
 	public boolean sendFile(String fileName, MultipartFile file) {
 		boolean isSuccess = false;
-
+		FTPClient ftp = initFTPClient();
 		InputStream is = null;
+
 		try {
 			is = file.getInputStream();
 			isSuccess = ftp.storeFile(fileName, is);
@@ -99,6 +125,7 @@ public class FTPUtil {
 				} catch (IOException e) {
 				}
 			}
+			closeFTPClient(ftp);
 		}
 		return isSuccess;
 	}
@@ -106,10 +133,14 @@ public class FTPUtil {
 	public boolean deleteFile(String fileName) {
 
 		boolean isSuccess = false;
+		FTPClient ftp = initFTPClient();
+
 		try {
 			isSuccess = ftp.deleteFile(fileName);
 		} catch (IOException e) {
 
+		} finally {
+			closeFTPClient(ftp);
 		}
 		return isSuccess;
 	}

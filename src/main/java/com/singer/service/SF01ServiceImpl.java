@@ -28,6 +28,9 @@ public class SF01ServiceImpl implements SF01Service {
 	@Resource(name = "sf02Dao")
 	private SF02Dao sf02Dao;
 
+	@Resource(name = "ftpUtil")
+	FTPUtil ftp;
+
 	@Transactional
 	@Override
 	public int insertSF01Vo(SF01Vo sf01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
@@ -48,7 +51,6 @@ public class SF01ServiceImpl implements SF01Service {
 		sf01Vo.setFtpfilename(ftpfilename);
 		int ok = sf01Dao.insertSF01Vo(sf01Vo);
 
-		FTPUtil ftp = FTPUtil.getInstance();
 		ftp.sendFile(ftpfilename, file);
 
 		return ok;
@@ -136,7 +138,7 @@ public class SF01ServiceImpl implements SF01Service {
 		sf02Dao.delete_seqSF02Vo(sf02Vo);
 
 		sf01Vo = sf01Dao.selectFile(sf01Vo);
-		FTPUtil ftp = FTPUtil.getInstance();
+
 		ftp.deleteFile(sf01Vo.getFtpfilename());
 
 		return sf01Dao.deleteSF01Vo(sf01Vo);
@@ -148,7 +150,6 @@ public class SF01ServiceImpl implements SF01Service {
 		sf01Vo = sf01Dao.selectFile(sf01Vo);
 
 		String filename = sf01Vo.getFtpfilename();
-		FTPUtil ftp = FTPUtil.getInstance();
 		File downloadFile = ftp.downFile(filename);
 
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
