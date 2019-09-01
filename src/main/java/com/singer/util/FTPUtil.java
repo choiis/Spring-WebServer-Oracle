@@ -37,7 +37,7 @@ public class FTPUtil {
 	private String path;
 
 	@PostConstruct
-	public void init() {
+	private void init() {
 		ftpIp = properties.getProperty("global.ftp.server");
 		port = Integer.parseInt(properties.getProperty("global.ftp.port"));
 		username = properties.getProperty("global.ftp.username");
@@ -116,7 +116,6 @@ public class FTPUtil {
 			isSuccess = ftp.storeFile(fileName, is);
 
 		} catch (IOException e) {
-			e.printStackTrace();
 			isSuccess = false;
 		} finally {
 			if (is != null) {
@@ -138,7 +137,7 @@ public class FTPUtil {
 		try {
 			isSuccess = ftp.deleteFile(fileName);
 		} catch (IOException e) {
-
+			
 		} finally {
 			closeFTPClient(ftp);
 		}

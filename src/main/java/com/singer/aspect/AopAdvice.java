@@ -31,9 +31,6 @@ public class AopAdvice {
 
 		log.debug(Arrays.toString(joinPoint.getArgs()));
 		Signature sg = joinPoint.getSignature();
-		log.debug(sg.getName());
-		log.debug(sg.getDeclaringTypeName());
-		log.debug(joinPoint.getTarget());
 
 		redisDao.zSetIncre("impl", sg.getName());
 	}
@@ -43,12 +40,12 @@ public class AopAdvice {
 
 		log.debug(Arrays.toString(pjp.getArgs()));
 
-		long startTime = System.currentTimeMillis();
+		// long startTime = System.currentTimeMillis();
 
 		Object result = pjp.proceed();
-		long endTime = System.currentTimeMillis();
+		// long endTime = System.currentTimeMillis();
 
-		log.debug(pjp.getSignature().getName() + " 실행시간" + (endTime - startTime));
+		// log.debug(pjp.getSignature().getName() + " 실행시간" + (endTime - startTime));
 		return result;
 	}
 
