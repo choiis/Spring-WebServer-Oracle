@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +31,8 @@ public class SB01ServiceImpl implements SB01Service {
 	@Resource(name = "sb02Dao")
 	private SB02Dao sb02Dao;
 
-	private String SAVE_PATH = "C:\\videoDown";
+	@Resource(name = "properties")
+	private Properties properties;
 
 	@Transactional
 	@Override
@@ -43,10 +46,10 @@ public class SB01ServiceImpl implements SB01Service {
 		}
 		sb01Vo.setVideo(video.getOriginalFilename());
 		sb01Vo.setRegdate(DateUtil.getTodayTime());
-
-		File dir = new File(SAVE_PATH);
+		String path = properties.getProperty("global.save.path");
+		File dir = new File(path);
 		dir.mkdir();
-		FileOutputStream fos = new FileOutputStream(SAVE_PATH + "/" + video.getOriginalFilename());
+		FileOutputStream fos = new FileOutputStream(path + "/" + video.getOriginalFilename());
 		fos.write(video.getBytes());
 		fos.close();
 
@@ -134,8 +137,8 @@ public class SB01ServiceImpl implements SB01Service {
 		sb02Vo.setSeq01(sb01Vo.getSeq());
 
 		sb02Dao.delete_seqSB02Vo(sb02Vo);
-
-		File file = new File(SAVE_PATH + "/" + sb01Vo.getVideo());
+		String path = properties.getProperty("global.save.path");
+		File file = new File(path + "/" + sb01Vo.getVideo());
 		file.delete();
 
 		return sb01Dao.deleteSB01Vo(sb01Vo);
@@ -149,7 +152,8 @@ public class SB01ServiceImpl implements SB01Service {
 			String video_path = request.getSession().getServletContext().getRealPath("/resources/video/hyeri.mp4");
 			file = new File(video_path);
 		} else {
-			file = new File(SAVE_PATH + "/" + sb01Vo.getVideo());
+			String path = properties.getProperty("global.save.path");
+			file = new File(path + "/" + sb01Vo.getVideo());
 		}
 		return file;
 	}
