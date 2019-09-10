@@ -34,14 +34,12 @@
 			update SP01 
 			set state = '03'
 			where seq = #{seq}
-			and title = #{title}
 		</update>
 		
 		<update id="cancel" parameterType="com.singer.vo.SP01Vo">
 			update SP01 
 			set state = '01'
 			where seq = #{seq}
-			and title = #{title}
 		</update>
 		
 		<update id="like" parameterType="com.singer.vo.SP01Vo">

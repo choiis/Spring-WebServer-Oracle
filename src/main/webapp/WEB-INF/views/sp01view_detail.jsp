@@ -212,14 +212,7 @@ var product_code = {};
 	
 	function like_sp01() {
 	
-		var sendData = {
-			"seq" : parseInt($("#seq01").val()),
-        	"title" : $("#title").val(),
-			"good" : parseInt($("#good").text())
-        	
-        };
-		
-		gfn_ajax("sp01like.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sp01like/" + parseInt($("#seq01").val()), "PUT", function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.like);
 				$("#button_like").attr('disabled', true);
@@ -230,13 +223,7 @@ var product_code = {};
 	
 	function hate_sp01() {
 		
-		var sendData = {
-			"seq" : parseInt($("#seq01").val()),
-        	"title" : $("#title").val(),
-			"good" : parseInt($("#good").text())
-        };
-		
-		gfn_ajax("sp01hate.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sp01hate/" + parseInt($("#seq01").val()), "PUT", function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.like);
 				$("#button_hate").attr('disabled', true);
@@ -246,12 +233,7 @@ var product_code = {};
 	
 	function sell() {
 		
-		var sendData = {
-			"seq" : parseInt($("#seq01").val()),
-        	"title" : $("#title").val()
-        };
-		
-		gfn_ajax("sp01buy.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sp01buy/" + parseInt($("#seq01").val()), "PUT", function(data) {
 			if(data.result == 1) {
 
 				$("#showDiv #state").text('판매신청');

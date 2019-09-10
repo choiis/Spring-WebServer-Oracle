@@ -91,24 +91,22 @@ public class SP01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01show.do", method = RequestMethod.POST)
-	public ResponseEntity<SP01Vo> selectSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sp01/{seq}", method = RequestMethod.GET)
+	public ResponseEntity<SP01Vo> selectSP01Vo(@ModelAttribute SP01Vo sp01Vo, HttpSession session) throws Exception {
 
-		log.debug("enter sp01show.do");
 		log.debug("SP01Vo : " + sp01Vo);
 
 		List<SP01Vo> list = sp01Service.selectSP01Vo(sp01Vo);
-
-		log.debug("list : " + list);
-		log.debug("exit sp01show.do");
+		sp01Vo.setList(list);
 		return new ResponseEntity<SP01Vo>(sp01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01showMyList.do", method = RequestMethod.POST)
-	public ResponseEntity<SP01Vo> selectMyListSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sp01My/{seq}", method = RequestMethod.GET)
+	public ResponseEntity<SP01Vo> selectMyListSP01Vo(@ModelAttribute SP01Vo sp01Vo, HttpSession session)
+			throws Exception {
 
-		log.debug("enter sp01showMyList.do");
+		log.debug("enter sp01My");
 		log.debug("SP01Vo : " + sp01Vo);
 
 		String userid = (String) session.getAttribute("userid");
@@ -116,8 +114,7 @@ public class SP01Controller {
 		List<SP01Vo> list = sp01Service.selectMyList(sp01Vo, userid);
 		sp01Vo.setList(list);
 
-		log.debug("list : " + list);
-		log.debug("exit sp01showMyList.do");
+		log.debug("exit sp01My");
 		return new ResponseEntity<SP01Vo>(sp01Vo, HttpStatus.OK);
 	}
 
@@ -211,8 +208,8 @@ public class SP01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01like.do", method = RequestMethod.POST)
-	public ResponseEntity<SP01Vo> likeSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sp01like/{seq}", method = RequestMethod.PUT)
+	public ResponseEntity<SP01Vo> likeSP01Vo(@ModelAttribute SP01Vo sp01Vo, HttpSession session) throws Exception {
 		log.debug("enter sp01like.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		String sessionid = (String) session.getAttribute("userid");
@@ -223,8 +220,8 @@ public class SP01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01hate.do", method = RequestMethod.POST)
-	public ResponseEntity<SP01Vo> hateSP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sp01hate/{seq}", method = RequestMethod.PUT)
+	public ResponseEntity<SP01Vo> hateSP01Vo(@ModelAttribute SP01Vo sp01Vo, HttpSession session) throws Exception {
 		log.debug("enter sp01hate.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		String sessionid = (String) session.getAttribute("userid");
@@ -236,8 +233,8 @@ public class SP01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01buy.do", method = RequestMethod.POST)
-	public ResponseEntity<SP01Vo> buySP01Vo(SP01Vo sp01Vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/sp01buy/{seq}", method = RequestMethod.PUT)
+	public ResponseEntity<SP01Vo> buySP01Vo(@ModelAttribute SP01Vo sp01Vo, HttpSession session) throws Exception {
 		log.debug("enter sp01buy.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		String sessionid = (String) session.getAttribute("userid");
@@ -250,8 +247,8 @@ public class SP01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01sell.do", method = RequestMethod.POST)
-	public ResponseEntity<SP01Vo> sellSP01Vo(SP01Vo sp01Vo) throws Exception {
+	@RequestMapping(value = "/sp01sell/{seq}", method = RequestMethod.PUT)
+	public ResponseEntity<SP01Vo> sellSP01Vo(@ModelAttribute SP01Vo sp01Vo) throws Exception {
 		log.debug("enter sp01sell.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		int like = sp01Service.sellSP01Vo(sp01Vo);
@@ -263,8 +260,8 @@ public class SP01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01cancel.do", method = RequestMethod.POST)
-	public ResponseEntity<SP01Vo> cancelSP01Vo(SP01Vo sp01Vo) throws Exception {
+	@RequestMapping(value = "/sp01cancel/{seq}", method = RequestMethod.PUT)
+	public ResponseEntity<SP01Vo> cancelSP01Vo(@ModelAttribute SP01Vo sp01Vo) throws Exception {
 		log.debug("enter sp01cancel.do");
 		log.debug("SP01Vo : " + sp01Vo);
 		int like = sp01Service.cancelSP01Vo(sp01Vo);

@@ -77,13 +77,8 @@ var product_code = {};
 			if(confirm("판매하시겠습니까 ??")) {
 				var tr = $(this).parent().parent("tr");
 
-				var sendData = {
-					seq : tr.children("#seq").text(),
-					title : tr.children("#title").text()
-				};
-				
-				gfn_ajax("sp01sell.do","POST" , sendData , function(data) {
-					if(data.result == 1){
+				fn_ajaxRest("sp01sell/" +tr.children("#seq").text(),"PUT", function(data) {
+					if(data.result == 1) {
 						tr.children("#state").text("판매완료");
 						$(this).hide(); // 버튼 hide
 						tr.children("#cancel").hide();
@@ -97,13 +92,8 @@ var product_code = {};
 			if(confirm("취소하시겠습니까 ??")) {
 				var tr = $(this).parent().parent("tr");
 
-				var sendData = {
-					seq : tr.children("#seq").text(),
-					title : tr.children("#title").text()
-				};
-				
-				gfn_ajax("sp01cancel.do","POST" , sendData , function(data) {
-					if(data.result == 1){
+				fn_ajaxRest("sp01cancel/" + tr.children("#seq").text() ,"PUT" , function(data) {
+					if(data.result == 1) {
 						tr.children("#state").text("판매대기");
 						$(this).hide(); // 버튼 hide
 						tr.children("#sell").hide();
@@ -144,17 +134,12 @@ var product_code = {};
 	function showSP01MyList(nowPage) {
 		console.log("showSP01MyList");
 		
+		var page = 1;
 		if(!gfn_isNull(nowPage)) {
 			page = nowPage;
-		} else {
-			page = 1;
 		}
 		
-		var sendData = {
-			"nowPage" : page
-		};
-		
-		gfn_ajax("sp01showMyList.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sp01My/" + page, "GET" , function(data) {
 
 			var html = "";
 			$.each(data.list, function(index, item) {

@@ -110,19 +110,13 @@ var product_code = {};
 	}
 	
 	function showSP01List(nowPage) {
-		console.log("showSP01List");
-		
+
+		var page = 1;
 		if(!gfn_isNull(nowPage)) {
 			page = nowPage;
-		} else {
-			page = 1;
-		}
+		} 
 		
-		var sendData = {
-			"nowPage" : page
-		};
-		
-		gfn_ajax("sp01show.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sp01/" + page,"GET" , function(data) {
 
 			var html = "";
 			$.each(data.list, function(index, item) {
