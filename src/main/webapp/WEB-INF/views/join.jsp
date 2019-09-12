@@ -70,8 +70,25 @@
 				return ;
 			}
 			
-			$("#form").submit();
-	
+			var form = $("#form")[0];  
+			var formData = new FormData(form);
+
+		    $.ajax({
+		    	cache : false,
+		        url : "/sm01", // 요기에
+		        processData: false,
+		        contentType: false,
+		        type : 'POST', 
+		        data : formData, 
+		        success : function(data) {
+		        	location.href = "/";
+		        	var jsonObj = JSON.parse(data);
+		        }, // success 
+		        error : function(data, status, error) {
+		        	var errorData = JSON.parse(data.responseText);
+			    	alert(errorData.errorCode + " " + errorData.errorMsg);
+			    }
+		    }); 
  		});
 	});
 </script>

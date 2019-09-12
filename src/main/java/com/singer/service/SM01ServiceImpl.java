@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.singer.common.AES256Util;
+import com.singer.common.AppException;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
@@ -42,27 +43,41 @@ public class SM01ServiceImpl implements SM01Service {
 	public HashMap<String, Object> insertSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request) throws Exception {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
-		if (CommonUtil.isNull(sm01Vo.getAdminyn())) {
-			sm01Vo.setAdminyn(Constants.YES_N);
+		if (CommonUtil.isNull(sm01Vo.getUserid())) {
+			throw new AppException("아이디를 필수 입력해야 합니다");
 		}
+		if (CommonUtil.isNull(sm01Vo.getPasswd())) {
+			throw new AppException("비밀번호를 필수 입력해야 합니다");
+		}
+
+		if (CommonUtil.isNull(sm01Vo.getUsername())) {
+			throw new AppException("이름을 입력해주세요");
+		}
+
 		// String pw = aes256Util.aesEncode(sm01Vo.getPasswd());
 		// sm01Vo.setPasswd(pw);
 
 		sm01Vo.setRegdate(DateUtil.getToday());
 		sm01Vo.setGrade(Constants.USER_CODE_NORMAL);
-		hashMap.put("succeed", sm01Dao.insertSM01Vo(sm01Vo));
+
+		if (CommonUtil.isNull(sm01Vo.getAdminyn())) {
+			sm01Vo.setAdminyn(Constants.YES_N);
+		}
 
 		MultipartFile photo = null;
 		Iterator<String> itr = request.getFileNames();
-
+		if (CommonUtil.isNull(itr)) {
+			throw new AppException("파일 업로드를 해주세요!");
+		}
 		while (itr.hasNext()) {
 			photo = request.getFile(itr.next());
 		}
 
-		if (!CommonUtil.chkIMGFile(photo.getName())) {
-
+		if (!CommonUtil.chkIMGFile(photo.getOriginalFilename())) {
+			throw new AppException("사진 파일만 업로드 가능합니다");
 		}
 
+		hashMap.put("succeed", sm01Dao.insertSM01Vo(sm01Vo));
 		HashMap<String, Object> putHash = new HashMap<String, Object>();
 		putHash.put("userid", sm01Vo.getUserid());
 		putHash.put("photo", photo.getBytes());
@@ -124,8 +139,13 @@ public class SM01ServiceImpl implements SM01Service {
 	@Transactional
 	@Override
 	public SM01Vo updateSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request, String userId) throws Exception {
-		// 저장후
-		sm01Dao.updateSM01Vo(sm01Vo);
+		if (CommonUtil.isNull(sm01Vo.getUserid())) {
+			throw new AppException("아이디를 필수 입력해야 합니다");
+		}
+
+		if (CommonUtil.isNull(sm01Vo.getUsername())) {
+			throw new AppException("이름을 입력해주세요");
+		}
 
 		MultipartFile photo = null;
 		Iterator<String> itr = request.getFileNames();
@@ -133,8 +153,14 @@ public class SM01ServiceImpl implements SM01Service {
 		while (itr.hasNext()) {
 			photo = request.getFile(itr.next());
 		}
+		// 저장후
+		sm01Dao.updateSM01Vo(sm01Vo);
 
 		if (!CommonUtil.isNull(photo.getSize())) {
+
+			if (!CommonUtil.chkIMGFile(photo.getOriginalFilename())) {
+				throw new AppException("사진 파일만 업로드 가능합니다");
+			}
 			HashMap<String, Object> putHash = new HashMap<String, Object>();
 			putHash.put("userid", sm01Vo.getUserid());
 			putHash.put("photo", photo.getBytes());

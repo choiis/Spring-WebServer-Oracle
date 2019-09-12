@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.singer.common.AppException;
+import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
 import com.singer.dao.SM02Dao;
 import com.singer.vo.SM02Vo;
@@ -19,6 +21,13 @@ public class SM02ServiceImpl implements SM02Service {
 	@Transactional
 	@Override
 	public int insertSM02Vo(SM02Vo sm02Vo) throws Exception {
+
+		if (CommonUtil.isNull(sm02Vo.getTitle())) {
+			throw new AppException("제목을 필수 입력해야 합니다");
+		}
+		if (CommonUtil.isNull(sm02Vo.getText())) {
+			throw new AppException("내용을 필수 입력해야 합니다");
+		}
 
 		sm02Vo.setRegdate(DateUtil.getTodayTime());
 		return sm02Dao.insertSM02Vo(sm02Vo);
@@ -46,6 +55,13 @@ public class SM02ServiceImpl implements SM02Service {
 	@Transactional
 	@Override
 	public int updateSM02Vo(SM02Vo sm02Vo) throws Exception {
+		if (CommonUtil.isNull(sm02Vo.getTitle())) {
+			throw new AppException("제목을 필수 입력해야 합니다");
+		}
+		if (CommonUtil.isNull(sm02Vo.getText())) {
+			throw new AppException("내용을 필수 입력해야 합니다");
+		}
+
 		return sm02Dao.updateSM02Vo(sm02Vo);
 	}
 

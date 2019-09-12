@@ -41,15 +41,12 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01", method = RequestMethod.POST)
-	public ModelAndView insertSM01Vo(@ModelAttribute("SM01Vo") SM01Vo sm01Vo, MultipartHttpServletRequest request)
-			throws Exception {
-		log.debug("sm01Vo : " + sm01Vo);
-
-		ModelAndView model = new ModelAndView("/index");
+	public ResponseEntity<SM01Vo> insertSM01Vo(@ModelAttribute("SM01Vo") SM01Vo sm01Vo,
+			MultipartHttpServletRequest request) throws Exception {
 
 		sm01Service.insertSM01Vo(sm01Vo, request);
 
-		return model;
+		return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/sm01page", method = RequestMethod.GET)
@@ -71,7 +68,7 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01update", method = RequestMethod.POST)
-	public ModelAndView upateSM01Vo(@ModelAttribute("SM01Vo") SM01Vo sm01Vo, MultipartHttpServletRequest request,
+	public ModelAndView upateSM01Vo(@ModelAttribute SM01Vo sm01Vo, MultipartHttpServletRequest request,
 			HttpSession session) throws Exception {
 		log.debug("sm01Vo : " + sm01Vo);
 

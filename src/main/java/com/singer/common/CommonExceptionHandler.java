@@ -1,5 +1,7 @@
 package com.singer.common;
 
+import java.sql.SQLException;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,10 +30,10 @@ public class CommonExceptionHandler {
 		boolean isAjax = false;
 		log.info("defaultException");
 		log.info(ext.getMessage());
-		
-		ErrorVo errorVo = new ErrorVo(request.getRequestURI(), DateUtil.getTodayTime(), ext.getCause().getMessage());
+		ErrorVo errorVo = new ErrorVo(request.getRequestURI(), DateUtil.getTodayTime(),
+				ext.getCause().getLocalizedMessage());
 		errorDao.insertError(errorVo);
-		
+
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 			isAjax = true;
 		}
@@ -43,7 +45,32 @@ public class CommonExceptionHandler {
 		}
 
 		mv.addObject("errorCode", "500");
-		mv.addObject("errorMsg", ext.getMessage());
+		mv.addObject("errorMsg", ext.getCause().getLocalizedMessage());
+		return mv;
+	}
+
+	@ExceptionHandler(SQLException.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "your message")
+	public ModelAndView SQLExceptionHandler(HttpServletRequest request, Exception ext) {
+		boolean isAjax = false;
+		log.info("SQLException");
+		log.info(ext.getMessage());
+		ErrorVo errorVo = new ErrorVo(request.getRequestURI(), DateUtil.getTodayTime(),
+				ext.getCause().getLocalizedMessage());
+		errorDao.insertError(errorVo);
+
+		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+			isAjax = true;
+		}
+		ModelAndView mv = null;
+		if (isAjax) {
+			mv = new ModelAndView("forward:/error");
+		} else {
+			mv = new ModelAndView("forward:/forwardError");
+		}
+
+		mv.addObject("errorCode", "500");
+		mv.addObject("errorMsg", ext.getCause().getLocalizedMessage());
 		return mv;
 	}
 
@@ -52,10 +79,10 @@ public class CommonExceptionHandler {
 		boolean isAjax = false;
 		log.info("AppException");
 		log.info(ext.getMessage());
-		
-		ErrorVo errorVo = new ErrorVo(request.getRequestURI(), DateUtil.getTodayTime(), ext.getCause().getMessage());
+
+		ErrorVo errorVo = new ErrorVo(request.getRequestURI(), DateUtil.getTodayTime(), ext.getMessage());
 		errorDao.insertError(errorVo);
-		
+
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 			isAjax = true;
 		}
@@ -76,10 +103,10 @@ public class CommonExceptionHandler {
 		boolean isAjax = false;
 		log.info("NoHandlerFoundException");
 		log.info(ext.getMessage());
-		
-		ErrorVo errorVo = new ErrorVo(request.getRequestURI(), DateUtil.getTodayTime(), ext.getCause().getMessage());
+
+		ErrorVo errorVo = new ErrorVo(request.getRequestURI(), DateUtil.getTodayTime(), ext.getMessage());
 		errorDao.insertError(errorVo);
-		
+
 		String errorURL = request.getRequestURL().toString();
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 			isAjax = true;
