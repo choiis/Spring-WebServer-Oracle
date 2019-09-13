@@ -25,7 +25,7 @@
 				return ;
 			}
 			
-			re_showSF02List();
+			insertSF02();
 		});
 		
 		// 삭제 버튼을 클릭할때 이벤트 발생
@@ -54,31 +54,6 @@
 			}
 		});
 		
-		// 조회(페이지 버튼)
-		$(document).on("click", "a[name='page_move']", function(e) {
-			e.preventDefault();
-			var page = $(this).attr('value');
-			showSF02List(page);
-		});
-		
-		// 조회(이전 버튼)
-		$(document).on("click", "a[name='page_prev']", function() {
-			e.preventDefault();
-			var page = $("#startPage").attr('value');
-			showSF02List(Number(page) - 10);
-		});
-		
-		// 조회(다음 버튼)
-		$(document).on("click", "a[name='page_next']", function() {
-			e.preventDefault();
-			var page = $("#startPage").attr('value');
-			var maxPage = $("#maxPage").attr('value');
-			if(Number(page) + 10 > maxPage) {
-				showSF02List(maxPage);
-			} else {
-				showSF02List(Number(page) + 10);
-			}
-		});
 		
 		fn_PreSave = function() {
 
@@ -116,10 +91,12 @@
 		            html += '</tr>';
 		        }
 
-		        $("#SF02viewTbody").empty();
-		        $("#SF02viewTbody").append(html);
-			    // 페이징 함수 호출
-		        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
+				html += '<tr>';
+				html += '<td><input type="button" value="더보기" onclick="showSF02ListMore('+ (data.nowPage + 1) +')"></td>';
+				html += '</tr>';
+		        $("#sf02viewTbody").empty();
+		        $("#sf02viewTbody").append(html);
+				$("#totCnt").val(data.totCnt);
 			});
 		}
 	}
@@ -128,7 +105,6 @@
 		
 		gfn_ajaxRest("sf02/" + parseInt($("#seq01").val()) + "/" + page , "GET" , function(data) {
 			var html = "";
-			
 			for (var i = 0; i < data.list.length; i++) {
 	        	 html += '<tr>';
 		         html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
@@ -147,16 +123,17 @@
 		         html += '</tr>';
 	        }
 
-			$("#SF02viewTbody").empty();
-	        $("#SF02viewTbody").append(html);
-		    // 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
+			html += '<tr>';
+			html += '<td><input type="button" value="더보기" onclick="showSF02ListMore('+ (data.nowPage + 1) +')"></td>';
+			html += '</tr>';
+			$("#sf02viewTbody").empty();
+	        $("#sf02viewTbody").append(html);
+			$("#totCnt").val(data.totCnt);
 		});
 	};
 	
-	function re_showSF02List() {
-	
-		
+	function insertSF02() {
+
 		var sendData = {
 			"seq01" : parseInt($("#seq01").val()),
         	"text" : $("#form #text").val().trim(),
@@ -183,13 +160,48 @@
 	            
 	            html += '</tr>';
 	        }
-	        $("#SF02viewTbody").empty();
-	        $("#SF02viewTbody").append(html);
-		    // 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
+
+	        html += '<tr>';
+			html += '<td><input type="button" value="더보기" onclick="showSF02ListMore('+ (data.nowPage + 1) +')"></td>';
+			html += '</tr>';
+	        $("#sf02viewTbody").empty();
+	        $("#sf02viewTbody").append(html);
+			$("#totCnt").val(data.totCnt);
 		});
 	};
 	
+	function showSF02ListMore(page) {
+		if($("#totCnt").val() <=$("#sf02viewTbody tr").length - 1) {
+			return;
+		}
+		
+		gfn_ajaxRest("sf02/" + parseInt($("#seq01").val()) + "/" + page , "GET" , function(data) {
+			var html = "";
+			for (var i = 0; i < data.list.length; i++) {
+	        	 html += '<tr>';
+		         html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
+		         html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
+		         html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
+		         html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
+		         if(data.list[i].deleteYn) {
+		          	html += '<td scope="col" width="50">' + 
+		           	'<input type="button" value="삭제" onclick="deleteSF02('+ i +')">'
+		           	+ '</td>';
+		           	 html += '<td id="seq' + i + '" style="display:none;">' + data.list[i].seq + '</td>';
+		           	 html += '<td id="seq01' + i + '" style="display:none;">' + data.list[i].seq01 + '</td>';
+		         } else {
+		          	html += '<td scope="col" width="50"></td>';
+		         }   
+		         html += '</tr>';
+	        }
+			$('#sf02viewTbody > tr:last').remove();
+			html += '<tr>';
+			html += '<td><input type="button" value="더보기" onclick="showSF02ListMore('+ (data.nowPage + 1) +')"></td>';
+			html += '</tr>';
+			$('#sf02viewTbody').append(html);
+		});
+	}
+
 	function like_sf01() {
 		
 		gfn_ajaxRest("sf01like/" + parseInt($("#seq01").val()), "PUT" , function(data) {
@@ -283,12 +295,12 @@
 				<th scope="col">삭제</th>
 			</tr>
 			</thead>
-			<tbody id="SF02viewTbody">
+			<tbody id="sf02viewTbody">
 		
 			</tbody>
 		</table>
 		<div id="pagenation">
-		
+			<input type="hidden" id="totCnt" name="totCnt"/>
 		</div>
 		</div>
 	</section>

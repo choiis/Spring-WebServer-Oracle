@@ -24,6 +24,9 @@ public class SB02Dao extends SuperDao {
 		return (List<SB02Vo>) selectList(namespace + ".select", sb02Vo);
 	}
 
+	public int selectSF02Total(SB02Vo sf02Vo) throws Exception {
+		return selectCnt(namespace + ".selectTotal", sf02Vo);
+	}
 	public int updateSB02Vo(SB02Vo sb02Vo) throws Exception {
 		return update(namespace + ".update", sb02Vo);
 	}

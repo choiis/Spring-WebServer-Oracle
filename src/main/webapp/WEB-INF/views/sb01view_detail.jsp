@@ -26,7 +26,7 @@
 				return ;
 			}
 			
-			re_showSB02List(1);
+			insertSB02(1);
 		});
 		
 		// 삭제 버튼을 클릭할때 이벤트 발생
@@ -55,31 +55,6 @@
 			}
 		});
 		
-		// 조회(페이지 버튼)
-		$(document).on("click", "a[name='page_move']", function(e) {
-			e.preventDefault();
-			var page = $(this).attr('value');
-			showSB02List(page);
-		});
-		
-		// 조회(이전 버튼)
-		$(document).on("click", "a[name='page_prev']", function() {
-			e.preventDefault();
-			var page = $("#startPage").attr('value');
-			showSB02List(Number(page) - 10);
-		});
-		
-		// 조회(다음 버튼)
-		$(document).on("click", "a[name='page_next']", function() {
-			e.preventDefault();
-			var page = $("#startPage").attr('value');
-			var maxPage = $("#maxPage").attr('value');
-			if(Number(page) + 10 > maxPage) {
-				showSB02List(maxPage);
-			} else {
-				showSB02List(Number(page) + 10);
-			}
-		});
 		
 		fn_PreSave = function() {
 
@@ -116,10 +91,13 @@
 		            
 		            html += '</tr>';
 		        }
+		        
+		        html += '<tr>';
+				html += '<td><input type="button" value="더보기" onclick="showSB02ListMore('+ (data.nowPage + 1) +')"></td>';
+				html += '</tr>';
 		        $("#sb02viewTbody").empty();
 		        $("#sb02viewTbody").append(html);
-		     	// 페이징 함수 호출
-		        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
+				$("#totCnt").val(data.totCnt);
 			});
 		}
 	}
@@ -146,14 +124,17 @@
 		            
 		            html += '</tr>';
 	        }
-	        $("#sb02viewTbody").empty();
+	        
+	        html += '<tr>';
+			html += '<td><input type="button" value="더보기" onclick="showSB02ListMore('+ (data.nowPage + 1) +')"></td>';
+			html += '</tr>';
+			$("#sb02viewTbody").empty();
 	        $("#sb02viewTbody").append(html);
-	     	// 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
+			$("#totCnt").val(data.totCnt);
 		});
 	};
 	
-	function re_showSB02List() {
+	function insertSB02() {
 	
 		var sendData = {
 			"seq01" : parseInt($("#seq01").val()),
@@ -181,10 +162,46 @@
 	            
 	            html += '</tr>';
 	        }
+	        
+	        html += '<tr>';
+			html += '<td><input type="button" value="더보기" onclick="showSB02ListMore('+ (data.nowPage + 1) +')"></td>';
+			html += '</tr>';
 	        $("#sb02viewTbody").empty();
 	        $("#sb02viewTbody").append(html);
-	     	// 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
+			$("#totCnt").val(data.totCnt);
+		});
+	};
+	
+	function showSB02ListMore(page) {
+		if($("#totCnt").val() <=$("#sb02viewTbody tr").length - 1) {
+			return;
+		}
+		
+		gfn_ajaxRest("sb02/" + parseInt($("#seq01").val()) + "/" + page,"GET" , function(data) {
+			var html = "";
+	        for (var i = 0; i < data.list.length; i++) {
+	        	 html += '<tr>';
+		            html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
+		            html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
+		            html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
+		            html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
+		            if(data.list[i].deleteYn) {
+		            	html += '<td scope="col" width="50">' + 
+		            	'<input type="button" value="삭제" onclick="deletesb02('+ i +')">'
+		            	+ '</td>';
+		            	 html += '<td id="seq' + i + '" style="display:none;">' + data.list[i].seq + '</td>';
+		            	 html += '<td id="seq01' + i + '" style="display:none;">' + data.list[i].seq01 + '</td>';
+		            } else {
+		            	html += '<td scope="col" width="50"></td>';
+		            }
+		            
+		            html += '</tr>';
+	        }
+	        $('#sb02viewTbody > tr:last').remove();
+			html += '<tr>';
+			html += '<td><input type="button" value="더보기" onclick="showSB02ListMore('+ (data.nowPage + 1) +')"></td>';
+			html += '</tr>';
+			$('#sb02viewTbody').append(html);
 		});
 	};
 	
@@ -287,7 +304,7 @@
 			</tbody>
 		</table>
 		<div id="pagenation">
-		
+			<input type="hidden" id="totCnt" name="totCnt"/>
 		</div>
 		</div>
 	</section>

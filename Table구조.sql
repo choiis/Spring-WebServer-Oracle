@@ -158,13 +158,13 @@ create table SB02(
 );
 
 alter table SB02
-add constraint pk_SB02 primary key(seq, seq01);
+add constraint pk_SB02 primary key(seq);
 
 alter table SB02
 add constraint fk_sb02 foreign key(seq01) references SB01(seq) on delete cascade;
 
 CREATE index idx_SB02_1
-on SB02(seq01, regdate);
+on SB02(seq01, seq);
 
 create table SBG1(
   seq number not null,
@@ -224,13 +224,13 @@ create table SF02(
 );
 
 alter table SF02
-add constraint pk_SF02 primary key(seq, seq01);
+add constraint pk_SF02 primary key(seq);
 
 alter table SF02
 add constraint fk_sf02 foreign key(seq01) references SF01(seq) on delete cascade;
 
 CREATE index idx_SF02_1
-on SF02(seq01, regdate);
+on SF02(seq01, seq);
 
 create table SFG1(
   seq number not null,

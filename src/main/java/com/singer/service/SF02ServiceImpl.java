@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.singer.common.AppException;
+import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
 import com.singer.dao.SF02Dao;
 import com.singer.vo.SF02Vo;
@@ -18,7 +20,9 @@ public class SF02ServiceImpl implements SF02Service {
 
 	@Override
 	public int insertSF02Vo(SF02Vo sf02Vo) throws Exception {
-
+		if (CommonUtil.isNull(sf02Vo.getText())) {
+			throw new AppException("내용을 필수 입력해야 합니다");
+		}
 		sf02Vo.setRegdate(DateUtil.getTodayTime());
 
 		return sf02Dao.insertSF02Vo(sf02Vo);
@@ -32,6 +36,9 @@ public class SF02ServiceImpl implements SF02Service {
 	@Override
 	public List<SF02Vo> selectSF02Vo(SF02Vo sf02Vo, String userid) throws Exception {
 
+		if (sf02Vo.getNowPage() == 1) { // 첫페이지 요청시 Total알아야한다
+			sf02Vo.setTotCnt(sf02Dao.selectSF02Total(sf02Vo));
+		}
 		List<SF02Vo> list = sf02Dao.selectSF02Vo(sf02Vo);
 
 		for (int i = 0; i < list.size(); i++) {

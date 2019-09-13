@@ -27,11 +27,7 @@
 		
 		<select id="select" resultType="com.singer.vo.SF02Vo"  parameterType="com.singer.vo.SF02Vo">
 			<![CDATA[
-			select T.* ,
- 				 (select count(*) /*+ INDEX_FFS(SF02 IDX_SF02_1)*/
-  				from SF02 
-  				where seq01 = #{seq01}
-  			) as totCnt
+			select T.*
 			from
 				(select  /*+ INDEX_DESC(SF02 IDX_SF02_1)*/
         			rownum as rown,
@@ -47,6 +43,15 @@
     			) T
     		where T.rown >= #{startRownum}
     		]]>
+		</select>
+		
+		<select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.singer.vo.SF02Vo">
+			<![CDATA[
+ 			select  /*+ INDEX_FFS(SF02 IDX_SF02_1)*/
+ 				count(*) as totCnt
+  				from SF02 
+  				where seq01 = #{seq01}
+  			]]>
 		</select>
 		
 		<delete id="delete" parameterType="com.singer.vo.SF02Vo">

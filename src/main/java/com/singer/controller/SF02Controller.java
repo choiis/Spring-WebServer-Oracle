@@ -30,15 +30,12 @@ public class SF02Controller {
 	@RequestMapping(value = "/sf02/{seq01}/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SF02Vo> selectSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpSession session) throws Exception {
 
-		log.debug("enter sf02show.do");
 		log.debug("sf02Vo : " + sf02Vo);
 
 		String userid = (String) session.getAttribute("userid");
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);
 		sf02Vo.setList(list);
-
 		log.debug("list : " + list);
-		log.debug("exit sf02show.do");
 		return new ResponseEntity<SF02Vo>(sf02Vo, HttpStatus.OK);
 	}
 
@@ -67,7 +64,6 @@ public class SF02Controller {
 	@RequestMapping(value = "/sf02/{seq}/{seq01}", method = RequestMethod.DELETE)
 	public ResponseEntity<SF02Vo> deleteSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpSession session) throws Exception {
 		sf02Vo.setNowPage(1);
-		log.debug("enter sf02delete.do");
 		log.debug("sf02Vo : " + sf02Vo);
 
 		sf02Service.deleteSF02Vo(sf02Vo);
@@ -75,9 +71,7 @@ public class SF02Controller {
 		String userid = (String) session.getAttribute("userid");
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);
 		sf02Vo.setList(list);
-
 		log.debug("list : " + list);
-		log.debug("exit sf02delete.do");
 		return new ResponseEntity<SF02Vo>(sf02Vo, HttpStatus.OK);
 	}
 
