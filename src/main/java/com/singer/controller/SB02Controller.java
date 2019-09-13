@@ -27,9 +27,8 @@ public class SB02Controller {
 	private SB02Service sb02Service;
 
 	@ResponseBody
-	@RequestMapping(value = "/sb02/{seq01}/{nowPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sb02/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SB02Vo> selectSB02Vo(@ModelAttribute SB02Vo sb02Vo, HttpSession session) throws Exception {
-		log.debug("enter sb02show.do");
 		log.debug("sb02Vo : " + sb02Vo);
 
 		String userid = (String) session.getAttribute("userid");
@@ -37,7 +36,6 @@ public class SB02Controller {
 		sb02Vo.setList(list);
 
 		log.debug("list : " + list);
-		log.debug("exit sb02show.do");
 		return new ResponseEntity<SB02Vo>(sb02Vo, HttpStatus.OK);
 	}
 
@@ -63,7 +61,7 @@ public class SB02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sb02/{seq}/{seq01}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/sb02/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
 	public ResponseEntity<SB02Vo> deleteSB02Vo(@ModelAttribute SB02Vo sb02Vo, HttpSession session) throws Exception {
 		sb02Vo.setNowPage(1);
 		log.debug("enter sb02delete.do");

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.singer.common.AppException;
 import com.singer.common.CommonUtil;
@@ -23,6 +24,9 @@ public class SF02ServiceImpl implements SF02Service {
 		if (CommonUtil.isNull(sf02Vo.getText())) {
 			throw new AppException("내용을 필수 입력해야 합니다");
 		}
+		if (sf02Vo.getSeq01() < sf02Vo.getParents()) {
+			throw new AppException("데이터 정합성 오류");
+		}
 		sf02Vo.setRegdate(DateUtil.getTodayTime());
 
 		return sf02Dao.insertSF02Vo(sf02Vo);
@@ -39,7 +43,12 @@ public class SF02ServiceImpl implements SF02Service {
 		if (sf02Vo.getNowPage() == 1) { // 첫페이지 요청시 Total알아야한다
 			sf02Vo.setTotCnt(sf02Dao.selectSF02Total(sf02Vo));
 		}
-		List<SF02Vo> list = sf02Dao.selectSF02Vo(sf02Vo);
+		List<SF02Vo> list;
+		if (sf02Vo.getParents() > 0) {
+			list = sf02Dao.selectReplySF02Vo(sf02Vo);
+		} else {
+			list = sf02Dao.selectSF02Vo(sf02Vo);
+		}
 
 		for (int i = 0; i < list.size(); i++) {
 
@@ -52,13 +61,19 @@ public class SF02ServiceImpl implements SF02Service {
 	}
 
 	@Override
-	public int updateSF02Vo(SF02Vo sf02) throws Exception {
-		return sf02Dao.updateSF02Vo(sf02);
+	public int updateSF02Vo(SF02Vo sf02Vo) throws Exception {
+		return sf02Dao.updateSF02Vo(sf02Vo);
 	}
 
+	@Transactional
 	@Override
-	public int deleteSF02Vo(SF02Vo sf02) throws Exception {
-		return sf02Dao.deleteSF02Vo(sf02);
+	public int deleteSF02Vo(SF02Vo sf02Vo) throws Exception {
+
+		if (sf02Vo.getParents() > 0) {
+			sf02Dao.deleteChild(sf02Vo);
+			sf02Vo.setParents(0);
+		}
+		return sf02Dao.deleteSF02Vo(sf02Vo);
 	}
 
 }

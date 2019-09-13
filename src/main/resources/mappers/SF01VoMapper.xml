@@ -68,6 +68,7 @@
   				(select count(*) 
         			from SF02 s2
         			where T.seq = s2.seq01
+        			and s2.parents = 0
       			) as reply,
       			(select count(*) /*+ INDEX_FFS(SF01 IDX_SF01_1)*/
   					from SF01 

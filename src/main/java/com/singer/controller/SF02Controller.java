@@ -27,7 +27,7 @@ public class SF02Controller {
 	private SF02Service sf02Service;
 
 	@ResponseBody
-	@RequestMapping(value = "/sf02/{seq01}/{nowPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sf02/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SF02Vo> selectSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpSession session) throws Exception {
 
 		log.debug("sf02Vo : " + sf02Vo);
@@ -61,7 +61,7 @@ public class SF02Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf02/{seq}/{seq01}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/sf02/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
 	public ResponseEntity<SF02Vo> deleteSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpSession session) throws Exception {
 		sf02Vo.setNowPage(1);
 		log.debug("sf02Vo : " + sf02Vo);

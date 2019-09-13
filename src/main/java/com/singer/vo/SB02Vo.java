@@ -6,10 +6,12 @@ public class SB02Vo extends SuperVo {
 
 	private int seq;
 	private int seq01;
+	private int parents;
 	private String text;
 	private String userid;
 	private String regdate;
 	private int good;
+	private int reply;
 
 	private List<SB02Vo> list;
 
@@ -17,14 +19,17 @@ public class SB02Vo extends SuperVo {
 		super();
 	}
 
-	public SB02Vo(int seq, int seq01, String text, String userid, String regdate, int good, List<SB02Vo> list) {
+	public SB02Vo(int seq, int seq01, int parents, String text, String userid, String regdate, int good, int reply,
+			List<SB02Vo> list) {
 		super();
 		this.seq = seq;
 		this.seq01 = seq01;
+		this.parents = parents;
 		this.text = text;
 		this.userid = userid;
 		this.regdate = regdate;
 		this.good = good;
+		this.reply = reply;
 		this.list = list;
 	}
 
@@ -42,6 +47,14 @@ public class SB02Vo extends SuperVo {
 
 	public void setSeq01(int seq01) {
 		this.seq01 = seq01;
+	}
+
+	public int getParents() {
+		return parents;
+	}
+
+	public void setParents(int parents) {
+		this.parents = parents;
 	}
 
 	public String getText() {
@@ -84,10 +97,18 @@ public class SB02Vo extends SuperVo {
 		this.list = list;
 	}
 
+	public int getReply() {
+		return reply;
+	}
+
+	public void setReply(int reply) {
+		this.reply = reply;
+	}
+
 	@Override
 	public String toString() {
-		return "SB02Vo [seq=" + seq + ", seq01=" + seq01 + ", text=" + text + ", userid=" + userid + ", regdate="
-				+ regdate + ", good=" + good + ", list=" + list + "]";
+		return "SB02Vo [seq=" + seq + ", seq01=" + seq01 + ", parents=" + parents + ", text=" + text + ", userid="
+				+ userid + ", regdate=" + regdate + ", good=" + good + ", reply=" + reply + ", list=" + list + "]";
 	}
 
 }

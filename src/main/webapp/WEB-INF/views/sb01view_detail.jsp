@@ -67,28 +67,29 @@
 		}	
 	});
 	
-	function deletesb02(idx) {
+	function deletesb02(seq, seq01) {
 		
 		if(confirm("삭제할까요?")) {
 			
-			gfn_ajaxRest("sb02/" + $("#seq" + idx).text() + "/" + $("#seq01" + idx).text(),"DELETE" , function(data) {
+			gfn_ajaxRest("sb02/" + seq + "/" + seq01 + "/" + seq,"DELETE" , function(data) {
 				var html = "";
 		        for (var i = 0; i < data.list.length; i++) {
 		            html += '<tr>';
 		            html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
 		            html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
+		            html += '<td scope="col" width="20">' + data.list[i].reply + '</td>';
 		            html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
 		            html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
 		            if(data.list[i].deleteYn) {
 		            	html += '<td scope="col" width="50">' + 
-		            	'<input type="button" value="삭제" onclick="deletesb02('+ i +')">'
+		            	'<input type="button" value="삭제" onclick="deletesb02('+ data.list[i].seq + ',' + data.list[i].seq01 +')">'
 		            	+ '</td>';
-		            	 html += '<td id="seq' + i + '" style="display:none;">' + data.list[i].seq + '</td>';
-		            	 html += '<td id="seq01' + i + '" style="display:none;">' + data.list[i].seq01 + '</td>';
 		            } else {
 		            	html += '<td scope="col" width="50"></td>';
 		            }
-		            
+		            html += '<td scope="col" width="50">';
+			        html += '<input type="button" value="댓글" onclick="showSB02ReplyList('+ data.list[i].seq + ',' + data.list[i].seq01 +')">';
+			        html += '</td>';
 		            html += '</tr>';
 		        }
 		        
@@ -104,24 +105,25 @@
 	
 	function showSB02List(nowPage) {
 		
-		gfn_ajaxRest("sb02/" + parseInt($("#seq01").val()) + "/" + nowPage,"GET" , function(data) {
+		gfn_ajaxRest("sb02/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + nowPage,"GET" , function(data) {
 			var html = "";
 	        for (var i = 0; i < data.list.length; i++) {
 	        	 html += '<tr>';
 		            html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
 		            html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
+		            html += '<td scope="col" width="20">' + data.list[i].reply + '</td>';
 		            html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
 		            html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
 		            if(data.list[i].deleteYn) {
 		            	html += '<td scope="col" width="50">' + 
-		            	'<input type="button" value="삭제" onclick="deletesb02('+ i +')">'
+		            	'<input type="button" value="삭제" onclick="deletesb02('+ data.list[i].seq + ',' + data.list[i].seq01 +')">'
 		            	+ '</td>';
-		            	 html += '<td id="seq' + i + '" style="display:none;">' + data.list[i].seq + '</td>';
-		            	 html += '<td id="seq01' + i + '" style="display:none;">' + data.list[i].seq01 + '</td>';
 		            } else {
 		            	html += '<td scope="col" width="50"></td>';
 		            }
-		            
+		            html += '<td scope="col" width="50">';
+			        html += '<input type="button" value="댓글" onclick="showSB02ReplyList('+ data.list[i].seq + ',' + data.list[i].seq01 +')">';
+			        html += '</td>';
 		            html += '</tr>';
 	        }
 	        
@@ -148,18 +150,19 @@
 	            html += '<tr>';
 	            html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
 	            html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
+	            html += '<td scope="col" width="20">' + data.list[i].reply + '</td>';
 	            html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
 	            html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
 	            if(data.list[i].deleteYn) {
 	            	html += '<td scope="col" width="50">' + 
-	            	'<input type="button" value="삭제" onclick="deletesb02('+ i +')">'
+	            	'<input type="button" value="삭제" onclick="deletesb02('+ data.list[i].seq + ',' + data.list[i].seq01 +')">'
 	            	+ '</td>';
-	            	 html += '<td id="seq' + i + '" style="display:none;">' + data.list[i].seq + '</td>';
-	            	 html += '<td id="seq01' + i + '" style="display:none;">' + data.list[i].seq01 + '</td>';
 	            } else {
 	            	html += '<td scope="col" width="50"></td>';
 	            }
-	            
+	            html += '<td scope="col" width="50">';
+		        html += '<input type="button" value="댓글" onclick="showSB02ReplyList('+ data.list[i].seq + ',' + data.list[i].seq01 +')">';
+		        html += '</td>';
 	            html += '</tr>';
 	        }
 	        
@@ -177,24 +180,25 @@
 			return;
 		}
 		
-		gfn_ajaxRest("sb02/" + parseInt($("#seq01").val()) + "/" + page,"GET" , function(data) {
+		gfn_ajaxRest("sb02/" + parseInt($("#seq01").val()) + "/" + 0 +"/" + page,"GET" , function(data) {
 			var html = "";
 	        for (var i = 0; i < data.list.length; i++) {
 	        	 html += '<tr>';
 		            html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
 		            html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
+		            html += '<td scope="col" width="20">' + data.list[i].reply + '</td>';
 		            html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
 		            html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
 		            if(data.list[i].deleteYn) {
 		            	html += '<td scope="col" width="50">' + 
-		            	'<input type="button" value="삭제" onclick="deletesb02('+ i +')">'
+		            	'<input type="button" value="삭제" onclick="deletesb02('+ data.list[i].seq + ',' + data.list[i].seq01 +')">'
 		            	+ '</td>';
-		            	 html += '<td id="seq' + i + '" style="display:none;">' + data.list[i].seq + '</td>';
-		            	 html += '<td id="seq01' + i + '" style="display:none;">' + data.list[i].seq01 + '</td>';
 		            } else {
 		            	html += '<td scope="col" width="50"></td>';
 		            }
-		            
+		            html += '<td scope="col" width="50">';
+			        html += '<input type="button" value="댓글" onclick="showSB02ReplyList('+ data.list[i].seq + ',' + data.list[i].seq01 +')">';
+			        html += '</td>';
 		            html += '</tr>';
 	        }
 	        $('#sb02viewTbody > tr:last').remove();
@@ -204,6 +208,22 @@
 			$('#sb02viewTbody').append(html);
 		});
 	};
+	
+	function showSB02ReplyList(seq, seq01) {
+		
+		gfn_ajaxRest("sb02/" + seq01 + "/" + seq + "/" + 0, "GET" , function(data) {
+			var html = "";
+
+			for (var i = 0; i < data.list.length; i++) {
+				
+			}
+			var html = "";
+			html += '<table border = "1">';
+			html += '<colgroup><col width="50"><col width="200"><col width="30"><col width="50"></colgroup>';
+			html += '<thead></thead><tbody id="sf02ReplyViewTbody"></tbody></table>';
+			
+		});	
+	}
 	
 	function like_sb01() {
 	
@@ -276,7 +296,7 @@
 		</div>
 		
 		<div class="container">
-		<form id="form" method="post"  action="/sb02insert.do">
+		<form id="form" method="post">
 				댓글 내용<textarea id="text" name="text" rows="2" cols="40">
 				</textarea>
 				<input type="hidden" id="seq01" name="seq01" value="${sb01Vo.seq}" />
@@ -286,17 +306,21 @@
 			<colgroup>
 				<col width="50">
 				<col width="200">
+				<col width="20">
 				<col width="30">
 				<col width="70">
+				<col width="50">
 				<col width="50">
 			</colgroup>
 			<thead>
 			<tr>
 				<th scope="col">글쓴이</th>
 				<th scope="col">내용</th>
+				<th scope="col">댓글</th>
 				<th scope="col">좋아요</th>
 				<th scope="col">등록일자</th>
 				<th scope="col">삭제</th>
+				<th scope="col">더보기</th>
 			</tr>
 			</thead>
 			<tbody id="sb02viewTbody">

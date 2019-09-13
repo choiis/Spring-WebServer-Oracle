@@ -19,9 +19,18 @@ public class SF02Dao extends SuperDao {
 		return update(namespace + ".like", sf02Vo);
 	}
 
+	public int hateSF02Vo(SF02Vo sf02Vo) throws Exception {
+		return update(namespace + ".hate", sf02Vo);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<SF02Vo> selectSF02Vo(SF02Vo sf02Vo) throws Exception {
 		return (List<SF02Vo>) selectList(namespace + ".select", sf02Vo);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<SF02Vo> selectReplySF02Vo(SF02Vo sf02Vo) throws Exception {
+		return (List<SF02Vo>) selectList(namespace + ".selectReply", sf02Vo);
 	}
 
 	public int selectSF02Total(SF02Vo sf02Vo) throws Exception {
@@ -40,4 +49,7 @@ public class SF02Dao extends SuperDao {
 		return delete(namespace + ".delete_seq01", sf02Vo);
 	}
 
+	public int deleteChild(SF02Vo sf02Vo) throws Exception {
+		return delete(namespace + ".deleteChild", sf02Vo);
+	}
 }

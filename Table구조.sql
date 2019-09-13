@@ -154,7 +154,8 @@ create table SB02(
   text varchar2(200) not null,
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
-  good number(4) default 0 not null
+  good number(4) default 0 not null,
+  parents number default 0
 );
 
 alter table SB02
@@ -164,7 +165,7 @@ alter table SB02
 add constraint fk_sb02 foreign key(seq01) references SB01(seq) on delete cascade;
 
 CREATE index idx_SB02_1
-on SB02(seq01, seq);
+on SB02(seq01, parents, seq);
 
 create table SBG1(
   seq number not null,
@@ -220,7 +221,8 @@ create table SF02(
   text varchar2(200) not null,
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
-  good number(4) default 0 not null
+  good number(4) default 0 not null,
+  parents number default 0
 );
 
 alter table SF02
@@ -230,7 +232,7 @@ alter table SF02
 add constraint fk_sf02 foreign key(seq01) references SF01(seq) on delete cascade;
 
 CREATE index idx_SF02_1
-on SF02(seq01, seq);
+on SF02(seq01, parents, seq);
 
 create table SFG1(
   seq number not null,
