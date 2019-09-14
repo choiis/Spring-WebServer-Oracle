@@ -1,6 +1,7 @@
 package com.singer.service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.annotation.Resource;
 
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.singer.dao.SV02Dao;
+import com.singer.common.AppException;
+import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
 import com.singer.dao.SV01Dao;
@@ -27,18 +30,33 @@ public class SV01ServiceImpl implements SV01Service {
 	@Override
 	public int insertSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
 
+		if (CommonUtil.isNull(sv01Vo.getTitle())) {
+			throw new AppException("제목을 필수 입력해야 합니다");
+		}
+		if (CommonUtil.isNull(sv01Vo.getText())) {
+			throw new AppException("내용을 필수 입력해야 합니다");
+		}
+
+		List<SV02Vo> list = sv01Vo.getSv02Vos();
+
+		if (list.size() == 0) {
+			throw new AppException("투표항목을 필수 입력해야 합니다");
+		}
+
 		String regDate = DateUtil.getTodayTime();
 		sv01Vo.setUserid(userid);
 		sv01Vo.setRegdate(regDate);
 		int result = sv01Dao.insertSV01Vo(sv01Vo);
 
-		List<SV02Vo> list = sv01Vo.getSv02Vos();
-		int leng = list.size();
-		for (int i = 0; i < leng; i++) {
-			list.get(i).setUserid(userid);
-			list.get(i).setRegdate(regDate);
-			sv02Dao.insertSV02Vo(list.get(i));
-		}
+		Stream<SV02Vo> stream = list.stream();
+		stream.forEach(s -> {
+			s.setUserid(userid);
+			s.setRegdate(regDate);
+			try {
+				sv02Dao.insertSV02Vo(s);
+			} catch (Exception e) {
+			}
+		});
 
 		return result;
 	}

@@ -1,8 +1,8 @@
 package com.singer.redis;
 
-import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
+import java.util.stream.Stream;
 
 import javax.annotation.Resource;
 
@@ -111,13 +111,13 @@ public class RedisDao {
 		ZSetOperations<String, Object> zsetOp = redisTemplate.opsForZSet();
 		Set<TypedTuple<Object>> sortedSet = zsetOp.reverseRangeWithScores(key, 0, -1);
 
-		Iterator<TypedTuple<Object>> iter = sortedSet.iterator();
+		Stream<TypedTuple<Object>> stream = sortedSet.stream();
 		Vector<SortedSetVo> vector = new Vector<SortedSetVo>();
 		log.debug("zrange " + key + " 0 -1 withscores");
-		while (iter.hasNext()) {
-			TypedTuple<Object> typedTuple = iter.next();
-			vector.add(new SortedSetVo((String) typedTuple.getValue(), typedTuple.getScore()));
-		}
+		stream.forEachOrdered(s -> {
+			vector.add(new SortedSetVo((String) s.getValue(), s.getScore()));
+		});
+
 		return vector;
 	}
 }

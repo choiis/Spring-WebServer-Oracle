@@ -1,6 +1,7 @@
 package com.singer.service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.annotation.Resource;
 
@@ -34,12 +35,12 @@ public class SP02ServiceImpl implements SP02Service {
 
 		List<SP02Vo> list = sp02Dao.selectSP02Vo(sp02Vo);
 
-		for (int i = 0; i < list.size(); i++) {
-
-			if (list.get(i).getUserid().equals(userid)) {
-				list.get(i).setDeleteYn(true);
+		Stream<SP02Vo> stream = list.stream();
+		stream.forEach(s -> {
+			if (userid.equals(s.getUserid())) {
+				s.setDeleteYn(true);
 			}
-		}
+		});
 
 		return list;
 	}
