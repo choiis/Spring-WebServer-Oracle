@@ -70,27 +70,8 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			gfn_ajaxRest("sf02/" + seq + "/" + seq01 + "/" + seq,"DELETE" , function(data) {
-				var html = "";
-		        for (var i = 0; i < data.list.length; i++) {
-		            html += '<tr>';
-		            html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
-		            html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
-		            html += '<td scope="col" width="20">' + data.list[i].reply + '</td>';
-		            html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
-		            html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
-		            if(data.list[i].deleteYn) {
-		            	html += '<td scope="col" width="50">' + 
-		            	'<input type="button" value="삭제" onclick="deleteSF02('+ data.list[i].seq + ',' + data.list[i].seq01 +')">'
-		            	+ '</td>';
-		            } else {
-		            	html += '<td scope="col" width="50"></td>';
-		            }
-		            html += '<td scope="col" width="50">';
-			         html += '<input type="button" value="댓글" onclick="showSF02ReplyList('+ data.list[i].seq + ',' + data.list[i].seq01 +')">';
-			         html += '</td>';
-			         html += '</tr>';
-		        }
+			gfn_ajaxRest("sf02/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function(data) {
+				var html = drawTable(data);
 
 				html += '<tr>';
 				html += '<td><input type="button" value="더보기" onclick="showSF02ListMore('+ (data.nowPage + 1) +')"></td>';
@@ -105,26 +86,7 @@
 	function showSF02List(page) {
 		
 		gfn_ajaxRest("sf02/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
-			var html = "";
-			for (var i = 0; i < data.list.length; i++) {
-	        	 html += '<tr>';
-		         html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
-		         html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
-		         html += '<td scope="col" width="20">' + data.list[i].reply + '</td>';
-		         html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
-		         html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
-		         if(data.list[i].deleteYn) {
-		        	html += '<td scope="col" width="50">' + 
-		            '<input type="button" value="삭제" onclick="deleteSF02('+ data.list[i].seq + ',' + data.list[i].seq01 +')">'
-		            + '</td>';
-		         } else {
-		          	html += '<td scope="col" width="50"></td>';
-		         }   
-		         html += '<td scope="col" width="50">';
-		         html += '<input type="button" value="댓글" onclick="showSF02ReplyList('+ data.list[i].seq + ',' + data.list[i].seq01 +')">';
-		         html += '</td>';
-		         html += '</tr>';
-	        }
+			var html = drawTable(data);
 
 			html += '<tr>';
 			html += '<td><input type="button" value="더보기" onclick="showSF02ListMore('+ (data.nowPage + 1) +')"></td>';
@@ -144,26 +106,7 @@
         };
 
 		gfn_ajax("sf02","POST" , sendData , function(data) {
-			var html = "";
-	        for (var i = 0; i < data.list.length; i++) {
-	            html += '<tr>';
-	            html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
-	            html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
-		        html += '<td scope="col" width="20">' + data.list[i].reply + '</td>';
-	            html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
-	            html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
-	            if(data.list[i].deleteYn) {
-	            	html += '<td scope="col" width="50">' + 
-		            '<input type="button" value="삭제" onclick="deleteSF02('+ data.list[i].seq + ',' + data.list[i].seq01 +')">'
-		            + '</td>';
-	            } else {
-	            	html += '<td scope="col" width="50"></td>';
-	            }
-	            html += '<td scope="col" width="50">';
-		         html += '<input type="button" value="댓글" onclick="showSF02ReplyList('+ data.list[i].seq + ',' + data.list[i].seq01 +')">';
-		         html += '</td>';
-		         html += '</tr>';
-	        }
+			var html = drawTable(data);
 
 	        html += '<tr>';
 			html += '<td><input type="button" value="더보기" onclick="showSF02ListMore('+ (data.nowPage + 1) +')"></td>';
@@ -180,26 +123,8 @@
 		}
 		
 		gfn_ajaxRest("sf02/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
-			var html = "";
-			for (var i = 0; i < data.list.length; i++) {
-	        	 html += '<tr>';
-		         html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
-		         html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
-		         html += '<td scope="col" width="20">' + data.list[i].reply + '</td>';
-		         html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
-		         html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
-		         if(data.list[i].deleteYn) {
-		        	 html += '<td scope="col" width="50">' + 
-			            '<input type="button" value="삭제" onclick="deleteSF02('+ data.list[i].seq + ',' + data.list[i].seq01 +')">'
-			            + '</td>';
-		         } else {
-		          	html += '<td scope="col" width="50"></td>';
-		         }   
-		         html += '<td scope="col" width="50">';
-		         html += '<input type="button" value="댓글" onclick="showSF02ReplyList('+ data.list[i].seq + ',' + data.list[i].seq01 +')">';
-		         html += '</td>';
-		         html += '</tr>';
-	        }
+			var html = drawTable(data);
+			
 			$('#sf02viewTbody > tr:last').remove();
 			html += '<tr>';
 			html += '<td><input type="button" value="더보기" onclick="showSF02ListMore('+ (data.nowPage + 1) +')"></td>';
@@ -208,21 +133,120 @@
 		});
 	}
 
+	function drawTable(data) {
+		var html = "";
+		for (var i = 0; i < data.list.length; i++) {
+       		 html += '<tr>';
+          	 html += '<td id="seq' + data.list[i].seq + '" style="display:none;">' + data.list[i].seq + '</td>';
+	         html += '<td scope="col" width="50">' + data.list[i].userid + '</td>';
+	         html += '<td scope="col" width="100">' + data.list[i].text + '</td>';
+	         html += '<td scope="col" width="20">' + data.list[i].reply + '</td>';
+	         html += '<td scope="col" width="30">' + data.list[i].good + '</td>';
+	         html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[i].regdate) + '</td>';
+	         if(data.list[i].deleteYn) {
+	        	 html += '<td scope="col" width="50">' + 
+		            '<input type="button" value="삭제" onclick="deleteSF02('+ data.list[i].seq + ',' + data.list[i].seq01 +')">'
+		            + '</td>';
+	         } else {
+	          	html += '<td scope="col" width="50"></td>';
+	         }   
+	         html += '<td scope="col" width="50">';
+	         html += '<input id="replyButton" type="button" value="댓글" onclick="showSF02ReplyList('+ data.list[i].seq + ',' + data.list[i].seq01 +')">';
+	         html += '</td>';
+	         html += '</tr>';
+        }
+		return html;
+	}
+	
 	function showSF02ReplyList(seq, seq01) {
-
 		gfn_ajaxRest("sf02/" + seq01 + "/" + seq + "/" + 0, "GET" , function(data) {
-			var html = "";
-
-			for (var i = 0; i < data.list.length; i++) {
-				
-			}
-			var html = "";
-			html += '<table border = "1">';
-			html += '<colgroup><col width="50"><col width="200"><col width="30"><col width="50"></colgroup>';
-			html += '<thead></thead><tbody id="sf02ReplyViewTbody"></tbody></table>';
 			
+			for (var i = 0; i < $("#sf02viewTbody").find("tr").length; i++) {
+				var tr = $("#sf02viewTbody").find("tr").eq(i);
+				if(tr.find("td").eq(0).text() == data.parents) {
+					var html = "";
+					for(var j = 0 ; j < data.list.length; j++) {
+						html += '<tr>'; 
+				        html += '<td scope="col" width="50">' + data.list[j].userid + '</td>';
+				        html += '<td scope="col" width="100">' + data.list[j].text + '</td>';
+						html += '<td scope="col" width="20">' + '</td>';
+				        html += '<td scope="col" width="30">' + '</td>';
+				        html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[j].regdate) + '</td>';
+				        if(data.list[j].deleteYn) {
+				        	html += '<td scope="col" width="50">' + 
+					        '<input type="button" value="삭제" onclick="deleteSF02(' + data.list[j].seq + ',' + data.list[j].seq01 +')">'
+					        + '</td>';
+				        } else {
+				          	html += '<td scope="col" width="50"></td>';
+				        }   
+				        html += '<td scope="col" width="50">';
+				        html += '</td>';
+				        html += '</tr>';
+					}
+					
+					html += '<tr><td scope="col" width="50"></td>';
+					html += '<td scope="col" width="200">';
+					html += '<input id="input' + data.parents + '" type="text"></td>';
+					html += '<td scope="col" width="20"></td><td scope="col" width="30"></td><td scope="col" width="70"></td>';
+					html += '<td scope="col" width="50">';
+					html += '<input type="button" value="입력" onclick="insertSF02Reply(' + data.parents + ')"></td>';
+					html += '<td scope="col" width="50"></td></tr>';
+					tr.after(html);
+					var id = "#seq" + data.parents;
+					$(id).parent().find("#replyButton").attr('disabled', true);
+					break;
+				}
+			}
 		});	
 	}
+	
+	function insertSF02Reply(seq) {
+
+		var sendData = {
+			"seq01" : parseInt($("#seq01").val()),
+			"parents" : parseInt(seq),
+        	"text" : $("#input" + seq).val().trim(),
+        	"nowPage" : 1
+        };
+
+		gfn_ajax("sf02","POST" , sendData , function(data) {
+			for (var i = 0; i < $("#sf02viewTbody").find("tr").length; i++) {
+				var tr = $("#sf02viewTbody").find("tr").eq(i);
+				if(tr.find("td").eq(0).text() == data.parents) {
+					var html = "";
+					for(var j = 0 ; j < data.list.length; j++) {
+						html += '<tr>'; 
+				        html += '<td scope="col" width="50">' + data.list[j].userid + '</td>';
+				        html += '<td scope="col" width="100">' + data.list[j].text + '</td>';
+						html += '<td scope="col" width="20">' + '</td>';
+				        html += '<td scope="col" width="30">' + '</td>';
+				        html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[j].regdate) + '</td>';
+				        if(data.list[j].deleteYn) {
+				        	html += '<td scope="col" width="50">' + 
+					        '<input type="button" value="삭제" onclick="deleteSF02(' + data.list[j].seq + ',' + data.list[j].seq01 +')">'
+					        + '</td>';
+				        } else {
+				          	html += '<td scope="col" width="50"></td>';
+				        }   
+				        html += '<td scope="col" width="50">';
+				        html += '</td>';
+				        html += '</tr>';
+					}
+					
+					html += '<tr><td scope="col" width="50"></td>';
+					html += '<td scope="col" width="200">';
+					html += '<input id="input' + data.parents + '" type="text"></td>';
+					html += '<td scope="col" width="20"></td><td scope="col" width="30"></td><td scope="col" width="70"></td>';
+					html += '<td scope="col" width="50">';
+					html += '<input type="button" value="입력" onclick="insertSF02Reply(' + data.parents + ')"></td>';
+					html += '<td scope="col" width="50"></td></tr>';
+					$("#sf02viewTbody").find("tr").eq(i + 1).remove();
+					tr.after(html);
+					break;
+				}
+			}
+		});
+	};
 	
 	function like_sf01() {
 		

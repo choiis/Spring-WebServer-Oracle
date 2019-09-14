@@ -25,9 +25,6 @@ public class SB02ServiceImpl implements SB02Service {
 		if (CommonUtil.isNull(sb02Vo.getText())) {
 			throw new AppException("내용을 필수 입력해야 합니다");
 		}
-		if (sb02Vo.getSeq01() < sb02Vo.getParents()) {
-			throw new AppException("데이터 정합성 오류");
-		}
 		sb02Vo.setRegdate(DateUtil.getTodayTime());
 
 		return sb02Dao.insertSB02Vo(sb02Vo);

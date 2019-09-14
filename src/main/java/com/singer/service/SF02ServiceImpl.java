@@ -25,9 +25,6 @@ public class SF02ServiceImpl implements SF02Service {
 		if (CommonUtil.isNull(sf02Vo.getText())) {
 			throw new AppException("내용을 필수 입력해야 합니다");
 		}
-		if (sf02Vo.getSeq01() < sf02Vo.getParents()) {
-			throw new AppException("데이터 정합성 오류");
-		}
 		sf02Vo.setRegdate(DateUtil.getTodayTime());
 
 		return sf02Dao.insertSF02Vo(sf02Vo);
