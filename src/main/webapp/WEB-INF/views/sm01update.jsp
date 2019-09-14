@@ -36,12 +36,12 @@ var product_code = {};
 				alert("이름엔 한글만 입력하세요");
 				return false;
 			}
-			
+			/*
 			if(!gfn_isPhoneNumber($("#phone").val())) {
 				alert("핸드폰번호 형식에 맞게 입력하세요");
 				return false;
 			}
-			
+			*/
 			if(!gfn_isEmail($("#email").val())) {
 				alert("이메일 형식에 맞게 입력하세요");
 				return false;

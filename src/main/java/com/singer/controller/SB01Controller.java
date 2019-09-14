@@ -1,8 +1,5 @@
 package com.singer.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -117,23 +114,15 @@ public class SB01Controller {
 	public void selectVideoSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter selectVideo.do");
-		File file = sb01Service.selectVideo(sb01Vo, request);
+		InputStream is = sb01Service.selectVideo(sb01Vo, request);
 
-		InputStream is = null;
-		try {
-			is = new FileInputStream(file);
-			IOUtils.copy(is, response.getOutputStream());
-		} catch (IOException e) {
+		IOUtils.copy(is, response.getOutputStream());
+		if (is != null) {
+			try {
+				is.close();
+			} catch (Exception e2) {
 
-		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (Exception e2) {
-
-				}
 			}
-			log.debug("exit selectVideo.do");
 		}
 	}
 

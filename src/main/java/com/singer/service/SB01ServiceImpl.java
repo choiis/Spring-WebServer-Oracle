@@ -1,10 +1,11 @@
 package com.singer.service;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,8 @@ import com.singer.dao.SB02Dao;
 import com.singer.vo.SB01Vo;
 import com.singer.vo.SB02Vo;
 
+import oracle.sql.BLOB;
+
 @Service("sb01Service")
 public class SB01ServiceImpl implements SB01Service {
 	@Resource(name = "sb01Dao")
@@ -30,9 +33,6 @@ public class SB01ServiceImpl implements SB01Service {
 
 	@Resource(name = "sb02Dao")
 	private SB02Dao sb02Dao;
-
-	@Resource(name = "properties")
-	private Properties properties;
 
 	@Transactional
 	@Override
@@ -57,16 +57,15 @@ public class SB01ServiceImpl implements SB01Service {
 		if (!CommonUtil.chkVideoFile(video.getOriginalFilename())) {
 			throw new AppException("동영상 파일만 업로드 가능합니다");
 		}
-		sb01Vo.setVideo(video.getOriginalFilename());
 		sb01Vo.setRegdate(DateUtil.getTodayTime());
-		String path = properties.getProperty("global.save.path");
-		File dir = new File(path);
-		dir.mkdir();
-		FileOutputStream fos = new FileOutputStream(path + "/" + video.getOriginalFilename());
-		fos.write(video.getBytes());
-		fos.close();
 
-		return sb01Dao.insertSB01Vo(sb01Vo);
+		sb01Dao.insertSB01Vo(sb01Vo);
+		HashMap<String, Object> putHash = new HashMap<String, Object>();
+		putHash.put("seq", sb01Vo.getSeq());
+		putHash.put("regdate", DateUtil.getToday());
+		putHash.put("video", video.getBytes());
+
+		return sb01Dao.insertVideo(putHash);
 
 	}
 
@@ -107,6 +106,12 @@ public class SB01ServiceImpl implements SB01Service {
 
 	@Override
 	public int updateSB01Vo(SB01Vo sb01Vo) throws Exception {
+		HashMap<String, Object> putHash = new HashMap<String, Object>();
+		putHash.put("seq", sb01Vo.getSeq());
+		putHash.put("regdate", DateUtil.getToday());
+		putHash.put("video", sb01Vo.getVideo());
+
+		sb01Dao.updateVideo(putHash);
 		return sb01Dao.updateSB01Vo(sb01Vo);
 	}
 
@@ -150,25 +155,25 @@ public class SB01ServiceImpl implements SB01Service {
 		sb02Vo.setSeq01(sb01Vo.getSeq());
 
 		sb02Dao.delete_seqSB02Vo(sb02Vo);
-		String path = properties.getProperty("global.save.path");
-		File file = new File(path + "/" + sb01Vo.getVideo());
-		file.delete();
 
 		return sb01Dao.deleteSB01Vo(sb01Vo);
 	}
 
 	@Override
-	public File selectVideo(SB01Vo sb01Vo, HttpServletRequest request) throws Exception {
-		sb01Vo = sb01Dao.selectVideo(sb01Vo);
-		File file;
-		if (CommonUtil.isNull(sb01Vo.getVideo())) {
+	public InputStream selectVideo(SB01Vo sb01Vo, HttpServletRequest request) throws Exception {
+		InputStream is = null;
+		HashMap<String, Object> hashMap = sb01Dao.selectVideo(sb01Vo);
+
+		if (CommonUtil.isNull(hashMap)) {
 			String video_path = request.getSession().getServletContext().getRealPath("/resources/video/hyeri.mp4");
-			file = new File(video_path);
+			File file = new File(video_path);
+			is = new FileInputStream(file);
 		} else {
-			String path = properties.getProperty("global.save.path");
-			file = new File(path + "/" + sb01Vo.getVideo());
+			BLOB images = (BLOB) hashMap.get("VIDEO");
+
+			is = images.getBinaryStream();
 		}
-		return file;
+		return is;
 	}
 
 }

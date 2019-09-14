@@ -54,13 +54,13 @@
         			from SV03 s3
         			where T.seq = s3.seq
       			) as votedCnt,
-      			(select count(*) /*+ INDEX_FFS(SV01 IDX_SV01_1)*/
+      			(select count(*) /*+ INDEX_FFS(SV01 PK_SV01)*/
   					from SV01 
   				) as totCnt
       			from
   				(select S1.*
 				 from (
-					select /*+ index_desc(SV01 IDX_SV01_1)*/
+					select /*+ index_desc(SV01 PK_SV01)*/
 					rownum as rown,
 					seq as seq,
 					title as title, 

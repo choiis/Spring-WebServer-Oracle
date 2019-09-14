@@ -80,6 +80,7 @@ public class SM01ServiceImpl implements SM01Service {
 		hashMap.put("succeed", sm01Dao.insertSM01Vo(sm01Vo));
 		HashMap<String, Object> putHash = new HashMap<String, Object>();
 		putHash.put("userid", sm01Vo.getUserid());
+		putHash.put("regdate", DateUtil.getToday());
 		putHash.put("photo", photo.getBytes());
 
 		sm01Dao.insertImage(putHash);
@@ -163,9 +164,10 @@ public class SM01ServiceImpl implements SM01Service {
 			}
 			HashMap<String, Object> putHash = new HashMap<String, Object>();
 			putHash.put("userid", sm01Vo.getUserid());
+			putHash.put("regdate", DateUtil.getToday());
 			putHash.put("photo", photo.getBytes());
 
-			sm01Dao.insertImage(putHash);
+			sm01Dao.updateImage(putHash);
 		}
 		sm01Vo.setUserid(userId);
 		// 재 조회

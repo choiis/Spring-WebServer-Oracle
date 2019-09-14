@@ -1,6 +1,6 @@
 package com.singer.service;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,5 +26,5 @@ public interface SB01Service {
 
 	public int deleteSB01Vo(SB01Vo sb01Vo) throws Exception;
 
-	public File selectVideo(SB01Vo sb01Vo, HttpServletRequest request) throws Exception;
+	public InputStream selectVideo(SB01Vo sb01Vo, HttpServletRequest request) throws Exception;
 }

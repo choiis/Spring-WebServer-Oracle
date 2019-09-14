@@ -46,7 +46,7 @@
 				brth as brth, 
 				grade as grade, 
 				regdate as regdate,
-				phone as phone, 
+				phone as phone,
 				email as email,
 				usertype as usertype,
 				count(*) over() as totCnt
@@ -61,13 +61,18 @@
 			where userid = #{userid}
 		</delete>
 		
-		<update id="insertImage" parameterType="java.util.HashMap">
-			update SM01 
-			set photo = #{photo}
-			where userid  = #{userid}
-		</update>
+		<insert id="insertImage" parameterType="java.util.HashMap">
+				insert into SMP1 values(#{userid}, #{regdate}, #{photo})
+		</insert>
 		
 		<select id="selectImage" parameterType="com.singer.vo.SM01Vo" resultType="java.util.Map">
-			select photo from SM01 where userid  = #{userid}
+			select photo from SMP1 where userid  = #{userid}
 		</select>
+		
+		<update id="updateImage" parameterType="java.util.HashMap">
+			update SMP1
+				set regdate = #{regdate},
+  				photo = #{photo}
+  				where userid = #{userid}
+		</update>
 </mapper>

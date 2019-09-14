@@ -70,13 +70,13 @@
         			where T.seq = s2.seq01
         			and s2.parents = 0
       			) as reply,
-      			(select count(*) /*+ INDEX_FFS(SF01 IDX_SF01_1)*/
+      			(select count(*) /*+ INDEX_FFS(SF01 PK_SF01)*/
   					from SF01 
   				) as totCnt
       			from
   				(select S1.*
 				 from (
-					select /*+ index_desc(SF01 IDX_SF01_1)*/
+					select /*+ index_desc(SF01 PK_SF01)*/
 					rownum as rown,
 					seq as seq,
 					title as title, 

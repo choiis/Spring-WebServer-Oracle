@@ -35,7 +35,11 @@ public class SM01Dao extends SuperDao {
 	}
 
 	public int insertImage(Map<String, Object> hashMap) throws Exception {
-		return update(namespace + ".insertImage", hashMap);
+		return insert(namespace + ".insertImage", hashMap);
+	}
+
+	public int updateImage(Map<String, Object> hashMap) throws Exception {
+		return insert(namespace + ".updateImage", hashMap);
 	}
 
 	@SuppressWarnings("unchecked")

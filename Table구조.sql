@@ -8,12 +8,23 @@ grade varchar2(2) not null,
 regdate varchar2(8) not null,
 phone varchar2(15) not null,
 email varchar2(30) not null,
-photo blob,
 usertype varchar2(5)
 );
 
 alter table SM01
 add constraint pk_SM01 primary key(userid);
+
+CREATE TABLE SMP1(
+userid varchar2(10) not null,
+regdate varchar2(8) not null,
+photo blob not null
+);
+
+ALTER TABLE SMP1
+add constraint pk_SMP1 primary key(userid);
+
+alter table SMP1
+add constraint fk_SMP1 foreign key(userid) references SM01(userid) on delete cascade;
 
 CREATE table MENU (
   menucd varchar2(2) not null,
@@ -137,13 +148,22 @@ alter table SB01
 add constraint fk_sb01 foreign key(userid) references SM01(userid) on delete cascade;
 
 CREATE index idx_SB01_1
-on SB01(seq, regdate);
-
-CREATE index idx_SB01_2
 on SB01(title);
 
-CREATE index idx_SB01_3
+CREATE index idx_SB01_2
 on SB01(userid);
+
+create table SBV1(
+  seq number not null,
+  regdate varchar2(8) not null,
+  video blob not null
+);
+
+alter table SBV1
+add constraint pk_SBV1 primary key(seq);
+
+alter table SBV1
+add constraint fk_SBV1 foreign key(seq) references SB01(seq) on delete cascade;
 
 CREATE SEQUENCE seq_SB02
 START WITH 1 INCREMENT BY 1 ;
@@ -203,14 +223,10 @@ alter table SF01
 add constraint fk_sf01 foreign key(userid) references SM01(userid) on delete cascade;
 
 CREATE index idx_SF01_1
-on SF01(seq, regdate);
-
-CREATE index idx_SF01_2
 on SF01(title);
 
-CREATE index idx_SF01_3
+CREATE index idx_SF01_2
 on SF01(userid);
-
 
 CREATE SEQUENCE seq_SF02
 START WITH 1 INCREMENT BY 1 ;
@@ -346,12 +362,9 @@ alter table SV01
 add constraint fk_sv01 foreign key(userid) references SM01(userid) on delete cascade;
 
 CREATE index idx_SV01_1
-on SV01(seq, regdate);
-
-CREATE index idx_SV01_2
 on SV01(title);
 
-CREATE index idx_SV01_3
+CREATE index idx_SV01_2
 on SV01(userid);
 
 create table SV02(

@@ -7,8 +7,12 @@
 
 <mapper namespace="com.singer.mappers.SB01">		
 		<insert id="insert"  parameterType="com.singer.vo.SB01Vo">
-			insert into SB01 (seq, title, text, userid, regdate, video)
-			values (SEQ_SB01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{video}) 
+			<selectKey  keyProperty="seq"  resultType="java.lang.Integer" order="AFTER">
+   			 SELECT SEQ_SB01.CURRVAL FROM DUAL
+  			</selectKey>
+			insert into SB01 (seq, title, text, userid, regdate)
+			values (SEQ_SB01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}) 
+			
 		</insert>
 		
 		<update id="update" parameterType="com.singer.vo.SB01Vo">
@@ -69,13 +73,13 @@
         			where T.seq = s2.seq01
         			and s2.parents = 0
       			) as reply,
-      			(select count(*) /*+ INDEX_FFS(SB01 IDX_SB01_1)*/
+      			(select count(*) /*+ INDEX_FFS(SB01 PK_SB01)*/
   					from SB01 
   				) as totCnt
       			from
   				(select S1.*
 				 from (
-					select /*+ index_desc(SB01 IDX_SB01_1)*/
+					select /*+ index_desc(SB01 PK_SB01)*/
 					rownum as rown,
 					seq as seq,
 					title as title, 
@@ -96,10 +100,20 @@
 			where seq = #{seq}
 		</delete>
 		
-		<select id="selectVideo" resultType="com.singer.vo.SB01Vo"  parameterType="com.singer.vo.SB01Vo">
-			select seq,video from SB01 
-			where seq = #{seq}
+		<insert id="insertVideo" parameterType="java.util.HashMap">
+				insert into SBV1 values(#{seq}, #{regdate}, #{video})
+		</insert>
+		
+		<select id="selectVideo" parameterType="com.singer.vo.SB01Vo" resultType="java.util.Map">
+			select video from SBV1 where seq  = #{seq}
 		</select>
+		
+		<update id="updateVideo" parameterType="java.util.HashMap">
+			update SMP1
+				set regdate = #{regdate},
+  				video = #{video}
+  				where seq = #{seq}
+		</update>
 		
 		<update id="likelog" parameterType="com.singer.vo.SB01Vo">
 			merge into SBG1 S1
