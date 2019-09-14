@@ -12,7 +12,7 @@
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 </head>
 <body>
-	<script type="text/javascript">E
+	<script type="text/javascript">
 	// 페이지 로딩이 완료되고, jQuery 스크립트 실행된다
 	$(document).ready(function() {
 

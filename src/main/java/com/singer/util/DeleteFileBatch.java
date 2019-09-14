@@ -2,9 +2,6 @@ package com.singer.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
-
-import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.ResourcePropertySource;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
+
 @Component
 public class DeleteFileBatch extends QuartzJobBean {
 
