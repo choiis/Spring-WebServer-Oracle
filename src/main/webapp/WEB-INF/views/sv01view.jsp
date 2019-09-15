@@ -90,7 +90,6 @@
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
 	            html += '<td scope="col" width="100">' + item.userid + '</td>';
-	            html += '<td scope="col" width="30">' + item.good + '</td>';
 	            html += '<td scope="col" width="30">' + item.hit + '</td>';
 	            html += '<td scope="col" width="70">' + gfn_dateFormat(item.regdate) + '</td>';
 	            html += '</tr>';
@@ -118,8 +117,8 @@
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
 	            html += '<td scope="col" width="50"><a href="/sv01show_detail/'+
 	            item.seq +'">' + 
-	            
 	            item.title + '</a></td>';
+	            html += '<td scope="col" width="30">' + item.reply + '</td>';
 	            html += '<td scope="col" width="100">' + item.userid + '</td>';
 	            html += '<td scope="col" width="30">' + item.hit + '</td>';
 	            html += '<td scope="col" width="70">' + gfn_dateFormat(item.regdate) + '</td>';
@@ -154,6 +153,7 @@
 			<colgroup>
 				<col width="50">
 				<col width="100">
+				<col width="30">
 				<col width="100">
 				<col width="30">
 				<col width="70">
@@ -162,6 +162,7 @@
 			<tr>
 				<th scope="col">번호</th>
 				<th scope="col">제목</th>
+				<th scope="col">댓글</th>
 				<th scope="col">글쓴이</th>
 				<th scope="col">조회수</th>
 				<th scope="col">등록일자</th>

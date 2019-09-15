@@ -394,6 +394,28 @@ add constraint pk_SV03 primary key(seq, idx, userid);
 alter table SV03
 add constraint fk_sv03 foreign key(seq, idx) references SV02(seq, idx) on delete cascade;
 
+CREATE SEQUENCE seq_SV04
+START WITH 1 INCREMENT BY 1 ;
+
+create table SV04 (
+  seq number not null,
+  seq01 number not null,
+  text varchar2(200) not null,
+  userid varchar2(20) not null,
+  regdate varchar2(20) not null,
+  good number(4) default 0 not null,
+  parents number default 0
+);
+
+alter table SV04
+add constraint SV04 primary key(seq);
+
+alter table SV04
+add constraint fk_SV04 foreign key(seq01) references SV04(seq) on delete cascade;
+
+CREATE index idx_SV04_1
+on SV04(seq01, parents, seq);
+
 CREATE table SE01(
 erroruri varchar2(30) not null,
 errortime varchar2(20) not null,

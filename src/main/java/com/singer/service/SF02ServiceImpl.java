@@ -35,6 +35,7 @@ public class SF02ServiceImpl implements SF02Service {
 		return sf02Dao.likeSF02Vo(sf02Vo);
 	}
 
+	@Transactional
 	@Override
 	public List<SF02Vo> selectSF02Vo(SF02Vo sf02Vo, String userid) throws Exception {
 

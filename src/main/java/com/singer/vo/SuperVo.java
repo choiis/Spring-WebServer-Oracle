@@ -18,21 +18,6 @@ public class SuperVo {
 		this.rowPerPage = Constants.ROW_PER_PAGE;
 	}
 
-	protected SuperVo(String adminyn, boolean deleteYn, String showDate, int totCnt, int startRownum, int endRownum,
-			int nowPage, int rowPerPage, int result, int like) {
-		super();
-		this.adminyn = adminyn;
-		this.deleteYn = deleteYn;
-		this.showDate = showDate;
-		this.totCnt = totCnt;
-		this.startRownum = startRownum;
-		this.endRownum = endRownum;
-		this.nowPage = nowPage;
-		this.rowPerPage = Constants.ROW_PER_PAGE;
-		this.result = result;
-		this.like = like;
-	}
-
 	public String getAdminyn() {
 		return adminyn;
 	}

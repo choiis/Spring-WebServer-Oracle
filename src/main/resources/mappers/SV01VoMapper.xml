@@ -50,6 +50,11 @@
 		<select id="select" resultType="com.singer.vo.SV01Vo"  parameterType="com.singer.vo.SV01Vo">
 				<![CDATA[
 			select T.*,
+				(select count(*) 
+        			from SV04 s
+        			where T.seq = s.seq01
+        			and s.parents = 0
+      			) as reply,
   				(select count(*) 
         			from SV03 s3
         			where T.seq = s3.seq

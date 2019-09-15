@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	도메인마다 namespace 를 구현하고
+	각각의 crud 에 대한 id 설정 후 쿼리 작성
+-->
+
+<mapper namespace="com.singer.mappers.SV04">		
+		<insert id="insert"  parameterType="com.singer.vo.SV04Vo">
+			insert into SV04 (seq, seq01, parents, text, userid, regdate)
+			values (SEQ_SV04.NEXTVAL, #{seq01}, #{parents}, #{text}, #{userid}, #{regdate}) 
+		</insert>
+		
+		<update id="update" parameterType="com.singer.vo.SV04Vo">
+			update SV04 
+			set text = #{text}
+			where seq = #{seq}
+			and seq01 = #{seq01}
+		</update>
+		
+		<update id="like" parameterType="com.singer.vo.SV04Vo">
+			update SV04 
+			set good = (select good from SV04 where seq = #{seq}) + 1
+			where seq = #{seq}
+		</update>
+		
+		<update id="hate" parameterType="com.singer.vo.SV04Vo">
+			update SV04 
+			set good = (select good from SV04 where seq = #{seq}) - 1
+			where seq = #{seq}
+		</update>
+		
+		<select id="select" resultType="com.singer.vo.SV04Vo"  parameterType="com.singer.vo.SV04Vo">
+			<![CDATA[
+			select T.*
+				,(select count(*) 
+        			from SV04 s2
+        			where s2.seq01 = T.seq01
+        			and s2.parents = T.seq
+      			) as reply
+			from
+				(select  /*+ INDEX_DESC(SV04 IDX_SV04_1)*/
+        			rownum as rown,
+					seq as seq,
+        			seq01 as seq01,
+					text as text, 
+					userid as userid,  
+					regdate as regdate,
+					good as good
+				 from SV04 
+ 				where seq01 = #{seq01}
+					and parents = 0
+					and rownum <= #{endRownum}
+    			) T
+    		where T.rown >= #{startRownum}
+    		]]>
+		</select>
+		
+		<select id="selectReply" resultType="com.singer.vo.SV04Vo"  parameterType="com.singer.vo.SV04Vo">
+			<![CDATA[
+				select  /*+ INDEX_DESC(SV04 IDX_SV04_1)*/
+        			rownum as rown,
+					seq as seq,
+        			seq01 as seq01,
+					text as text, 
+					userid as userid,  
+					regdate as regdate,
+					good as good
+				 from SV04 
+ 				where seq01 = #{seq01}	
+					and parents = #{parents}
+			]]>
+		</select>
+		
+		<select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.singer.vo.SV04Vo">
+			<![CDATA[
+ 			select  /*+ INDEX_FFS(SV04 IDX_SV04_1)*/
+ 				count(*) as totCnt
+  				from SV04 
+  				where seq01 = #{seq01}
+  				and parents = 0
+  			]]>
+		</select>
+		
+		<delete id="delete" parameterType="com.singer.vo.SV04Vo">
+			delete from SV04
+			where seq = #{seq}
+			and seq01 = #{seq01}
+		</delete>
+		
+		<delete id="delete_seq01" parameterType="com.singer.vo.SV04Vo">
+			delete from SV04
+			where seq01 = #{seq01}
+		</delete>
+		
+		<delete id="deleteChild" parameterType="com.singer.vo.SV04Vo">
+			delete from SV04
+			where seq01 = #{seq01}
+			and parents = #{parents}
+		</delete>
+</mapper>

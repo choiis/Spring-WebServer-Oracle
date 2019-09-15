@@ -35,6 +35,7 @@ public class SB02ServiceImpl implements SB02Service {
 		return sb02Dao.likeSB02Vo(sb02Vo);
 	}
 
+	@Transactional
 	@Override
 	public List<SB02Vo> selectSB02Vo(SB02Vo sb02Vo, String userid) throws Exception {
 		if (sb02Vo.getNowPage() == 1) { // 첫페이지 요청시 Total알아야한다
