@@ -56,15 +56,14 @@ public class CommController {
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 
+	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@RequestMapping(value = "/commMenu", method = RequestMethod.GET)
-	public ResponseEntity<CommVo> toSelectMenu(@ModelAttribute CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toSelectMenu(HttpSession session) throws Exception {
+		CommVo commVo = new CommVo();
 
-		log.debug("CommVo : " + commVo);
-
-		String authlevel = (String) session.getAttribute("usertype");
-		List<CommVo> list = commService.selectMenu(commVo, authlevel);
-		commVo.setCommList(list);
+		List<CommVo> menuList = (List<CommVo>) session.getAttribute("menuList");
+		commVo.setCommList(menuList);
 
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}

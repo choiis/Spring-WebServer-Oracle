@@ -23,9 +23,10 @@ public class CommServiceImpl implements CommService {
 	}
 
 	@Override
-	public List<CommVo> selectMenu(CommVo vo, String authlevel) throws Exception {
-		vo.setAuthlevel(authlevel);
-		return commDao.selectMenu(vo);
+	public List<CommVo> selectMenu(String authlevel) throws Exception {
+		CommVo commVo = new CommVo();
+		commVo.setAuthlevel(authlevel);
+		return commDao.selectMenu(commVo);
 	}
 
 	@Transactional

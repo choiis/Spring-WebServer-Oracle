@@ -1,6 +1,7 @@
 package com.singer.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
+import com.singer.service.CommService;
 import com.singer.service.SL01Service;
 import com.singer.service.SM01Service;
+import com.singer.vo.CommVo;
 import com.singer.vo.SL01Vo;
 import com.singer.vo.SM01Vo;
 
@@ -32,6 +35,9 @@ public class LoginController {
 
 	@Resource(name = "sl01Service")
 	private SL01Service sl01Service;
+
+	@Resource(name = "commService")
+	private CommService commService;
 
 	@RequestMapping(value = "/logout")
 	public ModelAndView logout(HttpSession session) throws Exception {
@@ -47,6 +53,7 @@ public class LoginController {
 		session.removeAttribute("phone");
 		session.removeAttribute("email");
 		session.removeAttribute("usertype");
+		session.removeAttribute("menuList");
 
 		model.addObject("message", "로그아웃!");
 
@@ -82,6 +89,9 @@ public class LoginController {
 			session.setAttribute("email", one.getEmail());
 			session.setAttribute("usertype", one.getUsertype());
 
+			List<CommVo> menuList = commService.selectMenu(one.getUsertype());
+			session.setAttribute("menuList", menuList);
+
 			SL01Vo sl01Vo = new SL01Vo();
 			sl01Vo.setUserid(userId);
 			sl01Vo.setLogintime(DateUtil.getTodayTime());
@@ -100,7 +110,6 @@ public class LoginController {
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView goMain() throws Exception {
 		ModelAndView model = new ModelAndView("/main");
-
 
 		return model;
 	}
