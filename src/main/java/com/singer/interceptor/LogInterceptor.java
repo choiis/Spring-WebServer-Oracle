@@ -18,13 +18,11 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-	//	HttpSession session = request.getSession();
-	//	String userid = (String) session.getAttribute("userid");
-		log.debug("===================== postHandle =========================");
+		// HttpSession session = request.getSession();
+		// String userid = (String) session.getAttribute("userid");
 		String uri = request.getRequestURI();
-		if (!uri.contains("/commCode") && !"/commMenu".equals(uri)
-				&& !"/commCodeGrp".equals(uri) && !"/sessionExpire".equals(uri)
-				&& !"/main".equals(uri)) {
+		if (!uri.contains("/commCode") && !"/commMenu".equals(uri) && !"/commCodeGrp".equals(uri)
+				&& !"/sessionExpire".equals(uri) && !"/main".equals(uri)) {
 //			
 //			log.debug("addr  : " + request.getRemoteAddr());
 //			log.debug("host  : " + request.getRemoteHost());
