@@ -411,7 +411,7 @@ alter table SV04
 add constraint SV04 primary key(seq);
 
 alter table SV04
-add constraint fk_SV04 foreign key(seq01) references SV04(seq) on delete cascade;
+add constraint fk_SV04 foreign key(seq01) references SV01(seq) on delete cascade;
 
 CREATE index idx_SV04_1
 on SV04(seq01, parents, seq);
