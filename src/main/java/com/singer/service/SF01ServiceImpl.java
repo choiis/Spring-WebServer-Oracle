@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,7 @@ public class SF01ServiceImpl implements SF01Service {
 	@Resource(name = "sf02Dao")
 	private SF02Dao sf02Dao;
 
-	@Resource(name = "ftpUtil")
+	@Inject
 	FTPUtil ftp;
 
 	@Transactional

@@ -1,4 +1,4 @@
-package com.singer.util;
+package com.singer.batch;
 
 import java.io.File;
 import java.io.IOException;

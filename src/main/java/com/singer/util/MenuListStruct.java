@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.singer.dao.CommDao;
 import com.singer.vo.CommVo;
 
-@Component
+@Component("menuListStruct")
 public class MenuListStruct {
 
 	private final Log log = LogFactory.getLog(MenuListStruct.class);

@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,7 +32,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	@Resource(name = "commDao")
 	private CommDao commDao;
 
-	@Resource
+	@Inject
 	private MenuListStruct menuListStruct;
 
 	@Override

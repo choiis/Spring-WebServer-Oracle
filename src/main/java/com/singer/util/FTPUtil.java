@@ -18,7 +18,7 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-@Component
+@Component("ftpUtil")
 public class FTPUtil {
 
 	private final Log log = LogFactory.getLog(FTPUtil.class);
