@@ -3,8 +3,7 @@ package com.singer.redis;
 import java.util.Set;
 import java.util.Vector;
 import java.util.stream.Stream;
-
-import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,8 +16,8 @@ import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Repository;
 
 import com.singer.common.DateUtil;
-import com.singer.dao.ErrorDao;
-import com.singer.vo.ErrorVo;
+import com.singer.kafka.Producer;
+import com.singer.util.InputQueryUtil;
 import com.singer.vo.SortedSetVo;
 
 @Repository("redisDao")
@@ -29,16 +28,20 @@ public class RedisDao {
 	@Autowired
 	RedisTemplate<String, Object> redisTemplate;
 
-	@Resource(name = "errorDao")
-	private ErrorDao errorDao;
+	@Inject
+	private Producer producer;
 
 	public void zSet(String key, String value, double score) {
 		try {
 			ZSetOperations<String, Object> zsetOp = redisTemplate.opsForZSet();
 			zsetOp.add(key, value, score);
 		} catch (RedisConnectionFailureException e) {
-			ErrorVo errorVo = new ErrorVo(value, DateUtil.getTodayTime(), "zSet");
-			errorDao.insertError(errorVo);
+			InputQueryUtil queryUtil = new InputQueryUtil("SE01");
+			queryUtil.add(value);
+			queryUtil.add(DateUtil.getTodayTime());
+			queryUtil.add("zSet");
+
+			producer.send(queryUtil.getQuery());
 		}
 	}
 
@@ -47,8 +50,12 @@ public class RedisDao {
 			ZSetOperations<String, Object> zsetOp = redisTemplate.opsForZSet();
 			zsetOp.incrementScore(key, value, 1);
 		} catch (RedisConnectionFailureException e) {
-			ErrorVo errorVo = new ErrorVo(value, DateUtil.getTodayTime(), "zSetIncre");
-			errorDao.insertError(errorVo);
+			InputQueryUtil queryUtil = new InputQueryUtil("SE01");
+			queryUtil.add(value);
+			queryUtil.add(DateUtil.getTodayTime());
+			queryUtil.add("zSetIncre");
+
+			producer.send(queryUtil.getQuery());
 		}
 	}
 
@@ -60,8 +67,13 @@ public class RedisDao {
 			// Hash구조에 Key는 날짜 field는 화면명
 			hashOp.increment(key, field, 1);
 		} catch (RedisConnectionFailureException e) {
-			ErrorVo errorVo = new ErrorVo(field, DateUtil.getTodayTime(), "hmSetIncre");
-			errorDao.insertError(errorVo);
+
+			InputQueryUtil queryUtil = new InputQueryUtil("SE01");
+			queryUtil.add(field);
+			queryUtil.add(DateUtil.getTodayTime());
+			queryUtil.add("hmSetIncre");
+
+			producer.send(queryUtil.getQuery());
 		}
 	}
 
@@ -73,8 +85,12 @@ public class RedisDao {
 			// Hash구조에 Key는 날짜 field는 화면명
 			hashOp.put(key, field, number);
 		} catch (RedisConnectionFailureException e) {
-			ErrorVo errorVo = new ErrorVo(field, DateUtil.getTodayTime(), "hmSet");
-			errorDao.insertError(errorVo);
+			InputQueryUtil queryUtil = new InputQueryUtil("SE01");
+			queryUtil.add(field);
+			queryUtil.add(DateUtil.getTodayTime());
+			queryUtil.add("hmSet");
+
+			producer.send(queryUtil.getQuery());
 		}
 	}
 

@@ -307,7 +307,22 @@
 		            <artifactId>jedis</artifactId>
 		        	<version>2.8.0</version>
 		        </dependency>
-				
+				<!-- kafka -->
+				 <dependency>
+    				<groupId>org.apache.kafka</groupId>
+    				<artifactId>kafka-clients</artifactId>
+    				<version>1.1.0</version>
+				</dependency>
+				<dependency>
+    				<groupId>org.apache.kafka</groupId>
+    				<artifactId>kafka-streams</artifactId>
+    				<version>1.1.0</version>
+				</dependency>
+				<dependency>
+    				<groupId>org.apache.kafka</groupId>
+    				<artifactId>kafka_2.11</artifactId>
+    				<version>0.8.2.1</version>
+				</dependency>
 				<!-- Java Mail API -->
  				<dependency>
      				<groupId>javax.mail</groupId>

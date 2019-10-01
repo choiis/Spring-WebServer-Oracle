@@ -27,6 +27,15 @@
   	</property>
 	</bean>
 	
+	<bean id="kafkaProperties"
+      class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	  <property name="locations">
+ 	   <list>
+    	  <value>classpath:/conf/property/kafka.properties</value>
+    	</list>
+  	</property>
+	</bean>
+	
 	<bean name="ftpUtil" class="com.singer.util.FTPUtil" />
 
 
