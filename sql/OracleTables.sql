@@ -95,17 +95,6 @@ insert into CODE values('04','티켓','P002','admin','20180901');
 insert into CODE values('05','파일','P002','admin','20180901');
 insert into CODE values('06','기타','P002','admin','20180901');
 
-CREATE table SL01(
-userid varchar2(10) not null,
-logintime varchar2(20) not null,
-browser varchar2(20) not null,
-device varchar2(20) not null,
-ip varchar2(30)
-);
-
-alter table SL01
-add constraint pk_SL01 primary key(logintime,userid);
-
 CREATE SEQUENCE seq_SM02
 START WITH 1 INCREMENT BY 1 ;
 
@@ -416,8 +405,3 @@ add constraint fk_SV04 foreign key(seq01) references SV01(seq) on delete cascade
 CREATE index idx_SV04_1
 on SV04(seq01, parents, seq);
 
-CREATE table SE01(
-erroruri varchar2(30) not null,
-errortime varchar2(20) not null,
-errormsg varchar2(300) not null
-);

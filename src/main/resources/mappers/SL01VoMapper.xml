@@ -16,7 +16,7 @@
 			device as device,
 			ip as ip,
 			count(*) over() as totCnt
-		 from SL01 
+		 from log_login 
 		 where 1 = 1
 		 	 <if test="userid != null">
 			 	and userid like #{userid} || '%'
@@ -39,7 +39,7 @@
   			from
 		(select count(*) as lcnt,
  		   userid
-  		  from SL01 
+  		  from log_login 
   		  where logintime <![CDATA[>]]> #{logintime}
   		  group by userid
   		  order by lcnt desc
@@ -49,7 +49,7 @@
 	</select>	
 		
 	<insert id="insertSL01"  parameterType="com.singer.vo.SL01Vo">
-	insert into SL01
+	insert into log_login
 	values (#{userid}, #{logintime}, #{browser}, #{device}, #{ip} ) 
 	</insert>
 

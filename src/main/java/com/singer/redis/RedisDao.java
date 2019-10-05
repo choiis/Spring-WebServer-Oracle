@@ -36,7 +36,7 @@ public class RedisDao {
 			ZSetOperations<String, Object> zsetOp = redisTemplate.opsForZSet();
 			zsetOp.add(key, value, score);
 		} catch (RedisConnectionFailureException e) {
-			InputQueryUtil queryUtil = new InputQueryUtil("SE01");
+			InputQueryUtil queryUtil = new InputQueryUtil("log_error");
 			queryUtil.add(value);
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add("zSet");
@@ -50,7 +50,7 @@ public class RedisDao {
 			ZSetOperations<String, Object> zsetOp = redisTemplate.opsForZSet();
 			zsetOp.incrementScore(key, value, 1);
 		} catch (RedisConnectionFailureException e) {
-			InputQueryUtil queryUtil = new InputQueryUtil("SE01");
+			InputQueryUtil queryUtil = new InputQueryUtil("log_error");
 			queryUtil.add(value);
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add("zSetIncre");
@@ -68,7 +68,7 @@ public class RedisDao {
 			hashOp.increment(key, field, 1);
 		} catch (RedisConnectionFailureException e) {
 
-			InputQueryUtil queryUtil = new InputQueryUtil("SE01");
+			InputQueryUtil queryUtil = new InputQueryUtil("log_error");
 			queryUtil.add(field);
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add("hmSetIncre");
@@ -85,7 +85,7 @@ public class RedisDao {
 			// Hash구조에 Key는 날짜 field는 화면명
 			hashOp.put(key, field, number);
 		} catch (RedisConnectionFailureException e) {
-			InputQueryUtil queryUtil = new InputQueryUtil("SE01");
+			InputQueryUtil queryUtil = new InputQueryUtil("log_error");
 			queryUtil.add(field);
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add("hmSet");
