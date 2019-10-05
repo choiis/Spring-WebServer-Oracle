@@ -20,9 +20,4 @@ public class SL01ServiceImpl implements SL01Service {
 		return sl01Dao.selectSL01(sl01Vo);
 	}
 
-	@Override
-	public int insertSL01(SL01Vo sl01Vo) throws Exception {
-		return sl01Dao.insertSL01(sl01Vo);
-	}
-
 }

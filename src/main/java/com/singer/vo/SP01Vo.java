@@ -6,12 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.singer.common.CommonUtil;
 
-public class SP01Vo extends SuperVo {
-	private int seq;
-	private String title;
-	private String text;
-	private String userid;
-	private String regdate;
+public class SP01Vo extends BoardVo {
+
 	private String state;
 	private String ptype;
 	private int hit;
@@ -31,71 +27,6 @@ public class SP01Vo extends SuperVo {
 
 	public SP01Vo() {
 		super();
-	}
-
-	public SP01Vo(int seq, String title, String text, String userid, String regdate, String state, String ptype,
-			int hit, int good, MultipartFile explain, int reply, int selection, String findText, String registerid,
-			String sessionid, String datelog, String goodlog, String hatelog, List<SP01Vo> list) {
-		super();
-		this.seq = seq;
-		this.title = title;
-		this.text = text;
-		this.userid = userid;
-		this.regdate = regdate;
-		this.state = state;
-		this.ptype = ptype;
-		this.hit = hit;
-		this.good = good;
-		this.explain = explain;
-		this.reply = reply;
-		this.selection = selection;
-		this.findText = findText;
-		this.registerid = registerid;
-		this.sessionid = sessionid;
-		this.datelog = datelog;
-		this.goodlog = goodlog;
-		this.hatelog = hatelog;
-		this.list = list;
-	}
-
-	public int getSeq() {
-		return seq;
-	}
-
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
-	public String getRegdate() {
-		return regdate;
-	}
-
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
 	}
 
 	public String getState() {
@@ -214,15 +145,6 @@ public class SP01Vo extends SuperVo {
 		} else {
 			super.setTotCnt(0);
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "SP01Vo [seq=" + seq + ", title=" + title + ", text=" + text + ", userid=" + userid + ", regdate="
-				+ regdate + ", state=" + state + ", ptype=" + ptype + ", hit=" + hit + ", good=" + good + ", explain="
-				+ explain + ", reply=" + reply + ", selection=" + selection + ", findText=" + findText + ", registerid="
-				+ registerid + ", sessionid=" + sessionid + ", datelog=" + datelog + ", goodlog=" + goodlog
-				+ ", hatelog=" + hatelog + ", list=" + list + "]";
 	}
 
 }

@@ -4,12 +4,8 @@ import java.util.List;
 
 import com.singer.common.CommonUtil;
 
-public class SV01Vo extends SuperVo {
-	private int seq;
-	private String title;
-	private String text;
-	private String userid;
-	private String regdate;
+public class SV01Vo extends BoardVo {
+
 	private int hit;
 	private int recall;
 	private int votedCnt;
@@ -29,67 +25,6 @@ public class SV01Vo extends SuperVo {
 
 	public SV01Vo() {
 		super();
-	}
-
-	public SV01Vo(int seq, String title, String text, String userid, String regdate, int hit, int recall, int votedCnt,
-			int reply, String findText, String sessionid, int multiselect, List<SV01Vo> list, List<SV02Vo> sv02Vos,
-			int votedYn) {
-		super();
-		this.seq = seq;
-		this.title = title;
-		this.text = text;
-		this.userid = userid;
-		this.regdate = regdate;
-		this.hit = hit;
-		this.recall = recall;
-		this.votedCnt = votedCnt;
-		this.reply = reply;
-		this.findText = findText;
-		this.sessionid = sessionid;
-		this.multiselect = multiselect;
-		this.list = list;
-		this.sv02Vos = sv02Vos;
-		this.votedYn = votedYn;
-	}
-
-	public int getSeq() {
-		return seq;
-	}
-
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
-	public String getRegdate() {
-		return regdate;
-	}
-
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
 	}
 
 	public int getHit() {
@@ -176,14 +111,6 @@ public class SV01Vo extends SuperVo {
 
 	public void setReply(int reply) {
 		this.reply = reply;
-	}
-
-	@Override
-	public String toString() {
-		return "SV01Vo [seq=" + seq + ", title=" + title + ", text=" + text + ", userid=" + userid + ", regdate="
-				+ regdate + ", hit=" + hit + ", recall=" + recall + ", votedCnt=" + votedCnt + ", reply=" + reply
-				+ ", findText=" + findText + ", sessionid=" + sessionid + ", multiselect=" + multiselect + ", list="
-				+ list + ", sv02Vos=" + sv02Vos + ", votedYn=" + votedYn + "]";
 	}
 
 }

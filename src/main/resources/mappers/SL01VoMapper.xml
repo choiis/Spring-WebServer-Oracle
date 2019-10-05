@@ -47,10 +47,5 @@
 		inner join SM01 SM
 		on (SL.userid = SM.userid)
 	</select>	
-		
-	<insert id="insertSL01"  parameterType="com.singer.vo.SL01Vo">
-	insert into log_login
-	values (#{userid}, #{logintime}, #{browser}, #{device}, #{ip} ) 
-	</insert>
 
 </mapper>

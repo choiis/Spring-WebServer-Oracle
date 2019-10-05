@@ -32,13 +32,13 @@ boardnumber varchar2(5) not null
 CREATE index idx_log_click_board_1
 on log_click_board(logtime);
 
-
-CREATE table log_click_reply (
+CREATE table log_click_goods (
 logtime varchar2(20) not null,
 sessionid varchar2(10) not null,
-replytype varchar2(5) not null,
-replynumber varchar2(5) not null
+seqtype varchar2(5) not null,
+seqnumber varchar2(5) not NULL,
+likehate varchar2(5) not NULL
 );
 
-CREATE index idx_log_click_reply_1
-on log_click_reply(logtime);
+CREATE index idx_log_click_goods_1
+on log_click_goods(logtime);

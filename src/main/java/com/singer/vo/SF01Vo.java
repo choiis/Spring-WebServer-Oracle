@@ -4,12 +4,8 @@ import java.util.List;
 
 import com.singer.common.CommonUtil;
 
-public class SF01Vo extends SuperVo {
-	private int seq;
-	private String title;
-	private String text;
-	private String userid;
-	private String regdate;
+public class SF01Vo extends BoardVo {
+
 	private int hit;
 	private int good;
 	private String filename;
@@ -27,69 +23,6 @@ public class SF01Vo extends SuperVo {
 
 	public SF01Vo() {
 		super();
-	}
-
-	public SF01Vo(int seq, String title, String text, String userid, String regdate, int hit, int good, String filename,
-			String ftpfilename, int reply, int selection, String findText, String sessionid, String datelog,
-			String goodlog, String hatelog, List<SF01Vo> list) {
-		super();
-		this.seq = seq;
-		this.title = title;
-		this.text = text;
-		this.userid = userid;
-		this.regdate = regdate;
-		this.hit = hit;
-		this.good = good;
-		this.filename = filename;
-		this.ftpfilename = ftpfilename;
-		this.reply = reply;
-		this.selection = selection;
-		this.findText = findText;
-		this.sessionid = sessionid;
-		this.datelog = datelog;
-		this.goodlog = goodlog;
-		this.hatelog = hatelog;
-		this.list = list;
-	}
-
-	public int getSeq() {
-		return seq;
-	}
-
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
-	public String getRegdate() {
-		return regdate;
-	}
-
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
 	}
 
 	public int getHit() {
@@ -192,15 +125,6 @@ public class SF01Vo extends SuperVo {
 		} else {
 			super.setTotCnt(0);
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "SF01Vo [seq=" + seq + ", title=" + title + ", text=" + text + ", userid=" + userid + ", regdate="
-				+ regdate + ", hit=" + hit + ", good=" + good + ", filename=" + filename + ", ftpfilename="
-				+ ftpfilename + ", reply=" + reply + ", selection=" + selection + ", findText=" + findText
-				+ ", sessionid=" + sessionid + ", datelog=" + datelog + ", goodlog=" + goodlog + ", hatelog=" + hatelog
-				+ ", list=" + list + "]";
 	}
 
 }

@@ -4,12 +4,8 @@ import java.util.List;
 
 import com.singer.common.CommonUtil;
 
-public class SB01Vo extends SuperVo {
-	private int seq;
-	private String title;
-	private String text;
-	private String userid;
-	private String regdate;
+public class SB01Vo extends BoardVo {
+
 	private int hit;
 	private int good;
 	private String video;
@@ -26,46 +22,6 @@ public class SB01Vo extends SuperVo {
 
 	public SB01Vo() {
 		super();
-	}
-
-	public int getSeq() {
-		return seq;
-	}
-
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
-	public String getRegdate() {
-		return regdate;
-	}
-
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
 	}
 
 	public int getHit() {
@@ -160,14 +116,6 @@ public class SB01Vo extends SuperVo {
 		} else {
 			super.setTotCnt(0);
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "SB01Vo [seq=" + seq + ", title=" + title + ", text=" + text + ", userid=" + userid + ", regdate="
-				+ regdate + ", hit=" + hit + ", good=" + good + ", video=" + video + ", reply=" + reply + ", selection="
-				+ selection + ", findText=" + findText + ", sessionid=" + sessionid + ", datelog=" + datelog
-				+ ", goodlog=" + goodlog + ", hatelog=" + hatelog + ", list=" + list + "]";
 	}
 
 }

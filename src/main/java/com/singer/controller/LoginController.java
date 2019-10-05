@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,11 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
+import com.singer.kafka.Producer;
 import com.singer.service.CommService;
-import com.singer.service.SL01Service;
 import com.singer.service.SM01Service;
+import com.singer.util.InputQueryUtil;
 import com.singer.vo.CommVo;
-import com.singer.vo.SL01Vo;
 import com.singer.vo.SM01Vo;
 
 @Controller("loginController")
@@ -33,8 +34,8 @@ public class LoginController {
 	@Resource(name = "sm01Service")
 	private SM01Service sm01Service;
 
-	@Resource(name = "sl01Service")
-	private SL01Service sl01Service;
+	@Inject
+	private Producer producer;
 
 	@Resource(name = "commService")
 	private CommService commService;
@@ -92,13 +93,15 @@ public class LoginController {
 			List<CommVo> menuList = commService.selectMenu(one.getUsertype());
 			session.setAttribute("menuList", menuList);
 
-			SL01Vo sl01Vo = new SL01Vo();
-			sl01Vo.setUserid(userId);
-			sl01Vo.setLogintime(DateUtil.getTodayTime());
-			sl01Vo.setIp(request.getRemoteAddr());
-			sl01Vo.setBrowser(sm01Vo.getBrowser());
-			sl01Vo.setDevice(sm01Vo.getDevice());
-			sl01Service.insertSL01(sl01Vo);
+			InputQueryUtil queryUtil = new InputQueryUtil("log_login");
+			queryUtil.add(userId);
+			queryUtil.add(DateUtil.getTodayTime());
+			queryUtil.add(sm01Vo.getBrowser());
+			queryUtil.add(sm01Vo.getDevice());
+			queryUtil.add(request.getRemoteAddr());
+
+			producer.send(queryUtil.getQuery());
+
 			hashMap.put("code", Constants.SUCCESS_CODE);
 
 			log.debug("code : " + Constants.SUCCESS_CODE);
