@@ -91,7 +91,7 @@ public class SP01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01/{seq}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sp01/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SP01Vo> selectSP01Vo(@ModelAttribute SP01Vo sp01Vo, HttpSession session) throws Exception {
 
 		log.debug("SP01Vo : " + sp01Vo);
@@ -102,7 +102,7 @@ public class SP01Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sp01My/{seq}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sp01My/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SP01Vo> selectMyListSP01Vo(@ModelAttribute SP01Vo sp01Vo, HttpSession session)
 			throws Exception {
 

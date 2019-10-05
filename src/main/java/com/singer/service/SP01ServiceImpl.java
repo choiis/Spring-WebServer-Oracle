@@ -35,19 +35,12 @@ public class SP01ServiceImpl implements SP01Service {
 	@Override
 	public List<SP01Vo> selectSP01Vo(SP01Vo sp01Vo) throws Exception {
 
-		int nowPage = sp01Vo.getNowPage();
-		sp01Vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE);
-		sp01Vo.setEndRownum(nowPage * Constants.ROW_PER_PAGE);
-
 		return sp01Dao.selectSP01Vo(sp01Vo);
 	}
 
 	@Override
 	public List<SP01Vo> selectMyList(SP01Vo sp01Vo, String userid) throws Exception {
-		int nowPage = sp01Vo.getNowPage();
 		sp01Vo.setUserid(userid);
-		sp01Vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE);
-		sp01Vo.setEndRownum(nowPage * Constants.ROW_PER_PAGE);
 
 		return sp01Dao.selectMyListSP01Vo(sp01Vo);
 	}
