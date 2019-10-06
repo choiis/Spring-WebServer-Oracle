@@ -32,6 +32,20 @@
 			insertSV04();
 		});
 		
+		// 좋아요 버튼을 클릭할때 이벤트 발생
+		$("#button_like").on("click", function(e) {
+			if(confirm("좋아요 할까요?")) {
+				like_sv01();
+			}
+		});
+		
+		// 싫어요 버튼을 클릭할때 이벤트 발생
+		$("#button_hate").on("click", function(e) {
+			if(confirm("싫어요 할까요?")) {
+				hate_sv01();
+			}
+		});
+		
 		// 삭제 버튼을 클릭할때 이벤트 발생
 		$("#button_vote").on("click", function(e) {
 			if(!Pre_Save()) {
@@ -135,7 +149,15 @@
 			$("#text").text(data.text);
 			$("#hits").text(data.hit);
 			$("#multiselect").val(data.multiselect);
+			$("#good").text(data.good);
 
+			if(data.hatelog === "Y") {
+				$("#button_hate").attr("disabled" , true);
+			}
+			if(data.goodlog === "Y") {
+				$("#button_like").attr("disabled" , true);
+			}
+			
 			var html = "";
 			if(data.votedYn == 0 ) { // 투표안함
 				if(data.multiselect == 0) { // 단일선택
@@ -356,6 +378,27 @@
 			}
 		});
 	};
+	
+	function like_sv01() {
+		
+		gfn_ajaxRest("sv01like/" + parseInt($("#seq").val()), "PUT", function(data) {
+			if(data.result == 1) {
+				$("#good").text(data.like);
+				$("#button_like").attr('disabled', true);
+			
+			}
+		});
+	};
+	
+	function hate_sv01() {
+		
+		gfn_ajaxRest("sv01hate/" + parseInt($("#seq").val()), "PUT" , function(data) {
+			if(data.result == 1) {
+				$("#good").text(data.like);
+				$("#button_hate").attr('disabled', true);
+			}
+		});
+	};
 </script>
  <jsp:include page="banner.jsp" /> 
 	<header>
@@ -377,6 +420,10 @@
 			<div>제목 :<span id="title"></span></div>
 			<div>내용 :<span id="text"></span></div>
 			<div>조회수 :<span id="hits"></span></div>
+			<div>좋아요 :<span id="good"></span></div>
+			
+			<input id="button_like" type="button" value="좋아요">
+			<input id="button_hate" type="button" value="싫어요">
     		<div id="voteTable">
     		</div>
     	</div>

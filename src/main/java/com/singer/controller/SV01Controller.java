@@ -107,4 +107,26 @@ public class SV01Controller {
 		log.debug("exit sv01delete.do");
 		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "sv01like/{seq}", method = RequestMethod.PUT)
+	public ResponseEntity<SV01Vo> likeSV01vo(@ModelAttribute SV01Vo sv01Vo, HttpSession session) throws Exception {
+		log.debug("enter sv01like.do");
+		log.debug("sv01Vo : " + sv01Vo);
+		String sessionid = (String) session.getAttribute("userid");
+		sv01Service.likeSV01Vo(sv01Vo, sessionid);
+
+		return new ResponseEntity<>(sv01Vo, HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "sv01hate/{seq}", method = RequestMethod.PUT)
+	public ResponseEntity<SV01Vo> hateSV01vo(@ModelAttribute SV01Vo sv01Vo, HttpSession session) throws Exception {
+		log.debug("enter sv01hate.do");
+		log.debug("sv01Vo : " + sv01Vo);
+		String sessionid = (String) session.getAttribute("userid");
+		sv01Service.hateSV01Vo(sv01Vo, sessionid);
+
+		return new ResponseEntity<>(sv01Vo, HttpStatus.OK);
+	}
 }

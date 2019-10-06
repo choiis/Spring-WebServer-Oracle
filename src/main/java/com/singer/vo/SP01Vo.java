@@ -10,8 +10,6 @@ public class SP01Vo extends BoardVo {
 
 	private String state;
 	private String ptype;
-	private int hit;
-	private int good;
 	private MultipartFile explain;
 	private int reply;
 	private int selection;
@@ -43,22 +41,6 @@ public class SP01Vo extends BoardVo {
 
 	public void setPtype(String ptype) {
 		this.ptype = ptype;
-	}
-
-	public int getHit() {
-		return hit;
-	}
-
-	public void setHit(int hit) {
-		this.hit = hit;
-	}
-
-	public int getGood() {
-		return good;
-	}
-
-	public void setGood(int good) {
-		this.good = good;
 	}
 
 	public MultipartFile getExplain() {

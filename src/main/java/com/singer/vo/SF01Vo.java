@@ -6,8 +6,6 @@ import com.singer.common.CommonUtil;
 
 public class SF01Vo extends BoardVo {
 
-	private int hit;
-	private int good;
 	private String filename;
 	private String ftpfilename;
 	private int reply;
@@ -23,22 +21,6 @@ public class SF01Vo extends BoardVo {
 
 	public SF01Vo() {
 		super();
-	}
-
-	public int getHit() {
-		return hit;
-	}
-
-	public void setHit(int hit) {
-		this.hit = hit;
-	}
-
-	public int getGood() {
-		return good;
-	}
-
-	public void setGood(int good) {
-		this.good = good;
 	}
 
 	public String getFilename() {

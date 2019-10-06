@@ -97,4 +97,35 @@ public class SV01ServiceImpl implements SV01Service {
 		return sv01Dao.deleteSV01Vo(sv01Vo);
 	}
 
+	@Transactional
+	@Override
+	public SV01Vo likeSV01Vo(SV01Vo sv01Vo, String sessionid) throws Exception {
+		int like = sv01Vo.getGood() + 1;
+		sv01Dao.likeSV01Vo(sv01Vo);
+
+		sv01Vo.setSessionid(sessionid);
+		sv01Vo.setDatelog(DateUtil.getTodayTime());
+
+		sv01Dao.likelogSV01Vo(sv01Vo);
+
+		sv01Vo.setResult(Constants.SUCCESS_CODE);
+		sv01Vo.setLike(like);
+		return sv01Vo;
+	}
+
+	@Transactional
+	@Override
+	public SV01Vo hateSV01Vo(SV01Vo sv01Vo, String sessionid) throws Exception {
+		int like = sv01Vo.getGood() - 1;
+		sv01Dao.hateSV01Vo(sv01Vo);
+
+		sv01Vo.setSessionid(sessionid);
+		sv01Vo.setDatelog(DateUtil.getTodayTime());
+
+		sv01Dao.hatelogSV01Vo(sv01Vo);
+
+		sv01Vo.setResult(Constants.SUCCESS_CODE);
+		sv01Vo.setLike(like);
+		return sv01Vo;
+	}
 }

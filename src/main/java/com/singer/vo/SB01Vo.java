@@ -6,8 +6,6 @@ import com.singer.common.CommonUtil;
 
 public class SB01Vo extends BoardVo {
 
-	private int hit;
-	private int good;
 	private String video;
 	private int reply;
 	private int selection;
@@ -22,22 +20,6 @@ public class SB01Vo extends BoardVo {
 
 	public SB01Vo() {
 		super();
-	}
-
-	public int getHit() {
-		return hit;
-	}
-
-	public void setHit(int hit) {
-		this.hit = hit;
-	}
-
-	public int getGood() {
-		return good;
-	}
-
-	public void setGood(int good) {
-		this.good = good;
 	}
 
 	public String getVideo() {

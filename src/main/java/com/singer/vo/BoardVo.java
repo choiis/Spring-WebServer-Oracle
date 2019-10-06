@@ -6,6 +6,8 @@ public class BoardVo extends SuperVo {
 	private String text;
 	private String userid;
 	private String regdate;
+	private int good;
+	private int hit;
 
 	protected BoardVo() {
 
@@ -49,6 +51,22 @@ public class BoardVo extends SuperVo {
 
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+
+	public int getGood() {
+		return good;
+	}
+
+	public void setGood(int good) {
+		this.good = good;
+	}
+
+	public int getHit() {
+		return hit;
+	}
+
+	public void setHit(int hit) {
+		this.hit = hit;
 	}
 
 }

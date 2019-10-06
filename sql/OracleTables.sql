@@ -50,6 +50,7 @@ insert into MENU values('06','상품 거래','/sp01page','04','admin','20180901'
 insert into MENU values('07','투표 게시판','/sv01page','04','admin','20180901','admin','20180901');
 insert into MENU values('08','나의 메모장','/sm02page','04','admin','20180901','admin','20180901');
 
+
 CREATE table CODE_GRP (
 codegrp varchar2(5) not null,
 codegrpnm varchar2(20) not null,
@@ -341,7 +342,8 @@ create table SV01(
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
   hit number(4)  default 0 not null,
-  multiselect number  default 0 not null
+  multiselect number  default 0 not null,
+  good number(4) default 0 not null
 );
 
 alter table SV01
@@ -404,4 +406,19 @@ add constraint fk_SV04 foreign key(seq01) references SV01(seq) on delete cascade
 
 CREATE index idx_SV04_1
 on SV04(seq01, parents, seq);
+
+create table SVG1(
+  seq number not null,
+  sessionid varchar2(20) not null,
+  datelog varchar2(20) not null,
+  goodlog varchar2(3),
+  hatelog varchar2(3)
+);
+
+alter table SVG1
+add constraint pk_SVG1 primary key(seq,sessionid);
+
+alter table SVG1
+add constraint fk_svg1 foreign key(seq) references SV01(seq) on delete cascade;
+
 

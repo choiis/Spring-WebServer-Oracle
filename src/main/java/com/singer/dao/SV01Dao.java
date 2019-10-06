@@ -34,4 +34,20 @@ public class SV01Dao extends SuperDao {
 	public int deleteSV01Vo(SV01Vo sv01Vo) throws Exception {
 		return delete(namespace + ".delete", sv01Vo);
 	}
+
+	public int likeSV01Vo(SV01Vo sv01Vo) throws Exception {
+		return update(namespace + ".like", sv01Vo);
+	}
+
+	public int hateSV01Vo(SV01Vo sv01Vo) throws Exception {
+		return update(namespace + ".hate", sv01Vo);
+	}
+
+	public int likelogSV01Vo(SV01Vo sv01Vo) throws Exception {
+		return update(namespace + ".likelog", sv01Vo);
+	}
+
+	public int hatelogSV01Vo(SV01Vo sv01Vo) throws Exception {
+		return update(namespace + ".hatelog", sv01Vo);
+	}
 }

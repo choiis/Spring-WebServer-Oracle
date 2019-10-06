@@ -36,7 +36,10 @@
   			S1.userid as userid,
     		S1.regdate as regdate,
     		S1.hit as hit, 
+			S1.good as good,
    			S1.multiselect as multiselect,
+    		SL1.goodlog as goodlog,
+    		SL1.hatelog  as hatelog,
    			(select 
 				count(*) as votedYn
 				from SV03 S3
@@ -44,6 +47,13 @@
 			 and userid = #{userid}
 			 ) as votedYn
     		from SV01 S1
+    		left outer join(
+     			  select *
+       			from SVG1
+       			where seq = #{seq} and
+      			 sessionid = #{userid}
+   		 	) SL1
+   		 	on (S1.seq = SL1.seq)
     	where S1.seq = #{seq}
 		</select>
 		
@@ -72,7 +82,8 @@
 					text as text, 
 					userid as userid,  
 					regdate as regdate,
-					hit as hit
+					hit as hit, 
+					good as good
 			 	from SV01 
 				) S1 where S1.rown between 
 			#{startRownum} and #{endRownum}
@@ -85,5 +96,39 @@
 			where seq = #{seq}
 		</delete>
 		
+		<update id="like" parameterType="com.singer.vo.SV01Vo">
+			update SV01 
+			set good = (select good from SV01 where seq = #{seq}) + 1
+			where seq = #{seq}
+		</update>
 		
+		<update id="hate" parameterType="com.singer.vo.SV01Vo">
+			update SV01 
+			set good = (select good from SV01 where seq = #{seq}) - 1
+			where seq = #{seq}
+		</update>
+		
+		<update id="likelog" parameterType="com.singer.vo.SV01Vo">
+			merge into SVG1 S1
+				using dual
+				on (S1.seq = #{seq}
+				and S1.sessionid = #{sessionid})
+			when matched then
+				update set S1.datelog = #{datelog},
+  					S1.goodlog = 'Y'
+			when not matched then
+				insert (S1.seq, S1.sessionid, S1.datelog, S1.goodlog ) values(#{seq}, #{sessionid}, #{datelog} , 'Y')
+		</update>
+		
+		<update id="hatelog" parameterType="com.singer.vo.SV01Vo">
+			merge into SVG1 S1
+				using dual
+				on (S1.seq = #{seq}
+				and S1.sessionid = #{sessionid})
+			when matched then
+				update set S1.datelog = #{datelog},
+  					S1.hatelog = 'Y'
+			when not matched then
+				insert (S1.seq, S1.sessionid, S1.datelog, S1.hatelog ) values(#{seq}, #{sessionid}, #{datelog} , 'Y')
+		</update>
 </mapper>
