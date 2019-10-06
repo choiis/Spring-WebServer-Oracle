@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.singer.dao.SV02Dao;
+import com.singer.dao.SV04Dao;
 import com.singer.common.AppException;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
@@ -16,6 +17,7 @@ import com.singer.common.DateUtil;
 import com.singer.dao.SV01Dao;
 import com.singer.vo.SV01Vo;
 import com.singer.vo.SV02Vo;
+import com.singer.vo.SV04Vo;
 
 @Service("sv01Service")
 public class SV01ServiceImpl implements SV01Service {
@@ -25,6 +27,9 @@ public class SV01ServiceImpl implements SV01Service {
 
 	@Resource(name = "sv02Dao")
 	private SV02Dao sv02Dao;
+
+	@Resource(name = "sv04Dao")
+	private SV04Dao sv04Dao;
 
 	@Transactional
 	@Override
@@ -92,8 +97,15 @@ public class SV01ServiceImpl implements SV01Service {
 		return sv01Dao.updateSV01Vo(sv01Vo);
 	}
 
+	@Transactional
 	@Override
 	public int deleteSV01Vo(SV01Vo sv01Vo) throws Exception {
+
+		SV04Vo sv04Vo = new SV04Vo();
+		sv04Vo.setSeq(sv01Vo.getSeq());
+
+		sv04Dao.delete_seqSV04Vo(sv04Vo);
+
 		return sv01Dao.deleteSV01Vo(sv01Vo);
 	}
 

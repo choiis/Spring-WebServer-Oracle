@@ -91,7 +91,6 @@
 		<delete id="delete_seq01" parameterType="com.singer.vo.SB02Vo">
 			delete from SB02
 			where seq01 = #{seq01}
-			and parents = #{parents}
 		</delete>
 		
 		<delete id="deleteChild" parameterType="com.singer.vo.SB02Vo">
