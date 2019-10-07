@@ -56,7 +56,7 @@ public class SV01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv01/{nowPage}", method = RequestMethod.GET)
-	public ResponseEntity<SV01Vo> selectSV01Vo(@ModelAttribute SV01Vo sv01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV01Vo> selectSV01Vo(@ModelAttribute SV01Vo sv01Vo) throws Exception {
 
 		log.debug("enter sv01show.do");
 		log.debug("SV01Vo : " + sv01Vo);
@@ -99,7 +99,7 @@ public class SV01Controller {
 	@RequestMapping(value = "sv01/{seq}", method = RequestMethod.DELETE)
 	public ResponseEntity<SV01Vo> deleteSV01Vo(@ModelAttribute SV01Vo sv01Vo, HttpSession session) throws Exception {
 		log.debug("enter sv01delete.do");
-		log.debug("SP01Vo : " + sv01Vo);
+		log.debug("SV01Vo : " + sv01Vo);
 
 		sv01Service.deleteSV01Vo(sv01Vo);
 
@@ -116,7 +116,7 @@ public class SV01Controller {
 		String sessionid = (String) session.getAttribute("userid");
 		sv01Service.likeSV01Vo(sv01Vo, sessionid);
 
-		return new ResponseEntity<>(sv01Vo, HttpStatus.OK);
+		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
@@ -127,6 +127,6 @@ public class SV01Controller {
 		String sessionid = (String) session.getAttribute("userid");
 		sv01Service.hateSV01Vo(sv01Vo, sessionid);
 
-		return new ResponseEntity<>(sv01Vo, HttpStatus.OK);
+		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);
 	}
 }

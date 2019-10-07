@@ -80,7 +80,11 @@ public class SV01ServiceImpl implements SV01Service {
 		}
 		sv01Vo.setUserid(userid);
 		sv01Vo = sv01Dao.selectOneSV01Vo(sv01Vo);
-
+		if (sv01Vo != null) {
+			if (userid.equals(sv01Vo.getUserid())) {
+				sv01Vo.setDeleteYn(true);
+			}
+		}
 		SV02Vo sv02Vo = new SV02Vo();
 		sv02Vo.setSeq(sv01Vo.getSeq());
 		sv02Vo.setUserid(userid);

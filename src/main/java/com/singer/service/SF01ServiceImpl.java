@@ -96,9 +96,12 @@ public class SF01ServiceImpl implements SF01Service {
 		sf01Dao.clickSF01Vo(sf01vo);
 		sf01vo.setSessionid(userid);
 		sf01vo = sf01Dao.selectOneSF01Vo(sf01vo);
-		if (sf01vo.getUserid().equals(userid)) {
-			sf01vo.setDeleteYn(true);
+		if (sf01vo != null) {
+			if (userid.equals(sf01vo.getUserid())) {
+				sf01vo.setDeleteYn(true);
+			}
 		}
+
 		sf01vo.setShowDate(DateUtil.getDateFormat(sf01vo.getRegdate()));
 
 		return sf01vo;

@@ -96,8 +96,10 @@ public class SB01ServiceImpl implements SB01Service {
 		sb01Dao.clickSB01Vo(sb01Vo);
 		sb01Vo.setSessionid(userid);
 		SB01Vo sb01vo = sb01Dao.selectOneSB01Vo(sb01Vo);
-		if (sb01vo.getUserid().equals(userid)) {
-			sb01vo.setDeleteYn(true);
+		if (sb01vo != null) {
+			if (userid.equals(sb01vo.getUserid())) {
+				sb01vo.setDeleteYn(true);
+			}
 		}
 		sb01Vo.setShowDate(DateUtil.getDateFormat(sb01Vo.getRegdate()));
 

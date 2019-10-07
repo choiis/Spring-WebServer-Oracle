@@ -151,6 +151,10 @@
 			$("#multiselect").val(data.multiselect);
 			$("#good").text(data.good);
 
+			if(!data.deleteYn) {
+				$("#button_delete").hide();
+			}
+			
 			if(data.hatelog === "Y") {
 				$("#button_hate").attr("disabled" , true);
 			}
@@ -421,7 +425,7 @@
 			<div>내용 :<span id="text"></span></div>
 			<div>조회수 :<span id="hits"></span></div>
 			<div>좋아요 :<span id="good"></span></div>
-			
+			<input id="button_delete" type="button" value="삭제">
 			<input id="button_like" type="button" value="좋아요">
 			<input id="button_hate" type="button" value="싫어요">
     		<div id="voteTable">

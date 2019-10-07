@@ -43,7 +43,7 @@ public class SV04Controller {
 	@RequestMapping(value = "/sv04", method = RequestMethod.POST)
 	public ResponseEntity<SV04Vo> insertSV04Vo(SV04Vo sv04Vo, HttpSession session) throws Exception {
 
-		log.debug("enter sf02insert.do");
+		log.debug("enter sv04insert.do");
 		log.debug("SV04Vo : " + sv04Vo);
 
 		String userid = (String) session.getAttribute("userid");
@@ -56,7 +56,7 @@ public class SV04Controller {
 		sv04Vo.setList(list);
 
 		log.debug("list : " + list);
-		log.debug("exit sf02insert.do");
+		log.debug("exit sv04insert.do");
 		return new ResponseEntity<SV04Vo>(sv04Vo, HttpStatus.CREATED);
 	}
 
