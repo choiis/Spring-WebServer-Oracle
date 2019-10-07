@@ -139,10 +139,10 @@ alter table SB01
 add constraint fk_sb01 foreign key(userid) references SM01(userid) on delete cascade;
 
 CREATE index idx_SB01_1
-on SB01(title);
+on SB01(title, regdate desc);
 
 CREATE index idx_SB01_2
-on SB01(userid);
+on SB01(userid, regdate desc);
 
 create table SBV1(
   seq number not null,
@@ -214,10 +214,10 @@ alter table SF01
 add constraint fk_sf01 foreign key(userid) references SM01(userid) on delete cascade;
 
 CREATE index idx_SF01_1
-on SF01(title);
+on SF01(title , regdate desc);
 
 CREATE index idx_SF01_2
-on SF01(userid);
+on SF01(userid , regdate desc);
 
 CREATE SEQUENCE seq_SF02
 START WITH 1 INCREMENT BY 1 ;
@@ -354,10 +354,10 @@ alter table SV01
 add constraint fk_sv01 foreign key(userid) references SM01(userid) on delete cascade;
 
 CREATE index idx_SV01_1
-on SV01(title);
+on SV01(title , regdate desc);
 
 CREATE index idx_SV01_2
-on SV01(userid);
+on SV01(userid , regdate desc);
 
 create table SV02(
   seq number not null,
@@ -445,10 +445,10 @@ alter table SR01
 add constraint fk_sr01 foreign key(userid) references SM01(userid) on delete cascade;
 
 CREATE index idx_SR01_1
-on SR01(title);
+on SR01(title , regdate desc);
 
 CREATE index idx_SR01_2
-on SR01(userid);
+on SR01(userid , regdate desc);
 
 create table SR02 (
   seq number not null,
