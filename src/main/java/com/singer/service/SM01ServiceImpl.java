@@ -19,7 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.singer.common.AES256Util;
-import com.singer.common.AppException;
+import com.singer.exception.AppException;
+import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
@@ -44,14 +45,14 @@ public class SM01ServiceImpl implements SM01Service {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
 		if (CommonUtil.isNull(sm01Vo.getUserid())) {
-			throw new AppException("아이디를 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INF_1);
 		}
 		if (CommonUtil.isNull(sm01Vo.getPasswd())) {
-			throw new AppException("비밀번호를 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INF_2);
 		}
 
 		if (CommonUtil.isNull(sm01Vo.getUsername())) {
-			throw new AppException("이름을 입력해주세요");
+			throw new AppException(ExceptionMsg.EXT_MSG_INF_3);
 		}
 
 		// String pw = aes256Util.aesEncode(sm01Vo.getPasswd());
@@ -67,14 +68,14 @@ public class SM01ServiceImpl implements SM01Service {
 		MultipartFile photo = null;
 		Iterator<String> itr = request.getFileNames();
 		if (CommonUtil.isNull(itr)) {
-			throw new AppException("파일 업로드를 해주세요!");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_3);
 		}
 		while (itr.hasNext()) {
 			photo = request.getFile(itr.next());
 		}
 
 		if (!CommonUtil.chkIMGFile(photo.getOriginalFilename())) {
-			throw new AppException("사진 파일만 업로드 가능합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_4);
 		}
 
 		hashMap.put("succeed", sm01Dao.insertSM01Vo(sm01Vo));
@@ -141,11 +142,11 @@ public class SM01ServiceImpl implements SM01Service {
 	@Override
 	public SM01Vo updateSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request, String userId) throws Exception {
 		if (CommonUtil.isNull(sm01Vo.getUserid())) {
-			throw new AppException("아이디를 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INF_1);
 		}
 
 		if (CommonUtil.isNull(sm01Vo.getUsername())) {
-			throw new AppException("이름을 입력해주세요");
+			throw new AppException(ExceptionMsg.EXT_MSG_INF_3);
 		}
 
 		MultipartFile photo = null;
@@ -160,7 +161,7 @@ public class SM01ServiceImpl implements SM01Service {
 		if (!CommonUtil.isNull(photo.getSize())) {
 
 			if (!CommonUtil.chkIMGFile(photo.getOriginalFilename())) {
-				throw new AppException("사진 파일만 업로드 가능합니다");
+				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_4);
 			}
 			HashMap<String, Object> putHash = new HashMap<String, Object>();
 			putHash.put("userid", sm01Vo.getUserid());

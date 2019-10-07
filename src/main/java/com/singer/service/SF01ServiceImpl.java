@@ -12,12 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.singer.common.AppException;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
 import com.singer.dao.SF01Dao;
 import com.singer.dao.SF02Dao;
+import com.singer.exception.AppException;
+import com.singer.exception.ExceptionMsg;
 import com.singer.util.FTPUtil;
 import com.singer.vo.SF01Vo;
 import com.singer.vo.SF02Vo;
@@ -38,17 +39,17 @@ public class SF01ServiceImpl implements SF01Service {
 	public int insertSF01Vo(SF01Vo sf01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
 
 		if (CommonUtil.isNull(sf01Vo.getTitle())) {
-			throw new AppException("제목을 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
 		}
 		if (CommonUtil.isNull(sf01Vo.getText())) {
-			throw new AppException("내용을 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 
 		MultipartFile file = null;
 		Iterator<String> itr = request.getFileNames();
 
 		if (CommonUtil.isNull(itr)) {
-			throw new AppException("파일 업로드를 해주세요!");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_3);
 		}
 		sf01Vo.setUserid(userid);
 		sf01Vo.setRegdate(DateUtil.getTodayTime());

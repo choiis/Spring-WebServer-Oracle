@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.singer.common.AppException;
+import com.singer.exception.AppException;
+import com.singer.exception.ExceptionMsg;
 
 public class RequestWrapper extends HttpServletRequestWrapper {
 
@@ -42,9 +43,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 						log.info("val " + val);
 						for (int j = 0; j < blackListArray.size(); j++) {
 							String black = blackListArray.get(j);
-							
+
 							if (val.indexOf(black) != -1) {
-								throw new AppException("SQL Injection 위험이 있습니다 ");
+								throw new AppException(ExceptionMsg.EXT_MSG_SECURE_1);
 							}
 						}
 						encodedValues[i] = val;

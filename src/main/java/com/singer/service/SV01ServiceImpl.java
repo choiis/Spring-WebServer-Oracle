@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.singer.dao.SV02Dao;
 import com.singer.dao.SV04Dao;
-import com.singer.common.AppException;
+import com.singer.exception.AppException;
+import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
@@ -36,16 +37,22 @@ public class SV01ServiceImpl implements SV01Service {
 	public int insertSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
 
 		if (CommonUtil.isNull(sv01Vo.getTitle())) {
-			throw new AppException("제목을 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
 		}
 		if (CommonUtil.isNull(sv01Vo.getText())) {
-			throw new AppException("내용을 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 
 		List<SV02Vo> list = sv01Vo.getSv02Vos();
 
 		if (list.size() == 0) {
-			throw new AppException("투표항목을 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
+		} else {
+			for (int i = 0; i < list.size(); i++) {
+				if (CommonUtil.isNull(list.get(i).getContent())) {
+					throw new AppException(ExceptionMsg.EXT_MSG_INPUT_9);
+				}
+			}
 		}
 
 		String regDate = DateUtil.getTodayTime();

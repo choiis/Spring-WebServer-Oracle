@@ -8,7 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.xml.sax.SAXException;
 
-import com.singer.common.AppException;
+import com.singer.exception.AppException;
 import com.singer.util.XmlUtil;
 
 public class B2CConfig extends XmlUtil {

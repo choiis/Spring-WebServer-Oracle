@@ -1,4 +1,4 @@
-package com.singer.common;
+package com.singer.exception;
 
 public class AppException extends Exception {
 

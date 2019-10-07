@@ -1,4 +1,4 @@
-package com.singer.common;
+package com.singer.exception;
 
 import java.sql.SQLException;
 
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import com.singer.common.DateUtil;
 import com.singer.kafka.Producer;
 import com.singer.util.InputQueryUtil;
 

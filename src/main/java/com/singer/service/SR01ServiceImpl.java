@@ -11,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.singer.common.AppException;
+import com.singer.exception.AppException;
+import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
@@ -34,13 +35,13 @@ public class SR01ServiceImpl implements SR01Service {
 	@Override
 	public int insertSR01Vo(SR01Vo sr01Vo, MultipartHttpServletRequest request, String sessionid) throws Exception {
 		if (CommonUtil.isNull(sr01Vo.getTitle())) {
-			throw new AppException("제목을 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
 		}
 		if (CommonUtil.isNull(sr01Vo.getText())) {
-			throw new AppException("내용을 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 		if (CommonUtil.isNull(sr01Vo.getMarkertitle())) {
-			throw new AppException("가게명을 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_6);
 		}
 		sr01Vo.setRegdate(DateUtil.getTodayTime());
 		sr01Vo.setUserid(sessionid);

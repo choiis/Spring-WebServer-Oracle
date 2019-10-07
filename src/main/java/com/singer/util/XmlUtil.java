@@ -17,7 +17,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.singer.common.AppException;
+import com.singer.exception.AppException;
 
 public class XmlUtil {
 
@@ -55,7 +55,7 @@ public class XmlUtil {
 		}
 	}
 
-	public void parse(Object obj) throws SAXException, AppException {
+	public void parse(Object obj) throws SAXException, com.singer.exception.AppException {
 		if (obj == null) {
 			throw new AppException("DOM Parsing 대상 Object가 Null입니다");
 		}

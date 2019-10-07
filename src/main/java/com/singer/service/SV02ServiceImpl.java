@@ -8,7 +8,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.singer.common.AppException;
+import com.singer.exception.AppException;
+import com.singer.exception.ExceptionMsg;
 import com.singer.common.DateUtil;
 import com.singer.dao.SV02Dao;
 import com.singer.vo.SV02Vo;
@@ -29,7 +30,7 @@ public class SV02ServiceImpl implements SV02Service {
 	public int insertSv03Vo(SV02Vo sv02Vo, String userid) throws Exception {
 		List<SV02Vo> list = sv02Vo.getSv02Vos();
 		if (list.size() == 0) {
-			throw new AppException("투표항목을 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
 		}
 
 		String regDate = DateUtil.getTodayTime();

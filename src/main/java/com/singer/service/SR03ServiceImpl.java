@@ -7,10 +7,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.singer.common.AppException;
 import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
 import com.singer.dao.SR03Dao;
+import com.singer.exception.AppException;
+import com.singer.exception.ExceptionMsg;
 import com.singer.vo.SR03Vo;
 
 @Service("sr03Service")
@@ -22,7 +23,7 @@ public class SR03ServiceImpl implements SR03Service {
 	@Override
 	public int insertSR03Vo(SR03Vo sr03Vo) throws Exception {
 		if (CommonUtil.isNull(sr03Vo.getText())) {
-			throw new AppException("내용을 필수 입력해야 합니다");
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 		sr03Vo.setRegdate(DateUtil.getTodayTime());
 
