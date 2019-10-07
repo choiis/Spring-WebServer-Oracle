@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	도메인마다 namespace 를 구현하고
+	각각의 crud 에 대한 id 설정 후 쿼리 작성
+-->
+
+<mapper namespace="com.singer.mappers.SR02">		
+
+		<select id="selectOne" resultType="com.singer.vo.SR01Vo" parameterType="com.singer.vo.SR01Vo">	
+			select 
+	    		S2.seq as seq,
+	    		S2.userid as userid, 
+	    		S2.grade as grade,
+	    		S2.regdate as regdate
+	    		from SR02 S2
+	    	where seq = #{seq}
+			and userid = #{userid}
+		</select>
+		
+		<insert id="insert"  parameterType="com.singer.vo.SR01Vo">
+			insert into SR02 (seq, userid, grade, regdate)
+			values (#{seq}, #{userid}, #{grade}, #{regdate}) 
+		</insert>
+		
+		<delete id="delete" parameterType="com.singer.vo.SR01Vo">
+			delete from SR02
+			where seq = #{seq}
+			and userid = #{userid}
+		</delete>
+</mapper>

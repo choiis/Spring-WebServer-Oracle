@@ -1,0 +1,66 @@
+package com.singer.controller;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.singer.common.Constants;
+import com.singer.service.SR02Service;
+import com.singer.vo.SR01Vo;
+
+@Controller("sr02Controller")
+public class SR02Controller {
+	private final Log log = LogFactory.getLog(SR02Controller.class);
+
+	@Resource(name = "sr02Service")
+	private SR02Service sr02Service;
+
+	@ResponseBody
+	@RequestMapping(value = "/sr02", method = RequestMethod.POST)
+	public ResponseEntity<SR01Vo> insertSR02Vo(@RequestBody SR01Vo sr02Vo, HttpSession session) throws Exception {
+		log.debug("enter sr02insert.do");
+		log.debug("sr02Vo : " + sr02Vo);
+
+		String userid = (String) session.getAttribute("userid");
+		sr02Service.insertSR02Vo(sr02Vo, userid);
+
+		log.debug("exit sr02insert.do");
+		return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.CREATED);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "sr02/{seq}", method = RequestMethod.DELETE)
+	public ResponseEntity<SR01Vo> deleteSR02Vo(@ModelAttribute SR01Vo sr02Vo, HttpSession session) throws Exception {
+		log.debug("enter sr02delete.do");
+		log.debug("sr02Vo : " + sr02Vo);
+		String userid = (String) session.getAttribute("userid");
+		sr02Service.deleteSR02Vo(sr02Vo, userid);
+
+		sr02Vo.setResult(Constants.SUCCESS_CODE);
+		log.debug("exit sr02delete.do");
+		return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "sr02/{seq}", method = RequestMethod.GET)
+	public ResponseEntity<SR01Vo> selectOneSR02Vo(@ModelAttribute SR01Vo sr02Vo, HttpSession session) throws Exception {
+		log.debug("enter sr02selectOne.do");
+		log.debug("sr02Vo : " + sr02Vo);
+		String userid = (String) session.getAttribute("userid");
+		sr02Service.selectOneSR02Vo(sr02Vo, userid);
+
+		sr02Vo.setResult(Constants.SUCCESS_CODE);
+		log.debug("exit sr02selectOne.do");
+		return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.OK);
+	}
+}

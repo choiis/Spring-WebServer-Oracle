@@ -49,6 +49,7 @@ insert into MENU values('05','파일 게시판','/sf01page','04','admin','201809
 insert into MENU values('06','상품 거래','/sp01page','04','admin','20180901','admin','20180901');
 insert into MENU values('07','투표 게시판','/sv01page','04','admin','20180901','admin','20180901');
 insert into MENU values('08','나의 메모장','/sm02page','04','admin','20180901','admin','20180901');
+insert into MENU values('09','맛집 추천','/sr01page','04','admin','20180901','admin','20180901');
 
 
 CREATE table CODE_GRP (
@@ -421,4 +422,92 @@ add constraint pk_SVG1 primary key(seq,sessionid);
 alter table SVG1
 add constraint fk_svg1 foreign key(seq) references SV01(seq) on delete cascade;
 
+CREATE SEQUENCE seq_SR01
+START WITH 1 INCREMENT BY 1;
 
+create table SR01 (
+  seq number not null,
+  title varchar2(20) not null,
+  text varchar2(200) not null,
+  userid varchar2(20) not null,
+  regdate varchar2(20) not null,
+  hit number(4)  default 0 not null,
+  markertitle varchar2(40) not null,
+  mapx number  not NULL,
+  mapy number  not NULL,
+  good number(4) default 0 not null
+);
+
+alter table SR01
+add constraint pk_SR01 primary key(seq);
+
+alter table SR01
+add constraint fk_sr01 foreign key(userid) references SM01(userid) on delete cascade;
+
+CREATE index idx_SR01_1
+on SR01(title);
+
+CREATE index idx_SR01_2
+on SR01(userid);
+
+create table SR02 (
+  seq number not null,
+  userid varchar2(20) not null,
+  grade number(1) not null,
+  regdate varchar2(20) not null
+);
+
+alter table SR02
+add constraint pk_SR02 primary key(seq, userid);
+
+alter table SR02
+add constraint fk_sr02 foreign key(seq) references SR01(seq) on delete cascade;
+
+CREATE SEQUENCE seq_SR03
+START WITH 1 INCREMENT BY 1 ;
+
+create table SR03 (
+  seq number not null,
+  seq01 number not null,
+  text varchar2(200) not null,
+  userid varchar2(20) not null,
+  regdate varchar2(20) not null,
+  good number(4) default 0 not null,
+  parents number default 0
+);
+
+alter table SR03
+add constraint SR03 primary key(seq);
+
+alter table SR03
+add constraint fk_SR03 foreign key(seq01) references SR01(seq) on delete cascade;
+
+CREATE index idx_SR03_1
+on SR03(seq01, parents, seq);
+
+CREATE TABLE SRP1 (
+  seq number not null,
+  idx number not null,
+  regdate varchar2(8) not null,
+  photo blob not null
+);
+
+alter table SRP1
+add constraint pk_SRP1 primary key(seq,idx);
+
+alter table SRP1
+add constraint fk_SRP1 foreign key(seq) references SR01(seq) on delete cascade;
+
+create table SRG1(
+  seq number not null,
+  sessionid varchar2(20) not null,
+  datelog varchar2(20) not null,
+  goodlog varchar2(3),
+  hatelog varchar2(3)
+);
+
+alter table SRG1
+add constraint pk_SRG1 primary key(seq,sessionid);
+
+alter table SRG1
+add constraint fk_sg1 foreign key(seq) references SR01(seq) on delete cascade;
