@@ -46,10 +46,9 @@ insert into MENU values('02','공지사항','/commandpage','02','admin','2018090
 insert into MENU values('03','회원관리','/sm01page','02','admin','20180901','admin','20180901');
 insert into MENU values('04','노래 동영상','/sb01page','04','admin','20180901','admin','20180901');
 insert into MENU values('05','파일 게시판','/sf01page','04','admin','20180901','admin','20180901');
-insert into MENU values('06','상품 거래','/sp01page','04','admin','20180901','admin','20180901');
-insert into MENU values('07','투표 게시판','/sv01page','04','admin','20180901','admin','20180901');
+insert into MENU values('06','투표 게시판','/sv01page','04','admin','20180901','admin','20180901');
+insert into MENU values('07','맛집 추천','/sr01page','04','admin','20180901','admin','20180901');
 insert into MENU values('08','나의 메모장','/sm02page','04','admin','20180901','admin','20180901');
-insert into MENU values('09','맛집 추천','/sr01page','04','admin','20180901','admin','20180901');
 
 
 CREATE table CODE_GRP (
@@ -254,84 +253,6 @@ add constraint pk_SFG1 primary key(seq,sessionid);
 
 alter table SFG1
 add constraint fk_sfg1 foreign key(seq) references SF01(seq) on delete cascade;
-
-CREATE SEQUENCE seq_SP01
-START WITH 1 INCREMENT BY 1 ;
-
-create table SP01(
-  seq number not null,
-  title varchar2(20) not null,
-  text varchar2(200) not null,
-  userid varchar2(20) not null,
-  regdate varchar2(20) not null,
-  state varchar2(5) not null,
-  ptype varchar2(5) not null,
-  hit number(4)  default 0 not null ,
-  good number(4) default 0 not null ,
-  explain blob
-);
-
-alter table SP01
-add constraint pk_SP01 primary key(seq);
-
-alter table SP01
-add constraint fk_sp01 foreign key(userid) references SM01(userid) on delete cascade;
-
-CREATE index idx_SP01_1
-on SP01(seq, regdate);
-
-CREATE index idx_SP01_2
-on SP01(title);
-
-CREATE index idx_SP01_3
-on SP01(userid);
-
-CREATE SEQUENCE seq_SP02
-START WITH 1 INCREMENT BY 1 ;
-
-create table SP02(
-  seq number not null,
-  seq01 number not null,
-  text varchar2(200) not null,
-  userid varchar2(20) not null,
-  regdate varchar2(20) not null,
-  good number(4) default 0 not null
-);
-
-alter table SP02
-add constraint pk_SP02 primary key(seq, seq01);
-
-alter table SP02
-add constraint fk_sp02 foreign key(seq01) references SP01(seq) on delete cascade;
-
-CREATE index idx_SP02_1
-on SB02(seq01, regdate);
-
-create table SP03(
-  registerid varchar2(20) not null,
-  seq number not null,
-  regdate varchar2(20) not null
-);
-
-alter table SP03
-add constraint pk_SP03 primary key(registerid, seq);
-
-alter table SP03
-add constraint fk_sp03 foreign key(seq) references SP01(seq) on delete cascade;
-
-create table SPG1(
-  seq number not null,
-  sessionid varchar2(20) not null,
-  datelog varchar2(20) not null,
-  goodlog varchar2(3),
-  hatelog varchar2(3)
-);
-
-alter table SPG1
-add constraint pk_SPG1 primary key(seq,sessionid);
-
-alter table SPG1
-add constraint fk_spg1 foreign key(seq) references SP01(seq) on delete cascade;
 
 CREATE SEQUENCE seq_SV01
 START WITH 1 INCREMENT BY 1 ;

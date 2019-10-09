@@ -28,7 +28,6 @@ var product_code = {};
 			changeYear : true
 		});
 	
-		showSP01MyList();
 		
 		fn_PreSave = function() {
 			
@@ -88,104 +87,8 @@ var product_code = {};
 	
  		});
 		
-		// 판매버튼
-		$(document).on("click", "#sell" , function() {
-			
-			if(confirm("판매하시겠습니까 ??")) {
-				var tr = $(this).parent().parent("tr");
-
-				fn_ajaxRest("sp01sell/" +tr.children("#seq").text(),"PUT", function(data) {
-					if(data.result == 1) {
-						tr.children("#state").text("판매완료");
-						$(this).hide(); // 버튼 hide
-						tr.children("#cancel").hide();
-					}
-				});	
-			}
-		});
-		
-		$(document).on("click", "#cancel" , function() {
-			
-			if(confirm("취소하시겠습니까 ??")) {
-				var tr = $(this).parent().parent("tr");
-
-				fn_ajaxRest("sp01cancel/" + tr.children("#seq").text() ,"PUT" , function(data) {
-					if(data.result == 1) {
-						tr.children("#state").text("판매대기");
-						$(this).hide(); // 버튼 hide
-						tr.children("#sell").hide();
-					}
-				});	
-			}
-			
-		});
-		
-		// 조회(페이지 버튼)
-		$(document).on("click", "a[name='page_move']" , function(e) {
-			e.preventDefault();
-			var page = $(this).attr('value');
-			showSP01MyList(page);
-		});
-		
-		// 조회(이전 버튼)
-		$(document).on("click", "a[name='page_prev']" , function(e) {
-			e.preventDefault();
-			var page = $("#startPage").attr('value');
-			showSP01MyList(Number(page) - 10);
-		});
-		
-		// 조회(다음 버튼)
-		$(document).on("click", "a[name='page_next']" , function(e) {
-			e.preventDefault();
-			var page = $("#startPage").attr('value');
-			var maxPage = $("#maxPage").attr('value');
-			if(Number(page) + 10 > maxPage) {
-				showSP01MyList(maxPage);
-			} else {
-				showSP01MyList(Number(page) + 10);
-			}
-		});
 	});
 
-	
-	function showSP01MyList(nowPage) {
-		console.log("showSP01MyList");
-		
-		var page = 1;
-		if(!gfn_isNull(nowPage)) {
-			page = nowPage;
-		}
-		
-		gfn_ajaxRest("sp01My/" + page, "GET" , function(data) {
-
-			var html = "";
-			$.each(data.list, function(index, item) {
-				html += '<tr>';
-	            html += '<td scope="col" width="50" id="seq">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50" id="title"><a href="/sp01show_detail/'+
-	            item.seq +'">' + 
-	            item.title + '</a></td>';
-	            html += '<td scope="col" width="30">' + item.reply + '</td>';
-	            html += '<td scope="col" width="100">' + item.userid + '</td>';
-				html += '<td scope="col" width="30">' + gfn_getCommCodeNm(product_code ,item.ptype) + '</td>';
-	            html += '<td scope="col" width="30" id="state">' + gfn_getCommCodeNm(state_code , item.state) + '</td>';   
-	            if(item.state == "02") {
-	            	html += '<td scope="col" width="30"><input type="button" id="sell" name="sell" value="판매"> </td>';
-	            	html += '<td scope="col" width="30"><input type="button" id="cancel" name="cancel" value="취소"> </td>';	
-	            } else {
-	            	html += '<td scope="col" width="30"></td>';	
-	            	html += '<td scope="col" width="30"></td>';	
-	            }
-	            html += '<td scope="col" width="70">' + gfn_dateFormat(item.regdate) + '</td>';
-	            html += '<td scope="col" width="70">' + item.registerid + '</td>';
-	            html += '</tr>';
-			});
-			
-	        $("#sp01viewTbody").html(html);
-	     	// 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
-		});
-	};
 </script>
  <jsp:include page="banner.jsp" /> 
 	<header>
@@ -213,38 +116,6 @@ var product_code = {};
 						<img id="showTempImage" alt="" name="photo" src="/selectPhoto/${sm01Vo.userid}" height="170px" width="150px"/>
 					</div>
 				</div>
-				<table border = "1">
-			<colgroup>
-				<col width="50">
-				<col width="100">
-				<col width="30">
-				<col width="100">
-				<col width="30">
-				<col width="30">
-				<col width="70">
-			</colgroup>
-			<thead>
-			<tr>
-				<th scope="col">번호</th>
-				<th scope="col">제목</th>
-				<th scope="col">댓글</th>
-				<th scope="col">글쓴이</th>
-				<th scope="col">상품유형</th>
-				<th scope="col">판매상태</th>
-				<th scope="col">판매완료</th>
-				<th scope="col">판매취소</th>
-				<th scope="col">등록일자</th>
-				<th scope="col">신청자</th>
-			</tr>
-			</thead>
-			<tbody id="sp01viewTbody">
-		
-			</tbody>
-		</table>
-		<div id="pagenation">
-		
-		</div>
-				
 			</div>
 		</div>
 	</section>
