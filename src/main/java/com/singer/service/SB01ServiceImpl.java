@@ -55,9 +55,15 @@ public class SB01ServiceImpl implements SB01Service {
 		while (itr.hasNext()) {
 			video = request.getFile(itr.next());
 		}
-		if (!CommonUtil.chkVideoFile(video.getOriginalFilename())) {
+
+		if (CommonUtil.chkVideoFile(video.getOriginalFilename())) {
+			sb01Vo.setVideobool(1);
+		} else if (CommonUtil.chkAudioFile(video.getOriginalFilename())) {
+			sb01Vo.setVideobool(0);
+		} else {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
 		}
+
 		sb01Vo.setRegdate(DateUtil.getTodayTime());
 
 		sb01Dao.insertSB01Vo(sb01Vo);

@@ -174,6 +174,21 @@ public class CommonUtil {
 	}
 
 	/**
+	 * 오디오 파일 확인
+	 */
+	public static boolean chkAudioFile(String fileName) throws Exception {
+		if (fileName == null || "".equals(fileName))
+			throw new Exception("NullFileException");
+		if (fileName.toLowerCase().endsWith(".mp3") || fileName.toLowerCase().endsWith(".ogg")
+				|| fileName.toLowerCase().endsWith(".wma") || fileName.toLowerCase().endsWith(".wav")
+				|| fileName.toLowerCase().endsWith(".au") || fileName.toLowerCase().endsWith(".rm")
+				|| fileName.toLowerCase().endsWith(".mid"))
+			return true;
+		else
+			return false;
+	}
+
+	/**
 	 * 파일명 확장자 추출
 	 */
 	public static String getExtensionName(String fileName) {

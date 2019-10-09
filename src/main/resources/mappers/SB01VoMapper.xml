@@ -10,8 +10,8 @@
 			<selectKey  keyProperty="seq"  resultType="java.lang.Integer" order="AFTER">
    			 SELECT SEQ_SB01.CURRVAL FROM DUAL
   			</selectKey>
-			insert into SB01 (seq, title, text, userid, regdate)
-			values (SEQ_SB01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}) 
+			insert into SB01 (seq, title, text, userid, regdate , videobool)
+			values (SEQ_SB01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{videobool}) 
 			
 		</insert>
 		
@@ -52,6 +52,7 @@
     		S1.regdate as regdate,
     		S1.hit as hit, 
    			S1.good as good,
+   			S1.videobool as videobool,
     		SL1.goodlog as goodlog,
     		SL1.hatelog  as hatelog
     		from SB01 S1

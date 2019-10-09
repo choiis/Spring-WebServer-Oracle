@@ -33,8 +33,9 @@
 				return false;
 			}
 			
-			if(!gfn_IsVideo($("input[name=videoFile]")[0].files[0].name)) {
-				alert("동영상파일만 업로드해 주세요");
+			if(!gfn_IsVideo($("input[name=videoFile]")[0].files[0].name)
+				&& !gfn_IsAudio($("input[name=videoFile]")[0].files[0].name)) {
+				alert("동영상파일 또는 오디오 파일을 업로드해 주세요");
 				return false;
 			}
 			

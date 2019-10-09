@@ -22,8 +22,8 @@ public class ExceptionMsg {
 	/** 사진 파일만 업로드 가능합니다! */
 	public static final String EXT_MSG_INPUT_4 = "사진 파일만 업로드 가능합니다!";
 
-	/** 동영상 파일만 업로드 가능합니다 */
-	public static final String EXT_MSG_INPUT_5 = "동영상 파일만 업로드 가능합니다!";
+	/** 동영상 또는 오디오 파일만 업로드 가능합니다 */
+	public static final String EXT_MSG_INPUT_5 = "동영상 또는 오디오 파일만 업로드 가능합니다!";
 
 	/** 가게명을 필수 입력해야 합니다 */
 	public static final String EXT_MSG_INPUT_6 = "가게명을 필수 입력해야 합니다";

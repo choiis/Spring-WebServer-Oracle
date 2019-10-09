@@ -313,9 +313,19 @@
 				</c:otherwise>
 			</c:choose>
     		
-			<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
-			    <source src="/sb01Video/${sb01Vo.seq}/${sb01Vo.title}" type="video/mp4" />
-			</video>
+    		<c:choose>
+				<c:when test="${sb01Vo.videobool == 1}">
+					<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
+			    		<source src="/sb01Video/${sb01Vo.seq}/${sb01Vo.title}" type="video/mp4" />
+					</video>
+				</c:when>
+				<c:otherwise>
+					<audio id="showAudio" autoplay controls>
+    					<source src="/sb01Video/${sb01Vo.seq}/${sb01Vo.title}" type="audio/mp3">
+					</audio>
+				</c:otherwise>
+			</c:choose>
+			
 		</div>
 		
 		<div class="container">

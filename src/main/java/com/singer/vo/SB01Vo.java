@@ -15,6 +15,7 @@ public class SB01Vo extends BoardVo {
 	private String datelog;
 	private String goodlog;
 	private String hatelog;
+	private int videobool;
 
 	private List<SB01Vo> list;
 
@@ -84,6 +85,14 @@ public class SB01Vo extends BoardVo {
 
 	public void setHatelog(String hatelog) {
 		this.hatelog = hatelog;
+	}
+
+	public int getVideobool() {
+		return videobool;
+	}
+
+	public void setVideobool(int videobool) {
+		this.videobool = videobool;
 	}
 
 	public List<SB01Vo> getList() {

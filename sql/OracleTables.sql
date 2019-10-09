@@ -129,7 +129,7 @@ create table SB01(
   regdate varchar2(20) not null,
   hit number(4)  default 0 not null ,
   good number(4) default 0 not null ,
-  video varchar2(100) not null
+  videobool number default 0 not null
 );
 
 alter table SB01

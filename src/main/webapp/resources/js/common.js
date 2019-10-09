@@ -182,6 +182,22 @@ $(document).ready(function() {
 		}
 	}
 	
+	/** 동영상 파일 확인*/	
+	gfn_IsAudio = function(filename) {
+		if(gfn_isNull(filename)) {
+			return false;
+		} else {
+			var fileType = gfn_getFileType(filename);
+			
+			if(fileType == '.mp3' || fileType == '.ogg' || fileType == '.wma' 
+				|| fileType == '.wav' || fileType == 'au' || fileType == '.rm' 
+				|| fileType == '.mid') {
+				return true;
+			}
+			return false;
+		}
+	}
+	
 	/** 날짜로 변환*/
 	gfn_dateFormat = function(str) {
 		return str.substr(0, 4) + "/" + str.substr(4, 2) + "/" + str.substr(6, 2);
