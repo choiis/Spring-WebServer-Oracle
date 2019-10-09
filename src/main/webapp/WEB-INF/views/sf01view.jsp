@@ -40,21 +40,21 @@
 		});
 		
 		// 조회(페이지 버튼)
-		$(document).on("click", "a[name='page_move']" , function() {
+		$(document).on("click", "a[name='page_move']" , function(e) {
 			e.preventDefault();
 			var page = $(this).attr('value');
 			showSF01List(page);
 		});
 		
 		// 조회(이전 버튼)
-		$(document).on("click", "a[name='page_prev']" , function() {
+		$(document).on("click", "a[name='page_prev']" , function(e) {
 			e.preventDefault();
 			var page = $("#startPage").attr('value');
 			showSF01List(Number(page) - 10);
 		});
 		
 		// 조회(다음 버튼)
-		$(document).on("click", "a[name='page_next']" , function() {
+		$(document).on("click", "a[name='page_next']" , function(e) {
 			e.preventDefault();
 			var page = $("#startPage").attr('value');
 			var maxPage = $("#maxPage").attr('value');
