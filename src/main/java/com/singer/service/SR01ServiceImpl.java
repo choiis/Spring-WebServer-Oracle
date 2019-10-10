@@ -17,6 +17,7 @@ import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
 import com.singer.dao.SR01Dao;
+import com.singer.dao.SR02Dao;
 import com.singer.dao.SR03Dao;
 import com.singer.vo.SR01Vo;
 import com.singer.vo.SR03Vo;
@@ -28,6 +29,10 @@ public class SR01ServiceImpl implements SR01Service {
 
 	@Resource(name = "sr01Dao")
 	private SR01Dao sr01Dao;
+
+	@Resource(name = "sr02Dao")
+	private SR02Dao sr02Dao;
+
 	@Resource(name = "sr03Dao")
 	private SR03Dao sr03Dao;
 
@@ -43,23 +48,32 @@ public class SR01ServiceImpl implements SR01Service {
 		if (CommonUtil.isNull(sr01Vo.getMarkertitle())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_6);
 		}
-		sr01Vo.setRegdate(DateUtil.getTodayTime());
+		if (sr01Vo.getGrade() < 0 || sr01Vo.getGrade() > 5) {
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_7);
+		}
+
 		sr01Vo.setUserid(sessionid);
+		sr01Vo.setRegdate(DateUtil.getTodayTime());
+
 		sr01Dao.insertSR01Vo(sr01Vo);
+		sr02Dao.insertSR02Vo(sr01Vo);
 
 		MultipartFile photo = null;
 		Iterator<String> itr = request.getFileNames();
 		while (itr.hasNext()) {
 			photo = request.getFile(itr.next());
 		}
-
-		HashMap<String, Object> putHash = new HashMap<String, Object>();
-		putHash.put("seq", sr01Vo.getSeq());
-		putHash.put("idx", 0);
-		putHash.put("regdate", DateUtil.getToday());
-		putHash.put("video", photo.getBytes());
-
-		sr01Dao.insertImage(putHash);
+		if (!CommonUtil.isNull(photo)) {
+			if (!CommonUtil.chkIMGFile(photo.getOriginalFilename())) {
+				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_4);
+			}
+			HashMap<String, Object> putHash = new HashMap<String, Object>();
+			putHash.put("seq", sr01Vo.getSeq());
+			putHash.put("idx", 0);
+			putHash.put("regdate", DateUtil.getToday());
+			putHash.put("photo", photo.getBytes());
+			sr01Dao.insertImage(putHash);
+		}
 
 		return sr01Vo.getSeq() > 0 ? 1 : 0;
 	}

@@ -18,6 +18,13 @@
 			and userid = #{userid}
 		</select>
 		
+		<select id="selectGrade" resultType="com.singer.vo.SR01Vo" parameterType="com.singer.vo.SR01Vo">	
+			select 
+	    		ROUND(AVG(S2.grade),2) avggrade
+	    		from SR02 S2
+	    	where seq = #{seq}
+		</select>
+		
 		<insert id="insert"  parameterType="com.singer.vo.SR01Vo">
 			insert into SR02 (seq, userid, grade, regdate)
 			values (#{seq}, #{userid}, #{grade}, #{regdate}) 

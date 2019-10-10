@@ -22,6 +22,7 @@ public class SR01Vo extends BoardVo {
 	private double avggrade;
 	private int idx;
 	private int photocnt;
+	private int reply;
 
 	private List<SR01Vo> list;
 
@@ -137,6 +138,14 @@ public class SR01Vo extends BoardVo {
 
 	public void setPhotocnt(int photocnt) {
 		this.photocnt = photocnt;
+	}
+
+	public int getReply() {
+		return reply;
+	}
+
+	public void setReply(int reply) {
+		this.reply = reply;
 	}
 
 }

@@ -21,4 +21,7 @@ public class SR02Dao extends SuperDao {
 		return (SR01Vo) selectOne(namespace + ".selectOne", sr01Vo);
 	}
 
+	public SR01Vo selectGradeSR02Vo(SR01Vo sr01Vo) throws Exception {
+		return (SR01Vo) selectOne(namespace + ".selectGrade", sr01Vo);
+	}
 }

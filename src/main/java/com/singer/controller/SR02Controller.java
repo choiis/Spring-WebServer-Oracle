@@ -32,7 +32,7 @@ public class SR02Controller {
 		log.debug("sr02Vo : " + sr02Vo);
 
 		String userid = (String) session.getAttribute("userid");
-		sr02Service.insertSR02Vo(sr02Vo, userid);
+		sr02Vo = sr02Service.insertSR02Vo(sr02Vo, userid);
 
 		log.debug("exit sr02insert.do");
 		return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.CREATED);
@@ -57,10 +57,18 @@ public class SR02Controller {
 		log.debug("enter sr02selectOne.do");
 		log.debug("sr02Vo : " + sr02Vo);
 		String userid = (String) session.getAttribute("userid");
-		sr02Service.selectOneSR02Vo(sr02Vo, userid);
+		sr02Vo = sr02Service.selectOneSR02Vo(sr02Vo, userid);
 
-		sr02Vo.setResult(Constants.SUCCESS_CODE);
-		log.debug("exit sr02selectOne.do");
-		return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.OK);
+		if (sr02Vo == null) {
+			SR01Vo sr02Vo2 = new SR01Vo();
+			sr02Vo2.setResult(Constants.FAIL_CODE);
+			log.debug("exit sr02selectOne.do");
+			return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.OK);
+		} else {
+
+			sr02Vo.setResult(Constants.SUCCESS_CODE);
+			log.debug("exit sr02selectOne.do");
+			return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.OK);
+		}
 	}
 }

@@ -17,14 +17,16 @@ public class SR02ServiceImpl implements SR02Service {
 	private SR02Dao sr02Dao;
 
 	@Override
-	public int insertSR02Vo(SR01Vo sr01Vo, String sessionid) throws Exception {
+	public SR01Vo insertSR02Vo(SR01Vo sr01Vo, String sessionid) throws Exception {
 		if (sr01Vo.getGrade() < 0 || sr01Vo.getGrade() > 5) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_7);
 		}
 
 		sr01Vo.setUserid(sessionid);
 		sr01Vo.setRegdate(DateUtil.getTodayTime());
-		return sr02Dao.insertSR02Vo(sr01Vo);
+		sr02Dao.insertSR02Vo(sr01Vo);
+
+		return sr02Dao.selectGradeSR02Vo(sr01Vo);
 	}
 
 	@Override
