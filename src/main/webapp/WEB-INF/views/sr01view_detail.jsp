@@ -110,7 +110,9 @@
 			$("#avggrade").text(data.avggrade);
 			// data.mapx
 			// data.mapy
-		
+			if(!data.deleteYn) {
+				$("#button_delete").hide();
+			}
 			var myLatlng = new google.maps.LatLng(data.mapx, data.mapy); // 
 			var Y_point			= data.mapx;		// 
 			var X_point			= data.mapy;		// 
@@ -139,6 +141,15 @@
 				maxWizzzdth: markerMaxWidth
 			});
 			
+			if(data.photocnt > 0) {
+				var html = "";
+				for(var i = 0 ; i < data.photocnt; i++) {
+					html += '<img id="showPhoto" alt="" name="photo" src="/sr01photo/'  + data.seq + '/' + i + '" height="200px" width="170px"/>';
+					html += '<br>';
+				}
+				$("#photoDiv").empty();
+		        $("#photoDiv").append(html);
+			}
 		});
 	};
 	
@@ -400,6 +411,8 @@
 			<input id="button_grade" type="button" value="점수주기">
 		</div>
 		<div id="map_ma">
+		</div>
+		<div id="photoDiv">
 		</div>
 		<div class="container">
 		<form id="form" method="post">
