@@ -35,7 +35,7 @@ public class CommonExceptionHandler {
 		InputQueryUtil queryUtil = new InputQueryUtil("log_error");
 		queryUtil.add(request.getRequestURI());
 		queryUtil.add(DateUtil.getTodayTime());
-		queryUtil.add(ext.getCause().getLocalizedMessage());
+		queryUtil.add(ext.getLocalizedMessage());
 
 		producer.send(queryUtil.getQuery());
 
@@ -89,12 +89,6 @@ public class CommonExceptionHandler {
 		log.info("AppException");
 		log.info(ext.getMessage());
 
-		InputQueryUtil queryUtil = new InputQueryUtil("log_error");
-		queryUtil.add(request.getRequestURI());
-		queryUtil.add(DateUtil.getTodayTime());
-		queryUtil.add(ext.getCause().getLocalizedMessage());
-
-		producer.send(queryUtil.getQuery());
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 			isAjax = true;
 		}
@@ -119,7 +113,7 @@ public class CommonExceptionHandler {
 		InputQueryUtil queryUtil = new InputQueryUtil("log_error");
 		queryUtil.add(request.getRequestURI());
 		queryUtil.add(DateUtil.getTodayTime());
-		queryUtil.add(ext.getCause().getLocalizedMessage());
+		queryUtil.add(ext.getLocalizedMessage());
 
 		producer.send(queryUtil.getQuery());
 

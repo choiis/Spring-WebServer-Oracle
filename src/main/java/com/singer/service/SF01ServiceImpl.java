@@ -97,7 +97,7 @@ public class SF01ServiceImpl implements SF01Service {
 		sf01Dao.clickSF01Vo(sf01vo);
 		sf01vo.setSessionid(userid);
 		sf01vo = sf01Dao.selectOneSF01Vo(sf01vo);
-		if (sf01vo != null) {
+		if (!CommonUtil.isNull(sf01vo)) {
 			if (userid.equals(sf01vo.getUserid())) {
 				sf01vo.setDeleteYn(true);
 			}

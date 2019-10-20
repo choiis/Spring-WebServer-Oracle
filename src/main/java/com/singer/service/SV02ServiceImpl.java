@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
+import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
 import com.singer.dao.SV02Dao;
 import com.singer.vo.SV02Vo;
@@ -29,7 +30,7 @@ public class SV02ServiceImpl implements SV02Service {
 	@Override
 	public int insertSv03Vo(SV02Vo sv02Vo, String userid) throws Exception {
 		List<SV02Vo> list = sv02Vo.getSv02Vos();
-		if (list.size() == 0) {
+		if (CommonUtil.isZeroLength(list)) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
 		}
 

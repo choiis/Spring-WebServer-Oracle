@@ -91,7 +91,7 @@ public class SR01ServiceImpl implements SR01Service {
 
 		sr01Vo.setUserid(userid);
 		sr01Vo = sr01Dao.selectOneSR01Vo(sr01Vo);
-		if (sr01Vo != null) {
+		if (!CommonUtil.isNull(sr01Vo)) {
 			if (userid.equals(sr01Vo.getUserid())) {
 				sr01Vo.setDeleteYn(true);
 			}

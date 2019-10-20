@@ -51,6 +51,28 @@ public class CommonUtil {
 	}
 
 	/**
+	 * 배열 길이가 0인가?
+	 */
+	public static boolean isZeroLength(Object[] array) {
+		if (isNull(array)) {
+			return true;
+		} else {
+			return array.length == 0;
+		}
+	}
+
+	/**
+	 * 배열 길이가 0인가?
+	 */
+	public static boolean isZeroLength(List<?> array) {
+		if (isNull(array)) {
+			return true;
+		} else {
+			return array.size() == 0;
+		}
+	}
+
+	/**
 	 * 널 체크
 	 */
 	public static boolean isNull(Object obj) {

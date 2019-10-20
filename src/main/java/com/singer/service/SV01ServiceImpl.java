@@ -45,7 +45,7 @@ public class SV01ServiceImpl implements SV01Service {
 
 		List<SV02Vo> list = sv01Vo.getSv02Vos();
 
-		if (list.size() == 0) {
+		if (CommonUtil.isZeroLength(list)) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
 		} else {
 			for (int i = 0; i < list.size(); i++) {
@@ -87,7 +87,7 @@ public class SV01ServiceImpl implements SV01Service {
 		}
 		sv01Vo.setUserid(userid);
 		sv01Vo = sv01Dao.selectOneSV01Vo(sv01Vo);
-		if (sv01Vo != null) {
+		if (!CommonUtil.isNull(sv01Vo)) {
 			if (userid.equals(sv01Vo.getUserid())) {
 				sv01Vo.setDeleteYn(true);
 			}

@@ -103,7 +103,7 @@ public class SB01ServiceImpl implements SB01Service {
 		sb01Dao.clickSB01Vo(sb01Vo);
 		sb01Vo.setSessionid(userid);
 		SB01Vo sb01vo = sb01Dao.selectOneSB01Vo(sb01Vo);
-		if (sb01vo != null) {
+		if (!CommonUtil.isNull(sb01vo)) {
 			if (userid.equals(sb01vo.getUserid())) {
 				sb01vo.setDeleteYn(true);
 			}
