@@ -3,7 +3,6 @@ package com.singer.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -167,23 +166,4 @@ public class CommController {
 		return model;
 	}
 
-	@RequestMapping(value = "/error")
-	public ResponseEntity<CommVo> errorJson(CommVo commVo, HttpServletRequest request) {
-
-		commVo.setErrorCode((String) request.getAttribute("errorCode"));
-		commVo.setErrorMsg((String) request.getAttribute("errorMsg"));
-
-		return new ResponseEntity<CommVo>(commVo, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-
-	@RequestMapping(value = "/forwardError")
-	public ModelAndView forwardError(HttpServletRequest request) throws Exception {
-
-		ModelAndView mv = new ModelAndView("/forwardError");
-		String errorCode = (String) request.getAttribute("errorCode");
-		String errorMsg = (String) request.getAttribute("errorMsg");
-		mv.addObject("errorCode", errorCode);
-		mv.addObject("errorMsg", errorMsg);
-		return mv;
-	}
 }

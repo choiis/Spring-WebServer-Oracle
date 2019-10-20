@@ -69,4 +69,34 @@
 		<session-config>
 			<session-timeout>600</session-timeout>
 		</session-config>
+		
+		<error-page> 
+			<error-code>400</error-code> 
+			<location>/400</location> 
+		</error-page> 
+		
+		<error-page> 
+			<error-code>401</error-code>
+			<location>/401</location> 
+		</error-page>
+		
+		<error-page> 
+			<error-code>403</error-code>
+			<location>/403</location> 
+		</error-page>
+		
+		<error-page> 
+			<error-code>404</error-code>
+			<location>/404</location> 
+		</error-page>
+
+		<error-page> 
+			<error-code>405</error-code>
+			<location>/405</location> 
+		</error-page>
+		
+		<error-page> 
+			<error-code>415</error-code>
+			<location>/415</location> 
+		</error-page>
 </web-app>

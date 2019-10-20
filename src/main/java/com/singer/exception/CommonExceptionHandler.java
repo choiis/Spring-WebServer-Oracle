@@ -26,7 +26,6 @@ public class CommonExceptionHandler {
 	private Producer producer;
 
 	@ExceptionHandler(Exception.class)
-	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "your message")
 	public ModelAndView defaultExceptionHandler(HttpServletRequest request, Exception ext) {
 		boolean isAjax = false;
 		log.info("defaultException");
@@ -50,7 +49,7 @@ public class CommonExceptionHandler {
 		}
 
 		mv.addObject("errorCode", "500");
-		mv.addObject("errorMsg", ext.getCause().getLocalizedMessage());
+		mv.addObject("errorMsg", ext.getLocalizedMessage());
 		return mv;
 	}
 
