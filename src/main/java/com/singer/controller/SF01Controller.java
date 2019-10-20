@@ -46,18 +46,17 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01", method = RequestMethod.POST)
-	public ModelAndView insertSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session,
+	public ResponseEntity<SF01Vo> insertSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session,
 			MultipartHttpServletRequest request) throws Exception {
 		log.debug("enter sf01insert.do");
 		log.debug("sf01Vo : " + sf01Vo);
 
 		String userid = (String) session.getAttribute("userid");
 
-		sf01Service.insertSF01Vo(sf01Vo, request, userid);
-
-		ModelAndView model = new ModelAndView("/sf01view");
+		int success = sf01Service.insertSF01Vo(sf01Vo, request, userid);
+		sf01Vo.setResult(success);
 		log.debug("exit sf01insert.do");
-		return model;
+		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody

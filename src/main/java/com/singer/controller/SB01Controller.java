@@ -47,7 +47,7 @@ public class SB01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sb01", method = RequestMethod.POST)
-	public ModelAndView insertSB01Vo(@ModelAttribute("SB01Vo") SB01Vo sb01Vo, HttpSession session,
+	public ResponseEntity<SB01Vo> insertSB01Vo(@ModelAttribute("SB01Vo") SB01Vo sb01Vo, HttpSession session,
 			MultipartHttpServletRequest request) throws Exception {
 
 		log.debug("sb01Vo : " + sb01Vo);
@@ -55,11 +55,9 @@ public class SB01Controller {
 		String userid = (String) session.getAttribute("userid");
 		sb01Vo.setUserid(userid);
 
-		sb01Service.insertSB01Vo(sb01Vo, request);
-
-		ModelAndView model = new ModelAndView("/sb01view");
-
-		return model;
+		int success = sb01Service.insertSB01Vo(sb01Vo, request);
+		sb01Vo.setResult(success);
+		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody

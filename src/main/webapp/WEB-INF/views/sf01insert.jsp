@@ -43,8 +43,29 @@
 				return ;
 			}
 						
-			$("#form").submit();
-			
+			// $("#form").submit();
+        	var form = $('#form')[0];
+ 
+        	// Create an FormData object 
+        	var formdata = new FormData(form);
+        
+	        $.ajax({
+	        	url:"/sf01",
+	            type:"POST",
+	            data: formdata,
+	            processData: false,
+	            contentType: false,
+	            success:function(data) {
+	            	if(data.result === 1) {
+	            		alert("게시물 입력 완료");
+		        		location.href = "/sf01page";		
+	            	}
+	            },
+	            error : function(data, status, error) {
+			    	var errorData = JSON.parse(data.responseText);
+			    	alert(errorData.errorCode + " " + errorData.errorMsg);
+			    }  
+	        });
 		});
 		
 	});
