@@ -4,11 +4,11 @@ passwd varchar2(30) not null,
 adminyn number(1) default 0,
 username varchar2(20) not null,
 brth varchar2(8) not null,
-grade varchar2(2) not null,
+grade number(1) default 4 not null,
 regdate varchar2(8) not null,
 phone varchar2(15) not null,
 email varchar2(30) not null,
-usertype varchar2(5)
+usertype number(1) default 4 not null
 );
 
 alter table SM01
@@ -30,7 +30,7 @@ CREATE table MENU (
   menucd varchar2(2) not null,
   menunm varchar2(20) not null,
   menuurl varchar2(20) not null,
-  authlevel varchar2(2) not null,
+  authlevel number(1) default 4 not null,
   reguser varchar2(20) not null,
   regdate varchar2(8) not null,
   moduser varchar2(20) not null,
@@ -41,14 +41,14 @@ CREATE table MENU (
 alter table MENU
 add constraint pk_MENU primary key(menucd);
 
-insert into MENU values('01','코드관리','/codepage','01','admin','20180901','admin','20180901');
-insert into MENU values('02','공지사항','/commandpage','02','admin','20180901','admin','20180901');
-insert into MENU values('03','회원관리','/sm01page','02','admin','20180901','admin','20180901');
-insert into MENU values('04','노래 동영상','/sb01page','04','admin','20180901','admin','20180901');
-insert into MENU values('05','파일 게시판','/sf01page','04','admin','20180901','admin','20180901');
-insert into MENU values('06','투표 게시판','/sv01page','04','admin','20180901','admin','20180901');
-insert into MENU values('07','맛집 추천','/sr01page','04','admin','20180901','admin','20180901');
-insert into MENU values('08','나의 메모장','/sm02page','04','admin','20180901','admin','20180901');
+insert into MENU values('01','코드관리','/codepage',1,'admin','20180901','admin','20180901');
+insert into MENU values('02','공지사항','/commandpage',2,'admin','20180901','admin','20180901');
+insert into MENU values('03','회원관리','/sm01page',2,'admin','20180901','admin','20180901');
+insert into MENU values('04','노래 동영상','/sb01page',4,'admin','20180901','admin','20180901');
+insert into MENU values('05','파일 게시판','/sf01page',4,'admin','20180901','admin','20180901');
+insert into MENU values('06','투표 게시판','/sv01page',4,'admin','20180901','admin','20180901');
+insert into MENU values('07','맛집 추천','/sr01page',4,'admin','20180901','admin','20180901');
+insert into MENU values('08','나의 메모장','/sm02page',4,'admin','20180901','admin','20180901');
 
 
 CREATE table CODE_GRP (

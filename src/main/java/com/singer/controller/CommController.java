@@ -85,7 +85,7 @@ public class CommController {
 
 		log.debug("CommVo : " + commVo);
 
-		String authlevel = (String) session.getAttribute("usertype");
+		int authlevel = (Integer) session.getAttribute("usertype");
 		String userid = (String) session.getAttribute("userid");
 		List<CommVo> list = commService.insertMenu(commVo, userid, authlevel);
 		commVo.setCommList(list);
@@ -100,7 +100,7 @@ public class CommController {
 		log.debug("enter deleteMenu.do");
 		log.debug("CommVo : " + commVo);
 
-		String authlevel = (String) session.getAttribute("usertype");
+		int authlevel = (Integer) session.getAttribute("usertype");
 		List<CommVo> list = commService.deleteMenu(commVo, authlevel);
 		commVo.setCommList(list);
 
@@ -114,7 +114,7 @@ public class CommController {
 
 		log.debug("CommVo : " + commVo);
 
-		String authlevel = (String) session.getAttribute("usertype");
+		int authlevel = (Integer) session.getAttribute("usertype");
 		String userid = (String) session.getAttribute("userid");
 		List<CommVo> list = commService.updateMenu(commVo, userid, authlevel);
 		commVo.setCommList(list);

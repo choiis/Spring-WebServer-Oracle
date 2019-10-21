@@ -43,7 +43,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
 		String uri = request.getRequestURI();
-		String usertype = (String) session.getAttribute("usertype");
+		int usertype = (Integer) session.getAttribute("usertype");
 		log.debug("===================== preHandle =========================");
 		// 세션 만료 케이스
 		if ("/sessionExpire".equals(uri) || "/".equals(uri) || "/forwardError".equals(uri) || "/error".equals(uri)) {
@@ -67,11 +67,11 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				Stream<CommVo> stream = list.stream().filter(s -> uri.equals(s.getMenuurl()));
 				for (Iterator<CommVo> i = stream.iterator(); i.hasNext();) {
 					CommVo comm = i.next();
-					int comp = usertype.compareTo(comm.getAuthlevel());
-					if (comp > 0) { // 권한 없는 메뉴 uri로 접속시
+					if (usertype > comm.getAuthlevel()) {// 권한 없는 메뉴 uri로 접속시
 						log.debug("use denied");
 						response.sendRedirect("/authExpire");
 						return false;
+
 					}
 				}
 

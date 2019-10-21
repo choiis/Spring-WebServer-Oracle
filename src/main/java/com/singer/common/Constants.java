@@ -42,12 +42,25 @@ public class Constants {
 	public static final int ERROR_LOGIN_FAIL = 1001;
 	/** 메일전송 실패 코드 */
 	public static final int ERROR_MAIL_FAIL = 1011;
-	/** 유저등급 관리자 코드 */
-	public static final String USER_CODE_ADMIN = "01";
-	/** 유저등급 특별회원 코드 */
-	public static final String USER_CODE_SPECIAL = "02";
-	/** 유저등급 우수회원 코드 */
-	public static final String USER_CODE_GOOD = "03";
-	/** 유저등급 사용자 코드 */
-	public static final String USER_CODE_NORMAL = "04";
+
+	public enum USER_CODE {
+		/** 유저등급 관리자 코드 */
+		ADMIN(1),
+		/** 유저등급 특별회원 코드 */
+		SPECIAL(2),
+		/** 유저등급 우수회원 코드 */
+		GOOD(3),
+		/** 유저등급 사용자 코드 */
+		NORMAL(4),;
+		private final int value;
+
+		private USER_CODE(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	}
+
 }

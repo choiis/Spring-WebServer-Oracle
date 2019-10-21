@@ -23,7 +23,7 @@ public class CommServiceImpl implements CommService {
 	}
 
 	@Override
-	public List<CommVo> selectMenu(String authlevel) throws Exception {
+	public List<CommVo> selectMenu(int authlevel) throws Exception {
 		CommVo commVo = new CommVo();
 		commVo.setAuthlevel(authlevel);
 		return commDao.selectMenu(commVo);
@@ -31,7 +31,7 @@ public class CommServiceImpl implements CommService {
 
 	@Transactional
 	@Override
-	public List<CommVo> insertMenu(CommVo commVo, String userid, String authlevel) throws Exception {
+	public List<CommVo> insertMenu(CommVo commVo, String userid, int authlevel) throws Exception {
 		commVo.setReguser(userid);
 		commVo.setModuser(userid);
 		commVo.setRegdate(DateUtil.getToday());
@@ -48,7 +48,7 @@ public class CommServiceImpl implements CommService {
 
 	@Transactional
 	@Override
-	public List<CommVo> updateMenu(CommVo commVo, String userid, String authlevel) throws Exception {
+	public List<CommVo> updateMenu(CommVo commVo, String userid, int authlevel) throws Exception {
 		commVo.setModuser(userid);
 		commVo.setModdate(DateUtil.getToday());
 		int cnt = commDao.updateMenu(commVo);
@@ -63,7 +63,7 @@ public class CommServiceImpl implements CommService {
 
 	@Transactional
 	@Override
-	public List<CommVo> deleteMenu(CommVo commVo, String authlevel) throws Exception {
+	public List<CommVo> deleteMenu(CommVo commVo, int authlevel) throws Exception {
 		commDao.deleteMenu(commVo);
 		commVo.setAuthlevel(authlevel);
 		return commDao.selectMenu(commVo);

@@ -60,7 +60,7 @@ public class SM01ServiceImpl implements SM01Service {
 		// sm01Vo.setPasswd(pw);
 
 		sm01Vo.setRegdate(DateUtil.getToday());
-		sm01Vo.setGrade(Constants.USER_CODE_NORMAL);
+		sm01Vo.setGrade(Constants.USER_CODE.NORMAL.getValue());
 
 		if (CommonUtil.isNull(sm01Vo.getAdminyn())) {
 			sm01Vo.setAdminyn(YES_NO.NO.getValue());
