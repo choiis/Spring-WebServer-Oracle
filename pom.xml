@@ -323,6 +323,13 @@
     				<artifactId>kafka_2.11</artifactId>
     				<version>0.8.2.1</version>
 				</dependency>
+				
+				<!-- lombok Vo -->
+				<dependency>
+				<groupId>org.projectlombok</groupId>
+					<artifactId>lombok</artifactId>
+					<version>1.16.20</version>
+				</dependency>
 				<!-- Java Mail API -->
  				<dependency>
      				<groupId>javax.mail</groupId>

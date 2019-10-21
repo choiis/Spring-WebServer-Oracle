@@ -4,17 +4,16 @@ import java.util.List;
 
 import com.singer.common.CommonUtil;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@NoArgsConstructor
+@Getter
+@ToString
 public class SM02Vo extends BoardVo {
 
 	private List<SM02Vo> list;
-
-	public SM02Vo() {
-		super();
-	}
-
-	public List<SM02Vo> getList() {
-		return list;
-	}
 
 	public void setList(List<SM02Vo> list) {
 		this.list = list;

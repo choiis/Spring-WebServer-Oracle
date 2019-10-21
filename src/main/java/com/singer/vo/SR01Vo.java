@@ -6,6 +6,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.singer.common.CommonUtil;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
 public class SR01Vo extends BoardVo {
 
 	private String markertitle;
@@ -26,78 +35,6 @@ public class SR01Vo extends BoardVo {
 
 	private List<SR01Vo> list;
 
-	public SR01Vo() {
-		super();
-	}
-
-	public String getMarkertitle() {
-		return markertitle;
-	}
-
-	public void setMarkertitle(String markertitle) {
-		this.markertitle = markertitle;
-	}
-
-	public double getMapx() {
-		return mapx;
-	}
-
-	public void setMapx(double mapx) {
-		this.mapx = mapx;
-	}
-
-	public double getMapy() {
-		return mapy;
-	}
-
-	public void setMapy(double mapy) {
-		this.mapy = mapy;
-	}
-
-	public MultipartFile getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(MultipartFile photo) {
-		this.photo = photo;
-	}
-
-	public String getSessionid() {
-		return sessionid;
-	}
-
-	public void setSessionid(String sessionid) {
-		this.sessionid = sessionid;
-	}
-
-	public String getDatelog() {
-		return datelog;
-	}
-
-	public void setDatelog(String datelog) {
-		this.datelog = datelog;
-	}
-
-	public String getGoodlog() {
-		return goodlog;
-	}
-
-	public void setGoodlog(String goodlog) {
-		this.goodlog = goodlog;
-	}
-
-	public String getHatelog() {
-		return hatelog;
-	}
-
-	public void setHatelog(String hatelog) {
-		this.hatelog = hatelog;
-	}
-
-	public List<SR01Vo> getList() {
-		return list;
-	}
-
 	public void setList(List<SR01Vo> list) {
 		this.list = list;
 		// 페이징을 위한 카운트
@@ -106,46 +43,6 @@ public class SR01Vo extends BoardVo {
 		} else {
 			super.setTotCnt(0);
 		}
-	}
-
-	public double getGrade() {
-		return grade;
-	}
-
-	public void setGrade(double grade) {
-		this.grade = grade;
-	}
-
-	public double getAvggrade() {
-		return avggrade;
-	}
-
-	public void setAvggrade(double avggrade) {
-		this.avggrade = avggrade;
-	}
-
-	public int getIdx() {
-		return idx;
-	}
-
-	public void setIdx(int idx) {
-		this.idx = idx;
-	}
-
-	public int getPhotocnt() {
-		return photocnt;
-	}
-
-	public void setPhotocnt(int photocnt) {
-		this.photocnt = photocnt;
-	}
-
-	public int getReply() {
-		return reply;
-	}
-
-	public void setReply(int reply) {
-		this.reply = reply;
 	}
 
 }
