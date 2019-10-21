@@ -2,20 +2,42 @@ package com.singer.common;
 
 public class Constants {
 
-	/** YES */
-	public static final String YES_N = "0";
-	/** NO */
-	public static final String YES_Y = "1";
+	public enum YES_NO {
+		/** NO */
+		NO(0),
+		/** YES */
+		YES(1);
+
+		private final int value;
+
+		private YES_NO(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	}
+
+	public enum RESULT_CODE {
+		/** 성공 코드 */
+		FAIL(0),
+		/** 실패 코드 */
+		SUCCESS(1);
+		private final int value;
+
+		private RESULT_CODE(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	}
+
 	/** 기본 페이징 숫자 */
 	public static final int ROW_PER_PAGE = 10;
-	/** 성공 코드 */
-	public static final int SUCCESS_CODE = 1;
-	/** 실패 코드 */
-	public static final int FAIL_CODE = 0;
-	/** YES */
-	public static final int YES = 1;
-	/** NO */
-	public static final int NO = 0;
+
 	/** 로그인 실패 코드 */
 	public static final int ERROR_LOGIN_FAIL = 1001;
 	/** 메일전송 실패 코드 */

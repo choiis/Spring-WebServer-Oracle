@@ -13,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.singer.common.CommonUtil;
-import com.singer.common.Constants;
 import com.singer.common.DateUtil;
+import com.singer.common.Constants.RESULT_CODE;
 import com.singer.dao.SF01Dao;
 import com.singer.dao.SF02Dao;
 import com.singer.exception.AppException;
@@ -124,7 +124,7 @@ public class SF01ServiceImpl implements SF01Service {
 
 		sf01Dao.likelogSF01Vo(sf01Vo);
 
-		sf01Vo.setResult(Constants.SUCCESS_CODE);
+		sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 		sf01Vo.setLike(like);
 		return sf01Vo;
 	}
@@ -140,7 +140,7 @@ public class SF01ServiceImpl implements SF01Service {
 
 		sf01Dao.hatelogSF01Vo(sf01Vo);
 
-		sf01Vo.setResult(Constants.SUCCESS_CODE);
+		sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 		sf01Vo.setLike(like);
 		return sf01Vo;
 	}

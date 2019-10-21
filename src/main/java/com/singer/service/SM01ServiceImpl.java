@@ -23,6 +23,7 @@ import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
+import com.singer.common.Constants.YES_NO;
 import com.singer.common.DateUtil;
 import com.singer.dao.SM01Dao;
 import com.singer.vo.SM01Vo;
@@ -62,7 +63,7 @@ public class SM01ServiceImpl implements SM01Service {
 		sm01Vo.setGrade(Constants.USER_CODE_NORMAL);
 
 		if (CommonUtil.isNull(sm01Vo.getAdminyn())) {
-			sm01Vo.setAdminyn(Constants.YES_N);
+			sm01Vo.setAdminyn(YES_NO.NO.getValue());
 		}
 
 		MultipartFile photo = null;

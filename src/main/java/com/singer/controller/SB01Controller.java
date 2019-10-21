@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.singer.common.Constants;
+import com.singer.common.Constants.RESULT_CODE;
 import com.singer.service.SB01Service;
 import com.singer.vo.SB01Vo;
 
@@ -132,7 +132,7 @@ public class SB01Controller {
 
 		sb01Service.deleteSB01Vo(sb01Vo);
 
-		sb01Vo.setResult(Constants.SUCCESS_CODE);
+		sb01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 		log.debug("exit sf01delete.do");
 		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
 	}

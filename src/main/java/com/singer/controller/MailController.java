@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.Constants;
+import com.singer.common.Constants.RESULT_CODE;
 import com.singer.vo.MailVo;
 
 @Controller("mailController")
@@ -50,6 +51,6 @@ public class MailController {
 		}
 		log.debug("MAIL SUCCESS");
 		;
-		return Constants.SUCCESS_CODE;
+		return RESULT_CODE.SUCCESS.getValue();
 	}
 }

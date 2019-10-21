@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
-import com.singer.common.Constants;
+import com.singer.common.Constants.RESULT_CODE;
 import com.singer.common.DateUtil;
 import com.singer.dao.SR01Dao;
 import com.singer.dao.SR02Dao;
@@ -115,7 +115,7 @@ public class SR01ServiceImpl implements SR01Service {
 
 		sr01Dao.likelogSR01Vo(sr01Vo);
 
-		sr01Vo.setResult(Constants.SUCCESS_CODE);
+		sr01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 		sr01Vo.setLike(like);
 		return sr01Vo;
 	}
@@ -131,7 +131,7 @@ public class SR01ServiceImpl implements SR01Service {
 
 		sr01Dao.hatelogSR01Vo(sr01Vo);
 
-		sr01Vo.setResult(Constants.SUCCESS_CODE);
+		sr01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 		sr01Vo.setLike(like);
 		return sr01Vo;
 	}

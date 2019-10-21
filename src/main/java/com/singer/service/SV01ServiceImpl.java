@@ -13,7 +13,8 @@ import com.singer.dao.SV04Dao;
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
-import com.singer.common.Constants;
+import com.singer.common.Constants.RESULT_CODE;
+import com.singer.common.Constants.YES_NO;
 import com.singer.common.DateUtil;
 import com.singer.dao.SV01Dao;
 import com.singer.vo.SV01Vo;
@@ -82,7 +83,7 @@ public class SV01ServiceImpl implements SV01Service {
 	@Transactional
 	@Override
 	public SV01Vo selectOneSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
-		if (sv01Vo.getRecall() == Constants.NO) {
+		if (sv01Vo.getRecall() == YES_NO.NO.getValue()) {
 			sv01Dao.clickSV01Vo(sv01Vo);
 		}
 		sv01Vo.setUserid(userid);
@@ -131,7 +132,7 @@ public class SV01ServiceImpl implements SV01Service {
 
 		sv01Dao.likelogSV01Vo(sv01Vo);
 
-		sv01Vo.setResult(Constants.SUCCESS_CODE);
+		sv01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 		sv01Vo.setLike(like);
 		return sv01Vo;
 	}
@@ -147,7 +148,7 @@ public class SV01ServiceImpl implements SV01Service {
 
 		sv01Dao.hatelogSV01Vo(sv01Vo);
 
-		sv01Vo.setResult(Constants.SUCCESS_CODE);
+		sv01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 		sv01Vo.setLike(like);
 		return sv01Vo;
 	}

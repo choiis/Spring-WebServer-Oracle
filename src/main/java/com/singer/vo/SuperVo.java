@@ -3,7 +3,7 @@ package com.singer.vo;
 import com.singer.common.Constants;
 
 public class SuperVo {
-	protected String adminyn;
+	protected int adminyn;
 	protected boolean deleteYn;
 	protected String showDate;
 	protected int totCnt;
@@ -18,11 +18,11 @@ public class SuperVo {
 		this.rowPerPage = Constants.ROW_PER_PAGE;
 	}
 
-	public String getAdminyn() {
+	public int getAdminyn() {
 		return adminyn;
 	}
 
-	public void setAdminyn(String adminyn) {
+	public void setAdminyn(int adminyn) {
 		this.adminyn = adminyn;
 	}
 

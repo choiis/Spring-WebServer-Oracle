@@ -1,7 +1,7 @@
 ﻿CREATE table SM01(
 userid varchar2(10) not null,
 passwd varchar2(30) not null,
-adminyn varchar2(5) not null,
+adminyn number(1) default 0,
 username varchar2(20) not null,
 brth varchar2(8) not null,
 grade varchar2(2) not null,

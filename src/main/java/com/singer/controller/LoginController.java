@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
 import com.singer.common.DateUtil;
+import com.singer.common.Constants.RESULT_CODE;
 import com.singer.kafka.Producer;
 import com.singer.service.CommService;
 import com.singer.service.SM01Service;
@@ -102,9 +103,9 @@ public class LoginController {
 
 			producer.send(queryUtil.getQuery());
 
-			hashMap.put("code", Constants.SUCCESS_CODE);
+			hashMap.put("code", RESULT_CODE.SUCCESS.getValue());
 
-			log.debug("code : " + Constants.SUCCESS_CODE);
+			log.debug("code : " + RESULT_CODE.SUCCESS.getValue());
 			return hashMap;
 		}
 

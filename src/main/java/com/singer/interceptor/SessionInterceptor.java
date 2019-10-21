@@ -2,6 +2,7 @@ package com.singer.interceptor;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.singer.common.CommonUtil;
 import com.singer.dao.CommDao;
 import com.singer.util.MenuListStruct;
 import com.singer.vo.CommVo;
@@ -44,12 +46,11 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		String usertype = (String) session.getAttribute("usertype");
 		log.debug("===================== preHandle =========================");
 		// 세션 만료 케이스
-		if ("/sessionExpire".equals(uri) || "/".equals(uri) || "/forwardError".equals(uri)
-				|| "/forwardError".equals(uri) || "/error".equals(uri)) {
+		if ("/sessionExpire".equals(uri) || "/".equals(uri) || "/forwardError".equals(uri) || "/error".equals(uri)) {
 			return true;
 		}
 
-		if (userid == null) { // 세션 없음
+		if (CommonUtil.isNull(userid)) { // 세션 없음
 			log.debug("login need");
 			response.sendRedirect("/sessionExpire");
 			return false;
@@ -63,9 +64,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 
 			// 메뉴 권한 제어
 			if (list.stream().anyMatch(s -> uri.equals(s.getMenuurl()))) {
-				Iterator<CommVo> iter = list.stream().filter(s -> uri.equals(s.getMenuurl())).iterator();
-				while (iter.hasNext()) {
-					CommVo comm = iter.next();
+				Stream<CommVo> stream = list.stream().filter(s -> uri.equals(s.getMenuurl()));
+				for (Iterator<CommVo> i = stream.iterator(); i.hasNext();) {
+					CommVo comm = i.next();
 					int comp = usertype.compareTo(comm.getAuthlevel());
 					if (comp > 0) { // 권한 없는 메뉴 uri로 접속시
 						log.debug("use denied");
@@ -73,6 +74,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 						return false;
 					}
 				}
+
 			} else {
 				return true;
 			}

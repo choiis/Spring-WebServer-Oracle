@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.singer.common.Constants;
+import com.singer.common.Constants.RESULT_CODE;
 import com.singer.service.SR02Service;
 import com.singer.vo.SR01Vo;
 
@@ -46,7 +46,7 @@ public class SR02Controller {
 		String userid = (String) session.getAttribute("userid");
 		sr02Service.deleteSR02Vo(sr02Vo, userid);
 
-		sr02Vo.setResult(Constants.SUCCESS_CODE);
+		sr02Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 		log.debug("exit sr02delete.do");
 		return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.OK);
 	}
@@ -61,12 +61,12 @@ public class SR02Controller {
 
 		if (sr02Vo == null) {
 			SR01Vo sr02Vo2 = new SR01Vo();
-			sr02Vo2.setResult(Constants.FAIL_CODE);
+			sr02Vo2.setResult(RESULT_CODE.FAIL.getValue());
 			log.debug("exit sr02selectOne.do");
 			return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.OK);
 		} else {
 
-			sr02Vo.setResult(Constants.SUCCESS_CODE);
+			sr02Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 			log.debug("exit sr02selectOne.do");
 			return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.OK);
 		}
