@@ -96,17 +96,23 @@
 			where seq = #{seq}
 		</delete>
 		
-		<update id="like" parameterType="com.singer.vo.SV01Vo">
+		<insert id="like" parameterType="com.singer.vo.SV01Vo">
+			<selectKey  keyProperty="good"  resultType="java.lang.Integer" order="AFTER">
+		 		select good from SV01 where seq = #{seq}
+		 	</selectKey>
 			update SV01 
 			set good = (select good from SV01 where seq = #{seq}) + 1
 			where seq = #{seq}
-		</update>
+		</insert>
 		
-		<update id="hate" parameterType="com.singer.vo.SV01Vo">
+		<insert id="hate" parameterType="com.singer.vo.SV01Vo">
+			<selectKey  keyProperty="good"  resultType="java.lang.Integer" order="AFTER">
+		 		select good from SV01 where seq = #{seq}
+		 	</selectKey>
 			update SV01 
 			set good = (select good from SV01 where seq = #{seq}) - 1
 			where seq = #{seq}
-		</update>
+		</insert>
 		
 		<update id="likelog" parameterType="com.singer.vo.SV01Vo">
 			merge into SVG1 S1

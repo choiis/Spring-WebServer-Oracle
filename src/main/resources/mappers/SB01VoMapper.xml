@@ -22,17 +22,23 @@
 			where seq = #{seq}
 		</update>
 		
-		<update id="like" parameterType="com.singer.vo.SB01Vo">
+		<insert id="like" parameterType="com.singer.vo.SB01Vo">
+			<selectKey  keyProperty="good"  resultType="java.lang.Integer" order="AFTER">
+		 		select good from SB01 where seq = #{seq}
+		 	</selectKey>
 			update SB01 
 			set good = (select good from SB01 where seq = #{seq}) + 1
 			where seq = #{seq}
-		</update>
+		</insert>
 		
-		<update id="hate" parameterType="com.singer.vo.SB01Vo">
+		<insert id="hate" parameterType="com.singer.vo.SB01Vo">
+			<selectKey  keyProperty="good"  resultType="java.lang.Integer" order="AFTER">
+		 		select good from SB01 where seq = #{seq}
+		 	</selectKey>
 			update SB01 
 			set good = (select good from SB01 where seq = #{seq}) - 1 
 			where seq = #{seq}
-		</update>
+		</insert>
 		
 		<update id="click" parameterType="com.singer.vo.SB01Vo">
 			update SB01

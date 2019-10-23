@@ -38,11 +38,11 @@ public class SR01Dao extends SuperDao {
 	}
 
 	public int likelogSR01Vo(SR01Vo sr01Vo) throws Exception {
-		return update(namespace + ".likelog", sr01Vo);
+		return insert(namespace + ".likelog", sr01Vo);
 	}
 
 	public int hatelogSR01Vo(SR01Vo sr01Vo) throws Exception {
-		return update(namespace + ".hatelog", sr01Vo);
+		return insert(namespace + ".hatelog", sr01Vo);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -49,7 +49,8 @@ public class SV01ServiceImpl implements SV01Service {
 		if (CommonUtil.isZeroLength(list)) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
 		} else {
-			for (int i = 0; i < list.size(); i++) {
+			int size = list.size();
+			for (int i = 0; i < size; i++) {
 				if (CommonUtil.isNull(list.get(i).getContent())) {
 					throw new AppException(ExceptionMsg.EXT_MSG_INPUT_9);
 				}
@@ -124,7 +125,6 @@ public class SV01ServiceImpl implements SV01Service {
 	@Transactional
 	@Override
 	public SV01Vo likeSV01Vo(SV01Vo sv01Vo, String sessionid) throws Exception {
-		int like = sv01Vo.getGood() + 1;
 		sv01Dao.likeSV01Vo(sv01Vo);
 
 		sv01Vo.setSessionid(sessionid);
@@ -133,14 +133,12 @@ public class SV01ServiceImpl implements SV01Service {
 		sv01Dao.likelogSV01Vo(sv01Vo);
 
 		sv01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		sv01Vo.setLike(like);
 		return sv01Vo;
 	}
 
 	@Transactional
 	@Override
 	public SV01Vo hateSV01Vo(SV01Vo sv01Vo, String sessionid) throws Exception {
-		int like = sv01Vo.getGood() - 1;
 		sv01Dao.hateSV01Vo(sv01Vo);
 
 		sv01Vo.setSessionid(sessionid);
@@ -149,7 +147,6 @@ public class SV01ServiceImpl implements SV01Service {
 		sv01Dao.hatelogSV01Vo(sv01Vo);
 
 		sv01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		sv01Vo.setLike(like);
 		return sv01Vo;
 	}
 }

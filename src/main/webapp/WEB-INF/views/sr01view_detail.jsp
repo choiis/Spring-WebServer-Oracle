@@ -353,7 +353,7 @@
 		
 		gfn_ajaxRest("sr01like/" + parseInt($("#seq").val()), "PUT", function(data) {
 			if(data.result == 1) {
-				$("#good").text(data.like);
+				$("#good").text(data.good);
 				$("#button_like").attr('disabled', true);
 			
 			}
@@ -364,7 +364,7 @@
 		
 		gfn_ajaxRest("sr01hate/" + parseInt($("#seq").val()), "PUT" , function(data) {
 			if(data.result == 1) {
-				$("#good").text(data.like);
+				$("#good").text(data.good);
 				$("#button_hate").attr('disabled', true);
 			}
 		});

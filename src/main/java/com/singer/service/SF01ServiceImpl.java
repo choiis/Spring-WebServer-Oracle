@@ -116,7 +116,6 @@ public class SF01ServiceImpl implements SF01Service {
 	@Transactional
 	@Override
 	public SF01Vo likeSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
-		int like = sf01Vo.getGood() + 1;
 		sf01Dao.likeSF01Vo(sf01Vo);
 
 		sf01Vo.setSessionid(sessionid);
@@ -125,14 +124,12 @@ public class SF01ServiceImpl implements SF01Service {
 		sf01Dao.likelogSF01Vo(sf01Vo);
 
 		sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		sf01Vo.setLike(like);
 		return sf01Vo;
 	}
 
 	@Transactional
 	@Override
 	public SF01Vo hateSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
-		int like = sf01Vo.getGood() - 1;
 		sf01Dao.hateSF01Vo(sf01Vo);
 
 		sf01Vo.setSessionid(sessionid);
@@ -141,7 +138,6 @@ public class SF01ServiceImpl implements SF01Service {
 		sf01Dao.hatelogSF01Vo(sf01Vo);
 
 		sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		sf01Vo.setLike(like);
 		return sf01Vo;
 	}
 

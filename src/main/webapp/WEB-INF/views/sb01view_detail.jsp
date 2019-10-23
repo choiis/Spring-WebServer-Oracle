@@ -252,7 +252,7 @@
 	
 		gfn_ajaxRest("sb01like/" + parseInt($("#seq01").val()), "PUT", function(data) {
 			if(data.result == 1) {
-				$("#good").text(data.like);
+				$("#good").text(data.good);
 				$("#button_like").attr('disabled', true);
 			
 			}
@@ -263,7 +263,7 @@
 		
 		gfn_ajaxRest("sb01hate/" + parseInt($("#seq01").val()), "PUT" , function(data) {
 			if(data.result == 1) {
-				$("#good").text(data.like);
+				$("#good").text(data.good);
 				$("#button_hate").attr('disabled', true);
 			}
 		});

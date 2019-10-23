@@ -19,6 +19,7 @@ import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants.RESULT_CODE;
+import com.singer.common.Constants.YES_NO;
 import com.singer.common.DateUtil;
 import com.singer.dao.SB01Dao;
 import com.singer.dao.SB02Dao;
@@ -57,9 +58,9 @@ public class SB01ServiceImpl implements SB01Service {
 		}
 
 		if (CommonUtil.chkVideoFile(video.getOriginalFilename())) {
-			sb01Vo.setVideobool(1);
+			sb01Vo.setVideobool(YES_NO.YES.getValue());
 		} else if (CommonUtil.chkAudioFile(video.getOriginalFilename())) {
-			sb01Vo.setVideobool(0);
+			sb01Vo.setVideobool(YES_NO.NO.getValue());
 		} else {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
 		}
@@ -127,7 +128,6 @@ public class SB01ServiceImpl implements SB01Service {
 	@Transactional
 	@Override
 	public SB01Vo likeSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
-		int like = sb01Vo.getGood() + 1;
 		sb01Dao.likeSB01Vo(sb01Vo);
 
 		sb01Vo.setSessionid(sessionid);
@@ -136,14 +136,12 @@ public class SB01ServiceImpl implements SB01Service {
 		sb01Dao.likelogSB01Vo(sb01Vo);
 
 		sb01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		sb01Vo.setLike(like);
 		return sb01Vo;
 	}
 
 	@Transactional
 	@Override
 	public SB01Vo hateSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
-		int like = sb01Vo.getGood() - 1;
 		sb01Dao.hateSB01Vo(sb01Vo);
 
 		sb01Vo.setSessionid(sessionid);
@@ -152,7 +150,6 @@ public class SB01ServiceImpl implements SB01Service {
 		sb01Dao.hatelogSB01Vo(sb01Vo);
 
 		sb01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		sb01Vo.setLike(like);
 		return sb01Vo;
 	}
 

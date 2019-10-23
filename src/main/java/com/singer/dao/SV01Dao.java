@@ -36,11 +36,11 @@ public class SV01Dao extends SuperDao {
 	}
 
 	public int likeSV01Vo(SV01Vo sv01Vo) throws Exception {
-		return update(namespace + ".like", sv01Vo);
+		return insert(namespace + ".like", sv01Vo);
 	}
 
 	public int hateSV01Vo(SV01Vo sv01Vo) throws Exception {
-		return update(namespace + ".hate", sv01Vo);
+		return insert(namespace + ".hate", sv01Vo);
 	}
 
 	public int likelogSV01Vo(SV01Vo sv01Vo) throws Exception {
