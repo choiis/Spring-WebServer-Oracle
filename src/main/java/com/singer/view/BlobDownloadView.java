@@ -21,6 +21,7 @@ public class BlobDownloadView extends AbstractView {
 		setContentType("apllication/download; charset=utf-8");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest req, HttpServletResponse res)
 			throws Exception {

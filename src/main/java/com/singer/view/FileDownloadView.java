@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
-import oracle.sql.BLOB;
-
 public class FileDownloadView extends AbstractView {
 	public FileDownloadView() {
 
@@ -22,6 +20,7 @@ public class FileDownloadView extends AbstractView {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest req, HttpServletResponse res)
@@ -31,7 +30,7 @@ public class FileDownloadView extends AbstractView {
 
 		File file = (File) downloadFile.get("downfile");
 		String fileName = (String) downloadFile.get("filename");
-		
+
 		res.setContentType(getContentType());
 		res.setContentLength((int) file.length());
 		res.setHeader("Content-Disposition",

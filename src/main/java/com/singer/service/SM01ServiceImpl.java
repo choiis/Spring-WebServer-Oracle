@@ -11,14 +11,11 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.singer.common.AES256Util;
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
@@ -36,9 +33,9 @@ public class SM01ServiceImpl implements SM01Service {
 	@Resource(name = "sm01Dao")
 	private SM01Dao sm01Dao;
 
-	@Autowired
-	@Qualifier("aes256")
-	private AES256Util aes256Util;
+	// @Autowired
+	// @Qualifier("aes256")
+	// private AES256Util aes256Util;
 
 	@Transactional
 	@Override

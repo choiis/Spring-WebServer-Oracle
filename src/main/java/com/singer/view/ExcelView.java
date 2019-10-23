@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.singer.common.CommonUtil;
 import com.singer.vo.SB01Vo;
 
 public class ExcelView extends AbstractExcelView {
@@ -20,13 +21,18 @@ public class ExcelView extends AbstractExcelView {
 		return new XSSFWorkbook();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		String type = model.get("excelType").toString();
+		Object excelType = model.get("excelType");
+		if (CommonUtil.isNull(excelType)) {
+			return;
+		}
+		String type = excelType.toString();
 
-		if (type.equals("board")) {
+		if ("board".equals(type)) {
 			List<SB01Vo> excelList = (List<SB01Vo>) model.get("excelList");
 			Sheet sheet = workbook.createSheet(type);
 			Row row = null;

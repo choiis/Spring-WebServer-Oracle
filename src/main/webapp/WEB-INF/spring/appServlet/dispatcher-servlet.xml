@@ -42,7 +42,6 @@
 
 	
 	<beans:bean id="sessionInterceptor" class="com.singer.interceptor.SessionInterceptor"></beans:bean>
-	<beans:bean id="logInterceptor" class="com.singer.interceptor.LogInterceptor"></beans:bean>
 	
 	<!-- 전역 예외 처리 -->
 	<beans:bean class="com.singer.exception.CommonExceptionHandler"/>
@@ -56,13 +55,6 @@
 			<beans:ref bean="sessionInterceptor" />
 		</interceptor>
 		
-		<interceptor>
-			<mapping path="/**" />
-			<exclude-mapping path="/sm01joinPage"/>
-			<exclude-mapping path="/sm01"/>
-			<exclude-mapping path="/login"/>
-			<beans:ref bean="logInterceptor" />
-		</interceptor>
 	</interceptors>
 		
 	<aop:aspectj-autoproxy/>

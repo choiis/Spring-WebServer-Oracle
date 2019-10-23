@@ -41,7 +41,8 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 					if (blackListArray != null) {
 						String val = values[i].toLowerCase();
 						log.info("val " + val);
-						for (int j = 0; j < blackListArray.size(); j++) {
+						int size = blackListArray.size();
+						for (int j = 0; j < size; j++) {
 							String black = blackListArray.get(j);
 
 							if (val.indexOf(black) != -1) {
