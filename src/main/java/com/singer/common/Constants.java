@@ -20,9 +20,9 @@ public class Constants {
 	}
 
 	public enum RESULT_CODE {
-		/** 성공 코드 */
-		FAIL(0),
 		/** 실패 코드 */
+		FAIL(0),
+		/** 성공 코드 */
 		SUCCESS(1);
 		private final int value;
 

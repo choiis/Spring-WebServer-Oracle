@@ -18,20 +18,31 @@
 
 		// 메일 전송을 클릭할때 이벤트 발생
 		$("#mail_btn").on("click", function(e) {
-		
-			var sendData = {
-	        	"email" : $("#email").val(),
-	        	"title" : $("#title").val(),
-	        	"contents" : $("#contents").val()
-	        };
-		
-			gfn_ajax("sendMail","POST" , sendData , function(data) {
-				if(data == 1011) {
-					alert("메일 전송 실패!");
-				} else {
-					alert($("#email").val() + " 님께 메일이 전송되었습니다!");	
-				}
-			});
+			
+			var form = $('#form')[0];
+			 
+        	// Create an FormData object 
+        	var formdata = new FormData(form);
+
+        	$.ajax({
+	        	url:"/sendMail",
+	            type:"POST",
+	            data: formdata,
+	            processData: false,
+	            contentType: false,
+	            success:function(data) {
+	            	if(data === 0) {
+						alert("메일 전송 실패!");
+					} else {
+						alert($("#email").val() + " 님께 메일이 전송되었습니다!");	
+					}
+	            },
+	            error : function(data, status, error) {
+			    	var errorData = JSON.parse(data.responseText);
+			    	alert(errorData.errorCode + " " + errorData.errorMsg);
+			    }  
+	        });
+			
 		});
 	});
 </script>
@@ -60,10 +71,12 @@
 			<p>전화번호 : ${sM01Vo.phone}</p>
 			
 			<img id="showTempImage" alt="" src="/selectPhoto/${sM01Vo.userid}" height="170px" width="150px"/>
-			<form id="form" method="post" action="/sendMail">
-			이메일 :<input type="text" id="email" name="email" value='${sM01Vo.email}' disabled><br>
+			<form id="form" method="post" enctype="multipart/form-data" action="/sendMail">
+			이메일 :<input type="text" value='${sM01Vo.email}' disabled><br>
+			<input type="text" id="email" name="email" value='${sM01Vo.email}' style="display:none;">
 			이메일 제목 : <input	type="text" id="title" name="title"><br>
-			이메일 내용 : <textarea id="contents" name="contents" rows="10" cols="60"></textarea>
+			이메일 내용 : <textarea id="contents" name="contents" rows="10" cols="60"></textarea><br>
+			이메일 첨부파일: <input id="fileInput" type="file" name="file" />
 			<button type="button" id="mail_btn">메일전송</button>
 			</form>
 

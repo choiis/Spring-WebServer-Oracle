@@ -1,56 +1,50 @@
 package com.singer.controller;
 
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMessage.RecipientType;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Iterator;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.singer.common.Constants;
-import com.singer.common.Constants.RESULT_CODE;
+import com.singer.common.CommonUtil;
+import com.singer.exception.AppException;
+import com.singer.util.MailUtil;
 import com.singer.vo.MailVo;
 
 @Controller("mailController")
 public class MailController {
 
 	@Autowired
-	private JavaMailSenderImpl mailSender;
+	private MailUtil mailUtil;
 
 	private final Log log = LogFactory.getLog(MailController.class);
 
 	@ResponseBody
 	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
-	public int sendMail(ModelAndView modelAndView, MailVo mailVo, HttpServletResponse response) {
-		log.debug("mailVo : " + mailVo);
+	public int sendMail(@ModelAttribute MailVo mailVo, MultipartHttpServletRequest request, HttpSession session)
+			throws AppException {
 
-		String setfrom = "mailSender";
-
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-
-			message.setFrom(new InternetAddress(setfrom)); // 보내는사람 생략하거나 하면
-															// 정상작동을 안함
-			message.addRecipient(RecipientType.TO, new InternetAddress(mailVo.getEmail())); // 받는사람
-			// 이메일
-			message.setSubject(mailVo.getTitle()); // 메일제목은 생략이 가능하다
-			message.setText(mailVo.getContents(), "utf-8", "html"); // 메일 내용
-			mailSender.send(message);
-
-		} catch (Exception e) {
-			log.debug("MAIL FAIL");
-			return Constants.ERROR_LOGIN_FAIL;
+		String userid = (String) session.getAttribute("userid");
+		mailVo.setSender(userid);
+		MultipartFile file = null;
+		Iterator<String> itr = request.getFileNames();
+		while (itr.hasNext()) {
+			file = request.getFile(itr.next());
 		}
-		log.debug("MAIL SUCCESS");
-		;
-		return RESULT_CODE.SUCCESS.getValue();
+		if (!CommonUtil.isNull(file)) {
+			mailVo.setFile(file);
+		}
+		log.debug("sendMail " + mailVo);
+		return mailUtil.mailSend(mailVo);
+
 	}
 }
