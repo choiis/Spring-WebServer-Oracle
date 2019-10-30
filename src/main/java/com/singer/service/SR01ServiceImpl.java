@@ -1,8 +1,8 @@
 package com.singer.service;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -57,24 +57,28 @@ public class SR01ServiceImpl implements SR01Service {
 
 		sr01Dao.insertSR01Vo(sr01Vo);
 		sr02Dao.insertSR02Vo(sr01Vo);
-
-		MultipartFile photo = null;
-		Iterator<String> itr = request.getFileNames();
-		while (itr.hasNext()) {
-			photo = request.getFile(itr.next());
-		}
-		if (!CommonUtil.isNull(photo)) {
+		List<MultipartFile> fileList = request.getFiles("file");
+		int idx = 0;
+		ArrayList<HashMap<String, Object>> arrayList = new ArrayList<>();
+		for (MultipartFile photo : fileList) {
 			if (!CommonUtil.chkIMGFile(photo.getOriginalFilename())) {
 				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_4);
 			}
 			HashMap<String, Object> putHash = new HashMap<String, Object>();
 			putHash.put("seq", sr01Vo.getSeq());
-			putHash.put("idx", 0);
+			putHash.put("idx", idx++);
 			putHash.put("regdate", DateUtil.getToday());
 			putHash.put("photo", photo.getBytes());
-			sr01Dao.insertImage(putHash);
+			arrayList.add(putHash);
 		}
 
+		arrayList.stream().forEach(s -> {
+			try {
+				sr01Dao.insertImage(s);
+			} catch (Exception e) {
+
+			}
+		});
 		return sr01Vo.getSeq() > 0 ? 1 : 0;
 	}
 

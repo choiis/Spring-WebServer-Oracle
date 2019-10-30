@@ -58,6 +58,7 @@
 			return true;
 		}
 		
+		
 		// 저장 버튼을 클릭할때 이벤트 발생
 		$("#btn_insert_button").on("click", function(e) {
 
@@ -159,8 +160,7 @@
 						제목:<input type="text" id="title" name="title"> <br>
 						가게명 : <input type="text" id="markertitle" name="markertitle"> <br>
 						내용<textarea id="text" name="text" rows="10" cols="40"></textarea>
-						
-						<input id="fileInput" type="file" name="sharefile" />
+						<input multiple="multiple" id="fileInput" type="file" name="file" />
 						<input id="mapx" type="hidden" name="mapx" />
 						<input id="mapy" type="hidden" name="mapy" />
 					<button id="btn_insert_button" type="button" >저장</button>
