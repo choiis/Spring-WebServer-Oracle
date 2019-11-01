@@ -6,13 +6,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BoardVo extends SuperVo {
-	private int seq;
-	private String title;
-	private String text;
-	private String userid;
-	private String regdate;
-	private int good;
-	private int hit;
+	protected int seq;
+	protected String title;
+	protected String text;
+	protected String userid;
+	protected String regdate;
+	protected int good;
+	protected int hit;
 
 	protected BoardVo() {
 

@@ -59,7 +59,7 @@ public class FTPUtil {
 			if (!FTPReply.isPositiveCompletion(reply)) {
 				ftp.disconnect();
 				log.debug("FTP Server refused");
-				System.exit(1);
+
 			}
 
 			if (!ftp.login(username, password)) {
@@ -137,7 +137,7 @@ public class FTPUtil {
 		try {
 			isSuccess = ftp.deleteFile(fileName);
 		} catch (IOException e) {
-			
+
 		} finally {
 			closeFTPClient(ftp);
 		}

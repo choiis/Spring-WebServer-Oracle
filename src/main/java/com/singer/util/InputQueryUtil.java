@@ -30,7 +30,8 @@ public class InputQueryUtil {
 	}
 
 	public String getQuery() {
-		return query.toString().substring(0, query.length() - 1) + ")";
+		int start = query.length() - 1;
+		return query.delete(start, start + 1).append(")").toString();
 	}
 
 }
