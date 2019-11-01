@@ -40,7 +40,7 @@ public class MailController {
 		while (itr.hasNext()) {
 			file = request.getFile(itr.next());
 		}
-		if (!CommonUtil.isNull(file)) {
+		if (!CommonUtil.isNull(file) && file.getSize() != 0) {
 			mailVo.setFile(file);
 		}
 		log.debug("sendMail " + mailVo);
