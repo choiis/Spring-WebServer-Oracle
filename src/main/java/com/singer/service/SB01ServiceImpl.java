@@ -38,7 +38,7 @@ public class SB01ServiceImpl implements SB01Service {
 
 	@Transactional
 	@Override
-	public int insertSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request) throws Exception {
+	public int insertSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
 
 		if (CommonUtil.isNull(sb01Vo.getTitle())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
@@ -47,6 +47,7 @@ public class SB01ServiceImpl implements SB01Service {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 
+		sb01Vo.setUserid(userid);
 		MultipartFile video = null;
 		Iterator<String> itr = request.getFileNames();
 

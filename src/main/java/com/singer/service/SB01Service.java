@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.singer.vo.SB01Vo;
 
 public interface SB01Service {
-	public int insertSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request) throws Exception;
+	public int insertSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request, String userid) throws Exception;
 
 	public List<SB01Vo> selectSB01Vo(SB01Vo sb01Vo) throws Exception;
 

@@ -6,7 +6,7 @@ import com.singer.vo.SR03Vo;
 
 public interface SR03Service {
 
-	public int insertSR03Vo(SR03Vo sr03Vo) throws Exception;
+	public int insertSR03Vo(SR03Vo sr03Vo, String userid) throws Exception;
 
 	public int likeSR03Vo(SR03Vo sr03Vo) throws Exception;
 

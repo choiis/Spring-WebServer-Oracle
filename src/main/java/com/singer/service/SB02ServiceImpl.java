@@ -22,10 +22,11 @@ public class SB02ServiceImpl implements SB02Service {
 	private SB02Dao sb02Dao;
 
 	@Override
-	public int insertSB02Vo(SB02Vo sb02Vo) throws Exception {
+	public int insertSB02Vo(SB02Vo sb02Vo, String userid) throws Exception {
 		if (CommonUtil.isNull(sb02Vo.getText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
+		sb02Vo.setUserid(userid);
 		sb02Vo.setRegdate(DateUtil.getTodayTime());
 
 		return sb02Dao.insertSB02Vo(sb02Vo);

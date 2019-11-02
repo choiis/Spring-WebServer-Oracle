@@ -46,60 +46,43 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01", method = RequestMethod.POST)
-	public ResponseEntity<SF01Vo> insertSF01Vo(@ModelAttribute("SF01Vo") SF01Vo sf01Vo, HttpSession session,
+	public ResponseEntity<SF01Vo> insertSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session,
 			MultipartHttpServletRequest request) throws Exception {
-		log.debug("enter sf01insert.do");
-		log.debug("sf01Vo : " + sf01Vo);
+		log.debug("enter sf01 post");
 
 		String userid = (String) session.getAttribute("userid");
 
 		int success = sf01Service.insertSF01Vo(sf01Vo, request, userid);
 		sf01Vo.setResult(success);
-		log.debug("exit sf01insert.do");
+
+		log.debug("exit sf01 post");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SF01Vo> selectSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
-		log.debug("enter sf01show.do");
-		log.debug("sf01Vo : " + sf01Vo);
+		log.debug("enter sf01 get");
 
 		List<SF01Vo> list = sf01Service.selectSF01Vo(sf01Vo);
 		sf01Vo.setList(list);
 
-		log.debug("list : " + list);
-		log.debug("exit sf01show.do");
-		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/sf01showFind.do", method = RequestMethod.POST)
-	public ResponseEntity<SF01Vo> selectFindSF01Vo(SF01Vo sf01Vo, HttpSession session) throws Exception {
-		log.debug("enter sf01showFind.do");
-		log.debug("sf01Vo : " + sf01Vo);
-
-		List<SF01Vo> list = sf01Service.selectFindSF01Vo(sf01Vo);
-		sf01Vo.setList(list);
-
-		log.debug("list : " + list);
-		log.debug("exit sf01showFind.do");
+		log.debug("exit sf01 get");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01show_detail/{seq}", method = RequestMethod.GET)
 	public ModelAndView selectOneSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
-		log.debug("enter sf01show_detail");
-		log.debug("sf01Vo : " + sf01Vo);
+		log.debug("enter sf01show_detail get");
 
 		ModelAndView model = new ModelAndView("/sf01view_detail");
+
 		String userid = (String) session.getAttribute("userid");
 		sf01Vo = sf01Service.selectOneSF01Vo(sf01Vo, userid);
 		model.addObject("sf01Vo", sf01Vo);
 
-		log.debug("sf01Vo : " + sf01Vo);
-		log.debug("exit sf01showFind.do");
+		log.debug("exit sf01show_detail get");
 		return model;
 	}
 
@@ -107,46 +90,50 @@ public class SF01Controller {
 	@RequestMapping(value = "/sf01File/{seq}/{regdate}", method = RequestMethod.GET)
 	public ModelAndView selectFileSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		log.debug("sf01Vo : " + sf01Vo);
+		log.debug("enter sf01File get");
+
 		HashMap<String, Object> downloadFile = sf01Service.selectFile(sf01Vo);
 
+		log.debug("exit sf01File get");
 		return new ModelAndView("filedownloadView", "downloadFile", downloadFile);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01/{seq}", method = RequestMethod.DELETE)
 	public ResponseEntity<SF01Vo> deleteSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
-		log.debug("enter sf01delete.do");
-		log.debug("sf01Vo : " + sf01Vo);
+		log.debug("enter sf01 delete");
 
 		sf01Service.deleteSF01Vo(sf01Vo);
 
 		sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		log.debug("exit sf01delete.do");
+
+		log.debug("exit sf01 delete");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01like/{seq}", method = RequestMethod.PUT)
 	public ResponseEntity<SF01Vo> likeSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
-		log.debug("enter sf01like.do");
-		log.debug("sf01Vo : " + sf01Vo);
+		log.debug("enter sf01like put");
+
 		String sessionid = (String) session.getAttribute("userid");
+
 		sf01Vo = sf01Service.likeSF01Vo(sf01Vo, sessionid);
 
-		log.debug("exit sf01like.do");
+		log.debug("exit sf01like put");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01hate/{seq}", method = RequestMethod.PUT)
 	public ResponseEntity<SF01Vo> hateSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
-		log.debug("enter sf01hate.do");
-		log.debug("sf01Vo : " + sf01Vo);
+		log.debug("enter sf01hate put");
+
 		String sessionid = (String) session.getAttribute("userid");
+
 		sf01Vo = sf01Service.hateSF01Vo(sf01Vo, sessionid);
 
-		log.debug("exit sf01hate.do");
+		log.debug("exit sf01hate put");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
 }

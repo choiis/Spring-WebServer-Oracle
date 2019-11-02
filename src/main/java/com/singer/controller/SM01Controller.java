@@ -41,11 +41,12 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01", method = RequestMethod.POST)
-	public ResponseEntity<SM01Vo> insertSM01Vo(@ModelAttribute("SM01Vo") SM01Vo sm01Vo,
-			MultipartHttpServletRequest request) throws Exception {
-
+	public ResponseEntity<SM01Vo> insertSM01Vo(@ModelAttribute SM01Vo sm01Vo, MultipartHttpServletRequest request)
+			throws Exception {
+		log.debug("enter sm01 pot");
 		sm01Service.insertSM01Vo(sm01Vo, request);
 
+		log.debug("exit sm01 post");
 		return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
 	}
 
@@ -58,19 +59,19 @@ public class SM01Controller {
 	@ResponseBody
 	@RequestMapping(value = "/sm01/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SM01Vo> selectSM01Vo(@ModelAttribute SM01Vo sm01Vo) throws Exception {
-		log.debug("sm01Vo : " + sm01Vo);
+		log.debug("enter sm01 get");
 
 		List<SM01Vo> list = sm01Service.selectSM01Vo(sm01Vo);
 		sm01Vo.setList(list);
 
-		log.debug("list : " + list);
+		log.debug("exit sm01 get");
 		return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/sm01update", method = RequestMethod.POST)
 	public ModelAndView upateSM01Vo(@ModelAttribute SM01Vo sm01Vo, MultipartHttpServletRequest request,
 			HttpSession session) throws Exception {
-		log.debug("sm01Vo : " + sm01Vo);
+		log.debug("enter sm01update post");
 
 		String userid = (String) session.getAttribute("userid");
 
@@ -79,37 +80,36 @@ public class SM01Controller {
 		ModelAndView model = new ModelAndView("/sm01update");
 		model.addObject("sm01Vo", sm01Vo);
 
+		log.debug("exit sm01update post");
 		return model;
 	}
 
 	@RequestMapping(value = "/sm01change", method = RequestMethod.GET)
 	public ModelAndView selectOneSM01Vo(HttpSession session) throws Exception {
 		SM01Vo sm01Vo = new SM01Vo();
+		log.debug("enter sm01change post");
 
 		ModelAndView model = new ModelAndView("/sm01update");
-
 		String userid = (String) session.getAttribute("userid");
-
 		sm01Vo.setUserid(userid);
 
 		sm01Vo = sm01Service.selectOneSM01Vo(sm01Vo);
 
 		model.addObject("sm01Vo", sm01Vo);
 
+		log.debug("exit sm01change post");
 		return model;
 	}
 
 	@RequestMapping(value = "/sm01show", method = RequestMethod.POST)
 	public ModelAndView selectOneSM01Vo(@ModelAttribute("sm01Vo") SM01Vo sm01Vo) throws Exception {
 		ModelAndView model = new ModelAndView("/sm01show");
-
-		log.debug("sm01Vo : " + sm01Vo);
+		log.debug("enter sm01show post");
 
 		sm01Vo = sm01Service.selectOneSM01Vo(sm01Vo);
 		model.addObject("sM01Vo", sm01Vo);
 
-		log.debug("sm01Vo : " + sm01Vo);
-
+		log.debug("exit sm01show post");
 		return model;
 	}
 
@@ -117,8 +117,7 @@ public class SM01Controller {
 	@RequestMapping(value = "/selectPhoto/{userid}", method = RequestMethod.GET)
 	public void selectPhotoSM01Vo(@ModelAttribute SM01Vo sm01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		log.debug("enter selectPhoto.do");
-		log.debug("sm01Vo : " + sm01Vo);
+		log.debug("enter selectPhoto get");
 
 		InputStream is = sm01Service.selectImage(sm01Vo, request);
 
@@ -130,6 +129,6 @@ public class SM01Controller {
 
 			}
 		}
-		log.debug("exit selectPhoto.do");
+		log.debug("exit selectPhoto get");
 	}
 }

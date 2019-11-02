@@ -36,53 +36,44 @@ public class SM02Controller {
 	@ResponseBody
 	@RequestMapping(value = "/sm02/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SM02Vo> toSelectSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
+		log.debug("enter sm02 get");
 
-		log.debug("enter sm02show");
-		log.debug("sm02Vo : " + sm02Vo);
-
-		sm02Vo.setUserid((String) session.getAttribute("userid"));
-		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo);
+		String userid = (String) session.getAttribute("userid");
+		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo, userid);
 		sm02Vo.setList(list);
 
-		log.debug("list : " + list);
-		log.debug("exit sm02show.do");
+		log.debug("exit sm02 get");
 		return new ResponseEntity<SM02Vo>(sm02Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02/{seq}", method = RequestMethod.DELETE)
-	public ResponseEntity<SM02Vo> toDeleteSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SM02Vo> deleteSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
+		log.debug("enter sm02 delete");
+		String userid = (String) session.getAttribute("userid");
+
+		sm02Service.deleteSM02Vo(sm02Vo, userid);
+
 		sm02Vo.setNowPage(1);
-		log.debug("enter sm02delete.do");
-
-		sm02Vo.setUserid((String) session.getAttribute("userid"));
-
-		log.debug("sm02Vo : " + sm02Vo);
-		sm02Service.deleteSM02Vo(sm02Vo);
-
-		sm02Vo.setUserid((String) session.getAttribute("userid"));
-		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo);
+		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo, userid);
 		sm02Vo.setList(list);
 
-		log.debug("list : " + list);
-		log.debug("exit sm02delete.do");
-
+		log.debug("exit sm02 delete");
 		return new ResponseEntity<SM02Vo>(sm02Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02", method = RequestMethod.POST)
-	public ResponseEntity<SM02Vo> toInsertSM02Vo(SM02Vo sm02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SM02Vo> insertSM02Vo(SM02Vo sm02Vo, HttpSession session) throws Exception {
+		log.debug("enter sm02 post");
 
-		sm02Vo.setUserid((String) session.getAttribute("userid"));
+		String userid = (String) session.getAttribute("userid");
+		sm02Service.insertSM02Vo(sm02Vo, userid);
 
-		log.debug("sm02Vo : " + sm02Vo);
-
-		sm02Service.insertSM02Vo(sm02Vo);
-
-		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo);
+		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo, userid);
 		sm02Vo.setList(list);
 
+		log.debug("exit sm02 post");
 		return new ResponseEntity<SM02Vo>(sm02Vo, HttpStatus.CREATED);
 	}
 }

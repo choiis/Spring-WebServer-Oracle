@@ -6,7 +6,7 @@ import com.singer.vo.SV04Vo;
 
 public interface SV04Service {
 
-	public int insertSV04Vo(SV04Vo sv04Vo) throws Exception;
+	public int insertSV04Vo(SV04Vo sv04Vo, String userid) throws Exception;
 
 	public int likeSV04Vo(SV04Vo sv04Vo) throws Exception;
 

@@ -26,13 +26,12 @@ public class SV02Controller {
 	@ResponseBody
 	@RequestMapping(value = "/sv03", method = RequestMethod.POST)
 	public ResponseEntity<SV02Vo> insertSV03Vo(@RequestBody SV02Vo sv02Vo, HttpSession session) throws Exception {
-		log.debug("enter sv03insert.do");
-		log.debug("sv01Vo : " + sv02Vo);
+		log.debug("enter sv03 post");
 
 		String userid = (String) session.getAttribute("userid");
 		sv02Service.insertSv03Vo(sv02Vo, userid);
 
-		log.debug("exit sv03insert.do");
+		log.debug("exit sv03 post");
 		return new ResponseEntity<SV02Vo>(sv02Vo, HttpStatus.CREATED);
 	}
 }

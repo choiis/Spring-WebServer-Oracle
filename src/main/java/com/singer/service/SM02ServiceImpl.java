@@ -21,7 +21,7 @@ public class SM02ServiceImpl implements SM02Service {
 
 	@Transactional
 	@Override
-	public int insertSM02Vo(SM02Vo sm02Vo) throws Exception {
+	public int insertSM02Vo(SM02Vo sm02Vo, String userid) throws Exception {
 
 		if (CommonUtil.isNull(sm02Vo.getTitle())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
@@ -29,15 +29,16 @@ public class SM02ServiceImpl implements SM02Service {
 		if (CommonUtil.isNull(sm02Vo.getText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
-
+		sm02Vo.setUserid(userid);
 		sm02Vo.setRegdate(DateUtil.getTodayTime());
 		return sm02Dao.insertSM02Vo(sm02Vo);
 	}
 
 	@Transactional
 	@Override
-	public List<SM02Vo> selectSM02Vo(SM02Vo sm02Vo) throws Exception {
+	public List<SM02Vo> selectSM02Vo(SM02Vo sm02Vo, String userid) throws Exception {
 
+		sm02Vo.setUserid(userid);
 		return sm02Dao.selectSM02Vo(sm02Vo);
 	}
 
@@ -49,7 +50,9 @@ public class SM02ServiceImpl implements SM02Service {
 
 	@Transactional
 	@Override
-	public int deleteSM02Vo(SM02Vo sm02Vo) throws Exception {
+	public int deleteSM02Vo(SM02Vo sm02Vo, String userid) throws Exception {
+
+		sm02Vo.setUserid(userid);
 		return sm02Dao.deleteSM02Vo(sm02Vo);
 	}
 

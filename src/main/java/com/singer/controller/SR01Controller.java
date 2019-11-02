@@ -42,13 +42,12 @@ public class SR01Controller {
 	@ResponseBody
 	@RequestMapping(value = "/sr01show_detail/{seq}", method = RequestMethod.GET)
 	public ModelAndView selectDetailSR01Vo(@ModelAttribute SR01Vo sr01Vo) throws Exception {
-		log.debug("enter sr01show_detail.do");
+		log.debug("enter sr01show_detail get");
 
 		ModelAndView model = new ModelAndView("/sr01view_detail");
-
 		model.addObject("seq", sr01Vo.getSeq());
 
-		log.debug("exit sr01show_detail.do");
+		log.debug("exit sr01show_detail get");
 		return model;
 	}
 
@@ -61,15 +60,12 @@ public class SR01Controller {
 	@ResponseBody
 	@RequestMapping(value = "/sr01/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SR01Vo> selectsr01Vo(@ModelAttribute SR01Vo sr01Vo) throws Exception {
-
-		log.debug("enter sr01show.do");
-		log.debug("sr01Vo : " + sr01Vo);
+		log.debug("enter sr01 get");
 
 		List<SR01Vo> list = sr01Service.selectSR01Vo(sr01Vo);
 		sr01Vo.setList(list);
 
-		log.debug("list : " + list);
-		log.debug("exit sr01show.do");
+		log.debug("exit sr01 get");
 		return new ResponseEntity<SR01Vo>(sr01Vo, HttpStatus.OK);
 	}
 
@@ -77,61 +73,61 @@ public class SR01Controller {
 	@RequestMapping(value = "/sr01", method = RequestMethod.POST)
 	public ResponseEntity<SR01Vo> insertSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session,
 			MultipartHttpServletRequest request) throws Exception {
-		log.debug("enter sr01insert.do");
-		log.debug("sr01Vo : " + sr01Vo);
+		log.debug("enter sr01 post");
 
 		String userid = (String) session.getAttribute("userid");
+		int success = sr01Service.insertSR01Vo(sr01Vo, request, userid);
+		sr01Vo.setResult(success);
 
-		sr01Service.insertSR01Vo(sr01Vo, request, userid);
-
-		log.debug("exit sr01insert.do");
+		log.debug("exit sr01 post");
 		return new ResponseEntity<SR01Vo>(sr01Vo, HttpStatus.CREATED);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sr01One/{seq}", method = RequestMethod.GET)
 	public ResponseEntity<SR01Vo> selectOneSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session) throws Exception {
-		log.debug("enter sr01selectOne.do");
-		log.debug("sr01Vo : " + sr01Vo);
-		String userid = (String) session.getAttribute("userid");
+		log.debug("enter sr01One get");
 
+		String userid = (String) session.getAttribute("userid");
 		sr01Vo = sr01Service.selectOneSR01Vo(sr01Vo, userid);
-		log.debug("exit sr01selectOne.do");
+
+		log.debug("exit sr01One get");
 		return new ResponseEntity<SR01Vo>(sr01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "sr01/{seq}", method = RequestMethod.DELETE)
 	public ResponseEntity<SR01Vo> deleteSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session) throws Exception {
-		log.debug("enter sr01delete.do");
-		log.debug("SR01Vo : " + sr01Vo);
+		log.debug("enter sr01 delete");
 
 		sr01Service.deleteSR01Vo(sr01Vo);
-
 		sr01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		log.debug("exit sr01delete.do");
+
+		log.debug("exit sr01 delete");
 		return new ResponseEntity<SR01Vo>(sr01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "sr01like/{seq}", method = RequestMethod.PUT)
 	public ResponseEntity<SR01Vo> likeSR01vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session) throws Exception {
-		log.debug("enter sr01like.do");
-		log.debug("sr01Vo : " + sr01Vo);
+		log.debug("enter sr01like put");
+
 		String sessionid = (String) session.getAttribute("userid");
 		sr01Service.likeSR01Vo(sr01Vo, sessionid);
 
+		log.debug("exit sr01like put");
 		return new ResponseEntity<SR01Vo>(sr01Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "sr01hate/{seq}", method = RequestMethod.PUT)
 	public ResponseEntity<SR01Vo> hateSR01vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session) throws Exception {
-		log.debug("enter sr01hate.do");
-		log.debug("sr01Vo : " + sr01Vo);
+		log.debug("enter sr01hate put");
+
 		String sessionid = (String) session.getAttribute("userid");
 		sr01Service.hateSR01Vo(sr01Vo, sessionid);
 
+		log.debug("exit sr01hate put");
 		return new ResponseEntity<SR01Vo>(sr01Vo, HttpStatus.OK);
 	}
 
@@ -139,7 +135,7 @@ public class SR01Controller {
 	@RequestMapping(value = "/sr01photo/{seq}/{idx}", method = RequestMethod.GET)
 	public void selectPhotoSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		log.debug("enter selectVideo.do");
+		log.debug("enter sr01photo get");
 		InputStream is = sr01Service.selectPhoto(sr01Vo);
 
 		IOUtils.copy(is, response.getOutputStream());
@@ -150,5 +146,6 @@ public class SR01Controller {
 
 			}
 		}
+		log.debug("exit sr01photo get");
 	}
 }

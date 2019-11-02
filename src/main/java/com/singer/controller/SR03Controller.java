@@ -29,49 +29,45 @@ public class SR03Controller {
 	@ResponseBody
 	@RequestMapping(value = "/sr03/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SR03Vo> selectsr03Vo(@ModelAttribute SR03Vo sr03Vo, HttpSession session) throws Exception {
-
-		log.debug("sr03Vo : " + sr03Vo);
+		log.debug("enter sr03 get");
 
 		String userid = (String) session.getAttribute("userid");
 		List<SR03Vo> list = sr03Service.selectSR03Vo(sr03Vo, userid);
 		sr03Vo.setList(list);
-		log.debug("list : " + list);
+
+		log.debug("exit sr03 get");
 		return new ResponseEntity<SR03Vo>(sr03Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sr03", method = RequestMethod.POST)
 	public ResponseEntity<SR03Vo> insertsr03Vo(SR03Vo sr03Vo, HttpSession session) throws Exception {
-
-		log.debug("enter sr03insert.do");
-		log.debug("sr03Vo : " + sr03Vo);
+		log.debug("enter sr03 post");
 
 		String userid = (String) session.getAttribute("userid");
-
-		sr03Vo.setUserid(userid);
-
-		sr03Service.insertSR03Vo(sr03Vo);
+		sr03Service.insertSR03Vo(sr03Vo, userid);
 
 		List<SR03Vo> list = sr03Service.selectSR03Vo(sr03Vo, userid);
 		sr03Vo.setList(list);
 
-		log.debug("list : " + list);
-		log.debug("exit sr03insert.do");
+		log.debug("exit sr03 post");
 		return new ResponseEntity<SR03Vo>(sr03Vo, HttpStatus.CREATED);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sr03/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
 	public ResponseEntity<SR03Vo> deletesr03Vo(@ModelAttribute SR03Vo sr03Vo, HttpSession session) throws Exception {
-		sr03Vo.setNowPage(1);
-		log.debug("sr03Vo : " + sr03Vo);
+		log.debug("enter sr03 delete");
 
 		sr03Service.deleteSR03Vo(sr03Vo);
 
 		String userid = (String) session.getAttribute("userid");
+
+		sr03Vo.setNowPage(1);
 		List<SR03Vo> list = sr03Service.selectSR03Vo(sr03Vo, userid);
 		sr03Vo.setList(list);
-		log.debug("list : " + list);
+
+		log.debug("exit sr03 delete");
 		return new ResponseEntity<SR03Vo>(sr03Vo, HttpStatus.OK);
 	}
 }

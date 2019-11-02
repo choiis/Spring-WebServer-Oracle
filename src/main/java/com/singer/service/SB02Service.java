@@ -5,7 +5,7 @@ import java.util.List;
 import com.singer.vo.SB02Vo;
 
 public interface SB02Service {
-	public int insertSB02Vo(SB02Vo sb02Vo) throws Exception;
+	public int insertSB02Vo(SB02Vo sb02Vo, String userid) throws Exception;
 
 	public int likeSB02Vo(SB02Vo sb02Vo) throws Exception;
 

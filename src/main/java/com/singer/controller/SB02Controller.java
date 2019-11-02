@@ -29,52 +29,45 @@ public class SB02Controller {
 	@ResponseBody
 	@RequestMapping(value = "/sb02/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SB02Vo> selectSB02Vo(@ModelAttribute SB02Vo sb02Vo, HttpSession session) throws Exception {
-		log.debug("sb02Vo : " + sb02Vo);
+		log.debug("enter sb02 get");
 
 		String userid = (String) session.getAttribute("userid");
 		List<SB02Vo> list = sb02Service.selectSB02Vo(sb02Vo, userid);
 		sb02Vo.setList(list);
 
-		log.debug("list : " + list);
+		log.debug("exit sb02 get");
 		return new ResponseEntity<SB02Vo>(sb02Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02", method = RequestMethod.POST)
 	public ResponseEntity<SB02Vo> insertSB02Vo(SB02Vo sb02Vo, HttpSession session) throws Exception {
-
-		log.debug("enter sb02insert.do");
-		log.debug("sb02Vo : " + sb02Vo);
+		log.debug("enter sb02 post");
 
 		String userid = (String) session.getAttribute("userid");
-
-		sb02Vo.setUserid(userid);
-
-		sb02Service.insertSB02Vo(sb02Vo);
+		sb02Service.insertSB02Vo(sb02Vo, userid);
 
 		List<SB02Vo> list = sb02Service.selectSB02Vo(sb02Vo, userid);
 		sb02Vo.setList(list);
 
-		log.debug("sb02Vo : " + sb02Vo);
-		log.debug("exit sb02insert.do");
+		log.debug("exit sb02 post");
 		return new ResponseEntity<SB02Vo>(sb02Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sb02/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
 	public ResponseEntity<SB02Vo> deleteSB02Vo(@ModelAttribute SB02Vo sb02Vo, HttpSession session) throws Exception {
-		sb02Vo.setNowPage(1);
-		log.debug("enter sb02delete.do");
-		log.debug("sb02Vo : " + sb02Vo);
+		log.debug("enter sb02 delete");
 
 		sb02Service.deleteSB02Vo(sb02Vo);
 
 		String userid = (String) session.getAttribute("userid");
+
+		sb02Vo.setNowPage(1);
 		List<SB02Vo> list = sb02Service.selectSB02Vo(sb02Vo, userid);
 		sb02Vo.setList(list);
 
-		log.debug("list : " + list);
-		log.debug("exit sb02delete.do");
+		log.debug("exit sb02 delete");
 		return new ResponseEntity<SB02Vo>(sb02Vo, HttpStatus.OK);
 	}
 }

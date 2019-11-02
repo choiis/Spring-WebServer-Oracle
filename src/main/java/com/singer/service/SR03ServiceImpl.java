@@ -21,10 +21,11 @@ public class SR03ServiceImpl implements SR03Service {
 	private SR03Dao sr03Dao;
 
 	@Override
-	public int insertSR03Vo(SR03Vo sr03Vo) throws Exception {
+	public int insertSR03Vo(SR03Vo sr03Vo, String userid) throws Exception {
 		if (CommonUtil.isNull(sr03Vo.getText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
+		sr03Vo.setUserid(userid);
 		sr03Vo.setRegdate(DateUtil.getTodayTime());
 
 		return sr03Dao.insertSR03Vo(sr03Vo);

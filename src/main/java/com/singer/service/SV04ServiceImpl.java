@@ -22,10 +22,12 @@ public class SV04ServiceImpl implements SV04Service {
 	private SV04Dao sv04Dao;
 
 	@Override
-	public int insertSV04Vo(SV04Vo sv04Vo) throws Exception {
+	public int insertSV04Vo(SV04Vo sv04Vo, String userid) throws Exception {
 		if (CommonUtil.isNull(sv04Vo.getText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
+
+		sv04Vo.setUserid(userid);
 		sv04Vo.setRegdate(DateUtil.getTodayTime());
 
 		return sv04Dao.insertSV04Vo(sv04Vo);

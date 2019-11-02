@@ -29,49 +29,46 @@ public class SV04Controller {
 	@ResponseBody
 	@RequestMapping(value = "/sv04/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SV04Vo> selectSV04Vo(@ModelAttribute SV04Vo sv04Vo, HttpSession session) throws Exception {
-
-		log.debug("SV04Vo : " + sv04Vo);
+		log.debug("enter sv04 get");
 
 		String userid = (String) session.getAttribute("userid");
 		List<SV04Vo> list = sv04Service.selectSV04Vo(sv04Vo, userid);
 		sv04Vo.setList(list);
-		log.debug("list : " + list);
+
+		log.debug("exit sv04 get");
 		return new ResponseEntity<SV04Vo>(sv04Vo, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sv04", method = RequestMethod.POST)
 	public ResponseEntity<SV04Vo> insertSV04Vo(SV04Vo sv04Vo, HttpSession session) throws Exception {
-
-		log.debug("enter sv04insert.do");
-		log.debug("SV04Vo : " + sv04Vo);
+		log.debug("enter sv04 post");
 
 		String userid = (String) session.getAttribute("userid");
 
-		sv04Vo.setUserid(userid);
-
-		sv04Service.insertSV04Vo(sv04Vo);
+		sv04Service.insertSV04Vo(sv04Vo, userid);
 
 		List<SV04Vo> list = sv04Service.selectSV04Vo(sv04Vo, userid);
 		sv04Vo.setList(list);
 
-		log.debug("list : " + list);
-		log.debug("exit sv04insert.do");
+		log.debug("exit sv04 post");
 		return new ResponseEntity<SV04Vo>(sv04Vo, HttpStatus.CREATED);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sv04/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
 	public ResponseEntity<SV04Vo> deleteSV04Vo(@ModelAttribute SV04Vo sv04Vo, HttpSession session) throws Exception {
-		sv04Vo.setNowPage(1);
-		log.debug("SV04Vo : " + sv04Vo);
+		log.debug("enter sv04 delete");
 
 		sv04Service.deleteSV04Vo(sv04Vo);
 
 		String userid = (String) session.getAttribute("userid");
+
+		sv04Vo.setNowPage(1);
 		List<SV04Vo> list = sv04Service.selectSV04Vo(sv04Vo, userid);
 		sv04Vo.setList(list);
-		log.debug("list : " + list);
+
+		log.debug("exit sv04 delete");
 		return new ResponseEntity<SV04Vo>(sv04Vo, HttpStatus.OK);
 	}
 }
