@@ -22,16 +22,15 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
 	public String[] getParameterValues(String parameter) {
 		String[] values = super.getParameterValues(parameter);
-		log.debug("getParameterValues");
-		log.debug("parameter " + parameter);
+
 		if (values == null) {
 			return null;
 		}
 		int count = values.length;
 		String[] encodedValues = new String[count];
 		for (int i = 0; i < count; i++) {
+			encodedValues[i] = cleanXSS(values[i]);
 
-			// SQL Injection 대처
 			try {
 				B2CConfig b2cConfig = B2CConfig.getInstance();
 				List<String> skiplist = b2cConfig.getSqlInjectionSkipParam();
@@ -40,7 +39,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 					List<String> blackListArray = b2cConfig.getSqlInjectionBlackList();
 					if (blackListArray != null) {
 						String val = values[i].toLowerCase();
-						log.info("val " + val);
+
 						int size = blackListArray.size();
 						for (int j = 0; j < size; j++) {
 							String black = blackListArray.get(j);
@@ -55,17 +54,17 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 			} catch (AppException e) {
 				log.info("AppException");
 			}
+
 		}
 
 		return encodedValues;
+
 	}
 
 	public String getParameter(String name) {
 
-		log.info("getParameter ");
-		log.info("name " + name);
 		String value = super.getParameter(name);
-		log.info("value " + value);
+
 		if (value == null) {
 			return null;
 		} else if ("".equals(value)) {

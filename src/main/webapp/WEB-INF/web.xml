@@ -51,6 +51,20 @@
 			<url-pattern>/*</url-pattern>
 		</filter-mapping>
 		
+		<!-- Multipart filter 
+		allowCasualMultipartParsing="true" tomcat Server.xml add
+		-->
+		<filter>
+ 	   	<filter-name>springMultipartFilter</filter-name>
+    		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+		</filter>
+
+		<filter-mapping>
+    		<filter-name>springMultipartFilter</filter-name>
+   			<url-pattern>/*</url-pattern>
+   			<url-pattern>/</url-pattern>
+		</filter-mapping>
+		
 		<!-- XSS setting -->
 		<filter>
 			<filter-name>XSS</filter-name>
@@ -59,6 +73,7 @@
 		<filter-mapping>
 			<filter-name>XSS</filter-name>
 			<url-pattern>/</url-pattern>
+			<url-pattern>/*</url-pattern>
 		</filter-mapping>
 		
 		
