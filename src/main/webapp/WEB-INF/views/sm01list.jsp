@@ -67,12 +67,9 @@ var user_code = {};
 			
 			$("#userId").val(userid);
 			var popTitle = "회원정보상세";
-				
-			window.open("", popTitle);
+			var url = "sm01One/" + userid;	
+			window.open(url, "", popTitle);
 			
-			frmData.target = popTitle;
-			frmData.action = "/sm01show";
-			frmData.submit();
 		});
 		
 	});

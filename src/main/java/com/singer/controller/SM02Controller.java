@@ -35,7 +35,7 @@ public class SM02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02/{nowPage}", method = RequestMethod.GET)
-	public ResponseEntity<SM02Vo> toSelectSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SM02Vo> selectSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
 		log.debug("enter sm02 get");
 
 		String userid = (String) session.getAttribute("userid");

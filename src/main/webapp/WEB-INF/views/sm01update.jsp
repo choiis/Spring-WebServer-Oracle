@@ -113,7 +113,7 @@ var product_code = {};
 							<button id="save" type="button" >저장</button>
 							<input id="fileInput" type="file" name="imgFile" />				
 						</form>
-						<img id="showTempImage" alt="" name="photo" src="/selectPhoto/${sm01Vo.userid}" height="170px" width="150px"/>
+						<img id="showTempImage" alt="" name="photo" src="/sm01photo/${sm01Vo.userid}" height="170px" width="150px"/>
 					</div>
 				</div>
 			</div>

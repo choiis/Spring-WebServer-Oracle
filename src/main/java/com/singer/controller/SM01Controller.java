@@ -85,7 +85,7 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01change", method = RequestMethod.GET)
-	public ModelAndView selectOneSM01Vo(HttpSession session) throws Exception {
+	public ModelAndView selectOneChangeSM01Vo(HttpSession session) throws Exception {
 		SM01Vo sm01Vo = new SM01Vo();
 		log.debug("enter sm01change post");
 
@@ -101,23 +101,23 @@ public class SM01Controller {
 		return model;
 	}
 
-	@RequestMapping(value = "/sm01show", method = RequestMethod.POST)
-	public ModelAndView selectOneSM01Vo(@ModelAttribute("sm01Vo") SM01Vo sm01Vo) throws Exception {
+	@RequestMapping(value = "/sm01One/{userid}", method = RequestMethod.GET)
+	public ModelAndView selectOneSM01Vo(@ModelAttribute SM01Vo sm01Vo) throws Exception {
 		ModelAndView model = new ModelAndView("/sm01show");
-		log.debug("enter sm01show post");
+		log.debug("enter sm01One get");
 
 		sm01Vo = sm01Service.selectOneSM01Vo(sm01Vo);
 		model.addObject("sM01Vo", sm01Vo);
 
-		log.debug("exit sm01show post");
+		log.debug("exit sm01One get");
 		return model;
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/selectPhoto/{userid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm01photo/{userid}", method = RequestMethod.GET)
 	public void selectPhotoSM01Vo(@ModelAttribute SM01Vo sm01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		log.debug("enter selectPhoto get");
+		log.debug("enter sm01photo get");
 
 		InputStream is = sm01Service.selectImage(sm01Vo, request);
 
@@ -129,6 +129,6 @@ public class SM01Controller {
 
 			}
 		}
-		log.debug("exit selectPhoto get");
+		log.debug("exit sm01photo get");
 	}
 }
