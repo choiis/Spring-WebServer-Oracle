@@ -38,7 +38,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 				if (!skiplist.contains(parameter)) {
 					List<String> blackListArray = b2cConfig.getSqlInjectionBlackList();
 					if (blackListArray != null) {
-						String val = values[i].toLowerCase();
+						String val = encodedValues[i].toLowerCase();
 
 						int size = blackListArray.size();
 						for (int j = 0; j < size; j++) {
