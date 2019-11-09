@@ -7,7 +7,7 @@ Java Spring Oracle Redis Kafka JQuery
 
 ### Tomcat Config
 
-<Connector connectionTimeout="20000" 
+Connector connectionTimeout="20000" 
     		port="6789" 
     		disableUploadTimeout="true"
     		protocol="HTTP/1.1" 
@@ -15,6 +15,6 @@ Java Spring Oracle Redis Kafka JQuery
     		maxThreads="300"
     		minSpareThreads="25"
     		acceptCount="10"
-    		tcpNoDelay="true"/>
+    		tcpNoDelay="true"
 
-<Context docBase="Singer" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Singer"  allowCasualMultipartParsing="true"/>
+Context docBase="Singer" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Singer"  allowCasualMultipartParsing="true"
