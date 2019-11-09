@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
 import com.singer.kafka.Producer;
 import com.singer.util.InputQueryUtil;
@@ -29,6 +30,9 @@ public class CommonExceptionHandler {
 	public ModelAndView defaultExceptionHandler(HttpServletRequest request, Exception ext) {
 		boolean isAjax = false;
 		log.info("defaultException");
+		if (CommonUtil.isNull(ext.getMessage())) {
+			return null;
+		}
 		log.info(ext.getMessage());
 
 		InputQueryUtil queryUtil = new InputQueryUtil("log_error");
