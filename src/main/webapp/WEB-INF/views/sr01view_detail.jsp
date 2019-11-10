@@ -205,7 +205,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajax("sr03","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("sr03","POST" , sendData , function(data) {
 			var html = drawTable(data);
 
 	        html += '<tr>';
@@ -310,7 +310,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajax("sr03","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("sr03","POST" , sendData , function(data) {
 			for (var i = 0; i < $("#sr03viewTbody").find("tr").length; i++) {
 				var tr = $("#sr03viewTbody").find("tr").eq(i);
 				if(tr.find("td").eq(0).text() == data.parents) {

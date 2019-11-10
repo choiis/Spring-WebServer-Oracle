@@ -16,5 +16,5 @@ Connector connectionTimeout="20000"
     		minSpareThreads="25"
     		acceptCount="10"
     		tcpNoDelay="true"
-
+			 maxPostSize="52428800"
 Context docBase="Singer" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Singer"  allowCasualMultipartParsing="true"

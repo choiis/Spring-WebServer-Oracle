@@ -46,7 +46,7 @@
 			    "nowPage" : 1
 		    };
 
-			gfn_ajax("sm02","POST" , sendData , function(data) {
+			gfn_ajaxRequestBody("sm02","POST" , sendData , function(data) {
 				var html = "";
 
 				// jQuery 유틸리티 메서드 
