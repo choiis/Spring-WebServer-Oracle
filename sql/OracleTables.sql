@@ -1,18 +1,22 @@
 ﻿CREATE table SM01(
 userid varchar2(10) not null,
 passwd varchar2(30) not null,
-adminyn number(1) default 0,
 username varchar2(20) not null,
 brth varchar2(8) not null,
 grade number(1) default 4 not null,
 regdate varchar2(8) not null,
-phone varchar2(15) not null,
 email varchar2(30) not null,
 usertype number(1) default 4 not null
 );
 
 alter table SM01
 add constraint pk_SM01 primary key(userid);
+
+CREATE index idx_SM01_1
+on SM01(username);
+
+CREATE index idx_SM01_2
+on SM01(brth);
 
 CREATE TABLE SMP1(
 userid varchar2(10) not null,
@@ -25,6 +29,36 @@ add constraint pk_SMP1 primary key(userid);
 
 alter table SMP1
 add constraint fk_SMP1 foreign key(userid) references SM01(userid) on delete cascade;
+
+CREATE table SMI1 (
+userid varchar2(10) not null,
+infocode number(2) not null,
+pfnum varchar2(5) not null,
+pcnum varchar2(5) not null,
+pbnum varchar2(5) not null,
+regdate varchar2(8) not null
+);
+
+ALTER TABLE SMI1
+add constraint pk_SMI1 primary key(userid,infocode);
+
+alter table SMI1
+add constraint fk_SMI1 foreign key(userid) references SM01(userid) on delete cascade;
+
+CREATE index idx_SMI1_1
+on SMI1(pbnum);
+
+CREATE table SME1 (
+userid varchar2(10) not null,
+regdate varchar2(8) not NULL,
+insertid varchar2(10) not null 
+);
+
+ALTER TABLE SME1
+add constraint pk_SME1 primary key(userid);
+
+alter table SME1
+add constraint fk_SME1 foreign key(userid) references SM01(userid) on delete cascade;
 
 CREATE table MENU (
   menucd varchar2(2) not null,

@@ -30,8 +30,30 @@ public class SM01Vo extends SuperVo {
 
 	private String device;
 	private String browser;
-
+	private String insertid;
+	
 	private List<SM01Vo> list;
+
+	private int infocode;
+	private String pfnum;
+	private String pcnum;
+	private String pbnum;
+
+	private String cellpfnum;
+	private String cellpcnum;
+	private String cellpbnum;
+
+	private String homepfnum;
+	private String homepcnum;
+	private String homepbnum;
+
+	private String companypfnum;
+	private String companypcnum;
+	private String companypbnum;
+
+	private String otherpfnum;
+	private String otherpcnum;
+	private String otherpbnum;
 
 	public void setList(List<SM01Vo> list) {
 		this.list = list;

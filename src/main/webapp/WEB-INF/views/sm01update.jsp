@@ -35,12 +35,7 @@ var product_code = {};
 				alert("이름엔 한글만 입력하세요");
 				return false;
 			}
-			/*
-			if(!gfn_isPhoneNumber($("#phone").val())) {
-				alert("핸드폰번호 형식에 맞게 입력하세요");
-				return false;
-			}
-			*/
+			
 			if(!gfn_isEmail($("#email").val())) {
 				alert("이메일 형식에 맞게 입력하세요");
 				return false;
@@ -50,12 +45,12 @@ var product_code = {};
 				alert("생년월일에 숫자만 입력하세요");
 				return false;
 			}
-			
+			/*
 			if(!gfn_IsImage($("#fileInput").val())) {
 				alert("이미지 파일만 입력하세요");
 				return false;
 			}
-		
+			*/
 			return true;
 		}
 		
@@ -106,7 +101,16 @@ var product_code = {};
 						<form id="form" name="updateform" method="post" enctype="multipart/form-data" action="/sm01update">
 							<input type="hidden" id="userid" name="userid" value="${sm01Vo.userid}"> <br>
 							<br> 이름:<input	type="text" id="username" name="username" value="${sm01Vo.username}" maxlength="6">
-							<br> 전화번호:<input type="text" id="phone" name="phone" value="${sm01Vo.phone}" maxlength="14">
+							<br> 핸드폰번호:
+							<input type="text" id="cellpfnum" name="cellpfnum" value="${sm01Vo.cellpfnum}" maxlength="3">
+							<input type="text" id="cellpcnum" name="cellpcnum" value="${sm01Vo.cellpcnum}" maxlength="4">
+							<input type="text" id="cellpbnum" name="cellpbnum" value="${sm01Vo.cellpbnum}" maxlength="4">
+							
+							<br> 집번호:
+							<input type="text" id="homepfnum" name="homepfnum" value="${sm01Vo.homepfnum}" maxlength="3">
+							<input type="text" id="homepcnum" name="homepcnum" value="${sm01Vo.homepcnum}" maxlength="4">
+							<input type="text" id="homepbnum" name="homepbnum" value="${sm01Vo.homepbnum}" maxlength="4">
+							
 							<br> 생년월일:<input type="text" id="brth" name="brth" value="${sm01Vo.brth}" maxlength="8">
 							<br> 이메일:<input type="text" id="email" name="email" value="${sm01Vo.email}" maxlength="20">
 							<br>

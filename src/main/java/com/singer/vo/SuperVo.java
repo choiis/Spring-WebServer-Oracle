@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SuperVo {
-	protected int adminyn;
 	protected boolean deleteYn;
 	protected String showDate;
 	protected int totCnt;

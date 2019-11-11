@@ -64,7 +64,7 @@ var user_code = {};
 			e.preventDefault();
 			var tr = $(this).parent().parent();
 			var userid = tr.children("#userid").text();
-			
+
 			$("#userId").val(userid);
 			var popTitle = "회원정보상세";
 			var url = "sm01One/" + userid;	
@@ -97,7 +97,7 @@ var user_code = {};
 	            html += '<td id="userid" style="display:none;">' + item.userid + '</td>';
 	            html += '<td >' + item.brth + '</td>';
 	            html += '<td >' + item.regdate + '</td>';
-	            html += '<td >' + item.phone + '</td>';
+	            html += '<td >' + item.pfnum + "-" + item.pcnum + "-" + item.pbnum + '</td>';
 	            html += '<td >' + item.email + '</td>';
 	          	html += '<td >' + gfn_getCommCodeNm(user_code,item.usertype) + '</td>';
 	            html += '<td >' + item.usertype + '</td>';
@@ -126,7 +126,7 @@ var user_code = {};
 	            html += '<td id="userid" style="display:none;">' + item.userid + '</td>';
 	            html += '<td >' + item.brth + '</td>';
 	            html += '<td >' + item.regdate + '</td>';
-	            html += '<td >' + item.phone + '</td>';
+	            html += '<td >' + item.pfnum + "-" + item.pcnum + "-" + item.pbnum + '</td>';
 	            html += '<td >' + item.email + '</td>';
 	          	html += '<td >' + gfn_getCommCodeNm(user_code,item.usertype) + '</td>';
 				html += '</tr>';
@@ -137,6 +137,7 @@ var user_code = {};
 	        gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
 		});
 	};
+	
 
 </script>
 	<jsp:include page="banner.jsp" /> 

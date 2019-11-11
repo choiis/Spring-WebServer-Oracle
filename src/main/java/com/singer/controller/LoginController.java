@@ -47,12 +47,8 @@ public class LoginController {
 		ModelAndView model = new ModelAndView("/index");
 
 		session.removeAttribute("userid");
-		session.removeAttribute("adminyn");
 		session.removeAttribute("username");
-		session.removeAttribute("brth");
 		session.removeAttribute("grade");
-		session.removeAttribute("regdate");
-		session.removeAttribute("phone");
 		session.removeAttribute("email");
 		session.removeAttribute("usertype");
 		session.removeAttribute("menuList");
@@ -72,7 +68,7 @@ public class LoginController {
 
 		String userId = sm01Vo.getUserid();
 
-		SM01Vo one = sm01Service.selectOneSM01Vo(sm01Vo);
+		SM01Vo one = sm01Service.login(sm01Vo);
 		if (CommonUtil.isNull(one)) { // 로그인 실패
 
 			hashMap.put("code", Constants.ERROR_LOGIN_FAIL);
@@ -82,12 +78,9 @@ public class LoginController {
 		} else {
 
 			session.setAttribute("userid", userId);
-			session.setAttribute("adminyn", one.getAdminyn());
 			session.setAttribute("username", one.getUsername());
-			session.setAttribute("brth", one.getBrth());
 			session.setAttribute("grade", one.getGrade());
 			session.setAttribute("regdate", one.getRegdate());
-			session.setAttribute("phone", one.getPhone());
 			session.setAttribute("email", one.getEmail());
 			session.setAttribute("usertype", one.getUsertype());
 

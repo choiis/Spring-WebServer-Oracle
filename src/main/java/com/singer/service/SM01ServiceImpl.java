@@ -20,7 +20,7 @@ import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
-import com.singer.common.Constants.YES_NO;
+import com.singer.common.Constants.PHONE_INFO_CODE;
 import com.singer.common.DateUtil;
 import com.singer.dao.SM01Dao;
 import com.singer.vo.SM01Vo;
@@ -59,10 +59,6 @@ public class SM01ServiceImpl implements SM01Service {
 		sm01Vo.setRegdate(DateUtil.getToday());
 		sm01Vo.setGrade(Constants.USER_CODE.NORMAL.getValue());
 
-		if (CommonUtil.isNull(sm01Vo.getAdminyn())) {
-			sm01Vo.setAdminyn(YES_NO.NO.getValue());
-		}
-
 		MultipartFile photo = null;
 		Iterator<String> itr = request.getFileNames();
 		if (CommonUtil.isNull(itr)) {
@@ -77,6 +73,8 @@ public class SM01ServiceImpl implements SM01Service {
 		}
 
 		hashMap.put("succeed", sm01Dao.insertSM01Vo(sm01Vo));
+		sm01Vo.setInfocode(PHONE_INFO_CODE.CELL.getValue());
+		sm01Dao.insertSMI1Vo(sm01Vo);
 		HashMap<String, Object> putHash = new HashMap<String, Object>();
 		putHash.put("userid", sm01Vo.getUserid());
 		putHash.put("regdate", DateUtil.getToday());
@@ -101,7 +99,34 @@ public class SM01ServiceImpl implements SM01Service {
 	@Transactional
 	@Override
 	public SM01Vo selectOneSM01Vo(SM01Vo sm01Vo) throws Exception {
+		sm01Vo = sm01Dao.selectOneSM01Vo(sm01Vo);
+		List<SM01Vo> list = sm01Dao.selectSMI1Vo(sm01Vo);
+		for (SM01Vo vo : list) {
 
+			if (vo.getInfocode() == PHONE_INFO_CODE.CELL.getValue()) {
+				sm01Vo.setCellpfnum(vo.getPfnum());
+				sm01Vo.setCellpcnum(vo.getPcnum());
+				sm01Vo.setCellpbnum(vo.getPbnum());
+			} else if (vo.getInfocode() == PHONE_INFO_CODE.HOME.getValue()) {
+				sm01Vo.setHomepfnum(vo.getPfnum());
+				sm01Vo.setHomepcnum(vo.getPcnum());
+				sm01Vo.setHomepbnum(vo.getPbnum());
+			} else if (vo.getInfocode() == PHONE_INFO_CODE.COMPANY.getValue()) {
+				sm01Vo.setCompanypfnum(vo.getPfnum());
+				sm01Vo.setCompanypcnum(vo.getPcnum());
+				sm01Vo.setCompanypbnum(vo.getPbnum());
+			} else if (vo.getInfocode() == PHONE_INFO_CODE.OTHER.getValue()) {
+				sm01Vo.setOtherpfnum(vo.getPfnum());
+				sm01Vo.setOtherpcnum(vo.getPcnum());
+				sm01Vo.setOtherpbnum(vo.getPbnum());
+			}
+		}
+		return sm01Vo;
+	}
+
+	@Transactional
+	@Override
+	public SM01Vo login(SM01Vo sm01Vo) throws Exception {
 		return sm01Dao.selectOneSM01Vo(sm01Vo);
 	}
 
@@ -155,6 +180,50 @@ public class SM01ServiceImpl implements SM01Service {
 		}
 		// 저장후
 		sm01Dao.updateSM01Vo(sm01Vo);
+		// 전화번호 변경
+		if (!CommonUtil.isNull(sm01Vo.getCellpcnum()) && !CommonUtil.isNull(sm01Vo.getCellpbnum())) {
+			SM01Vo vo = new SM01Vo();
+			vo.setUserid(sm01Vo.getUserid());
+			vo.setInfocode(PHONE_INFO_CODE.CELL.getValue());
+			vo.setPfnum(sm01Vo.getCellpfnum());
+			vo.setPcnum(sm01Vo.getCellpcnum());
+			vo.setPbnum(sm01Vo.getCellpbnum());
+			vo.setRegdate(DateUtil.getToday());
+			sm01Dao.insertSMI1Vo(vo);
+		}
+
+		if (!CommonUtil.isNull(sm01Vo.getHomepcnum()) && !CommonUtil.isNull(sm01Vo.getHomepbnum())) {
+			SM01Vo vo = new SM01Vo();
+			vo.setUserid(sm01Vo.getUserid());
+			vo.setInfocode(PHONE_INFO_CODE.HOME.getValue());
+			vo.setPfnum(sm01Vo.getHomepfnum());
+			vo.setPcnum(sm01Vo.getHomepcnum());
+			vo.setPbnum(sm01Vo.getHomepbnum());
+			vo.setRegdate(DateUtil.getToday());
+			sm01Dao.insertSMI1Vo(vo);
+		}
+
+		if (!CommonUtil.isNull(sm01Vo.getCompanypcnum()) && !CommonUtil.isNull(sm01Vo.getCompanypbnum())) {
+			SM01Vo vo = new SM01Vo();
+			vo.setUserid(sm01Vo.getUserid());
+			vo.setInfocode(PHONE_INFO_CODE.COMPANY.getValue());
+			vo.setPfnum(sm01Vo.getCompanypfnum());
+			vo.setPcnum(sm01Vo.getCompanypcnum());
+			vo.setPbnum(sm01Vo.getCompanypbnum());
+			vo.setRegdate(DateUtil.getToday());
+			sm01Dao.insertSMI1Vo(vo);
+		}
+
+		if (!CommonUtil.isNull(sm01Vo.getOtherpcnum()) && !CommonUtil.isNull(sm01Vo.getOtherpbnum())) {
+			SM01Vo vo = new SM01Vo();
+			vo.setUserid(sm01Vo.getUserid());
+			vo.setInfocode(PHONE_INFO_CODE.OTHER.getValue());
+			vo.setPfnum(sm01Vo.getOtherpfnum());
+			vo.setPcnum(sm01Vo.getOtherpcnum());
+			vo.setPbnum(sm01Vo.getOtherpbnum());
+			vo.setRegdate(DateUtil.getToday());
+			sm01Dao.insertSMI1Vo(vo);
+		}
 
 		if (!CommonUtil.isNull(photo.getSize())) {
 
@@ -171,6 +240,19 @@ public class SM01ServiceImpl implements SM01Service {
 		sm01Vo.setUserid(userId);
 		// 재 조회
 		return sm01Dao.selectOneSM01Vo(sm01Vo);
+	}
+
+	@Transactional
+	@Override
+	public int updateSME1Vo(SM01Vo sm01Vo, String userId) throws Exception {
+		sm01Vo.setInsertid(userId);
+		sm01Dao.updateUserType(sm01Vo);
+		if (sm01Vo.getUsertype() == Constants.USER_CODE.ADMIN.getValue()) {
+			sm01Dao.insertSME1Vo(sm01Vo);
+		} else {
+			sm01Dao.deleteSME1Vo(sm01Vo);
+		}
+		return 0;
 	}
 
 }
