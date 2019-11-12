@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	도메인마다 namespace 를 구현하고
+	각각의 crud 에 대한 id 설정 후 쿼리 작성
+-->
+
+<mapper namespace="com.singer.mappers.SMI1">		
+
+		<select id="selectByBrth" resultType="com.singer.vo.SM01Vo"  parameterType="com.singer.vo.SM01Vo">
+				select
+					S.*,
+					S1.pfnum as pfnum,
+	 				S1.pcnum as pcnum,
+					S1.pbnum as pbnum
+					from 
+	 	 			(
+	 				 select 
+	  				T1.userid,
+	  				T1.username,
+	  				T1.brth,
+	  				T1.email,
+	  				T1.grade
+	  					from SM01 T1 where T1.brth = #{brth}
+	  					and not exists (
+	  					select 1 from SME1 E1 
+	  					where T1.userid = E1.userid
+	  				)
+	  				) S
+					left outer join SMI1 S1
+			 		on S.userid = S1.userid
+			 	and S1.infocode = 1
+		</select>
+		
+		
+		<select id="selectByName" resultType="com.singer.vo.SM01Vo"  parameterType="com.singer.vo.SM01Vo">
+				select
+					S.*,
+					S1.pfnum as pfnum,
+	 				S1.pcnum as pcnum,
+					S1.pbnum as pbnum
+					from 
+	 	 			(
+	 				 select 
+	  				T1.userid,
+	  				T1.username,
+	  				T1.brth,
+	  				T1.email,
+	  				T1.grade
+	  					from SM01 T1 where T1.username like #{username}||'%'
+	  					and not exists (
+	  					select 1 from SME1 E1 
+	  					where T1.userid = E1.userid
+	  				)
+	  				) S
+					left outer join SMI1 S1
+			 		on S.userid = S1.userid
+			 	and S1.infocode = 1
+		</select>
+
+		<select id="selectByPhone" resultType="com.singer.vo.SM01Vo"  parameterType="com.singer.vo.SM01Vo">
+				select
+	  				S1.userid as userid,
+	  				S1.username as username,
+	  				S1.brth as brth,
+	  				S1.email as email,
+	  				S1.grade as grade,
+	  				S.pfnum as pfnum,
+	 				S.pcnum as pcnum,
+					S.pbnum as pbnum
+	  				from 
+					(select 
+						T1.* from SMI1 T1
+						where T1.pbnum = #{pbnum}
+						<if test="pcnum != null">
+			 				and T1.pcnum = #{pcnum}
+			 			</if>
+			 			<if test="pfnum != null">
+			 				and T1.pfnum = #{pfnum}
+			 			</if>
+						AND T1.infocode = 1
+						and not exists (
+	 				 	select 1 from SME1 E1 
+	  					where T1.userid = E1.userid
+						)
+					) S
+				inner join SM01 S1
+				on S.userid = S1.userid		
+		</select>		
+</mapper>

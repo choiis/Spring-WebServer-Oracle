@@ -46,7 +46,7 @@ alter table SMI1
 add constraint fk_SMI1 foreign key(userid) references SM01(userid) on delete cascade;
 
 CREATE index idx_SMI1_1
-on SMI1(pbnum);
+on SMI1(pbnum,pcnum,pfnum);
 
 CREATE table SME1 (
 userid varchar2(10) not null,
