@@ -83,7 +83,7 @@ insert into MENU values('05','파일 게시판','/sf01page',4,'admin','20180901'
 insert into MENU values('06','투표 게시판','/sv01page',4,'admin','20180901','admin','20180901');
 insert into MENU values('07','맛집 추천','/sr01page',4,'admin','20180901','admin','20180901');
 insert into MENU values('08','나의 메모장','/sm02page',4,'admin','20180901','admin','20180901');
-
+insert into MENU values('09','유저 검색','/smi1Page',4,'admin','20180901','admin','20180901');
 
 CREATE table CODE_GRP (
 codegrp varchar2(5) not null,

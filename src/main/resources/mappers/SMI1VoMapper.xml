@@ -20,6 +20,7 @@
 	  				T1.username,
 	  				T1.brth,
 	  				T1.email,
+	  				T1.regdate,
 	  				T1.grade
 	  					from SM01 T1 where T1.brth = #{brth}
 	  					and not exists (
@@ -46,6 +47,7 @@
 	  				T1.username,
 	  				T1.brth,
 	  				T1.email,
+	  				T1.regdate,
 	  				T1.grade
 	  					from SM01 T1 where T1.username like #{username}||'%'
 	  					and not exists (
@@ -64,6 +66,7 @@
 	  				S1.username as username,
 	  				S1.brth as brth,
 	  				S1.email as email,
+	  				S1.regdate as regdate,
 	  				S1.grade as grade,
 	  				S.pfnum as pfnum,
 	 				S.pcnum as pcnum,
@@ -71,12 +74,12 @@
 	  				from 
 					(select 
 						T1.* from SMI1 T1
-						where T1.pbnum = #{pbnum}
+						where T1.pbnum = #{cellpbnum}
 						<if test="pcnum != null">
-			 				and T1.pcnum = #{pcnum}
+			 				and T1.pcnum = #{cellpcnum}
 			 			</if>
 			 			<if test="pfnum != null">
-			 				and T1.pfnum = #{pfnum}
+			 				and T1.pfnum = #{cellpfnum}
 			 			</if>
 						AND T1.infocode = 1
 						and not exists (
