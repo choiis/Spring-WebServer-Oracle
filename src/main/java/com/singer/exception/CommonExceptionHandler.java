@@ -62,6 +62,9 @@ public class CommonExceptionHandler {
 	public ModelAndView SQLExceptionHandler(HttpServletRequest request, Exception ext) {
 		boolean isAjax = false;
 		log.info("SQLException");
+		if (CommonUtil.isNull(ext.getMessage())) {
+			return null;
+		}
 		log.info(ext.getMessage());
 
 		InputQueryUtil queryUtil = new InputQueryUtil("log_error");
@@ -90,6 +93,9 @@ public class CommonExceptionHandler {
 	public ModelAndView appExceptionHandler(HttpServletRequest request, Exception ext) {
 		boolean isAjax = false;
 		log.info("AppException");
+		if (CommonUtil.isNull(ext.getMessage())) {
+			return null;
+		}
 		log.info(ext.getMessage());
 
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
@@ -111,6 +117,9 @@ public class CommonExceptionHandler {
 	public ModelAndView NoHandlerFoundException(HttpServletRequest request, Exception ext) {
 		boolean isAjax = false;
 		log.info("NoHandlerFoundException");
+		if (CommonUtil.isNull(ext.getMessage())) {
+			return null;
+		}
 		log.info(ext.getMessage());
 
 		InputQueryUtil queryUtil = new InputQueryUtil("log_error");

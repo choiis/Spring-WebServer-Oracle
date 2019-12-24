@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -131,4 +132,17 @@ public class SM01Controller {
 		}
 		log.debug("exit sm01photo get");
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/sme1", method = RequestMethod.PUT)
+	public ResponseEntity<SM01Vo> upateSME1Vo(@RequestBody SM01Vo sm01Vo, HttpSession session) throws Exception {
+		log.debug("enter sme1 put");
+
+		String userid = (String) session.getAttribute("userid");
+		sm01Service.updateSME1Vo(sm01Vo, userid);
+
+		log.debug("exit sme1 put");
+		return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
+	}
+
 }

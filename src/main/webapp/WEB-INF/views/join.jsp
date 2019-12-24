@@ -39,12 +39,7 @@
 				alert("이름엔 한글만 입력하세요");
 				return false;
 			}
-			/*
-			if(!gfn_isPhoneNumber($("#phone").val())) {
-				alert("핸드폰번호 형식에 맞게 입력하세요");
-				return false;
-			}
-			*/
+			
 			if(!gfn_isEmail($("#email").val())) {
 				alert("이메일 형식에 맞게 입력하세요");
 				return false;
@@ -109,7 +104,9 @@
 							아이디:<input type="text" id="userid" name="userid"  maxlength="12"> <br>
 							<br> 비밀번호:<input type="password" id="passwd" name="passwd"  maxlength="10"> 
 							<br> 이름:<input	type="text" id="username" name="username"  maxlength="6">
-							<br> 전화번호:<input type="text" id="phone" name="phone"  maxlength="14">
+							<br> 전화번호:<input type="text" id="pfnum" name="pfnum"  maxlength="3">
+								<input type="text" id="pcnum" name="pcnum"  maxlength="4">
+								<input type="text" id="pbnum" name="pbnum"  maxlength="4">
 							<br> 생년월일:<input type="text" id="brth" name="brth" maxlength="8">
 							<br> 이메일:<input type="text" id="email" name="email" maxlength="30">
 							<br>

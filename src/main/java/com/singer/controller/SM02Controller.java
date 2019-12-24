@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,7 +65,7 @@ public class SM02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02", method = RequestMethod.POST)
-	public ResponseEntity<SM02Vo> insertSM02Vo(SM02Vo sm02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SM02Vo> insertSM02Vo(@RequestBody SM02Vo sm02Vo, HttpSession session) throws Exception {
 		log.debug("enter sm02 post");
 
 		String userid = (String) session.getAttribute("userid");

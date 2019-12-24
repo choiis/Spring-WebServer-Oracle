@@ -63,4 +63,23 @@ public class Constants {
 		}
 	}
 
+	public enum PHONE_INFO_CODE {
+		/** 핸드폰코드 */
+		CELL(1),
+		/** 집번호코드 */
+		HOME(2),
+		/** 회사번호코드 */
+		COMPANY(3),
+		/** 그외번호코드 */
+		OTHER(4),;
+		private final int value;
+
+		private PHONE_INFO_CODE(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	}
 }

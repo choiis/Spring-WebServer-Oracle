@@ -61,6 +61,9 @@ public class SR01ServiceImpl implements SR01Service {
 		int idx = 0;
 		ArrayList<HashMap<String, Object>> arrayList = new ArrayList<>();
 		for (MultipartFile photo : fileList) {
+			if (photo.getSize() == 0) {
+				continue;
+			}
 			if (!CommonUtil.chkIMGFile(photo.getOriginalFilename())) {
 				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_4);
 			}
