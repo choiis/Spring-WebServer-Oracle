@@ -66,11 +66,21 @@
 				S.usertype as usertype
 			 from SM01 S
 			 where S.userid = #{userid}
-			 <if test="passwd != null">
-			 	and S.passwd = #{passwd}
-			 </if>
 		</select>
 		
+		<select id="selectLogin" resultType="com.singer.vo.SM01Vo" parameterType="com.singer.vo.SM01Vo">
+			select 
+				S.userid as userid,
+				S.username as username, 
+				S.passwd as passwd,
+				S.brth as brth, 
+				S.grade as grade, 
+				S.regdate as regdate,
+				S.email as email,
+				S.usertype as usertype
+			 from SM01 S
+			 where S.userid = #{userid}
+		</select>
 		
 		<select id="selectSMI1" resultType="com.singer.vo.SM01Vo" parameterType="com.singer.vo.SM01Vo">
 			select 
@@ -84,7 +94,10 @@
 		</select>
 		
 		<select id="select" resultType="com.singer.vo.SM01Vo"  parameterType="com.singer.vo.SM01Vo">
-			select T.*,
+		<![CDATA[
+			select 
+				/*+ ordered use_nl(T S1)*/
+				T.*,
 				S1.pfnum as pfnum,
 	 			S1.pcnum as pcnum,
 				S1.pbnum as pbnum
@@ -110,6 +123,7 @@
 			 left outer join SMI1 S1
 			 on T.userid = S1.userid
 			 and S1.INFOCODE = 1
+		]]>
 		</select>
 		
 		<delete id="delete" parameterType="com.singer.vo.SM01Vo">

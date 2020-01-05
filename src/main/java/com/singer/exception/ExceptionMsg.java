@@ -37,6 +37,19 @@ public class ExceptionMsg {
 	/** 투표항목 내용을 필수 입력해야 합니다 */
 	public static final String EXT_MSG_INPUT_9 = "투표항목 내용을 필수 입력해야 합니다";
 
+	/** 검색조건을 입력하세요 */
+	public static final String EXT_MSG_INPUT_10 = "검색조건을 입력하세요";
+
+	/** 검색구분을 선택하세요 */
+	public static final String EXT_MSG_INPUT_11 = "검색구분을 선택하세요";
+
 	/** SQL Injection 위험이 있습니다 */
 	public static final String EXT_MSG_SECURE_1 = "SQL Injection 위험이 있습니다";
+
+	/** 존재 하지않는 계정입니다 */
+	public static final String EXT_MSG_LOGIN_1 = "존재 하지않는 계정입니다";
+
+	/** 비밀번호가 틀렸습니다" */
+	public static final String EXT_MSG_LOGIN_2 = "비밀번호가 틀렸습니다";
+
 }

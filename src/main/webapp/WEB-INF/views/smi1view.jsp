@@ -98,9 +98,7 @@
 		}
 		
 		gfn_ajaxRequestBody("smi1","POST" , sendData , function(data) {
-			debugger;
 			var html = "";
-			debugger;
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 				html += '<td><a id="sm01show">' +  item.username + '</a></td>';

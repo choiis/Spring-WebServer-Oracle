@@ -66,11 +66,11 @@
         	"device" : gfn_getDevice()
         };
 		
-		gfn_ajax("login","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("login","POST" , sendData , function(data) {
 			if(data.code == 1){
 				location.href='/main';
 			} else {
-				alert("아이디와 비밀번호를 확인해 주세요");
+				alert(data.msg);
 			}
 			
 		});	

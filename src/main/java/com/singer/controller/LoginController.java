@@ -11,15 +11,16 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.CommonUtil;
-import com.singer.common.Constants;
 import com.singer.common.DateUtil;
 import com.singer.common.Constants.RESULT_CODE;
+import com.singer.exception.ExceptionMsg;
 import com.singer.kafka.Producer;
 import com.singer.service.CommService;
 import com.singer.service.SM01Service;
@@ -60,7 +61,7 @@ public class LoginController {
 
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public HashMap<String, Object> login(SM01Vo sm01Vo, HttpSession session, HttpServletRequest request)
+	public HashMap<String, Object> login(@RequestBody SM01Vo sm01Vo, HttpSession session, HttpServletRequest request)
 			throws Exception {
 		log.debug("sm01Vo : " + sm01Vo);
 
@@ -69,11 +70,15 @@ public class LoginController {
 		String userId = sm01Vo.getUserid();
 
 		SM01Vo one = sm01Service.login(sm01Vo);
-		if (CommonUtil.isNull(one)) { // 로그인 실패
+		if (CommonUtil.isNull(one)) { // 계정없음
 
-			hashMap.put("code", Constants.ERROR_LOGIN_FAIL);
-			log.debug("code : " + Constants.ERROR_LOGIN_FAIL);
+			hashMap.put("code", RESULT_CODE.FAIL.getValue());
+			hashMap.put("msg", ExceptionMsg.EXT_MSG_LOGIN_1);
+			return hashMap;
+		} else if (!one.getPasswd().equals(sm01Vo.getPasswd())) { // 비밀번호틀림
 
+			hashMap.put("code", RESULT_CODE.FAIL.getValue());
+			hashMap.put("msg", ExceptionMsg.EXT_MSG_LOGIN_2);
 			return hashMap;
 		} else {
 

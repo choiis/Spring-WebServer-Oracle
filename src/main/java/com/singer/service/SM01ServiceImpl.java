@@ -127,7 +127,7 @@ public class SM01ServiceImpl implements SM01Service {
 	@Transactional
 	@Override
 	public SM01Vo login(SM01Vo sm01Vo) throws Exception {
-		return sm01Dao.selectOneSM01Vo(sm01Vo);
+		return sm01Dao.selectLoginSM01Vo(sm01Vo);
 	}
 
 	@Transactional
