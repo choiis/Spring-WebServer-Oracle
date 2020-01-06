@@ -73,6 +73,19 @@ public class SB01Controller {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/sb01find/{selection}/{findText}", method = RequestMethod.GET)
+	public ResponseEntity<SB01Vo> selectFindSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpSession session)
+			throws Exception {
+		log.debug("enter sb01find get");
+
+		List<SB01Vo> list = sb01Service.selectFindSB01Vo(sb01Vo);
+		sb01Vo.setList(list);
+
+		log.debug("exit sb01find get");
+		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/sb01show_detail/{seq}", method = RequestMethod.GET)
 	public ModelAndView selectOneSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpSession session) throws Exception {
 		log.debug("enter sb01show_detail get");

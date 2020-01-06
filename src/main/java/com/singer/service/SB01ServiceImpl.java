@@ -87,15 +87,17 @@ public class SB01ServiceImpl implements SB01Service {
 	@Override
 	public List<SB01Vo> selectFindSB01Vo(SB01Vo sb01Vo) throws Exception {
 
-		if (sb01Vo.getSelection() == 1) { // 제목으로 검색
+		if (CommonUtil.isNull(sb01Vo.getFindText())) {
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
+		} else if (sb01Vo.getSelection() == 1) { // 제목으로 검색
 			sb01Vo.setTitle(sb01Vo.getFindText());
-			sb01Vo.setUserid(null);
-		} else { // 아이디로 검색
+		} else if (sb01Vo.getSelection() == 2) { // 아이디로 검색
 			sb01Vo.setUserid(sb01Vo.getFindText());
-			sb01Vo.setTitle(null);
+		} else {
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_11);
 		}
 
-		return sb01Dao.selectSB01Vo(sb01Vo);
+		return sb01Dao.selectFindSB01Vo(sb01Vo);
 	}
 
 	@Transactional

@@ -98,6 +98,34 @@
   			]]>
 		</select>
 		
+		<select id="selectFind" resultType="com.singer.vo.SF01Vo"  parameterType="com.singer.vo.SF01Vo">
+			select T.*,
+  				(select count(*) 
+        			from SF02 s2
+        			where T.seq = s2.seq01
+        			and s2.parents = 0
+      			) as reply
+      			from
+  				(select
+					seq as seq,
+					title as title, 
+					text as text, 
+					userid as userid,  
+					regdate as regdate,
+					hit as hit, 
+					good as good
+				 from SF01 
+				 where 1 = 1
+		 		 <if test="userid != null">
+			 		and userid like #{userid} || '%'
+			 	</if>
+			 	<if test="title != null">
+			 		and title like #{title} || '%'
+			 	</if>
+			 	order by regdate desc
+  				) T
+		</select>
+		
 		<delete id="delete" parameterType="com.singer.vo.SF01Vo">
 			delete from SF01
 			where seq = #{seq}
