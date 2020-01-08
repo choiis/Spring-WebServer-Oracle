@@ -1,14 +1,19 @@
 package com.singer.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.singer.common.DateUtil;
 import com.singer.dao.CommDao;
+import com.singer.util.MenuListStruct;
 import com.singer.vo.CommVo;
 
 @Service("commService")
@@ -17,6 +22,9 @@ public class CommServiceImpl implements CommService {
 	@Resource(name = "commDao")
 	private CommDao commDao;
 
+	@Inject
+	private MenuListStruct menuListStruct;
+
 	@Override
 	public List<CommVo> selectCode(CommVo vo) throws Exception {
 		return commDao.selectCode(vo);
@@ -24,9 +32,13 @@ public class CommServiceImpl implements CommService {
 
 	@Override
 	public List<CommVo> selectMenu(int authlevel) throws Exception {
-		CommVo commVo = new CommVo();
-		commVo.setAuthlevel(authlevel);
-		return commDao.selectMenu(commVo);
+
+		Stream<CommVo> stream = menuListStruct.getAllMenuList().stream().filter(s -> s.getAuthlevel() >= authlevel);
+		List<CommVo> list = new ArrayList<>();
+		for (Iterator<CommVo> i = stream.iterator(); i.hasNext();) {
+			list.add(i.next());
+		}
+		return list;
 	}
 
 	@Transactional
