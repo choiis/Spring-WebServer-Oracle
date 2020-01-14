@@ -66,6 +66,19 @@ public class SV01Controller {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/sv01find/{selection}/{findText}", method = RequestMethod.GET)
+	public ResponseEntity<SV01Vo> selectFindSV01Vo(@ModelAttribute SV01Vo sv01Vo, HttpSession session)
+			throws Exception {
+		log.debug("enter sv01find get");
+
+		List<SV01Vo> list = sv01Service.selectFindSV01Vo(sv01Vo);
+		sv01Vo.setList(list);
+
+		log.debug("exit sv01find get");
+		return new ResponseEntity<SV01Vo>(sv01Vo, HttpStatus.OK);
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/sv01", method = RequestMethod.POST)
 	public ResponseEntity<SV01Vo> insertSV01Vo(@RequestBody SV01Vo sv01Vo, HttpSession session) throws Exception {
 		log.debug("enter sv01 post");

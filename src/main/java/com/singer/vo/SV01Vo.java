@@ -2,7 +2,6 @@ package com.singer.vo;
 
 import java.util.List;
 
-
 import com.singer.common.CommonUtil;
 
 import lombok.Getter;
@@ -19,8 +18,6 @@ public class SV01Vo extends BoardVo {
 	private int recall;
 	private int votedCnt;
 	private int reply;
-
-	private String findText;
 
 	private String sessionid;
 

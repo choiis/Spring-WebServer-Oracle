@@ -27,6 +27,11 @@ public class SV01Dao extends SuperDao {
 		return (List<SV01Vo>) selectList(namespace + ".select", sv01Vo);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<SV01Vo> selectFindSV01Vo(SV01Vo sv01Vo) throws Exception {
+		return (List<SV01Vo>) selectList(namespace + ".selectFind", sv01Vo);
+	}
+
 	public SV01Vo selectOneSV01Vo(SV01Vo sv01Vo) throws Exception {
 		return (SV01Vo) selectOne(namespace + ".selectOne", sv01Vo);
 	}

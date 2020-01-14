@@ -14,6 +14,9 @@ public class BoardVo extends SuperVo {
 	protected int good;
 	protected int hit;
 
+	protected int selection;
+	protected String findText;
+
 	protected BoardVo() {
 
 	}

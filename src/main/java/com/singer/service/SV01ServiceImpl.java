@@ -81,6 +81,21 @@ public class SV01ServiceImpl implements SV01Service {
 		return sv01Dao.selectSV01Vo(sv01Vo);
 	}
 
+	@Override
+	public List<SV01Vo> selectFindSV01Vo(SV01Vo sv01Vo) throws Exception {
+		if (CommonUtil.isNull(sv01Vo.getFindText())) {
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
+		} else if (sv01Vo.getSelection() == 1) { // 제목으로 검색
+			sv01Vo.setTitle(sv01Vo.getFindText());
+		} else if (sv01Vo.getSelection() == 2) { // 아이디로 검색
+			sv01Vo.setUserid(sv01Vo.getFindText());
+		} else {
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_11);
+		}
+
+		return sv01Dao.selectFindSV01Vo(sv01Vo);
+	}
+
 	@Transactional
 	@Override
 	public SV01Vo selectOneSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
@@ -149,4 +164,5 @@ public class SV01ServiceImpl implements SV01Service {
 		sv01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 		return sv01Vo;
 	}
+
 }

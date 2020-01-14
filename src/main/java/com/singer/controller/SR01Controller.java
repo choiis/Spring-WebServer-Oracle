@@ -59,13 +59,25 @@ public class SR01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sr01/{nowPage}", method = RequestMethod.GET)
-	public ResponseEntity<SR01Vo> selectsr01Vo(@ModelAttribute SR01Vo sr01Vo) throws Exception {
+	public ResponseEntity<SR01Vo> selectSR01Vo(@ModelAttribute SR01Vo sr01Vo) throws Exception {
 		log.debug("enter sr01 get");
 
 		List<SR01Vo> list = sr01Service.selectSR01Vo(sr01Vo);
 		sr01Vo.setList(list);
 
 		log.debug("exit sr01 get");
+		return new ResponseEntity<SR01Vo>(sr01Vo, HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/sr01find/{selection}/{findText}", method = RequestMethod.GET)
+	public ResponseEntity<SR01Vo> selectFindSR01Vo(@ModelAttribute SR01Vo sr01Vo) throws Exception {
+		log.debug("enter sr01find get");
+
+		List<SR01Vo> list = sr01Service.selectFindSR01Vo(sr01Vo);
+		sr01Vo.setList(list);
+
+		log.debug("exit sr01find get");
 		return new ResponseEntity<SR01Vo>(sr01Vo, HttpStatus.OK);
 	}
 

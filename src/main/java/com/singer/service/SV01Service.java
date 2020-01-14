@@ -9,6 +9,8 @@ public interface SV01Service {
 
 	public List<SV01Vo> selectSV01Vo(SV01Vo sv01Vo) throws Exception;
 
+	public List<SV01Vo> selectFindSV01Vo(SV01Vo sv01Vo) throws Exception;
+
 	public SV01Vo selectOneSV01Vo(SV01Vo sv01Vo, String userid) throws Exception;
 
 	public int updateSV01Vo(SV01Vo sv01Vo) throws Exception;

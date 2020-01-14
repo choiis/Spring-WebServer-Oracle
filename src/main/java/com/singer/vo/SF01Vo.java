@@ -18,8 +18,6 @@ public class SF01Vo extends BoardVo {
 	private String filename;
 	private String ftpfilename;
 	private int reply;
-	private int selection;
-	private String findText;
 
 	private String sessionid;
 	private String datelog;

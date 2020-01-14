@@ -72,21 +72,16 @@
 			alert("검색조건 입력하세요");
 			return false;
 		}
+
 		
-		var sendData = {
-        	"findText" : $("#findText").val(),
-        	"selection" : $("#likeSelect").val(),
-        	"nowPage" : 0
-        };
-		
-		gfn_ajax("sr01showFind.do","POST" , sendData , function(data) {
+		gfn_ajaxRest("sr01find/" + $("#likeSelect").val() + "/" + $("#findText").val(), "GET" , function(data) {	
 			var html = "";
 			
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
 	            html += '<td scope="col" width="50"><a href="/sr01show_detail/'+
-	            item.seq + '">' + 
+	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
 	            html += '<td scope="col" width="30">' + item.avggrade + '</td>';
@@ -98,8 +93,7 @@
 			});
 			
 	        $("#sr01viewTbody").html(html);
-	    	 // 페이징 함수 호출
-	        gfn_paging(data.nowPage, data.size , "#pagenation", "page_move");
+	        $("#pagenation").empty();
 		});
 	}
 	

@@ -12,6 +12,8 @@ public interface SR01Service {
 
 	public List<SR01Vo> selectSR01Vo(SR01Vo sr01Vo) throws Exception;
 
+	public List<SR01Vo> selectFindSR01Vo(SR01Vo sr01Vo) throws Exception;
+
 	public SR01Vo selectOneSR01Vo(SR01Vo sr01Vo, String userid) throws Exception;
 
 	public int updateSR01Vo(SR01Vo sr01Vo) throws Exception;

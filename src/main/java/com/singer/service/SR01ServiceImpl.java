@@ -90,6 +90,22 @@ public class SR01ServiceImpl implements SR01Service {
 		return sr01Dao.selectSR01Vo(sr01Vo);
 	}
 
+	@Override
+
+	public List<SR01Vo> selectFindSR01Vo(SR01Vo sr01Vo) throws Exception {
+		if (CommonUtil.isNull(sr01Vo.getFindText())) {
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
+		} else if (sr01Vo.getSelection() == 1) { // 제목으로 검색
+			sr01Vo.setTitle(sr01Vo.getFindText());
+		} else if (sr01Vo.getSelection() == 2) { // 아이디로 검색
+			sr01Vo.setUserid(sr01Vo.getFindText());
+		} else {
+			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_11);
+		}
+
+		return sr01Dao.selectFindSR01Vo(sr01Vo);
+	}
+
 	@Transactional
 	@Override
 	public SR01Vo selectOneSR01Vo(SR01Vo sr01Vo, String userid) throws Exception {

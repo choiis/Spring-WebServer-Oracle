@@ -17,8 +17,6 @@ public class SB01Vo extends BoardVo {
 
 	private String video;
 	private int reply;
-	private int selection;
-	private String findText;
 
 	private String sessionid;
 	private String datelog;
