@@ -97,7 +97,7 @@ public class LoginController {
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add(sm01Vo.getBrowser());
 			queryUtil.add(sm01Vo.getDevice());
-			queryUtil.add(request.getRemoteAddr());
+			queryUtil.add(CommonUtil.getIp(request));
 
 			producer.send(queryUtil.getQuery());
 

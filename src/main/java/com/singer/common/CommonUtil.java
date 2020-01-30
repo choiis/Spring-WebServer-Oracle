@@ -2,6 +2,8 @@ package com.singer.common;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class CommonUtil {
 
 	/**
@@ -222,4 +224,31 @@ public class CommonUtil {
 			return null;
 		}
 	}
+
+	/**
+	 * request에서 IPv4리턴
+	 */
+	public static String getIp(HttpServletRequest request) {
+
+		// VM arguments 에 -Djava.net.preferIPv4Stack=true
+		// IPv6 => IPv4
+		String ip = request.getHeader("X-Forwarded-For");
+
+		if (ip == null) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null) {
+			ip = request.getHeader("HTTP_CLIENT_IP");
+		}
+		if (ip == null) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+		}
+		if (ip == null) {
+			ip = request.getRemoteAddr();
+		}
+
+		return ip;
+
+	}
+
 }
