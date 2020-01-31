@@ -16,12 +16,7 @@ import lombok.ToString;
 public class SB01Vo extends BoardVo {
 
 	private String video;
-	private int reply;
 
-	private String sessionid;
-	private String datelog;
-	private String goodlog;
-	private String hatelog;
 	private int videobool;
 
 	private List<SB01Vo> list;

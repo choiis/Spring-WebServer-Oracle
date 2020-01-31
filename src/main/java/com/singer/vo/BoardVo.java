@@ -17,6 +17,12 @@ public class BoardVo extends SuperVo {
 	protected int selection;
 	protected String findText;
 
+	private String sessionid;
+	private String goodlog;
+	private String hatelog;
+	private String datelog;
+	private int reply;
+
 	protected BoardVo() {
 
 	}

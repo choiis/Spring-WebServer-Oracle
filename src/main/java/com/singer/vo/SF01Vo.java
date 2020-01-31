@@ -17,12 +17,6 @@ public class SF01Vo extends BoardVo {
 
 	private String filename;
 	private String ftpfilename;
-	private int reply;
-
-	private String sessionid;
-	private String datelog;
-	private String goodlog;
-	private String hatelog;
 
 	private List<SF01Vo> list;
 

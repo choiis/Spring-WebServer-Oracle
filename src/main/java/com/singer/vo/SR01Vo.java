@@ -22,16 +22,10 @@ public class SR01Vo extends BoardVo {
 	private double mapy;
 	private MultipartFile photo;
 
-	private String sessionid;
-	private String datelog;
-	private String goodlog;
-	private String hatelog;
-
 	private double grade;
 	private double avggrade;
 	private int idx;
 	private int photocnt;
-	private int reply;
 
 	private List<SR01Vo> list;
 
