@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
+import lombok.Cleanup;
+
 public class FileDownloadView extends AbstractView {
 	public FileDownloadView() {
 
@@ -36,34 +38,12 @@ public class FileDownloadView extends AbstractView {
 		res.setHeader("Content-Disposition",
 				"attachment; filename=\"" + java.net.URLEncoder.encode(fileName, "utf-8") + "\";");
 		res.setHeader("Content-Transfer-Encoding", "binary");
+		@Cleanup
 		OutputStream out = res.getOutputStream();
-		FileInputStream fis = null;
+		@Cleanup
+		FileInputStream fis = new FileInputStream(file);
 
-		try {
-
-			fis = new FileInputStream(file);
-			FileCopyUtils.copy(fis, out);
-
-		} catch (Exception e) {
-
-		} finally {
-
-			if (fis != null) {
-				try {
-					fis.close();
-				} catch (IOException e) {
-
-				}
-			}
-			if (out != null) {
-				try {
-					out.flush();
-					out.close();
-				} catch (IOException e) {
-
-				}
-			}
-		}
+		FileCopyUtils.copy(fis, out);
 
 	}
 

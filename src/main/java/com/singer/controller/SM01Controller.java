@@ -25,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.singer.service.SM01Service;
 import com.singer.vo.SM01Vo;
 
+import lombok.Cleanup;
+
 @Controller("sM01Controller")
 public class SM01Controller {
 
@@ -120,16 +122,11 @@ public class SM01Controller {
 			HttpServletResponse response) throws Exception {
 		log.debug("enter sm01photo get");
 
+		@Cleanup
 		InputStream is = sm01Service.selectImage(sm01Vo, request);
 
 		IOUtils.copy(is, response.getOutputStream());
-		if (is != null) {
-			try {
-				is.close();
-			} catch (Exception e2) {
 
-			}
-		}
 		log.debug("exit sm01photo get");
 	}
 

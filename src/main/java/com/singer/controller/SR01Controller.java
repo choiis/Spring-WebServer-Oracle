@@ -25,6 +25,8 @@ import com.singer.common.Constants.RESULT_CODE;
 import com.singer.service.SR01Service;
 import com.singer.vo.SR01Vo;
 
+import lombok.Cleanup;
+
 @Controller("sR01Controller")
 public class SR01Controller {
 
@@ -148,16 +150,11 @@ public class SR01Controller {
 	public void selectPhotoSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter sr01photo get");
+		@Cleanup
 		InputStream is = sr01Service.selectPhoto(sr01Vo);
 
 		IOUtils.copy(is, response.getOutputStream());
-		if (is != null) {
-			try {
-				is.close();
-			} catch (Exception e2) {
 
-			}
-		}
 		log.debug("exit sr01photo get");
 	}
 }

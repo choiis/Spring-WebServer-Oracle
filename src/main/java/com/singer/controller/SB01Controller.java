@@ -25,6 +25,8 @@ import com.singer.common.Constants.RESULT_CODE;
 import com.singer.service.SB01Service;
 import com.singer.vo.SB01Vo;
 
+import lombok.Cleanup;
+
 @Controller("sB01Controller")
 public class SB01Controller {
 
@@ -105,16 +107,11 @@ public class SB01Controller {
 	public void selectVideoSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter sb01Video get");
+		@Cleanup
 		InputStream is = sb01Service.selectVideo(sb01Vo, request);
 
 		IOUtils.copy(is, response.getOutputStream());
-		if (is != null) {
-			try {
-				is.close();
-			} catch (Exception e) {
 
-			}
-		}
 		log.debug("exit sb01Video get");
 	}
 

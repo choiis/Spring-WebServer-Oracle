@@ -18,6 +18,8 @@ import org.apache.commons.logging.LogFactory;
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
 
+import lombok.Cleanup;
+
 public class RequestWrapper extends HttpServletRequestWrapper {
 
 	private final Log log = LogFactory.getLog(RequestWrapper.class);
@@ -77,12 +79,13 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
 		String body = null;
 		StringBuilder stringBuilder = new StringBuilder();
-		BufferedReader br = null;
-		InputStream is = null;
+
 		try {
-			is = request.getInputStream();
+			@Cleanup
+			InputStream is = request.getInputStream();
 			if (is != null) {
-				br = new BufferedReader(new InputStreamReader(is));
+				@Cleanup
+				BufferedReader br = new BufferedReader(new InputStreamReader(is));
 				char[] charBuffer = new char[1024];
 				int bytesRead = -1;
 				while ((bytesRead = br.read(charBuffer)) > 0) {
@@ -93,22 +96,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 			}
 		} catch (IOException ex) {
 
-		} finally {
-
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException ex) {
-
-				}
-			}
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException ex) {
-
-				}
-			}
 		}
 
 		body = cleanXSS(stringBuilder.toString());
