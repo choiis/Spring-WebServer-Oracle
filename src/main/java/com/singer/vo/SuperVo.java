@@ -1,5 +1,7 @@
 package com.singer.vo;
 
+import java.io.Serializable;
+
 import com.singer.common.Constants;
 
 import lombok.Getter;
@@ -7,7 +9,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SuperVo {
+public class SuperVo implements Serializable {
+
+	private static final long serialVersionUID = -594197827136251262L;
 	protected boolean deleteYn;
 	protected String showDate;
 	protected int totCnt;

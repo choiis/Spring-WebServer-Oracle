@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class SF02Vo extends ReplyVo {
 
+	private static final long serialVersionUID = 7773635527529423007L;
 	private List<SF02Vo> list;
 
 	public void setList(List<SF02Vo> list) {

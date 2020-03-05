@@ -1,5 +1,7 @@
 package com.singer.vo;
 
+import java.io.Serializable;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -11,8 +13,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MailVo {
+public class MailVo implements Serializable {
 
+	private static final long serialVersionUID = -6476594188315547364L;
 	private String sender;
 	private String email;
 	private String title;

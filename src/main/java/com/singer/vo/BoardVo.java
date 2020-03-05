@@ -6,6 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BoardVo extends SuperVo {
+
+	private static final long serialVersionUID = 7956711521174141824L;
 	protected int seq;
 	protected String title;
 	protected String text;
@@ -24,7 +26,6 @@ public class BoardVo extends SuperVo {
 	private int reply;
 
 	protected BoardVo() {
-
 	}
 
 }

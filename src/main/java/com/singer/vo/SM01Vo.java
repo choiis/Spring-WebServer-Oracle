@@ -17,6 +17,7 @@ import lombok.ToString;
 @ToString
 public class SM01Vo extends SuperVo {
 
+	private static final long serialVersionUID = -3086307924530620773L;
 	private String userid;
 	private String passwd;
 	private String username;
@@ -31,7 +32,7 @@ public class SM01Vo extends SuperVo {
 	private String device;
 	private String browser;
 	private String insertid;
-	
+
 	private List<SM01Vo> list;
 
 	private int infocode;

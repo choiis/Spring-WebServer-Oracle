@@ -17,6 +17,7 @@ import lombok.ToString;
 @ToString
 public class SR01Vo extends BoardVo {
 
+	private static final long serialVersionUID = 1103708805378444703L;
 	private String markertitle;
 	private double mapx;
 	private double mapy;

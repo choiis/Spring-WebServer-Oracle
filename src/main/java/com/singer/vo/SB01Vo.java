@@ -15,6 +15,8 @@ import lombok.ToString;
 @ToString
 public class SB01Vo extends BoardVo {
 
+	private static final long serialVersionUID = 5522985426890393310L;
+
 	private String video;
 
 	private int videobool;

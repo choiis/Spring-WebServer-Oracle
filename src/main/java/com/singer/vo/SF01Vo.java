@@ -15,6 +15,7 @@ import lombok.ToString;
 @ToString
 public class SF01Vo extends BoardVo {
 
+	private static final long serialVersionUID = 3928577641125222184L;
 	private String filename;
 	private String ftpfilename;
 

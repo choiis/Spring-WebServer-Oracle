@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 public class SM02Vo extends BoardVo {
 
+	private static final long serialVersionUID = 6789449111366146090L;
 	private List<SM02Vo> list;
 
 	public void setList(List<SM02Vo> list) {

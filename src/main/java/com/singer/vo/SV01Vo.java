@@ -15,6 +15,7 @@ import lombok.ToString;
 @ToString
 public class SV01Vo extends BoardVo {
 
+	private static final long serialVersionUID = 2664458173473543079L;
 	private int recall;
 	private int votedCnt;
 	private int multiselect;

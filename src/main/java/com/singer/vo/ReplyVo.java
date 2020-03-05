@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class ReplyVo extends SuperVo {
 
+	private static final long serialVersionUID = 1940077307178232725L;
 	protected int seq;
 	protected int seq01;
 	protected int parents;

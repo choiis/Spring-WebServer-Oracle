@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 public class SV02Vo extends SuperVo {
 
+	private static final long serialVersionUID = 5374258406705298004L;
 	private int seq;
 	private int idx;
 	private String content;

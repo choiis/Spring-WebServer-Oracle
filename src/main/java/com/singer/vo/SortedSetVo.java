@@ -13,6 +13,10 @@ import lombok.ToString;
 @ToString
 public class SortedSetVo extends SuperVo {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4669092346429172855L;
 	private String key;
 	private double score;
 
