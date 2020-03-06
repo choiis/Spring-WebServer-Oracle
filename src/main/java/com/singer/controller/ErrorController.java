@@ -64,6 +64,18 @@ public class ErrorController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/403")
+	public ModelAndView clientError403(HttpServletRequest request) throws Exception {
+		log.debug("client error 403");
+
+		ModelAndView mv = new ModelAndView("/clientError");
+		HttpStatus errorCode = HttpStatus.FORBIDDEN;
+		String errorMsg = HttpStatus.FORBIDDEN.toString();
+		mv.addObject("errorCode", errorCode);
+		mv.addObject("errorMsg", errorMsg);
+		return mv;
+	}
+
 	@RequestMapping(value = "/404")
 	public ModelAndView clientError404(HttpServletRequest request) throws Exception {
 		log.debug("client error 404");
@@ -95,6 +107,30 @@ public class ErrorController {
 		ModelAndView mv = new ModelAndView("/clientError");
 		HttpStatus errorCode = HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 		String errorMsg = HttpStatus.UNSUPPORTED_MEDIA_TYPE.toString();
+		mv.addObject("errorCode", errorCode);
+		mv.addObject("errorMsg", errorMsg);
+		return mv;
+	}
+
+	@RequestMapping(value = "/502")
+	public ModelAndView clientError502(HttpServletRequest request) throws Exception {
+		log.debug("client error 502");
+
+		ModelAndView mv = new ModelAndView("/serverError");
+		HttpStatus errorCode = HttpStatus.BAD_GATEWAY;
+		String errorMsg = HttpStatus.BAD_GATEWAY.toString();
+		mv.addObject("errorCode", errorCode);
+		mv.addObject("errorMsg", errorMsg);
+		return mv;
+	}
+
+	@RequestMapping(value = "/503")
+	public ModelAndView clientError503(HttpServletRequest request) throws Exception {
+		log.debug("client error 503");
+
+		ModelAndView mv = new ModelAndView("/serverError");
+		HttpStatus errorCode = HttpStatus.SERVICE_UNAVAILABLE;
+		String errorMsg = HttpStatus.SERVICE_UNAVAILABLE.toString();
 		mv.addObject("errorCode", errorCode);
 		mv.addObject("errorMsg", errorMsg);
 		return mv;

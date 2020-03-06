@@ -1,10 +1,13 @@
 package com.singer.vo;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardVo extends SuperVo {
 
 	private static final long serialVersionUID = 7956711521174141824L;
@@ -19,13 +22,10 @@ public class BoardVo extends SuperVo {
 	protected int selection;
 	protected String findText;
 
-	private String sessionid;
-	private String goodlog;
-	private String hatelog;
-	private String datelog;
-	private int reply;
-
-	protected BoardVo() {
-	}
+	protected String sessionid;
+	protected String goodlog;
+	protected String hatelog;
+	protected String datelog;
+	protected int reply;
 
 }

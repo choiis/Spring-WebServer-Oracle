@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MailVo implements Serializable {
+public class MailVo implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = -6476594188315547364L;
 	private String sender;

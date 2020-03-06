@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SuperVo implements Serializable {
+public class SuperVo implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = -594197827136251262L;
 	protected boolean deleteYn;
