@@ -1,5 +1,9 @@
 package com.singer.common;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Constants {
 
 	public enum YES_NO {
