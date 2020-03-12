@@ -1,9 +1,11 @@
 package com.singer.exception;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,6 +27,25 @@ public class CommonExceptionHandler {
 
 	@Inject
 	private Producer producer;
+
+	@ExceptionHandler(ClientException.class)
+	public ModelAndView clientExceptionHandler(HttpServletRequest request, HttpServletResponse response,
+			ClientException ext) throws IOException {
+		boolean isAjax = false;
+		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+			isAjax = true;
+		}
+		ModelAndView mv = null;
+		if (isAjax) {
+			mv = new ModelAndView("forward:/error");
+		} else {
+			mv = new ModelAndView("forward:/" + ext.getHttpStatusCode().value());
+		}
+
+		mv.addObject("errorCode", ext.getHttpStatusCode().value());
+		mv.addObject("errorMsg", ext.getLocalizedMessage());
+		return mv;
+	}
 
 	@ExceptionHandler(Exception.class)
 	public ModelAndView defaultExceptionHandler(HttpServletRequest request, Exception ext) {
@@ -52,14 +73,14 @@ public class CommonExceptionHandler {
 			mv = new ModelAndView("forward:/forwardError");
 		}
 
-		mv.addObject("errorCode", "500");
+		mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
 		mv.addObject("errorMsg", ext.getLocalizedMessage());
 		return mv;
 	}
 
 	@ExceptionHandler(SQLException.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "your message")
-	public ModelAndView SQLExceptionHandler(HttpServletRequest request, Exception ext) {
+	public ModelAndView sQLExceptionHandler(HttpServletRequest request, SQLException ext) {
 		boolean isAjax = false;
 		log.info("SQLException");
 		if (CommonUtil.isNull(ext.getMessage())) {
@@ -84,13 +105,13 @@ public class CommonExceptionHandler {
 			mv = new ModelAndView("forward:/forwardError");
 		}
 
-		mv.addObject("errorCode", "500");
+		mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
 		mv.addObject("errorMsg", ext.getCause().getLocalizedMessage());
 		return mv;
 	}
 
 	@ExceptionHandler(AppException.class)
-	public ModelAndView appExceptionHandler(HttpServletRequest request, Exception ext) {
+	public ModelAndView appExceptionHandler(HttpServletRequest request, AppException ext) {
 		boolean isAjax = false;
 		log.info("AppException");
 		if (CommonUtil.isNull(ext.getMessage())) {
@@ -108,13 +129,13 @@ public class CommonExceptionHandler {
 			mv = new ModelAndView("forward:/forwardError");
 		}
 
-		mv.addObject("errorCode", "500");
+		mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
 		mv.addObject("errorMsg", ext.getMessage());
 		return mv;
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public ModelAndView NoHandlerFoundException(HttpServletRequest request, Exception ext) {
+	public ModelAndView noHandlerFoundException(HttpServletRequest request, NoHandlerFoundException ext) {
 		boolean isAjax = false;
 		log.info("NoHandlerFoundException");
 		if (CommonUtil.isNull(ext.getMessage())) {
@@ -140,7 +161,7 @@ public class CommonExceptionHandler {
 			mv = new ModelAndView("forward:/forwardError");
 		}
 
-		mv.addObject("errorCode", "500");
+		mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
 		mv.addObject("errorMsg", "error Url" + errorURL + " || " + ext.getMessage());
 		return mv;
 	}

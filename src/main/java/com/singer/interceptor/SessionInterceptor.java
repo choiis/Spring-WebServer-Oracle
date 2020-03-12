@@ -12,11 +12,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.singer.common.CommonUtil;
 import com.singer.dao.CommDao;
+import com.singer.exception.ClientException;
 import com.singer.util.MenuListStruct;
 import com.singer.vo.CommVo;
 
@@ -68,9 +70,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 					CommVo comm = i.next();
 					if (usertype > comm.getAuthlevel()) {// 권한 없는 메뉴 uri로 접속시
 						log.debug("use denied");
-						response.sendRedirect("/authExpire");
-						return false;
-
+						// 403 forbidden
+						throw new ClientException(HttpStatus.FORBIDDEN);
 					}
 				}
 

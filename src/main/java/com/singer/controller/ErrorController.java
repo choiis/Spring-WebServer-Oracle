@@ -21,10 +21,11 @@ public class ErrorController {
 	@RequestMapping(value = "/error")
 	public ResponseEntity<CommVo> errorJson(CommVo commVo, HttpServletRequest request) {
 		log.debug("server ajax error");
-		commVo.setErrorCode((String) request.getAttribute("errorCode"));
+		HttpStatus errorCode = (HttpStatus) request.getAttribute("errorCode");
+		commVo.setErrorCode(errorCode);
 		commVo.setErrorMsg((String) request.getAttribute("errorMsg"));
 
-		return new ResponseEntity<CommVo>(commVo, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<CommVo>(commVo, errorCode);
 	}
 
 	// CommonExceptionHandler에서 Ajax 아닌것들을 여기로 보낸다
@@ -33,7 +34,7 @@ public class ErrorController {
 		log.debug("server not ajax error");
 
 		ModelAndView mv = new ModelAndView("/serverError");
-		String errorCode = (String) request.getAttribute("errorCode");
+		HttpStatus errorCode = (HttpStatus) request.getAttribute("errorCode");
 		String errorMsg = (String) request.getAttribute("errorMsg");
 		mv.addObject("errorCode", errorCode);
 		mv.addObject("errorMsg", errorMsg);
