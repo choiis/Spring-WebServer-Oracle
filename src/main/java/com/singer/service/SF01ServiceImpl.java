@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import com.singer.common.Constants.RESULT_CODE;
 import com.singer.dao.SF01Dao;
 import com.singer.dao.SF02Dao;
 import com.singer.exception.AppException;
+import com.singer.exception.ClientException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.util.FTPUtil;
 import com.singer.vo.SF01Vo;
@@ -145,7 +147,15 @@ public class SF01ServiceImpl implements SF01Service {
 
 	@Transactional
 	@Override
-	public int deleteSF01Vo(SF01Vo sf01Vo) throws Exception {
+	public int deleteSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
+
+		sf01Vo.setSessionid(sessionid);
+		SF01Vo checkVo = sf01Dao.selectOneSF01Vo(sf01Vo);
+		if (!CommonUtil.isNull(checkVo)) {
+			if (!checkVo.getUserid().equals(sessionid)) {
+				throw new ClientException(HttpStatus.FORBIDDEN);
+			}
+		}
 
 		SF02Vo sf02Vo = new SF02Vo();
 		sf02Vo.setSeq01(sf01Vo.getSeq());

@@ -114,7 +114,8 @@ public class SR01Controller {
 	public ResponseEntity<SR01Vo> deleteSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session) throws Exception {
 		log.debug("enter sr01 delete");
 
-		sr01Service.deleteSR01Vo(sr01Vo);
+		String userid = (String) session.getAttribute("userid");
+		sr01Service.deleteSR01Vo(sr01Vo, userid);
 		sr01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 
 		log.debug("exit sr01 delete");

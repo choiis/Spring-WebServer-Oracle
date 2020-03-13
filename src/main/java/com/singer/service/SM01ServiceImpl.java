@@ -1,8 +1,5 @@
 package com.singer.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,12 +8,14 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.singer.exception.AppException;
+import com.singer.exception.ClientException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants;
@@ -143,19 +142,13 @@ public class SM01ServiceImpl implements SM01Service {
 		InputStream is = null;
 
 		HashMap<String, Object> hashMap = sm01Dao.selectImage(sm01Vo);
-		try {
-			if (CommonUtil.isNull(hashMap)) {
-				String img_path = request.getSession().getServletContext().getRealPath("/resources/img/basic.jpg");
-				File file = new File(img_path);
-				is = new FileInputStream(file);
+		if (CommonUtil.isNull(hashMap)) {
+			throw new ClientException(HttpStatus.NOT_FOUND);
+		} else { // 이미지 불러오기 성공시
+			BLOB images = (BLOB) hashMap.get("PHOTO");
 
-			} else { // 이미지 불러오기 성공시
-				BLOB images = (BLOB) hashMap.get("PHOTO");
+			is = images.getBinaryStream();
 
-				is = images.getBinaryStream();
-
-			}
-		} catch (IOException e) {
 		}
 
 		return is;

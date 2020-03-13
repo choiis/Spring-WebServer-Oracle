@@ -45,7 +45,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
 		String uri = request.getRequestURI();
-		int usertype = (Integer) session.getAttribute("usertype");
 		// 세션 만료 케이스
 		if ("/sessionExpire".equals(uri) || "/".equals(uri) || "/forwardError".equals(uri) || "/error".equals(uri)) {
 			return true;
@@ -57,6 +56,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 
+		int usertype = (Integer) session.getAttribute("usertype");
 		// 초기 로그인 케이스 아니면
 		if (!"/main".equals(uri)) {
 			CommVo commVo = new CommVo();

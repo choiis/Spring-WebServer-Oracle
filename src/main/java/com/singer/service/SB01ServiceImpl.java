@@ -1,7 +1,5 @@
 package com.singer.service;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,12 +8,14 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.singer.exception.AppException;
+import com.singer.exception.ClientException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants.RESULT_CODE;
@@ -158,8 +158,15 @@ public class SB01ServiceImpl implements SB01Service {
 
 	@Transactional
 	@Override
-	public int deleteSB01Vo(SB01Vo sb01Vo) throws Exception {
+	public int deleteSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
 
+		sb01Vo.setSessionid(sessionid);
+		SB01Vo checkVo = sb01Dao.selectOneSB01Vo(sb01Vo);
+		if (!CommonUtil.isNull(checkVo)) {
+			if (!checkVo.getUserid().equals(sessionid)) {
+				throw new ClientException(HttpStatus.FORBIDDEN);
+			}
+		}
 		SB02Vo sb02Vo = new SB02Vo();
 		sb02Vo.setSeq01(sb01Vo.getSeq());
 
@@ -174,9 +181,7 @@ public class SB01ServiceImpl implements SB01Service {
 		HashMap<String, Object> hashMap = sb01Dao.selectVideo(sb01Vo);
 
 		if (CommonUtil.isNull(hashMap)) {
-			String video_path = request.getSession().getServletContext().getRealPath("/resources/video/hyeri.mp4");
-			File file = new File(video_path);
-			is = new FileInputStream(file);
+			throw new ClientException(HttpStatus.NOT_FOUND);
 		} else {
 			BLOB images = (BLOB) hashMap.get("VIDEO");
 

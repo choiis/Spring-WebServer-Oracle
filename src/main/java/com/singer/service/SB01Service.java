@@ -24,7 +24,7 @@ public interface SB01Service {
 
 	public SB01Vo hateSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception;
 
-	public int deleteSB01Vo(SB01Vo sb01Vo) throws Exception;
+	public int deleteSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception;
 
 	public InputStream selectVideo(SB01Vo sb01Vo, HttpServletRequest request) throws Exception;
 }

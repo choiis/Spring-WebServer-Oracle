@@ -5,12 +5,14 @@ import java.util.stream.Stream;
 
 import javax.annotation.Resource;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.singer.dao.SV02Dao;
 import com.singer.dao.SV04Dao;
 import com.singer.exception.AppException;
+import com.singer.exception.ClientException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants.RESULT_CODE;
@@ -127,8 +129,14 @@ public class SV01ServiceImpl implements SV01Service {
 
 	@Transactional
 	@Override
-	public int deleteSV01Vo(SV01Vo sv01Vo) throws Exception {
-
+	public int deleteSV01Vo(SV01Vo sv01Vo, String sessionid) throws Exception {
+		sv01Vo.setSessionid(sessionid);
+		SV01Vo checkVo = sv01Dao.selectOneSV01Vo(sv01Vo);
+		if (!CommonUtil.isNull(checkVo)) {
+			if (!checkVo.getUserid().equals(sessionid)) {
+				throw new ClientException(HttpStatus.FORBIDDEN);
+			}
+		}
 		SV04Vo sv04Vo = new SV04Vo();
 		sv04Vo.setSeq(sv01Vo.getSeq());
 

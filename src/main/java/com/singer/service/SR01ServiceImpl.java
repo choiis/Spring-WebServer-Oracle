@@ -6,12 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.singer.exception.AppException;
+import com.singer.exception.ClientException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants.RESULT_CODE;
@@ -157,8 +160,14 @@ public class SR01ServiceImpl implements SR01Service {
 
 	@Transactional
 	@Override
-	public int deleteSR01Vo(SR01Vo sr01Vo) throws Exception {
-
+	public int deleteSR01Vo(SR01Vo sr01Vo, String sessionid) throws Exception {
+		sr01Vo.setSessionid(sessionid);
+		SR01Vo checkVo = sr01Dao.selectOneSR01Vo(sr01Vo);
+		if (!CommonUtil.isNull(checkVo)) {
+			if (!checkVo.getUserid().equals(sessionid)) {
+				throw new ClientException(HttpStatus.FORBIDDEN);
+			}
+		}
 		SR03Vo sr03Vo = new SR03Vo();
 		sr03Vo.setSeq(sr01Vo.getSeq());
 

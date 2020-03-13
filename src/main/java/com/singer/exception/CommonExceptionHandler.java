@@ -42,38 +42,7 @@ public class CommonExceptionHandler {
 			mv = new ModelAndView("forward:/" + ext.getHttpStatusCode().value());
 		}
 
-		mv.addObject("errorCode", ext.getHttpStatusCode().value());
-		mv.addObject("errorMsg", ext.getLocalizedMessage());
-		return mv;
-	}
-
-	@ExceptionHandler(Exception.class)
-	public ModelAndView defaultExceptionHandler(HttpServletRequest request, Exception ext) {
-		boolean isAjax = false;
-		log.info("defaultException");
-		if (CommonUtil.isNull(ext.getMessage())) {
-			return null;
-		}
-		log.info(ext.getMessage());
-
-		InputQueryUtil queryUtil = new InputQueryUtil("log_error");
-		queryUtil.add(request.getRequestURI());
-		queryUtil.add(DateUtil.getTodayTime());
-		queryUtil.add(ext.getLocalizedMessage());
-
-		producer.send(queryUtil.getQuery());
-
-		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-			isAjax = true;
-		}
-		ModelAndView mv = null;
-		if (isAjax) {
-			mv = new ModelAndView("forward:/error");
-		} else {
-			mv = new ModelAndView("forward:/forwardError");
-		}
-
-		mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
+		mv.addObject("errorCode", ext.getHttpStatusCode());
 		mv.addObject("errorMsg", ext.getLocalizedMessage());
 		return mv;
 	}
@@ -163,6 +132,30 @@ public class CommonExceptionHandler {
 
 		mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
 		mv.addObject("errorMsg", "error Url" + errorURL + " || " + ext.getMessage());
+		return mv;
+	}
+
+	@ExceptionHandler(Exception.class)
+	public ModelAndView exceptionHandler(HttpServletRequest request, Exception ext) {
+		boolean isAjax = false;
+		log.info("defaultException");
+		if (CommonUtil.isNull(ext.getMessage())) {
+			return null;
+		}
+		log.info(ext.getMessage());
+
+		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+			isAjax = true;
+		}
+		ModelAndView mv = null;
+		if (isAjax) {
+			mv = new ModelAndView("forward:/error");
+		} else {
+			mv = new ModelAndView("forward:/forwardError");
+		}
+
+		mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
+		mv.addObject("errorMsg", ext.getMessage());
 		return mv;
 	}
 }
