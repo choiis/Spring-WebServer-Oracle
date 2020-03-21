@@ -33,8 +33,8 @@ public class Producer {
 
 	public void send(String message) {
 
-		Future<RecordMetadata> future = producer.send(new ProducerRecord<String, String>(topic, message),
-				new KafkaCallback());
+		//Future<RecordMetadata> future = producer.send(new ProducerRecord<String, String>(topic, message),
+			//	new KafkaCallback());
 
 	}
 }
