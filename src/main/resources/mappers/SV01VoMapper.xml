@@ -57,6 +57,14 @@
     	where S1.seq = #{seq}
 		</select>
 		
+		<select id="checkUser" resultType="com.singer.vo.SV01Vo" parameterType="com.singer.vo.SV01Vo">	
+		select 
+    		S1.seq as seq,
+    		S1.userid as userid
+    		from SV01 S1
+		where S1.seq = #{seq}
+		</select>
+		
 		<select id="select" resultType="com.singer.vo.SV01Vo"  parameterType="com.singer.vo.SV01Vo">
 				<![CDATA[
 			select T.*,

@@ -150,7 +150,7 @@ public class SF01ServiceImpl implements SF01Service {
 	public int deleteSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
 
 		sf01Vo.setSessionid(sessionid);
-		SF01Vo checkVo = sf01Dao.selectOneSF01Vo(sf01Vo);
+		SF01Vo checkVo = sf01Dao.checkUserSF01Vo(sf01Vo);
 		if (!CommonUtil.isNull(checkVo)) {
 			if (!checkVo.getUserid().equals(sessionid)) {
 				throw new ClientException(HttpStatus.FORBIDDEN);

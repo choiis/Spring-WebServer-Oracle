@@ -36,6 +36,10 @@ public class SV01Dao extends SuperDao {
 		return (SV01Vo) selectOne(namespace + ".selectOne", sv01Vo);
 	}
 
+	public SV01Vo checkUserV01Vo(SV01Vo sv01Vo) throws Exception {
+		return (SV01Vo) selectOne(namespace + ".checkUser", sv01Vo);
+	}
+
 	public int deleteSV01Vo(SV01Vo sv01Vo) throws Exception {
 		return delete(namespace + ".delete", sv01Vo);
 	}

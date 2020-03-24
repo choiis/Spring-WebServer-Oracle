@@ -42,75 +42,75 @@ public class ErrorController {
 	}
 
 	@RequestMapping(value = "/400")
-	public ModelAndView clientError400(HttpServletRequest request) throws Exception {
+	public ResponseEntity<CommVo> clientError400(CommVo commVo, HttpServletRequest request) throws Exception {
 		log.debug("client error 400");
 
-		ModelAndView mv = new ModelAndView("/clientError");
 		HttpStatus errorCode = HttpStatus.BAD_REQUEST;
 		String errorMsg = HttpStatus.BAD_REQUEST.toString();
-		mv.addObject("errorCode", errorCode);
-		mv.addObject("errorMsg", errorMsg);
-		return mv;
+		commVo.setErrorCode(errorCode);
+		commVo.setErrorMsg(errorMsg);
+
+		return new ResponseEntity<CommVo>(commVo, errorCode);
 	}
 
 	@RequestMapping(value = "/401")
-	public ModelAndView clientError401(HttpServletRequest request) throws Exception {
+	public ResponseEntity<CommVo> clientError401(CommVo commVo, HttpServletRequest request) throws Exception {
 		log.debug("client error 401");
 
-		ModelAndView mv = new ModelAndView("/clientError");
 		HttpStatus errorCode = HttpStatus.UNAUTHORIZED;
 		String errorMsg = HttpStatus.UNAUTHORIZED.toString();
-		mv.addObject("errorCode", errorCode);
-		mv.addObject("errorMsg", errorMsg);
-		return mv;
+		commVo.setErrorCode(errorCode);
+		commVo.setErrorMsg(errorMsg);
+
+		return new ResponseEntity<CommVo>(commVo, errorCode);
 	}
 
 	@RequestMapping(value = "/403")
-	public ModelAndView clientError403(HttpServletRequest request) throws Exception {
+	public ResponseEntity<CommVo> clientError403(CommVo commVo, HttpServletRequest request) throws Exception {
 		log.debug("client error 403");
 
-		ModelAndView mv = new ModelAndView("/clientError");
 		HttpStatus errorCode = HttpStatus.FORBIDDEN;
 		String errorMsg = HttpStatus.FORBIDDEN.toString();
-		mv.addObject("errorCode", errorCode);
-		mv.addObject("errorMsg", errorMsg);
-		return mv;
+		commVo.setErrorCode(errorCode);
+		commVo.setErrorMsg(errorMsg);
+
+		return new ResponseEntity<CommVo>(commVo, errorCode);
 	}
 
 	@RequestMapping(value = "/404")
-	public ModelAndView clientError404(HttpServletRequest request) throws Exception {
+	public ResponseEntity<CommVo> clientError404(CommVo commVo, HttpServletRequest request) throws Exception {
 		log.debug("client error 404");
 
-		ModelAndView mv = new ModelAndView("/clientError");
 		HttpStatus errorCode = HttpStatus.NOT_FOUND;
 		String errorMsg = HttpStatus.NOT_FOUND.toString();
-		mv.addObject("errorCode", errorCode);
-		mv.addObject("errorMsg", errorMsg);
-		return mv;
+		commVo.setErrorCode(errorCode);
+		commVo.setErrorMsg(errorMsg);
+
+		return new ResponseEntity<CommVo>(commVo, errorCode);
 	}
 
 	@RequestMapping(value = "/405")
-	public ModelAndView clientError405(HttpServletRequest request) throws Exception {
+	public ResponseEntity<CommVo> clientError405(CommVo commVo, HttpServletRequest request) throws Exception {
 		log.debug("client error 405");
 
-		ModelAndView mv = new ModelAndView("/clientError");
 		HttpStatus errorCode = HttpStatus.METHOD_NOT_ALLOWED;
 		String errorMsg = HttpStatus.METHOD_NOT_ALLOWED.toString();
-		mv.addObject("errorCode", errorCode);
-		mv.addObject("errorMsg", errorMsg);
-		return mv;
+		commVo.setErrorCode(errorCode);
+		commVo.setErrorMsg(errorMsg);
+
+		return new ResponseEntity<CommVo>(commVo, errorCode);
 	}
 
 	@RequestMapping(value = "/415")
-	public ModelAndView clientError415(HttpServletRequest request) throws Exception {
+	public ResponseEntity<CommVo> clientError415(CommVo commVo, HttpServletRequest request) throws Exception {
 		log.debug("client error 415");
 
-		ModelAndView mv = new ModelAndView("/clientError");
 		HttpStatus errorCode = HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 		String errorMsg = HttpStatus.UNSUPPORTED_MEDIA_TYPE.toString();
-		mv.addObject("errorCode", errorCode);
-		mv.addObject("errorMsg", errorMsg);
-		return mv;
+		commVo.setErrorCode(errorCode);
+		commVo.setErrorMsg(errorMsg);
+
+		return new ResponseEntity<CommVo>(commVo, errorCode);
 	}
 
 	@RequestMapping(value = "/502")
@@ -132,6 +132,18 @@ public class ErrorController {
 		ModelAndView mv = new ModelAndView("/serverError");
 		HttpStatus errorCode = HttpStatus.SERVICE_UNAVAILABLE;
 		String errorMsg = HttpStatus.SERVICE_UNAVAILABLE.toString();
+		mv.addObject("errorCode", errorCode);
+		mv.addObject("errorMsg", errorMsg);
+		return mv;
+	}
+
+	@RequestMapping(value = "/forbiddenPage")
+	public ModelAndView forbiddenPage(HttpServletRequest request) throws Exception {
+		log.debug("client error 403");
+
+		ModelAndView mv = new ModelAndView("/clientError");
+		HttpStatus errorCode = HttpStatus.FORBIDDEN;
+		String errorMsg = HttpStatus.FORBIDDEN.toString();
 		mv.addObject("errorCode", errorCode);
 		mv.addObject("errorMsg", errorMsg);
 		return mv;

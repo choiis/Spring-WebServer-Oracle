@@ -71,7 +71,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 					if (usertype > comm.getAuthlevel()) {// 권한 없는 메뉴 uri로 접속시
 						log.debug("use denied");
 						// 403 forbidden
-						throw new ClientException(HttpStatus.FORBIDDEN);
+						response.sendRedirect("/forbiddenPage");
+						return false;
 					}
 				}
 

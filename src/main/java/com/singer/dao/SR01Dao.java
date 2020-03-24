@@ -59,6 +59,10 @@ public class SR01Dao extends SuperDao {
 		return (SR01Vo) selectOne(namespace + ".selectOne", sr01Vo);
 	}
 
+	public SR01Vo checkUserSR01Vo(SR01Vo sr01Vo) throws Exception {
+		return (SR01Vo) selectOne(namespace + ".checkUser", sr01Vo);
+	}
+
 	public int insertImage(Map<String, Object> hashMap) throws Exception {
 		return insert(namespace + ".insertPhoto", hashMap);
 	}

@@ -161,7 +161,7 @@ public class SB01ServiceImpl implements SB01Service {
 	public int deleteSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
 
 		sb01Vo.setSessionid(sessionid);
-		SB01Vo checkVo = sb01Dao.selectOneSB01Vo(sb01Vo);
+		SB01Vo checkVo = sb01Dao.checkUserSB01Vo(sb01Vo);
 		if (!CommonUtil.isNull(checkVo)) {
 			if (!checkVo.getUserid().equals(sessionid)) {
 				throw new ClientException(HttpStatus.FORBIDDEN);
