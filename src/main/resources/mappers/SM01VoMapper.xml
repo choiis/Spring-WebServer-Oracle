@@ -6,9 +6,21 @@
 -->
 
 <mapper namespace="com.singer.mappers.SM01">		
+
+		<resultMap type="com.singer.vo.SM01Vo" id="SM01VoResult">
+			<result column="userid" property="userid"/>
+			<result column="username" property="username"/>
+			<result column="passwd" property="passwd"/>
+			<result column="brth" property="brth"/>
+			<result column="regdate" property="regdate"/>
+			<result column="email" property="email"/>
+			<result column="grade" property="grade" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+			<result column="usertype" property="usertype" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+		</resultMap>
+		
 		<insert id="insert"  parameterType="com.singer.vo.SM01Vo">
 			insert into SM01 (userid, passwd, username, brth, grade, regdate, email, usertype)
-			values (#{userid}, #{passwd}, #{username}, #{brth}, #{grade}, #{regdate}, #{email}, 4) 
+			values (#{userid}, #{passwd}, #{username}, #{brth}, #{grade, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, #{regdate}, #{email}, 4) 
 		</insert>
 		
 		<update id="insertSMI1"  parameterType="com.singer.vo.SM01Vo">
@@ -55,7 +67,7 @@
 		</update>
 	
 		
-		<select id="selectOne" resultType="com.singer.vo.SM01Vo" parameterType="com.singer.vo.SM01Vo">
+		<select id="selectOne" resultMap="SM01VoResult" parameterType="com.singer.vo.SM01Vo">
 			select 
 				S.userid as userid,
 				S.username as username, 
@@ -68,7 +80,7 @@
 			 where S.userid = #{userid}
 		</select>
 		
-		<select id="selectLogin" resultType="com.singer.vo.SM01Vo" parameterType="com.singer.vo.SM01Vo">
+		<select id="selectLogin" resultMap="SM01VoResult" parameterType="com.singer.vo.SM01Vo">
 			select 
 				S.userid as userid,
 				S.username as username, 

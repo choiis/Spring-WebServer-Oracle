@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.singer.common.Constants.USER_CODE;
 import com.singer.service.CommService;
 import com.singer.vo.CommVo;
 
@@ -85,7 +86,7 @@ public class CommController {
 
 		log.debug("CommVo : " + commVo);
 
-		int authlevel = (Integer) session.getAttribute("usertype");
+		USER_CODE authlevel = (USER_CODE) session.getAttribute("usertype");
 		String userid = (String) session.getAttribute("userid");
 		List<CommVo> list = commService.insertMenu(commVo, userid, authlevel);
 		commVo.setCommList(list);
@@ -100,7 +101,7 @@ public class CommController {
 		log.debug("enter deleteMenu.do");
 		log.debug("CommVo : " + commVo);
 
-		int authlevel = (Integer) session.getAttribute("usertype");
+		USER_CODE authlevel = (USER_CODE) session.getAttribute("usertype");
 		List<CommVo> list = commService.deleteMenu(commVo, authlevel);
 		commVo.setCommList(list);
 
@@ -114,7 +115,7 @@ public class CommController {
 
 		log.debug("CommVo : " + commVo);
 
-		int authlevel = (Integer) session.getAttribute("usertype");
+		USER_CODE authlevel = (USER_CODE) session.getAttribute("usertype");
 		String userid = (String) session.getAttribute("userid");
 		List<CommVo> list = commService.updateMenu(commVo, userid, authlevel);
 		commVo.setCommList(list);

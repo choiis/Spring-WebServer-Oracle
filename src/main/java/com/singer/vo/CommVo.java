@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
+import com.singer.common.Constants.USER_CODE;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,7 +37,7 @@ public class CommVo extends SuperVo {
 
 	private String menuurl;
 
-	private int authlevel;
+	private USER_CODE authlevel;
 
 	private String moduser;
 

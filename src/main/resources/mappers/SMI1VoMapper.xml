@@ -6,8 +6,22 @@
 -->
 
 <mapper namespace="com.singer.mappers.SMI1">		
+		
+		<resultMap type="com.singer.vo.SM01Vo" id="SM01VoResult">
+			<result column="userid" property="userid"/>
+			<result column="username" property="username"/>
+			<result column="passwd" property="passwd"/>
+			<result column="brth" property="brth"/>
+			<result column="regdate" property="regdate"/>
+			<result column="email" property="email"/>
+			<result column="grade" property="grade" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+			<result column="usertype" property="usertype" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+			<result column="pfnum" property="pfnum"/>
+			<result column="pcnum" property="pcnum"/>
+			<result column="pbnum" property="pbnum"/>
+		</resultMap>
 
-		<select id="selectByBrth" resultType="com.singer.vo.SM01Vo"  parameterType="com.singer.vo.SM01Vo">
+		<select id="selectByBrth" resultMap="SM01VoResult" parameterType="com.singer.vo.SM01Vo">
 				select
 					S.*,
 					S1.pfnum as pfnum,
@@ -34,7 +48,7 @@
 		</select>
 		
 		
-		<select id="selectByName" resultType="com.singer.vo.SM01Vo"  parameterType="com.singer.vo.SM01Vo">
+		<select id="selectByName" resultMap="SM01VoResult" parameterType="com.singer.vo.SM01Vo">
 				select
 					S.*,
 					S1.pfnum as pfnum,
@@ -60,7 +74,7 @@
 			 	and S1.infocode = 1
 		</select>
 
-		<select id="selectByPhone" resultType="com.singer.vo.SM01Vo"  parameterType="com.singer.vo.SM01Vo">
+		<select id="selectByPhone" resultMap="SM01VoResult" parameterType="com.singer.vo.SM01Vo">
 				select
 	  				S1.userid as userid,
 	  				S1.username as username,

@@ -56,7 +56,7 @@ public class SM01ServiceImpl implements SM01Service {
 		// sm01Vo.setPasswd(pw);
 
 		sm01Vo.setRegdate(DateUtil.getToday());
-		sm01Vo.setGrade(Constants.USER_CODE.NORMAL.getValue());
+		sm01Vo.setGrade(Constants.USER_CODE.NORMAL);
 
 		MultipartFile photo = null;
 		Iterator<String> itr = request.getFileNames();
@@ -240,7 +240,7 @@ public class SM01ServiceImpl implements SM01Service {
 	public int updateSME1Vo(SM01Vo sm01Vo, String userId) throws Exception {
 		sm01Vo.setInsertid(userId);
 		sm01Dao.updateUserType(sm01Vo);
-		if (sm01Vo.getUsertype() == Constants.USER_CODE.ADMIN.getValue()) {
+		if (sm01Vo.getUsertype() == Constants.USER_CODE.ADMIN) {
 			sm01Dao.insertSME1Vo(sm01Vo);
 		} else {
 			sm01Dao.deleteSME1Vo(sm01Vo);

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.singer.common.CommonUtil;
+import com.singer.common.Constants.USER_CODE;
 import com.singer.dao.CommDao;
 import com.singer.util.MenuListStruct;
 import com.singer.vo.CommVo;
@@ -54,7 +55,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 
-		int usertype = (Integer) session.getAttribute("usertype");
+		USER_CODE usertype = (USER_CODE) session.getAttribute("usertype");
 		// 초기 로그인 케이스 아니면
 		if (!"/main".equals(uri)) {
 			CommVo commVo = new CommVo();
@@ -66,7 +67,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				Stream<CommVo> stream = list.stream().filter(s -> uri.equals(s.getMenuurl()));
 				for (Iterator<CommVo> i = stream.iterator(); i.hasNext();) {
 					CommVo comm = i.next();
-					if (usertype > comm.getAuthlevel()) {// 권한 없는 메뉴 uri로 접속시
+					if (usertype.compareTo(comm.getAuthlevel()) > 0) {// 권한 없는 메뉴 uri로 접속시
 						log.debug("use denied");
 						// 403 forbidden
 						response.sendRedirect("/forbiddenPage");

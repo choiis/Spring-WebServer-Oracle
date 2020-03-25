@@ -30,8 +30,15 @@
 		)	
 	where nowPage = #{nowPage}
 	</select>
-		
-	<select id="selectSL01Count" resultType="com.singer.vo.SL01Vo"  parameterType="com.singer.vo.SL01Vo">
+	
+	<resultMap type="com.singer.vo.SL01Vo" id="SL01VoResult">
+		<result column="lcnt" property="lcnt"/>
+		<result column="userid" property="userid"/>
+		<result column="username" property="username"/>
+		<result column="usertype" property="usertype" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+	</resultMap>
+	
+	<select id="selectSL01Count" resultMap="SL01VoResult"  parameterType="com.singer.vo.SL01Vo">
 		select SL.lcnt,
         SL.userid,
         SM.username,

@@ -2,18 +2,19 @@ package com.singer.service;
 
 import java.util.List;
 
+import com.singer.common.Constants.USER_CODE;
 import com.singer.vo.CommVo;
 
 public interface CommService {
 	public List<CommVo> selectCode(CommVo vo) throws Exception;
 
-	public List<CommVo> selectMenu(int authlevel) throws Exception;
+	public List<CommVo> selectMenu(USER_CODE authlevel) throws Exception;
 
-	public List<CommVo> insertMenu(CommVo commVo, String userid, int authlevel) throws Exception;
+	public List<CommVo> insertMenu(CommVo commVo, String userid, USER_CODE authlevel) throws Exception;
 
-	public List<CommVo> updateMenu(CommVo commVo, String userid, int authlevel) throws Exception;
+	public List<CommVo> updateMenu(CommVo commVo, String userid, USER_CODE authlevel) throws Exception;
 
-	public List<CommVo> deleteMenu(CommVo commVo, int authlevel) throws Exception;
+	public List<CommVo> deleteMenu(CommVo commVo, USER_CODE authlevel) throws Exception;
 
 	public List<CommVo> selectCodeGrp(CommVo commVo) throws Exception;
 

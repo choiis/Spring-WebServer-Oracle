@@ -48,6 +48,8 @@ public class Constants {
 	public static final int ERROR_MAIL_FAIL = 1011;
 
 	public enum USER_CODE {
+		/** 유저등급 안쓰는 코드 */
+		NONE(0),
 		/** 유저등급 관리자 코드 */
 		ADMIN(1),
 		/** 유저등급 특별회원 코드 */
@@ -55,15 +57,32 @@ public class Constants {
 		/** 유저등급 우수회원 코드 */
 		GOOD(3),
 		/** 유저등급 사용자 코드 */
-		NORMAL(4),;
+		NORMAL(4);
 		private final int value;
 
-		private USER_CODE(int value) {
+		USER_CODE(int value) {
 			this.value = value;
 		}
 
 		public int getValue() {
 			return value;
+		}
+
+		public static USER_CODE valueOf(int value) {
+			switch (value) {
+			case 0:
+				return NONE;
+			case 1:
+				return ADMIN;
+			case 2:
+				return SPECIAL;
+			case 3:
+				return GOOD;
+			case 4:
+				return NORMAL;
+			default:
+				throw new IllegalArgumentException();
+			}
 		}
 	}
 

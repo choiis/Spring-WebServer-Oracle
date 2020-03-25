@@ -35,16 +35,24 @@
 	and codegrp = #{codegrp}
 	</delete>
 	
-	<select id="selectMenu" resultType="com.singer.vo.CommVo"  parameterType="com.singer.vo.CommVo">
+	
+	<resultMap type="com.singer.vo.CommVo" id="CommVoResult">
+		<result column="menucd" property="menucd"/>
+		<result column="menunm" property="menunm"/>
+		<result column="menuurl" property="menuurl"/>
+		<result column="authlevel" property="authlevel" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+	</resultMap>
+	
+	<select id="selectMenu" resultMap="CommVoResult" parameterType="com.singer.vo.CommVo">
 	select menucd as menucd,
       menunm as menunm,
       menuurl as menuurl,
       authlevel as authlevel
-	from menu where authlevel >= #{authlevel}
+	from menu where authlevel >= #{authlevel, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}
 	 order by menucd
 	</select>
 	
-	<select id="selectAllMenu" resultType="com.singer.vo.CommVo">
+	<select id="selectAllMenu" resultMap="CommVoResult">
 	select menucd as menucd,
       menunm as menunm,
       menuurl as menuurl,
@@ -54,14 +62,14 @@
 	
 	<insert id="insertMenu"  parameterType="com.singer.vo.CommVo">
 	insert into MENU
-	values (#{menucd}, #{menunm}, #{menuurl}, #{authlevel}, #{reguser},#{regdate} , #{reguser},#{regdate}) 
+	values (#{menucd}, #{menunm}, #{menuurl}, #{authlevel, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, #{reguser},#{regdate} , #{reguser},#{regdate}) 
 	</insert>
 	
 	<update id="updateMenu" parameterType="com.singer.vo.CommVo">
 	update MENU 
 	set menunm = #{menunm},
 		menuurl = #{menuurl},
-		authlevel = #{authlevel},
+		authlevel = #{authlevel, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
 		moduser = #{moduser},
 		moddate = #{moddate}
 	where menucd = #{menucd}

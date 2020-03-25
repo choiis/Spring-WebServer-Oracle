@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.singer.common.CommonUtil;
+import com.singer.common.Constants.USER_CODE;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,11 +23,11 @@ public class SM01Vo extends SuperVo {
 	private String passwd;
 	private String username;
 	private String brth;
-	private int grade;
+	private USER_CODE grade;
 	private String regdate;
 	private String phone;
 	private String email;
-	private int usertype;
+	private USER_CODE usertype;
 	private MultipartFile photo;
 
 	private String device;

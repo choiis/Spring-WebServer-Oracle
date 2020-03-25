@@ -1,5 +1,7 @@
 package com.singer.vo;
 
+import com.singer.common.Constants.USER_CODE;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +21,6 @@ public class SL01Vo extends SuperVo {
 	private String device;
 	private String lcnt;
 	private String username;
-	private String usertype;
+	private USER_CODE usertype;
 
 }

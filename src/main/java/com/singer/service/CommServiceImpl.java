@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.singer.common.Constants.USER_CODE;
 import com.singer.common.DateUtil;
 import com.singer.dao.CommDao;
 import com.singer.util.MenuListStruct;
@@ -31,9 +32,10 @@ public class CommServiceImpl implements CommService {
 	}
 
 	@Override
-	public List<CommVo> selectMenu(int authlevel) throws Exception {
+	public List<CommVo> selectMenu(USER_CODE authlevel) throws Exception {
 
-		Stream<CommVo> stream = menuListStruct.getAllMenuList().stream().filter(s -> s.getAuthlevel() >= authlevel);
+		Stream<CommVo> stream = menuListStruct.getAllMenuList().stream()
+				.filter(s -> s.getAuthlevel().compareTo(authlevel) >= 0);
 		List<CommVo> list = new ArrayList<>();
 		for (Iterator<CommVo> i = stream.iterator(); i.hasNext();) {
 			list.add(i.next());
@@ -43,7 +45,7 @@ public class CommServiceImpl implements CommService {
 
 	@Transactional
 	@Override
-	public List<CommVo> insertMenu(CommVo commVo, String userid, int authlevel) throws Exception {
+	public List<CommVo> insertMenu(CommVo commVo, String userid, USER_CODE authlevel) throws Exception {
 		commVo.setReguser(userid);
 		commVo.setModuser(userid);
 		commVo.setRegdate(DateUtil.getToday());
@@ -60,7 +62,7 @@ public class CommServiceImpl implements CommService {
 
 	@Transactional
 	@Override
-	public List<CommVo> updateMenu(CommVo commVo, String userid, int authlevel) throws Exception {
+	public List<CommVo> updateMenu(CommVo commVo, String userid, USER_CODE authlevel) throws Exception {
 		commVo.setModuser(userid);
 		commVo.setModdate(DateUtil.getToday());
 		int cnt = commDao.updateMenu(commVo);
@@ -75,7 +77,7 @@ public class CommServiceImpl implements CommService {
 
 	@Transactional
 	@Override
-	public List<CommVo> deleteMenu(CommVo commVo, int authlevel) throws Exception {
+	public List<CommVo> deleteMenu(CommVo commVo, USER_CODE authlevel) throws Exception {
 		commDao.deleteMenu(commVo);
 		commVo.setAuthlevel(authlevel);
 		return commDao.selectMenu(commVo);
