@@ -116,11 +116,11 @@ public class LoginController {
 		return model;
 	}
 
-	@RequestMapping(value = "/sessionExpire")
-	public ModelAndView sessionExpire() throws Exception {
-
-		ModelAndView model = new ModelAndView("/sessionExpire");
-
+	@RequestMapping(value = "/sessionNotExist")
+	public ModelAndView redirect_uri(HttpServletRequest request) throws Exception {
+		String redirect = request.getParameter("redirect_uri");
+		ModelAndView model = new ModelAndView("/index");
+		model.addObject("redirect_uri", redirect);
 		return model;
 	}
 }

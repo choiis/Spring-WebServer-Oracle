@@ -45,6 +45,10 @@ public class SR03Dao extends SuperDao {
 		return delete(namespace + ".delete", sr03Vo);
 	}
 
+	public SR03Vo checkUserSR03Vo(SR03Vo sr03Vo) throws Exception {
+		return (SR03Vo) selectOne(namespace + ".checkUser", sr03Vo);
+	}
+
 	public int delete_seqSR03Vo(SR03Vo sr03Vo) throws Exception {
 		return delete(namespace + ".delete_seq01", sr03Vo);
 	}

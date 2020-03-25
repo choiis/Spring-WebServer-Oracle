@@ -68,7 +68,14 @@
 		
 		gfn_ajaxRequestBody("login","POST" , sendData , function(data) {
 			if(data.code == 1){
-				location.href='/main';
+				
+				var redirect = "${redirect_uri}";
+				if(gfn_isNull(redirect) || gfn_isNumber(redirect)) {
+					location.href='/main';		
+				} else {
+					location.href=redirect;
+				}
+				
 			} else {
 				alert(data.msg);
 			}

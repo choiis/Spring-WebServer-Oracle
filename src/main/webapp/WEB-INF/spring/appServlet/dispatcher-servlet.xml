@@ -52,6 +52,7 @@
 			<exclude-mapping path="/sm01joinPage"/>
 			<exclude-mapping path="/sm01"/>
 			<exclude-mapping path="/login"/>
+			<exclude-mapping path="/sessionNotExist"/>
 			<beans:ref bean="sessionInterceptor" />
 		</interceptor>
 		

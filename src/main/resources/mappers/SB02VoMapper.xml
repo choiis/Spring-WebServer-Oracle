@@ -88,6 +88,14 @@
 			and seq01 = #{seq01}
 		</delete>
 		
+		<select id="checkUser" resultType="com.singer.vo.SB02Vo" parameterType="com.singer.vo.SB02Vo">	
+			select 
+    			seq as seq,
+    			userid as userid
+    			from SB02
+			where seq = #{seq}
+		</select>
+		
 		<delete id="delete_seq01" parameterType="com.singer.vo.SB02Vo">
 			delete from SB02
 			where seq01 = #{seq01}

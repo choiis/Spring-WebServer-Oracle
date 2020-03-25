@@ -124,7 +124,7 @@ $(document).ready(function() {
 	
 	/** 숫자포맷 체크*/	
 	gfn_isNumber = function(obj) {
-		var regex= /[0-9]/;
+		var regex= /^[0-9]*$/
 		return regex.test(obj);
 	}
 	
