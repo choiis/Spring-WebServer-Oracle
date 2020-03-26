@@ -68,7 +68,7 @@
 	
 		<div>
 			<p>가입일 : ${sM01Vo.regdate}</p>
-			<p>전화번호 : ${sM01Vo.phone}</p>
+			<p>전화번호 : ${sM01Vo.cellpfnum}- ${sM01Vo.cellpcnum} - ${sM01Vo.cellpbnum}</p>
 			
 			<img id="showTempImage" alt="" src="/sm01photo/${sM01Vo.userid}" height="170px" width="150px"/>
 			<form id="form" method="post" enctype="multipart/form-data" action="/sendMail">

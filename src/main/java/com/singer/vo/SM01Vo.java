@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.singer.common.CommonUtil;
+import com.singer.common.Constants.PHONE_INFO_CODE;
 import com.singer.common.Constants.USER_CODE;
 
 import lombok.Getter;
@@ -36,7 +37,7 @@ public class SM01Vo extends SuperVo {
 
 	private List<SM01Vo> list;
 
-	private int infocode;
+	private PHONE_INFO_CODE infocode;
 	private String pfnum;
 	private String pcnum;
 	private String pbnum;

@@ -72,7 +72,7 @@ public class SM01ServiceImpl implements SM01Service {
 		}
 
 		hashMap.put("succeed", sm01Dao.insertSM01Vo(sm01Vo));
-		sm01Vo.setInfocode(PHONE_INFO_CODE.CELL.getValue());
+		sm01Vo.setInfocode(PHONE_INFO_CODE.CELL);
 		sm01Dao.insertSMI1Vo(sm01Vo);
 		HashMap<String, Object> putHash = new HashMap<String, Object>();
 		putHash.put("userid", sm01Vo.getUserid());
@@ -102,19 +102,19 @@ public class SM01ServiceImpl implements SM01Service {
 		List<SM01Vo> list = sm01Dao.selectSMI1Vo(sm01Vo);
 		for (SM01Vo vo : list) {
 
-			if (vo.getInfocode() == PHONE_INFO_CODE.CELL.getValue()) {
+			if (vo.getInfocode() == PHONE_INFO_CODE.CELL) {
 				sm01Vo.setCellpfnum(vo.getPfnum());
 				sm01Vo.setCellpcnum(vo.getPcnum());
 				sm01Vo.setCellpbnum(vo.getPbnum());
-			} else if (vo.getInfocode() == PHONE_INFO_CODE.HOME.getValue()) {
+			} else if (vo.getInfocode() == PHONE_INFO_CODE.HOME) {
 				sm01Vo.setHomepfnum(vo.getPfnum());
 				sm01Vo.setHomepcnum(vo.getPcnum());
 				sm01Vo.setHomepbnum(vo.getPbnum());
-			} else if (vo.getInfocode() == PHONE_INFO_CODE.COMPANY.getValue()) {
+			} else if (vo.getInfocode() == PHONE_INFO_CODE.COMPANY) {
 				sm01Vo.setCompanypfnum(vo.getPfnum());
 				sm01Vo.setCompanypcnum(vo.getPcnum());
 				sm01Vo.setCompanypbnum(vo.getPbnum());
-			} else if (vo.getInfocode() == PHONE_INFO_CODE.OTHER.getValue()) {
+			} else if (vo.getInfocode() == PHONE_INFO_CODE.OTHER) {
 				sm01Vo.setOtherpfnum(vo.getPfnum());
 				sm01Vo.setOtherpcnum(vo.getPcnum());
 				sm01Vo.setOtherpbnum(vo.getPbnum());
@@ -177,7 +177,7 @@ public class SM01ServiceImpl implements SM01Service {
 		if (!CommonUtil.isNull(sm01Vo.getCellpcnum()) && !CommonUtil.isNull(sm01Vo.getCellpbnum())) {
 			SM01Vo vo = new SM01Vo();
 			vo.setUserid(sm01Vo.getUserid());
-			vo.setInfocode(PHONE_INFO_CODE.CELL.getValue());
+			vo.setInfocode(PHONE_INFO_CODE.CELL);
 			vo.setPfnum(sm01Vo.getCellpfnum());
 			vo.setPcnum(sm01Vo.getCellpcnum());
 			vo.setPbnum(sm01Vo.getCellpbnum());
@@ -188,7 +188,7 @@ public class SM01ServiceImpl implements SM01Service {
 		if (!CommonUtil.isNull(sm01Vo.getHomepcnum()) && !CommonUtil.isNull(sm01Vo.getHomepbnum())) {
 			SM01Vo vo = new SM01Vo();
 			vo.setUserid(sm01Vo.getUserid());
-			vo.setInfocode(PHONE_INFO_CODE.HOME.getValue());
+			vo.setInfocode(PHONE_INFO_CODE.HOME);
 			vo.setPfnum(sm01Vo.getHomepfnum());
 			vo.setPcnum(sm01Vo.getHomepcnum());
 			vo.setPbnum(sm01Vo.getHomepbnum());
@@ -199,7 +199,7 @@ public class SM01ServiceImpl implements SM01Service {
 		if (!CommonUtil.isNull(sm01Vo.getCompanypcnum()) && !CommonUtil.isNull(sm01Vo.getCompanypbnum())) {
 			SM01Vo vo = new SM01Vo();
 			vo.setUserid(sm01Vo.getUserid());
-			vo.setInfocode(PHONE_INFO_CODE.COMPANY.getValue());
+			vo.setInfocode(PHONE_INFO_CODE.COMPANY);
 			vo.setPfnum(sm01Vo.getCompanypfnum());
 			vo.setPcnum(sm01Vo.getCompanypcnum());
 			vo.setPbnum(sm01Vo.getCompanypbnum());
@@ -210,7 +210,7 @@ public class SM01ServiceImpl implements SM01Service {
 		if (!CommonUtil.isNull(sm01Vo.getOtherpcnum()) && !CommonUtil.isNull(sm01Vo.getOtherpbnum())) {
 			SM01Vo vo = new SM01Vo();
 			vo.setUserid(sm01Vo.getUserid());
-			vo.setInfocode(PHONE_INFO_CODE.OTHER.getValue());
+			vo.setInfocode(PHONE_INFO_CODE.OTHER);
 			vo.setPfnum(sm01Vo.getOtherpfnum());
 			vo.setPcnum(sm01Vo.getOtherpcnum());
 			vo.setPbnum(sm01Vo.getOtherpbnum());

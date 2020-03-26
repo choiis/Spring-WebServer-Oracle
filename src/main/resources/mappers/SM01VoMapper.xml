@@ -16,6 +16,12 @@
 			<result column="email" property="email"/>
 			<result column="grade" property="grade" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
 			<result column="usertype" property="usertype" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+			<result column="infocode" property="infocode" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+			<result column="pfnum" property="pfnum"/>
+			<result column="pcnum" property="pcnum"/>
+			<result column="pbnum" property="pbnum"/>
+			<result column="totCnt" property="totCnt"/>
+			
 		</resultMap>
 		
 		<insert id="insert"  parameterType="com.singer.vo.SM01Vo">
@@ -27,7 +33,7 @@
 			merge into SMI1 S1
 				using dual
 				on (S1.userid = #{userid}
-				and S1.infocode = #{infocode})
+				and S1.infocode = #{infocode, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler})
 			when matched then
 				update set 
 					S1.pfnum = #{pfnum},
@@ -36,7 +42,7 @@
   					S1.regdate = #{regdate}
 			when not matched then
 				insert (S1.userid, S1.infocode, S1.pfnum, S1.pcnum, S1.pbnum, S1.regdate)
-				values (#{userid}, #{infocode}, #{pfnum}, #{pcnum}, #{pbnum}, #{regdate}) 
+				values (#{userid}, #{infocode, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, #{pfnum}, #{pcnum}, #{pbnum}, #{regdate}) 
 		</update>
 		
 		<insert id="insertSME1"  parameterType="com.singer.vo.SM01Vo">
@@ -94,7 +100,7 @@
 			 where S.userid = #{userid}
 		</select>
 		
-		<select id="selectSMI1" resultType="com.singer.vo.SM01Vo" parameterType="com.singer.vo.SM01Vo">
+		<select id="selectSMI1" resultMap="SM01VoResult" parameterType="com.singer.vo.SM01Vo">
 			select 
 				S.userid as userid,
 				S.infocode as infocode,
@@ -105,7 +111,7 @@
 			  where S.userid = #{userid}
 		</select>
 		
-		<select id="select" resultType="com.singer.vo.SM01Vo"  parameterType="com.singer.vo.SM01Vo">
+		<select id="select" resultMap="SM01VoResult" parameterType="com.singer.vo.SM01Vo">
 		<![CDATA[
 			select 
 				/*+ ordered use_nl(T S1)*/

@@ -87,6 +87,8 @@ public class Constants {
 	}
 
 	public enum PHONE_INFO_CODE {
+		/** 안쓰는 코드 */
+		NONE(0),
 		/** 핸드폰코드 */
 		CELL(1),
 		/** 집번호코드 */
@@ -97,12 +99,29 @@ public class Constants {
 		OTHER(4),;
 		private final int value;
 
-		private PHONE_INFO_CODE(int value) {
+		PHONE_INFO_CODE(int value) {
 			this.value = value;
 		}
 
 		public int getValue() {
 			return value;
+		}
+
+		public static PHONE_INFO_CODE valueOf(int value) {
+			switch (value) {
+			case 0:
+				return NONE;
+			case 1:
+				return CELL;
+			case 2:
+				return HOME;
+			case 3:
+				return COMPANY;
+			case 4:
+				return OTHER;
+			default:
+				throw new IllegalArgumentException();
+			}
 		}
 	}
 }
