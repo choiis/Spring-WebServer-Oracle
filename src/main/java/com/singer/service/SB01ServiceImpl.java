@@ -59,9 +59,9 @@ public class SB01ServiceImpl implements SB01Service {
 		}
 
 		if (CommonUtil.chkVideoFile(video.getOriginalFilename())) {
-			sb01Vo.setVideobool(YES_NO.YES.getValue());
+			sb01Vo.setVideobool(YES_NO.YES);
 		} else if (CommonUtil.chkAudioFile(video.getOriginalFilename())) {
-			sb01Vo.setVideobool(YES_NO.NO.getValue());
+			sb01Vo.setVideobool(YES_NO.NO);
 		} else {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
 		}

@@ -314,7 +314,7 @@
 			</c:choose>
     		
     		<c:choose>
-				<c:when test="${sb01Vo.videobool == 1}">
+				<c:when test="${sb01Vo.videobool == 'YES'}">
 					<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
 			    		<source src="/sb01Video/${sb01Vo.seq}/${sb01Vo.title}" type="video/mp4" />
 					</video>

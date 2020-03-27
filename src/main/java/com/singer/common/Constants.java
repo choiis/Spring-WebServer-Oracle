@@ -60,7 +60,7 @@ public class Constants {
 		NORMAL(4);
 		private final int value;
 
-		USER_CODE(int value) {
+		private USER_CODE(int value) {
 			this.value = value;
 		}
 
@@ -99,7 +99,7 @@ public class Constants {
 		OTHER(4),;
 		private final int value;
 
-		PHONE_INFO_CODE(int value) {
+		private PHONE_INFO_CODE(int value) {
 			this.value = value;
 		}
 

@@ -11,7 +11,7 @@
    			 SELECT SEQ_SB01.CURRVAL FROM DUAL
   			</selectKey>
 			insert into SB01 (seq, title, text, userid, regdate , videobool)
-			values (SEQ_SB01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{videobool}) 
+			values (SEQ_SB01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{videobool, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}) 
 			
 		</insert>
 		
@@ -49,7 +49,20 @@
 			where seq = #{seq}
 		</update>
 		
-		<select id="selectOne" resultType="com.singer.vo.SB01Vo" parameterType="com.singer.vo.SB01Vo">	
+		<resultMap type="com.singer.vo.SB01Vo" id="SB01VoResult">
+			<result column="seq" property="seq"/>
+			<result column="title" property="title"/>
+			<result column="text" property="text"/>
+			<result column="userid" property="userid"/>
+			<result column="regdate" property="regdate"/>
+			<result column="hit" property="hit"/>
+			<result column="good" property="good"/>
+			<result column="goodlog" property="goodlog"/>
+			<result column="hatelog" property="hatelog"/>
+			<result column="videobool" property="videobool" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+		</resultMap>
+		
+		<select id="selectOne" resultMap="SB01VoResult" parameterType="com.singer.vo.SB01Vo">	
 		select 
     		S1.seq as seq,
     		S1.title as title, 

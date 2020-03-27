@@ -6,6 +6,7 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -16,7 +17,11 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Component;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 @Component("aes256")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AES256Util {
 
 	private String iv;
@@ -24,7 +29,8 @@ public class AES256Util {
 
 	private static final String KEY = "abcdefghijklmnopqrstuvwxyz";
 
-	public AES256Util() throws UnsupportedEncodingException {
+	@PostConstruct
+	private void init() throws UnsupportedEncodingException {
 		this.iv = KEY.substring(0, 16);
 
 		byte[] keyBytes = new byte[16];

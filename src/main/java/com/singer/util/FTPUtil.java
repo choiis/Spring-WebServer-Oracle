@@ -18,7 +18,11 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 @Component("ftpUtil")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FTPUtil {
 
 	private final Log log = LogFactory.getLog(FTPUtil.class);
@@ -43,10 +47,6 @@ public class FTPUtil {
 		username = properties.getProperty("global.ftp.username");
 		password = properties.getProperty("global.ftp.password");
 		path = properties.getProperty("global.ftp.path");
-	}
-
-	private FTPUtil() {
-
 	}
 
 	private FTPClient initFTPClient() {

@@ -3,6 +3,7 @@ package com.singer.vo;
 import java.util.List;
 
 import com.singer.common.CommonUtil;
+import com.singer.common.Constants.YES_NO;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class SB01Vo extends BoardVo {
 
 	private String video;
 
-	private int videobool;
+	private YES_NO videobool;
 
 	private List<SB01Vo> list;
 

@@ -8,7 +8,7 @@ import java.util.Date;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DateUtil {
 
 	private static SimpleDateFormat sdfDay_8 = new SimpleDateFormat("yyyyMMdd");
