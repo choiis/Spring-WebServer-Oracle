@@ -59,10 +59,9 @@ public class SF02Controller {
 	@RequestMapping(value = "/sf02/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
 	public ResponseEntity<SF02Vo> deleteSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpSession session) throws Exception {
 		log.debug("enter sf02 delete");
-
-		sf02Service.deleteSF02Vo(sf02Vo);
-
 		String userid = (String) session.getAttribute("userid");
+
+		sf02Service.deleteSF02Vo(sf02Vo, userid);
 
 		sf02Vo.setNowPage(1);
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);

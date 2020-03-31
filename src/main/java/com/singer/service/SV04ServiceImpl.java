@@ -5,10 +5,12 @@ import java.util.stream.Stream;
 
 import javax.annotation.Resource;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.singer.exception.AppException;
+import com.singer.exception.ClientException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
@@ -68,8 +70,13 @@ public class SV04ServiceImpl implements SV04Service {
 
 	@Transactional
 	@Override
-	public int deleteSV04Vo(SV04Vo sv04Vo) throws Exception {
-
+	public int deleteSV04Vo(SV04Vo sv04Vo, String sessionid) throws Exception {
+		SV04Vo checkVo = sv04Dao.checkUserSV04Vo(sv04Vo);
+		if (!CommonUtil.isNull(checkVo)) {
+			if (!checkVo.getUserid().equals(sessionid)) {
+				throw new ClientException(HttpStatus.FORBIDDEN);
+			}
+		}
 		if (sv04Vo.getParents() > 0) {
 			sv04Dao.deleteChild(sv04Vo);
 			sv04Vo.setParents(0);

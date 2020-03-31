@@ -14,5 +14,5 @@ public interface SV04Service {
 
 	public int updateSV04Vo(SV04Vo sv04Vo) throws Exception;
 
-	public int deleteSV04Vo(SV04Vo sv04Vo) throws Exception;
+	public int deleteSV04Vo(SV04Vo sv04Vo, String sessionid) throws Exception;
 }

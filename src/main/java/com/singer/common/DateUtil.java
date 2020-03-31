@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DateUtil {
 
-	private static SimpleDateFormat sdfDay_8 = new SimpleDateFormat("yyyyMMdd");
-	private static SimpleDateFormat sdfDay_14 = new SimpleDateFormat("yyyyMMddHHmmss");
+	protected static SimpleDateFormat sdfDay_8 = new SimpleDateFormat("yyyyMMdd");
+	protected static SimpleDateFormat sdfDay_14 = new SimpleDateFormat("yyyyMMddHHmmss");
 
 	/**
 	 * 오늘 날짜를 반환한다
@@ -36,21 +36,19 @@ public class DateUtil {
 		try {
 			return sdfDay_8.parse(date);
 		} catch (ParseException e) {
-
+			throw new IllegalArgumentException();
 		}
-		return null;
 	}
 
 	private static Date stringDetailToDate(String date) {
 		try {
 			return sdfDay_14.parse(date);
 		} catch (ParseException e) {
-
+			throw new IllegalArgumentException();
 		}
-		return null;
 	}
 
-	private static String addMonth_8(String str, int month) {
+	protected static String addMonth_8(String str, int month) {
 		Date date = stringToDayTime(str);
 
 		Calendar cal = Calendar.getInstance();
@@ -60,7 +58,7 @@ public class DateUtil {
 		return sdfDay_8.format(cal.getTime());
 	}
 
-	private static String addMonth_14(String str, int month) {
+	protected static String addMonth_14(String str, int month) {
 		Date date = stringDetailToDate(str);
 
 		Calendar cal = Calendar.getInstance();
@@ -76,12 +74,14 @@ public class DateUtil {
 	public static String addMonth(String str, int month) {
 		if (str.length() == 8) {
 			return addMonth_8(str, month);
-		} else {
+		} else if (str.length() == 14) {
 			return addMonth_14(str, month);
+		} else {
+			throw new IllegalArgumentException();
 		}
 	}
 
-	private static String addDay_8(String str, int day) {
+	protected static String addDay_8(String str, int day) {
 		Date date = stringToDayTime(str);
 
 		Calendar cal = Calendar.getInstance();
@@ -91,7 +91,7 @@ public class DateUtil {
 		return sdfDay_8.format(cal.getTime());
 	}
 
-	private static String addDay_14(String str, int day) {
+	protected static String addDay_14(String str, int day) {
 		Date date = stringDetailToDate(str);
 
 		Calendar cal = Calendar.getInstance();
@@ -107,8 +107,10 @@ public class DateUtil {
 	public static String addDay(String str, int day) {
 		if (str.length() == 8) {
 			return addDay_8(str, day);
-		} else {
+		} else if (str.length() == 14) {
 			return addDay_14(str, day);
+		} else {
+			throw new IllegalArgumentException();
 		}
 	}
 
