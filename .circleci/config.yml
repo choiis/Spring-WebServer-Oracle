@@ -1,9 +1,9 @@
 version: 2
-
 jobs:
-    build:
-        docker: 
-           - image:circleci/maven@0.0.12
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
 steps:
     - checkout
     - run:
