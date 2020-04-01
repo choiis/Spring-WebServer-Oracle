@@ -1,10 +1,9 @@
 version: 2
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
-steps:
-    - checkout
-    - run:
-        command: mvn clean install
+    build:
+        docker:
+        # specify the version you desire here
+        - image: circleci/openjdk:8-jdk
+    steps:
+        - checkout
+        - run: mvn clean install
