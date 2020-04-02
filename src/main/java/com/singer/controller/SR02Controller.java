@@ -1,7 +1,7 @@
 package com.singer.controller;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,7 +19,7 @@ import com.singer.service.SR02Service;
 import com.singer.vo.SR01Vo;
 
 @Controller("sr02Controller")
-public class SR02Controller {
+public class SR02Controller extends BaseController {
 	private final Log log = LogFactory.getLog(SR02Controller.class);
 
 	@Resource(name = "sr02Service")
@@ -27,10 +27,11 @@ public class SR02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sr02", method = RequestMethod.POST)
-	public ResponseEntity<SR01Vo> insertSR02Vo(@RequestBody SR01Vo sr02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SR01Vo> insertSR02Vo(@RequestBody SR01Vo sr02Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sr02 post");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sr02Vo = sr02Service.insertSR02Vo(sr02Vo, userid);
 
 		log.debug("exit sr02 post");
@@ -39,10 +40,11 @@ public class SR02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "sr02/{seq}", method = RequestMethod.DELETE)
-	public ResponseEntity<SR01Vo> deleteSR02Vo(@ModelAttribute SR01Vo sr02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SR01Vo> deleteSR02Vo(@ModelAttribute SR01Vo sr02Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sr02 delete");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sr02Service.deleteSR02Vo(sr02Vo, userid);
 
 		sr02Vo.setResult(RESULT_CODE.SUCCESS.getValue());
@@ -53,10 +55,11 @@ public class SR02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "sr02/{seq}", method = RequestMethod.GET)
-	public ResponseEntity<SR01Vo> selectOneSR02Vo(@ModelAttribute SR01Vo sr02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SR01Vo> selectOneSR02Vo(@ModelAttribute SR01Vo sr02Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sr02 get");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sr02Vo = sr02Service.selectOneSR02Vo(sr02Vo, userid);
 
 		if (sr02Vo == null) {

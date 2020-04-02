@@ -1,7 +1,7 @@
 package com.singer.controller;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,7 +17,7 @@ import com.singer.service.SV02Service;
 import com.singer.vo.SV02Vo;
 
 @Controller("sv02Controller")
-public class SV02Controller {
+public class SV02Controller extends BaseController {
 	private final Log log = LogFactory.getLog(SV02Controller.class);
 
 	@Resource(name = "sv02Service")
@@ -25,10 +25,11 @@ public class SV02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv03", method = RequestMethod.POST)
-	public ResponseEntity<SV02Vo> insertSV03Vo(@RequestBody SV02Vo sv02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV02Vo> insertSV03Vo(@RequestBody SV02Vo sv02Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sv03 post");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sv02Service.insertSv03Vo(sv02Vo, userid);
 
 		log.debug("exit sv03 post");

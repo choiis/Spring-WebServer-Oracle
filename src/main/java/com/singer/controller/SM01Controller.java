@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -28,7 +27,7 @@ import com.singer.vo.SM01Vo;
 import lombok.Cleanup;
 
 @Controller("sM01Controller")
-public class SM01Controller {
+public class SM01Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SM01Controller.class);
 
@@ -72,11 +71,11 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01update", method = RequestMethod.POST)
-	public ModelAndView upateSM01Vo(@ModelAttribute SM01Vo sm01Vo, MultipartHttpServletRequest request,
-			HttpSession session) throws Exception {
+	public ModelAndView upateSM01Vo(@ModelAttribute SM01Vo sm01Vo, MultipartHttpServletRequest request)
+			throws Exception {
 		log.debug("enter sm01update post");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 
 		sm01Vo = sm01Service.updateSM01Vo(sm01Vo, request, userid);
 
@@ -88,12 +87,12 @@ public class SM01Controller {
 	}
 
 	@RequestMapping(value = "/sm01change", method = RequestMethod.GET)
-	public ModelAndView selectOneChangeSM01Vo(HttpSession session) throws Exception {
+	public ModelAndView selectOneChangeSM01Vo(HttpServletRequest request) throws Exception {
 		SM01Vo sm01Vo = new SM01Vo();
 		log.debug("enter sm01change post");
 
 		ModelAndView model = new ModelAndView("/sm01update");
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sm01Vo.setUserid(userid);
 
 		sm01Vo = sm01Service.selectOneSM01Vo(sm01Vo);
@@ -132,10 +131,10 @@ public class SM01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sme1", method = RequestMethod.PUT)
-	public ResponseEntity<SM01Vo> upateSME1Vo(@RequestBody SM01Vo sm01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SM01Vo> upateSME1Vo(@RequestBody SM01Vo sm01Vo, HttpServletRequest request) throws Exception {
 		log.debug("enter sme1 put");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sm01Service.updateSME1Vo(sm01Vo, userid);
 
 		log.debug("exit sme1 put");

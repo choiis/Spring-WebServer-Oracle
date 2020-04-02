@@ -3,7 +3,7 @@ package com.singer.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,7 +25,7 @@ import com.singer.vo.CommVo;
 
 @Controller("commController")
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
-public class CommController {
+public class CommController extends BaseController {
 	private final Log log = LogFactory.getLog(SB01Controller.class);
 
 	@Resource(name = "commService")
@@ -33,8 +33,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commCode/{codegrp}", method = RequestMethod.GET)
-	public ResponseEntity<CommVo> toSelectCommCode(@ModelAttribute CommVo commVo, HttpSession session)
-			throws Exception {
+	public ResponseEntity<CommVo> toSelectCommCode(@ModelAttribute CommVo commVo) throws Exception {
 		log.debug("CommVo : " + commVo);
 
 		List<CommVo> list = commService.selectCode(commVo);
@@ -45,8 +44,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commCodeGrp", method = RequestMethod.GET)
-	public ResponseEntity<CommVo> toSelectCommCodeGrp(@ModelAttribute CommVo commVo, HttpSession session)
-			throws Exception {
+	public ResponseEntity<CommVo> toSelectCommCodeGrp(@ModelAttribute CommVo commVo) throws Exception {
 
 		log.debug("CommVo : " + commVo);
 
@@ -56,13 +54,12 @@ public class CommController {
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
 	}
 
-	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@RequestMapping(value = "/commMenu", method = RequestMethod.GET)
-	public ResponseEntity<CommVo> toSelectMenu(HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toSelectMenu(HttpServletRequest request) throws Exception {
 		CommVo commVo = new CommVo();
 
-		List<CommVo> menuList = (List<CommVo>) session.getAttribute("menuList");
+		List<CommVo> menuList = getMenuList(request);
 		commVo.setCommList(menuList);
 
 		return new ResponseEntity<CommVo>(commVo, HttpStatus.OK);
@@ -82,12 +79,13 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commMenu", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toInsertMenu(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toInsertMenu(@RequestBody CommVo commVo, HttpServletRequest request)
+			throws Exception {
 
 		log.debug("CommVo : " + commVo);
 
-		USER_CODE authlevel = (USER_CODE) session.getAttribute("usertype");
-		String userid = (String) session.getAttribute("userid");
+		USER_CODE authlevel = getUsertype(request);
+		String userid = getSessionId(request);
 		List<CommVo> list = commService.insertMenu(commVo, userid, authlevel);
 		commVo.setCommList(list);
 
@@ -96,12 +94,13 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commMenu/{menucd}", method = RequestMethod.DELETE)
-	public ResponseEntity<CommVo> toDeleteMenu(@ModelAttribute CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toDeleteMenu(@ModelAttribute CommVo commVo, HttpServletRequest request)
+			throws Exception {
 
 		log.debug("enter deleteMenu.do");
 		log.debug("CommVo : " + commVo);
 
-		USER_CODE authlevel = (USER_CODE) session.getAttribute("usertype");
+		USER_CODE authlevel = getUsertype(request);
 		List<CommVo> list = commService.deleteMenu(commVo, authlevel);
 		commVo.setCommList(list);
 
@@ -111,12 +110,13 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commMenu", method = RequestMethod.PUT)
-	public ResponseEntity<CommVo> toUpdateMenu(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toUpdateMenu(@RequestBody CommVo commVo, HttpServletRequest request)
+			throws Exception {
 
 		log.debug("CommVo : " + commVo);
 
-		USER_CODE authlevel = (USER_CODE) session.getAttribute("usertype");
-		String userid = (String) session.getAttribute("userid");
+		USER_CODE authlevel = getUsertype(request);
+		String userid = getSessionId(request);
 		List<CommVo> list = commService.updateMenu(commVo, userid, authlevel);
 		commVo.setCommList(list);
 
@@ -125,11 +125,12 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commCode", method = RequestMethod.POST)
-	public ResponseEntity<CommVo> toInsertCode(@RequestBody CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toInsertCode(@RequestBody CommVo commVo, HttpServletRequest request)
+			throws Exception {
 
 		log.debug("CommVo : " + commVo);
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		List<CommVo> list = commService.insertCode(commVo, userid);
 		commVo.setCommList(list);
 
@@ -138,7 +139,8 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commCode/{codegrp}/{codecd}", method = RequestMethod.DELETE)
-	public ResponseEntity<CommVo> toDeleteCode(@ModelAttribute CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toDeleteCode(@ModelAttribute CommVo commVo, HttpServletRequest request)
+			throws Exception {
 
 		log.debug("CommVo : " + commVo);
 
@@ -150,7 +152,7 @@ public class CommController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commCode", method = RequestMethod.PUT)
-	public ResponseEntity<CommVo> toUpdateCode(CommVo commVo, HttpSession session) throws Exception {
+	public ResponseEntity<CommVo> toUpdateCode(CommVo commVo, HttpServletRequest request) throws Exception {
 
 		log.debug("CommVo : " + commVo);
 

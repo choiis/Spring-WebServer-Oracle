@@ -3,7 +3,7 @@ package com.singer.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,7 +20,7 @@ import com.singer.service.SV04Service;
 import com.singer.vo.SV04Vo;
 
 @Controller("sV04Controller")
-public class SV04Controller {
+public class SV04Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SV04Controller.class);
 
@@ -29,10 +29,11 @@ public class SV04Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv04/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
-	public ResponseEntity<SV04Vo> selectSV04Vo(@ModelAttribute SV04Vo sv04Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV04Vo> selectSV04Vo(@ModelAttribute SV04Vo sv04Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sv04 get");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		List<SV04Vo> list = sv04Service.selectSV04Vo(sv04Vo, userid);
 		sv04Vo.setList(list);
 
@@ -42,10 +43,11 @@ public class SV04Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv04", method = RequestMethod.POST)
-	public ResponseEntity<SV04Vo> insertSV04Vo(@RequestBody SV04Vo sv04Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV04Vo> insertSV04Vo(@RequestBody SV04Vo sv04Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sv04 post");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 
 		sv04Service.insertSV04Vo(sv04Vo, userid);
 
@@ -58,9 +60,10 @@ public class SV04Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv04/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
-	public ResponseEntity<SV04Vo> deleteSV04Vo(@ModelAttribute SV04Vo sv04Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SV04Vo> deleteSV04Vo(@ModelAttribute SV04Vo sv04Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sv04 delete");
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 
 		sv04Service.deleteSV04Vo(sv04Vo, userid);
 

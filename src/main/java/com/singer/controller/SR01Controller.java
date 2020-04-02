@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -28,7 +27,7 @@ import com.singer.vo.SR01Vo;
 import lombok.Cleanup;
 
 @Controller("sR01Controller")
-public class SR01Controller {
+public class SR01Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SR01Controller.class);
 
@@ -85,11 +84,11 @@ public class SR01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sr01", method = RequestMethod.POST)
-	public ResponseEntity<SR01Vo> insertSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session,
-			MultipartHttpServletRequest request) throws Exception {
+	public ResponseEntity<SR01Vo> insertSR01Vo(@ModelAttribute SR01Vo sr01Vo, MultipartHttpServletRequest request)
+			throws Exception {
 		log.debug("enter sr01 post");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		int success = sr01Service.insertSR01Vo(sr01Vo, request, userid);
 		sr01Vo.setResult(success);
 
@@ -99,10 +98,11 @@ public class SR01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sr01One/{seq}", method = RequestMethod.GET)
-	public ResponseEntity<SR01Vo> selectOneSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SR01Vo> selectOneSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sr01One get");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sr01Vo = sr01Service.selectOneSR01Vo(sr01Vo, userid);
 
 		log.debug("exit sr01One get");
@@ -111,10 +111,11 @@ public class SR01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "sr01/{seq}", method = RequestMethod.DELETE)
-	public ResponseEntity<SR01Vo> deleteSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SR01Vo> deleteSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sr01 delete");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sr01Service.deleteSR01Vo(sr01Vo, userid);
 		sr01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 
@@ -124,10 +125,11 @@ public class SR01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "sr01like/{seq}", method = RequestMethod.PUT)
-	public ResponseEntity<SR01Vo> likeSR01vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SR01Vo> likeSR01vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sr01like put");
 
-		String sessionid = (String) session.getAttribute("userid");
+		String sessionid = getSessionId(request);
 		sr01Service.likeSR01Vo(sr01Vo, sessionid);
 
 		log.debug("exit sr01like put");
@@ -136,10 +138,11 @@ public class SR01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "sr01hate/{seq}", method = RequestMethod.PUT)
-	public ResponseEntity<SR01Vo> hateSR01vo(@ModelAttribute SR01Vo sr01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SR01Vo> hateSR01vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sr01hate put");
 
-		String sessionid = (String) session.getAttribute("userid");
+		String sessionid = getSessionId(request);
 		sr01Service.hateSR01Vo(sr01Vo, sessionid);
 
 		log.debug("exit sr01hate put");

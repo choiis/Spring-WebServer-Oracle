@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,7 +24,7 @@ import com.singer.service.SF01Service;
 import com.singer.vo.SF01Vo;
 
 @Controller("sF01Controller")
-public class SF01Controller {
+public class SF01Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SF01Controller.class);
 
@@ -46,11 +45,11 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01", method = RequestMethod.POST)
-	public ResponseEntity<SF01Vo> insertSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session,
-			MultipartHttpServletRequest request) throws Exception {
+	public ResponseEntity<SF01Vo> insertSF01Vo(@ModelAttribute SF01Vo sf01Vo, MultipartHttpServletRequest request)
+			throws Exception {
 		log.debug("enter sf01 post");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 
 		int success = sf01Service.insertSF01Vo(sf01Vo, request, userid);
 		sf01Vo.setResult(success);
@@ -61,7 +60,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01/{nowPage}", method = RequestMethod.GET)
-	public ResponseEntity<SF01Vo> selectSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF01Vo> selectSF01Vo(@ModelAttribute SF01Vo sf01Vo) throws Exception {
 		log.debug("enter sf01 get");
 
 		List<SF01Vo> list = sf01Service.selectSF01Vo(sf01Vo);
@@ -73,8 +72,7 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01find/{selection}/{findText}", method = RequestMethod.GET)
-	public ResponseEntity<SF01Vo> selectFindSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session)
-			throws Exception {
+	public ResponseEntity<SF01Vo> selectFindSF01Vo(@ModelAttribute SF01Vo sf01Vo) throws Exception {
 		log.debug("enter sf01find get");
 
 		List<SF01Vo> list = sf01Service.selectFindSF01Vo(sf01Vo);
@@ -86,12 +84,12 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01show_detail/{seq}", method = RequestMethod.GET)
-	public ModelAndView selectOneSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ModelAndView selectOneSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request) throws Exception {
 		log.debug("enter sf01show_detail get");
 
 		ModelAndView model = new ModelAndView("/sf01view_detail");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sf01Vo = sf01Service.selectOneSF01Vo(sf01Vo, userid);
 		model.addObject("sf01Vo", sf01Vo);
 
@@ -113,10 +111,11 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01/{seq}", method = RequestMethod.DELETE)
-	public ResponseEntity<SF01Vo> deleteSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF01Vo> deleteSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sf01 delete");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sf01Service.deleteSF01Vo(sf01Vo, userid);
 
 		sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
@@ -127,10 +126,11 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01like/{seq}", method = RequestMethod.PUT)
-	public ResponseEntity<SF01Vo> likeSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF01Vo> likeSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sf01like put");
 
-		String sessionid = (String) session.getAttribute("userid");
+		String sessionid = getSessionId(request);
 
 		sf01Vo = sf01Service.likeSF01Vo(sf01Vo, sessionid);
 
@@ -140,10 +140,11 @@ public class SF01Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01hate/{seq}", method = RequestMethod.PUT)
-	public ResponseEntity<SF01Vo> hateSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF01Vo> hateSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sf01hate put");
 
-		String sessionid = (String) session.getAttribute("userid");
+		String sessionid = getSessionId(request);
 
 		sf01Vo = sf01Service.hateSF01Vo(sf01Vo, sessionid);
 

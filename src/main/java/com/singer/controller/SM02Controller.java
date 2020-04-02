@@ -3,7 +3,7 @@ package com.singer.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,7 +21,7 @@ import com.singer.service.SM02Service;
 import com.singer.vo.SM02Vo;
 
 @Controller("sM02Controller")
-public class SM02Controller {
+public class SM02Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SM02Controller.class);
 
@@ -29,17 +29,18 @@ public class SM02Controller {
 	private SM02Service sm02Service;
 
 	@RequestMapping(value = "/sm02page", method = RequestMethod.GET)
-	public ModelAndView showSM02(HttpSession session) throws Exception {
+	public ModelAndView showSM02() throws Exception {
 		ModelAndView model = new ModelAndView("/sm02view");
 		return model;
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02/{nowPage}", method = RequestMethod.GET)
-	public ResponseEntity<SM02Vo> selectSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SM02Vo> selectSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sm02 get");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo, userid);
 		sm02Vo.setList(list);
 
@@ -49,9 +50,10 @@ public class SM02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02/{seq}", method = RequestMethod.DELETE)
-	public ResponseEntity<SM02Vo> deleteSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SM02Vo> deleteSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sm02 delete");
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 
 		sm02Service.deleteSM02Vo(sm02Vo, userid);
 
@@ -65,10 +67,11 @@ public class SM02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02", method = RequestMethod.POST)
-	public ResponseEntity<SM02Vo> insertSM02Vo(@RequestBody SM02Vo sm02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SM02Vo> insertSM02Vo(@RequestBody SM02Vo sm02Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sm02 post");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sm02Service.insertSM02Vo(sm02Vo, userid);
 
 		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo, userid);

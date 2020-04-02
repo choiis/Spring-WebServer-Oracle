@@ -3,7 +3,7 @@ package com.singer.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,7 +20,7 @@ import com.singer.service.SF02Service;
 import com.singer.vo.SF02Vo;
 
 @Controller("sF02Controller")
-public class SF02Controller {
+public class SF02Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SF02Controller.class);
 
@@ -29,10 +29,11 @@ public class SF02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf02/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
-	public ResponseEntity<SF02Vo> selectSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF02Vo> selectSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sf02 get");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);
 		sf02Vo.setList(list);
 
@@ -42,10 +43,11 @@ public class SF02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf02", method = RequestMethod.POST)
-	public ResponseEntity<SF02Vo> insertSF02Vo(@RequestBody SF02Vo sf02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF02Vo> insertSF02Vo(@RequestBody SF02Vo sf02Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sf02 post");
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		sf02Service.insertSF02Vo(sf02Vo, userid);
 
 		List<SF02Vo> list = sf02Service.selectSF02Vo(sf02Vo, userid);
@@ -57,9 +59,10 @@ public class SF02Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf02/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
-	public ResponseEntity<SF02Vo> deleteSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpSession session) throws Exception {
+	public ResponseEntity<SF02Vo> deleteSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpServletRequest request)
+			throws Exception {
 		log.debug("enter sf02 delete");
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 
 		sf02Service.deleteSF02Vo(sf02Vo, userid);
 

@@ -2,8 +2,6 @@ package com.singer.controller;
 
 import java.util.Iterator;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,7 @@ import com.singer.util.MailUtil;
 import com.singer.vo.MailVo;
 
 @Controller("mailController")
-public class MailController {
+public class MailController extends BaseController {
 
 	@Autowired
 	private MailUtil mailUtil;
@@ -30,10 +28,9 @@ public class MailController {
 
 	@ResponseBody
 	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
-	public int sendMail(@ModelAttribute MailVo mailVo, MultipartHttpServletRequest request, HttpSession session)
-			throws AppException {
+	public int sendMail(@ModelAttribute MailVo mailVo, MultipartHttpServletRequest request) throws AppException {
 
-		String userid = (String) session.getAttribute("userid");
+		String userid = getSessionId(request);
 		mailVo.setSender(userid);
 		MultipartFile file = null;
 		Iterator<String> itr = request.getFileNames();
