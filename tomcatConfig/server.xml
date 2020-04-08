@@ -61,8 +61,12 @@
          Define a non-SSL/TLS HTTP/1.1 Connector on port 8080
     -->
     <Connector acceptCount="5" connectionTimeout="5000" disableUploadTimeout="true"
-     maxPostSize="52428800" maxSpareThreads="50" maxThreads="200" minSpareThreads="25"
-     port="6789" protocol="HTTP/1.1" tcpNoDelay="true" maxConnection="8192" enableLookups="false"/>
+     maxPostSize="52428800" maxSpareThreads="50" maxThreads="200" minSpareThreads="25" URIEncoding="UTF-8"
+     port="6789" protocol="HTTP/1.1" tcpNoDelay="true" maxConnection="8192" enableLookups="false"
+	 secure="true" sslProtocol="TLS"
+	 SSLEnabled="true" keyAlias="tomcat_https"
+	 keystoreFile="D:/WAS/apache-tomcat-8.5.11/conf/.keystore" keystorePass="changeit"
+	 />
      <!-- minSpareThreads 톰캣 실행시 생성되는 스레드 수 -->
      <!-- acceptCount 요청 대기 Queue의 길이, 0 ~ 10 내외 요청 처리 불가 시 에러코드 응답-->
      <!-- maxThreads = Active User수, 순간처리 가능 트랜잭션 -->
