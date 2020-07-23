@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.singer.common.Constants;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +16,11 @@ public class SuperVo implements Serializable, Cloneable {
 	protected boolean deleteYn;
 	protected String showDate;
 	protected int totCnt;
+
 	protected int startRownum;
 	protected int endRownum;
+
+	@Setter(AccessLevel.NONE)
 	protected int nowPage;
 	protected int rowPerPage;
 	protected int result;
@@ -26,7 +30,7 @@ public class SuperVo implements Serializable, Cloneable {
 		this.rowPerPage = Constants.ROW_PER_PAGE;
 	}
 
-	public void setNowPage(int nowPage) {
+	public final void setNowPage(int nowPage) {
 		this.nowPage = nowPage;
 		this.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE + 1);
 		this.setEndRownum(nowPage * Constants.ROW_PER_PAGE);

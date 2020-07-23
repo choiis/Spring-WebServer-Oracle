@@ -1,11 +1,15 @@
 package com.singer.common;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Constants {
 
+	@AllArgsConstructor(access = AccessLevel.PRIVATE)
+	@Getter
 	public enum YES_NO {
 		/** NO */
 		NO(0),
@@ -14,25 +18,16 @@ public class Constants {
 
 		private final int value;
 
-		private YES_NO(int value) {
-			this.value = value;
-		}
-
-		public int getValue() {
-			return value;
-		}
 	}
 
+	@AllArgsConstructor(access = AccessLevel.PRIVATE)
+	@Getter
 	public enum RESULT_CODE {
 		/** 실패 코드 */
 		FAIL(0),
 		/** 성공 코드 */
 		SUCCESS(1);
 		private final int value;
-
-		private RESULT_CODE(int value) {
-			this.value = value;
-		}
 
 		public int getValue() {
 			return value;
@@ -47,6 +42,8 @@ public class Constants {
 	/** 메일전송 실패 코드 */
 	public static final int ERROR_MAIL_FAIL = 1011;
 
+	@AllArgsConstructor(access = AccessLevel.PRIVATE)
+	@Getter
 	public enum USER_CODE {
 		/** 유저등급 안쓰는 코드 */
 		NONE(0),
@@ -59,14 +56,6 @@ public class Constants {
 		/** 유저등급 사용자 코드 */
 		NORMAL(4);
 		private final int value;
-
-		private USER_CODE(int value) {
-			this.value = value;
-		}
-
-		public int getValue() {
-			return value;
-		}
 
 		public static USER_CODE valueOf(int value) {
 			switch (value) {
@@ -86,6 +75,8 @@ public class Constants {
 		}
 	}
 
+	@AllArgsConstructor(access = AccessLevel.PRIVATE)
+	@Getter
 	public enum PHONE_INFO_CODE {
 		/** 안쓰는 코드 */
 		NONE(0),
@@ -98,14 +89,6 @@ public class Constants {
 		/** 그외번호코드 */
 		OTHER(4),;
 		private final int value;
-
-		private PHONE_INFO_CODE(int value) {
-			this.value = value;
-		}
-
-		public int getValue() {
-			return value;
-		}
 
 		public static PHONE_INFO_CODE valueOf(int value) {
 			switch (value) {

@@ -18,5 +18,6 @@ public class ReplyVo extends SuperVo {
 	protected String userid;
 	protected String regdate;
 	protected int good;
+	protected int reply;
 
 }
