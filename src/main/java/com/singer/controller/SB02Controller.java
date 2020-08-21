@@ -50,9 +50,6 @@ public class SB02Controller extends BaseController {
 		String userid = getSessionId(request);
 		sb02Service.insertSB02Vo(sb02Vo, userid);
 
-		List<SB02Vo> list = sb02Service.selectSB02Vo(sb02Vo, userid);
-		sb02Vo.setList(list);
-
 		log.debug("exit sb02 post");
 		return new ResponseEntity<SB02Vo>(sb02Vo, HttpStatus.OK);
 	}
@@ -65,10 +62,6 @@ public class SB02Controller extends BaseController {
 		String userid = getSessionId(request);
 
 		sb02Service.deleteSB02Vo(sb02Vo, userid);
-
-		sb02Vo.setNowPage(1);
-		List<SB02Vo> list = sb02Service.selectSB02Vo(sb02Vo, userid);
-		sb02Vo.setList(list);
 
 		log.debug("exit sb02 delete");
 		return new ResponseEntity<SB02Vo>(sb02Vo, HttpStatus.OK);

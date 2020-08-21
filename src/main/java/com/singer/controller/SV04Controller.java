@@ -51,9 +51,6 @@ public class SV04Controller extends BaseController {
 
 		sv04Service.insertSV04Vo(sv04Vo, userid);
 
-		List<SV04Vo> list = sv04Service.selectSV04Vo(sv04Vo, userid);
-		sv04Vo.setList(list);
-
 		log.debug("exit sv04 post");
 		return new ResponseEntity<SV04Vo>(sv04Vo, HttpStatus.CREATED);
 	}
@@ -66,10 +63,6 @@ public class SV04Controller extends BaseController {
 		String userid = getSessionId(request);
 
 		sv04Service.deleteSV04Vo(sv04Vo, userid);
-
-		sv04Vo.setNowPage(1);
-		List<SV04Vo> list = sv04Service.selectSV04Vo(sv04Vo, userid);
-		sv04Vo.setList(list);
 
 		log.debug("exit sv04 delete");
 		return new ResponseEntity<SV04Vo>(sv04Vo, HttpStatus.OK);

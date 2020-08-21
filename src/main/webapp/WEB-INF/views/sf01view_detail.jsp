@@ -71,14 +71,7 @@
 		if(confirm("삭제할까요?")) {
 			
 			gfn_ajaxRest("sf02/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function(data) {
-				var html = drawTable(data);
-
-				html += '<tr>';
-				html += '<td><input type="button" value="더보기" onclick="showSF02ListMore('+ (data.nowPage + 1) +')"></td>';
-				html += '</tr>';
-		        $("#sf02viewTbody").empty();
-		        $("#sf02viewTbody").append(html);
-				$("#totCnt").val(data.totCnt);
+				showSF02List(1);
 			});
 		}
 	}
@@ -106,14 +99,7 @@
         };
 
 		gfn_ajaxRequestBody("sf02","POST" , sendData , function(data) {
-			var html = drawTable(data);
-
-	        html += '<tr>';
-			html += '<td><input type="button" value="더보기" onclick="showSF02ListMore('+ (data.nowPage + 1) +')"></td>';
-			html += '</tr>';
-	        $("#sf02viewTbody").empty();
-	        $("#sf02viewTbody").append(html);
-			$("#totCnt").val(data.totCnt);
+			showSF02List(1);
 		});
 	};
 	
