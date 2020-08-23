@@ -5,14 +5,12 @@ import java.util.stream.Stream;
 
 import javax.annotation.Resource;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
 import com.singer.dao.SR03Dao;
 import com.singer.exception.AppException;
-import com.singer.exception.ClientException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.vo.SR03Vo;
 
@@ -67,12 +65,7 @@ public class SR03ServiceImpl implements SR03Service {
 
 	@Override
 	public int deleteSR03Vo(SR03Vo sr03Vo, String sessionid) throws Exception {
-		SR03Vo checkVo = sr03Dao.checkUserSR03Vo(sr03Vo);
-		if (!CommonUtil.isNull(checkVo)) {
-			if (!checkVo.getUserid().equals(sessionid)) {
-				throw new ClientException(HttpStatus.FORBIDDEN);
-			}
-		}
+
 		if (sr03Vo.getParents() > 0) {
 			sr03Dao.deleteChild(sr03Vo);
 			sr03Vo.setParents(0);

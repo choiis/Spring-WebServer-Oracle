@@ -31,6 +31,10 @@ public class CommDao extends SuperDao {
 		return (List<CommVo>) selectList(namespace + ".selectCodeGrp", commVo);
 	}
 
+	public String checkCreateUser(CommVo commVo) throws Exception {
+		return (String) selectOne(namespace + ".checkCreateUser", commVo);
+	}
+
 	public int insertMenu(CommVo commVo) throws Exception {
 		return insert(namespace + ".insertMenu", commVo);
 	}

@@ -160,13 +160,6 @@ public class SB01ServiceImpl implements SB01Service {
 	@Override
 	public int deleteSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
 
-		sb01Vo.setSessionid(sessionid);
-		SB01Vo checkVo = sb01Dao.checkUserSB01Vo(sb01Vo);
-		if (!CommonUtil.isNull(checkVo)) {
-			if (!checkVo.getUserid().equals(sessionid)) {
-				throw new ClientException(HttpStatus.FORBIDDEN);
-			}
-		}
 		SB02Vo sb02Vo = new SB02Vo();
 		sb02Vo.setSeq01(sb01Vo.getSeq());
 

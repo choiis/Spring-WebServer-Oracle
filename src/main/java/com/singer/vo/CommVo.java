@@ -19,6 +19,8 @@ public class CommVo extends SuperVo {
 
 	private static final long serialVersionUID = 924492385649962278L;
 
+	private int seq;
+
 	private String codecd;
 
 	private String codenm;
@@ -52,5 +54,9 @@ public class CommVo extends SuperVo {
 	private String errorMsg;
 
 	private List<CommVo> commList;
+
+	private String userId;
+
+	private String tableName;
 
 }

@@ -80,4 +80,10 @@
 	where menucd = #{menucd}
 	</delete>
 	
+	<select id="checkCreateUser" resultType="java.lang.String"  parameterType="com.singer.vo.CommVo">
+	select userid
+		from ${tableName}
+		where seq = #{seq}
+	</select>
+	
 </mapper>
