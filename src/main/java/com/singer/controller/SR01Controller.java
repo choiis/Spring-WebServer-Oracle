@@ -115,8 +115,7 @@ public class SR01Controller extends BaseController {
 			throws Exception {
 		log.debug("enter sr01 delete");
 
-		String userid = getSessionId(request);
-		sr01Service.deleteSR01Vo(sr01Vo, userid);
+		sr01Service.deleteSR01Vo(sr01Vo);
 		sr01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 
 		log.debug("exit sr01 delete");

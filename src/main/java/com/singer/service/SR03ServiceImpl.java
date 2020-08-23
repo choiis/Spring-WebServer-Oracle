@@ -64,7 +64,7 @@ public class SR03ServiceImpl implements SR03Service {
 	}
 
 	@Override
-	public int deleteSR03Vo(SR03Vo sr03Vo, String sessionid) throws Exception {
+	public int deleteSR03Vo(SR03Vo sr03Vo) throws Exception {
 
 		if (sr03Vo.getParents() > 0) {
 			sr03Dao.deleteChild(sr03Vo);

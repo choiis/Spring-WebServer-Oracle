@@ -68,7 +68,7 @@ public class SV04ServiceImpl implements SV04Service {
 
 	@Transactional
 	@Override
-	public int deleteSV04Vo(SV04Vo sv04Vo, String sessionid) throws Exception {
+	public int deleteSV04Vo(SV04Vo sv04Vo) throws Exception {
 
 		if (sv04Vo.getParents() > 0) {
 			sv04Dao.deleteChild(sv04Vo);

@@ -36,8 +36,8 @@ public class SR02ServiceImpl implements SR02Service {
 	}
 
 	@Override
-	public int deleteSR02Vo(SR01Vo sr01Vo, String sessionid) throws Exception {
-		sr01Vo.setUserid(sessionid);
+	public int deleteSR02Vo(SR01Vo sr01Vo) throws Exception {
+	
 		return sr02Dao.deleteSR02Vo(sr01Vo);
 	}
 

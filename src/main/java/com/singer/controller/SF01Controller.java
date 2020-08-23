@@ -115,9 +115,7 @@ public class SF01Controller extends BaseController {
 			throws Exception {
 		log.debug("enter sf01 delete");
 
-		String userid = getSessionId(request);
-		sf01Service.deleteSF01Vo(sf01Vo, userid);
-
+		sf01Service.deleteSF01Vo(sf01Vo);
 		sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 
 		log.debug("exit sf01 delete");

@@ -22,7 +22,7 @@ public interface SF01Service {
 
 	public SF01Vo hateSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception;
 
-	public int deleteSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception;
+	public int deleteSF01Vo(SF01Vo sf01Vo) throws Exception;
 
 	public HashMap<String, Object> selectFile(SF01Vo sf01Vo) throws Exception;
 }

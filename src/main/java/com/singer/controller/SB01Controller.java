@@ -119,9 +119,7 @@ public class SB01Controller extends BaseController {
 			throws Exception {
 		log.debug("enter sb01 delete");
 
-		String sessionid = getSessionId(request);
-
-		sb01Service.deleteSB01Vo(sb01Vo, sessionid);
+		sb01Service.deleteSB01Vo(sb01Vo);
 		sb01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 
 		log.debug("exit sb01 delete");

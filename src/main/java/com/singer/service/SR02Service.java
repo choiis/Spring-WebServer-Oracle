@@ -8,6 +8,6 @@ public interface SR02Service {
 
 	public SR01Vo selectOneSR02Vo(SR01Vo sr01Vo, String userid) throws Exception;
 
-	public int deleteSR02Vo(SR01Vo sr01Vo, String sessionid) throws Exception;
+	public int deleteSR02Vo(SR01Vo sr01Vo) throws Exception;
 
 }

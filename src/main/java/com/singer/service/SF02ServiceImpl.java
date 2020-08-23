@@ -68,7 +68,7 @@ public class SF02ServiceImpl implements SF02Service {
 
 	@Transactional
 	@Override
-	public int deleteSF02Vo(SF02Vo sf02Vo, String sessionid) throws Exception {
+	public int deleteSF02Vo(SF02Vo sf02Vo) throws Exception {
 
 		if (sf02Vo.getParents() > 0) {
 			sf02Dao.deleteChild(sf02Vo);

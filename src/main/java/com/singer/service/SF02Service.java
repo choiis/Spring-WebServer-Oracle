@@ -13,6 +13,6 @@ public interface SF02Service {
 
 	public int updateSF02Vo(SF02Vo sf02Vo) throws Exception;
 
-	public int deleteSF02Vo(SF02Vo sf02Vo, String sessionid) throws Exception;
+	public int deleteSF02Vo(SF02Vo sf02Vo) throws Exception;
 
 }

@@ -22,7 +22,7 @@ public interface SR01Service {
 
 	public SR01Vo hateSR01Vo(SR01Vo sr01Vo, String sessionid) throws Exception;
 
-	public int deleteSR01Vo(SR01Vo sr01Vo, String sessionid) throws Exception;
+	public int deleteSR01Vo(SR01Vo sr01Vo) throws Exception;
 
 	public InputStream selectPhoto(SR01Vo sr01Vo) throws Exception;
 }

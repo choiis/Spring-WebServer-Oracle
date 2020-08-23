@@ -60,9 +60,8 @@ public class SV04Controller extends BaseController {
 	public ResponseEntity<SV04Vo> deleteSV04Vo(@ModelAttribute SV04Vo sv04Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sv04 delete");
-		String userid = getSessionId(request);
 
-		sv04Service.deleteSV04Vo(sv04Vo, userid);
+		sv04Service.deleteSV04Vo(sv04Vo);
 
 		log.debug("exit sv04 delete");
 		return new ResponseEntity<SV04Vo>(sv04Vo, HttpStatus.OK);

@@ -117,11 +117,18 @@ public class AopAdvice {
 	public void deleteCheck(JoinPoint pjp) throws Exception {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
-		Signature signature = pjp.getSignature();
-		String userid = null;
-		CommVo commVo = new CommVo();
-		int seq = 0;
 
+		Signature signature = pjp.getSignature();
+
+		Object sessionId = request.getSession().getAttribute("userid");
+		if (sessionId == null) {
+			throw new ClientException(HttpStatus.UNAUTHORIZED);
+		}
+
+		String userid = (String) sessionId;
+		CommVo commVo = new CommVo();
+
+		int seq = 0;
 		for (int i = 0; i < pjp.getArgs().length; i++) {
 			Object obj = pjp.getArgs()[i];
 			if (obj instanceof BoardVo) {
@@ -132,23 +139,16 @@ public class AopAdvice {
 				ReplyVo replyVo = (ReplyVo) obj;
 				commVo.setSeq(replyVo.getSeq());
 				seq = replyVo.getSeq();
-			} else if (obj instanceof String) {
-				userid = (String) obj;
 			}
 		}
 
 		String method = signature.getName().substring(6, 10);
-		log.debug("delete method : " + method);
+		log.debug("delete method check : " + method);
 		commVo.setTableName(method);
-		if (userid == null) {
-			HttpSession session = request.getSession();
-			userid = (String) session.getAttribute("userid");
-		}
 
 		if (seq > 0) {
 			String createUser = commDao.checkCreateUser(commVo);
-			log.debug("session user " + userid);
-			log.debug("create user " + createUser);
+			log.debug("session user " + userid + " create user " + createUser);
 			if (!CommonUtil.isNull(createUser)) {
 				if (!createUser.equals(userid)) {
 					throw new ClientException(HttpStatus.FORBIDDEN);

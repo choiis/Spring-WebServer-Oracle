@@ -59,9 +59,8 @@ public class SF02Controller extends BaseController {
 	public ResponseEntity<SF02Vo> deleteSF02Vo(@ModelAttribute SF02Vo sf02Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sf02 delete");
-		String userid = getSessionId(request);
 
-		sf02Service.deleteSF02Vo(sf02Vo, userid);
+		sf02Service.deleteSF02Vo(sf02Vo);
 
 		log.debug("exit sf02 delete");
 		return new ResponseEntity<SF02Vo>(sf02Vo, HttpStatus.OK);

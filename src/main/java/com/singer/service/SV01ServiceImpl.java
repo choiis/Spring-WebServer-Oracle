@@ -127,7 +127,7 @@ public class SV01ServiceImpl implements SV01Service {
 
 	@Transactional
 	@Override
-	public int deleteSV01Vo(SV01Vo sv01Vo, String sessionid) throws Exception {
+	public int deleteSV01Vo(SV01Vo sv01Vo) throws Exception {
 
 		SV04Vo sv04Vo = new SV04Vo();
 		sv04Vo.setSeq(sv01Vo.getSeq());
