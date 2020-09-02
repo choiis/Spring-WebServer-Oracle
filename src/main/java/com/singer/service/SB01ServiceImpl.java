@@ -1,22 +1,25 @@
 package com.singer.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.singer.exception.AppException;
-import com.singer.exception.ClientException;
 import com.singer.exception.ExceptionMsg;
+import com.singer.util.S3Util;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants.RESULT_CODE;
 import com.singer.common.Constants.YES_NO;
@@ -26,7 +29,7 @@ import com.singer.dao.SB02Dao;
 import com.singer.vo.SB01Vo;
 import com.singer.vo.SB02Vo;
 
-import oracle.sql.BLOB;
+import lombok.Cleanup;
 
 @Service("sb01Service")
 public class SB01ServiceImpl implements SB01Service {
@@ -35,6 +38,12 @@ public class SB01ServiceImpl implements SB01Service {
 
 	@Resource(name = "sb02Dao")
 	private SB02Dao sb02Dao;
+
+	@Inject
+	S3Util s3Util;
+
+	@Resource(name = "properties")
+	private Properties properties;
 
 	@Transactional
 	@Override
@@ -57,24 +66,45 @@ public class SB01ServiceImpl implements SB01Service {
 		while (itr.hasNext()) {
 			video = request.getFile(itr.next());
 		}
+		String timestamp = DateUtil.getTodayTime();
+		StringBuilder sb = new StringBuilder("video/" + timestamp);
+		sb01Vo.setRegdate(timestamp);
 
 		if (CommonUtil.chkVideoFile(video.getOriginalFilename())) {
 			sb01Vo.setVideobool(YES_NO.YES);
+			sb.append(".mp4");
 		} else if (CommonUtil.chkAudioFile(video.getOriginalFilename())) {
 			sb01Vo.setVideobool(YES_NO.NO);
+			sb.append(".mp3");
 		} else {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
 		}
 
-		sb01Vo.setRegdate(DateUtil.getTodayTime());
+		String path = properties.getProperty("global.ftp.path");
+		File file = new File(path + "/" + sb.toString());
+
+		@Cleanup
+		InputStream in = video.getInputStream();
+
+		@Cleanup
+		FileOutputStream fos = new FileOutputStream(file);
+		byte[] bytes = new byte[1024];
+		int read;
+
+		while ((read = in.read(bytes)) != -1) {
+			fos.write(bytes, 0, read);
+		}
+
+		s3Util.putS3File(sb.toString(), file);
 
 		sb01Dao.insertSB01Vo(sb01Vo);
-		HashMap<String, Object> putHash = new HashMap<String, Object>();
-		putHash.put("seq", sb01Vo.getSeq());
-		putHash.put("regdate", DateUtil.getToday());
-		putHash.put("video", video.getBytes());
 
-		return sb01Dao.insertVideo(putHash);
+		SB01Vo sb01Vo2 = new SB01Vo();
+		sb01Vo2.setSeq(sb01Vo.getSeq());
+		sb01Vo2.setRegdate(DateUtil.getToday());
+		sb01Vo2.setVideopath(sb.toString());
+		file.delete();
+		return sb01Dao.insertVideo(sb01Vo2);
 
 	}
 
@@ -113,7 +143,6 @@ public class SB01ServiceImpl implements SB01Service {
 			}
 		}
 		sb01Vo.setShowDate(DateUtil.getDateFormat(sb01Vo.getRegdate()));
-
 		return sb01vo;
 	}
 
@@ -170,17 +199,8 @@ public class SB01ServiceImpl implements SB01Service {
 
 	@Override
 	public InputStream selectVideo(SB01Vo sb01Vo, HttpServletRequest request) throws Exception {
-		InputStream is = null;
-		HashMap<String, Object> hashMap = sb01Dao.selectVideo(sb01Vo);
 
-		if (CommonUtil.isNull(hashMap)) {
-			throw new ClientException(HttpStatus.NOT_FOUND);
-		} else {
-			BLOB images = (BLOB) hashMap.get("VIDEO");
-
-			is = images.getBinaryStream();
-		}
-		return is;
+		return s3Util.getS3FileStream(sb01Dao.selectVideo(sb01Vo));
 	}
 
 }

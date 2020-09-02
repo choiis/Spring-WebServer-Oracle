@@ -157,18 +157,18 @@
 			where seq = #{seq}
 		</delete>
 		
-		<insert id="insertVideo" parameterType="java.util.HashMap">
-				insert into SBV1 values(#{seq}, #{regdate}, #{video})
+		<insert id="insertVideo" parameterType="com.singer.vo.SB01Vo">
+				insert into SBV1 (seq, regdate, videopath) values(#{seq}, #{regdate}, #{videopath})
 		</insert>
 		
-		<select id="selectVideo" parameterType="com.singer.vo.SB01Vo" resultType="java.util.Map">
-			select video from SBV1 where seq  = #{seq}
+		<select id="selectVideo" parameterType="com.singer.vo.SB01Vo" resultType="java.lang.String">
+			select videopath from SBV1 where seq  = #{seq}
 		</select>
 		
 		<update id="updateVideo" parameterType="java.util.HashMap">
-			update SMP1
+			update SBV1
 				set regdate = #{regdate},
-  				video = #{video}
+  				videopath = #{videopath}
   				where seq = #{seq}
 		</update>
 		

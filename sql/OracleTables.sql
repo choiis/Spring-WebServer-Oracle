@@ -180,7 +180,7 @@ on SB01(userid, regdate desc);
 create table SBV1(
   seq number not null,
   regdate varchar2(8) not null,
-  video blob not null
+  videopath varchar2(40) not null
 );
 
 alter table SBV1

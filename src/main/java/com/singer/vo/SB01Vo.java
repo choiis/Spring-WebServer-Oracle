@@ -20,6 +20,8 @@ public class SB01Vo extends BoardVo {
 
 	private String video;
 
+	private String videopath;
+
 	private YES_NO videobool;
 
 	private List<SB01Vo> list;
