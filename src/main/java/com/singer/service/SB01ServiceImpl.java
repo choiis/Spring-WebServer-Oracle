@@ -3,7 +3,6 @@ package com.singer.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -147,13 +146,55 @@ public class SB01ServiceImpl implements SB01Service {
 	}
 
 	@Override
-	public int updateSB01Vo(SB01Vo sb01Vo) throws Exception {
-		HashMap<String, Object> putHash = new HashMap<String, Object>();
-		putHash.put("seq", sb01Vo.getSeq());
-		putHash.put("regdate", DateUtil.getToday());
-		putHash.put("video", sb01Vo.getVideo());
+	public int updateSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request) throws Exception {
 
-		sb01Dao.updateVideo(putHash);
+		MultipartFile video = null;
+		Iterator<String> itr = request.getFileNames();
+
+		if (!CommonUtil.isNull(itr)) {
+			while (itr.hasNext()) {
+				video = request.getFile(itr.next());
+			}
+			String timestamp = DateUtil.getTodayTime();
+			StringBuilder sb = new StringBuilder("video/" + timestamp);
+			sb01Vo.setRegdate(timestamp);
+
+			if (CommonUtil.chkVideoFile(video.getOriginalFilename())) {
+				sb01Vo.setVideobool(YES_NO.YES);
+				sb.append(".mp4");
+			} else if (CommonUtil.chkAudioFile(video.getOriginalFilename())) {
+				sb01Vo.setVideobool(YES_NO.NO);
+				sb.append(".mp3");
+			} else {
+				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
+			}
+
+			String path = properties.getProperty("global.ftp.path");
+			File file = new File(path + "/" + sb.toString());
+
+			@Cleanup
+			InputStream in = video.getInputStream();
+
+			@Cleanup
+			FileOutputStream fos = new FileOutputStream(file);
+			byte[] bytes = new byte[1024];
+			int read;
+
+			while ((read = in.read(bytes)) != -1) {
+				fos.write(bytes, 0, read);
+			}
+			String deletedPath = sb01Dao.selectVideo(sb01Vo);
+			s3Util.deleteS3File(deletedPath); // S3 파일삭제
+
+			SB01Vo sb01Vo2 = new SB01Vo();
+			sb01Vo2.setSeq(sb01Vo.getSeq());
+			sb01Vo2.setRegdate(DateUtil.getToday());
+			sb01Vo2.setVideopath(sb.toString());
+			file.delete();
+
+			sb01Dao.updateVideo(sb01Vo2);
+		}
+
 		return sb01Dao.updateSB01Vo(sb01Vo);
 	}
 

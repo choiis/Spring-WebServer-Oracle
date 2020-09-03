@@ -18,7 +18,7 @@ public interface SB01Service {
 
 	public SB01Vo selectOneSB01Vo(SB01Vo sb01Vo, String userid) throws Exception;
 
-	public int updateSB01Vo(SB01Vo sb01Vo) throws Exception;
+	public int updateSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request) throws Exception;
 
 	public SB01Vo likeSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception;
 

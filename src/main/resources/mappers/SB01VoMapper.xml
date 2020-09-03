@@ -165,7 +165,7 @@
 			select videopath from SBV1 where seq  = #{seq}
 		</select>
 		
-		<update id="updateVideo" parameterType="java.util.HashMap">
+		<update id="updateVideo" parameterType="com.singer.vo.SB01Vo">
 			update SBV1
 				set regdate = #{regdate},
   				videopath = #{videopath}

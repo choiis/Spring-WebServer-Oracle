@@ -15,6 +15,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 
 @Component("s3util")
@@ -52,5 +53,15 @@ public class S3Util {
 
 	public void putS3File(String fileName, File file) {
 		s3client.putObject(bucketName, fileName, file);
+	}
+
+	public ObjectMetadata getS3Meta(String fileName) {
+		S3Object s3Object = s3client.getObject(bucketName, fileName);
+
+		return s3Object.getObjectMetadata();
+	}
+
+	public void deleteS3File(String fileName) {
+		s3client.deleteObject(bucketName, fileName);
 	}
 }
