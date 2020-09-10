@@ -22,6 +22,7 @@ public class SR01Vo extends BoardVo {
 	private double mapx;
 	private double mapy;
 	private MultipartFile photo;
+	private String photopath;
 
 	private double grade;
 	private double avggrade;

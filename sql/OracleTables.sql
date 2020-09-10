@@ -444,7 +444,7 @@ CREATE TABLE SRP1 (
   seq number not null,
   idx number not null,
   regdate varchar2(8) not null,
-  photo blob not null
+  photopath varchar2(40) not null
 );
 
 alter table SRP1

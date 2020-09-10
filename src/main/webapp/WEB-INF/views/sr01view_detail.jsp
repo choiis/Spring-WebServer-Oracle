@@ -108,6 +108,16 @@
 			$("#hits").text(data.hit);
 			$("#good").text(data.good);
 			$("#avggrade").text(data.avggrade);
+			if(data.photocnt > 0) {
+				
+				var html = "";
+				for(var i = 0 ; i < data.photocnt; i++) {
+					html += '<img id="showPhoto" alt="" name="photo" src="/sr01photo/'  + data.seq + '/' + i + '" height="200px" width="170px"/>';
+					html += '<br>';
+				}
+				$("#photoDiv").empty();
+		        $("#photoDiv").append(html);
+			}
 			// data.mapx
 			// data.mapy
 			if(!data.deleteYn) {
@@ -141,15 +151,6 @@
 				maxWizzzdth: markerMaxWidth
 			});
 			
-			if(data.photocnt > 0) {
-				var html = "";
-				for(var i = 0 ; i < data.photocnt; i++) {
-					html += '<img id="showPhoto" alt="" name="photo" src="/sr01photo/'  + data.seq + '/' + i + '" height="200px" width="170px"/>';
-					html += '<br>';
-				}
-				$("#photoDiv").empty();
-		        $("#photoDiv").append(html);
-			}
 		});
 	};
 	

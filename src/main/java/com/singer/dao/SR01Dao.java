@@ -1,8 +1,6 @@
 package com.singer.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -63,12 +61,11 @@ public class SR01Dao extends SuperDao {
 		return (SR01Vo) selectOne(namespace + ".checkUser", sr01Vo);
 	}
 
-	public int insertImage(Map<String, Object> hashMap) throws Exception {
-		return insert(namespace + ".insertPhoto", hashMap);
+	public int insertImage(SR01Vo sr01Vo) throws Exception {
+		return insert(namespace + ".insertPhoto", sr01Vo);
 	}
 
-	@SuppressWarnings("unchecked")
-	public HashMap<String, Object> selectPhoto(SR01Vo sr01Vo) throws Exception {
-		return (HashMap<String, Object>) selectOne(namespace + ".selectPhoto", sr01Vo);
+	public String selectPhoto(SR01Vo sr01Vo) throws Exception {
+		return (String) selectOne(namespace + ".selectPhoto", sr01Vo);
 	}
 }

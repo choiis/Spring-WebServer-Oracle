@@ -1,11 +1,14 @@
 package com.singer.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
+import com.singer.util.S3Util;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants.RESULT_CODE;
 import com.singer.common.DateUtil;
@@ -23,7 +27,7 @@ import com.singer.dao.SR03Dao;
 import com.singer.vo.SR01Vo;
 import com.singer.vo.SR03Vo;
 
-import oracle.sql.BLOB;
+import lombok.Cleanup;
 
 @Service("sr01Service")
 public class SR01ServiceImpl implements SR01Service {
@@ -36,6 +40,12 @@ public class SR01ServiceImpl implements SR01Service {
 
 	@Resource(name = "sr03Dao")
 	private SR03Dao sr03Dao;
+
+	@Inject
+	S3Util s3Util;
+
+	@Resource(name = "properties")
+	private Properties properties;
 
 	@Transactional
 	@Override
@@ -60,20 +70,41 @@ public class SR01ServiceImpl implements SR01Service {
 		sr02Dao.insertSR02Vo(sr01Vo);
 		List<MultipartFile> fileList = request.getFiles("file");
 		int idx = 0;
-		ArrayList<HashMap<String, Object>> arrayList = new ArrayList<>();
+		ArrayList<SR01Vo> arrayList = new ArrayList<>();
+		String today = DateUtil.getToday();
+		String path = properties.getProperty("global.ftp.path");
 		for (MultipartFile photo : fileList) {
 			if (photo.getSize() == 0) {
 				continue;
 			}
-			if (!CommonUtil.chkIMGFile(photo.getOriginalFilename())) {
+			String originalFilename = photo.getOriginalFilename();
+			if (!CommonUtil.chkIMGFile(originalFilename)) {
 				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_4);
 			}
-			HashMap<String, Object> putHash = new HashMap<String, Object>();
-			putHash.put("seq", sr01Vo.getSeq());
-			putHash.put("idx", idx++);
-			putHash.put("regdate", DateUtil.getToday());
-			putHash.put("photo", photo.getBytes());
-			arrayList.add(putHash);
+			SR01Vo sr01Vos = new SR01Vo();
+			sr01Vos.setSeq(sr01Vo.getSeq());
+			sr01Vos.setIdx(idx++);
+			sr01Vos.setRegdate(today);
+			StringBuilder sb = new StringBuilder("rphoto/");
+			sb.append(sr01Vo.getSeq() + "_" + today + "_" + idx + CommonUtil.getExtensionName(originalFilename));
+			sr01Vos.setPhotopath(sb.toString());
+			arrayList.add(sr01Vos);
+
+			File file = new File(path + "/" + sb.toString());
+
+			@Cleanup
+			InputStream in = photo.getInputStream();
+
+			@Cleanup
+			FileOutputStream fos = new FileOutputStream(file);
+			byte[] bytes = new byte[1024];
+			int read;
+
+			while ((read = in.read(bytes)) != -1) {
+				fos.write(bytes, 0, read);
+			}
+
+			s3Util.putS3File(sb.toString(), file);
 		}
 
 		arrayList.stream().forEach(s -> {
@@ -170,10 +201,7 @@ public class SR01ServiceImpl implements SR01Service {
 
 	@Override
 	public InputStream selectPhoto(SR01Vo sr01Vo) throws Exception {
-		HashMap<String, Object> hashMap = sr01Dao.selectPhoto(sr01Vo);
-		BLOB images = (BLOB) hashMap.get("PHOTO");
-
-		return images.getBinaryStream();
+		return s3Util.getS3FileStream(sr01Dao.selectPhoto(sr01Vo));
 	}
 
 }

@@ -187,12 +187,12 @@
 				insert (S1.seq, S1.sessionid, S1.datelog, S1.hatelog ) values(#{seq}, #{sessionid}, #{datelog} , 'Y')
 		</update>
 		
-		<insert id="insertPhoto" parameterType="java.util.HashMap">
-				insert into SRP1 values(#{seq}, #{idx}, #{regdate}, #{photo})
+		<insert id="insertPhoto" parameterType="com.singer.vo.SR01Vo">
+				insert into SRP1 (seq, idx, regdate, photopath) values(#{seq}, #{idx}, #{regdate}, #{photopath})
 		</insert>
 		
-		<select id="selectPhoto" parameterType="com.singer.vo.SR01Vo" resultType="java.util.Map">
-			select photo from SRP1 
+		<select id="selectPhoto" parameterType="com.singer.vo.SR01Vo" resultType="java.lang.String">
+			select photopath from SRP1 
 				where seq = #{seq}
 				and idx = #{idx}
 		</select>
