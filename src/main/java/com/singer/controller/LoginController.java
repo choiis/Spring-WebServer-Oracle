@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
+import com.singer.common.Constants.BROWSER_CODE;
 import com.singer.common.Constants.RESULT_CODE;
 import com.singer.exception.ExceptionMsg;
 import com.singer.kafka.Producer;
@@ -92,10 +93,13 @@ public class LoginController {
 			List<CommVo> menuList = commService.selectMenu(one.getUsertype());
 			session.setAttribute("menuList", menuList);
 
+			BROWSER_CODE brower = CommonUtil.getBrower(request);
+			log.info("login brower " + brower);
+
 			InputQueryUtil queryUtil = new InputQueryUtil("log_login");
 			queryUtil.add(userId);
 			queryUtil.add(DateUtil.getTodayTime());
-			queryUtil.add(sm01Vo.getBrowser());
+			queryUtil.add(brower.toString());
 			queryUtil.add(sm01Vo.getDevice());
 			queryUtil.add(CommonUtil.getIp(request));
 

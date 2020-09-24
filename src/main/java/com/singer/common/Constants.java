@@ -29,9 +29,6 @@ public class Constants {
 		SUCCESS(1);
 		private final int value;
 
-		public int getValue() {
-			return value;
-		}
 	}
 
 	/** 기본 페이징 숫자 */
@@ -102,6 +99,36 @@ public class Constants {
 				return COMPANY;
 			case 4:
 				return OTHER;
+			default:
+				throw new IllegalArgumentException();
+			}
+		}
+	}
+
+	@AllArgsConstructor(access = AccessLevel.PRIVATE)
+	@Getter
+	public enum BROWSER_CODE {
+		CHROME(0), IE(1), WHALE(2), OPERA(3), FIREFOX(4), SAFARI(5), IPHONE(6), ANDROID(7);
+		private final int value;
+
+		public static BROWSER_CODE valueOf(int value) {
+			switch (value) {
+			case 0:
+				return CHROME;
+			case 1:
+				return IE;
+			case 2:
+				return WHALE;
+			case 3:
+				return OPERA;
+			case 4:
+				return FIREFOX;
+			case 5:
+				return SAFARI;
+			case 6:
+				return IPHONE;
+			case 7:
+				return ANDROID;
 			default:
 				throw new IllegalArgumentException();
 			}

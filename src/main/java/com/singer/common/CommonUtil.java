@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.singer.common.Constants.BROWSER_CODE;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -255,4 +257,27 @@ public class CommonUtil {
 
 	}
 
+	public static BROWSER_CODE getBrower(HttpServletRequest request) {
+		String browserInfo = request.getHeader("User-Agent");
+
+		if (browserInfo.indexOf("Chrome") > -1) {
+			return BROWSER_CODE.CHROME;
+		} else if (browserInfo.indexOf("Trident") > -1 || browserInfo.indexOf("MSIE") > -1) {
+			return BROWSER_CODE.IE;
+		} else if (browserInfo.indexOf("Whale") > -1) {
+			return BROWSER_CODE.WHALE;
+		} else if (browserInfo.indexOf("Opera") > -1 || browserInfo.indexOf("OPR") > -1) {
+			return BROWSER_CODE.OPERA;
+		} else if (browserInfo.indexOf("Firefox") > -1) { // 파이어폭스
+			return BROWSER_CODE.FIREFOX;
+		} else if (browserInfo.indexOf("Safari") > -1) {
+			return BROWSER_CODE.SAFARI;
+		} else if (browserInfo.indexOf("iPhone") > -1) { // 파이어폭스
+			return BROWSER_CODE.IPHONE;
+		} else if (browserInfo.indexOf("Android") > -1) {
+			return BROWSER_CODE.ANDROID;
+		} else {
+			return null;
+		}
+	}
 }
