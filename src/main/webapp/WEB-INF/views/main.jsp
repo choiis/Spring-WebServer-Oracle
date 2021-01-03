@@ -20,11 +20,63 @@
 	</header>
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
+	<div>
+        <input type="text" id="messageinput">
+    </div>
+    
+    <div>
+        <button onclick="openSocket();">Open</button>
+        <button onclick="send();">Send</button>
+        <button onclick="closeSocket();">close</button>
+    </div>
+    
+    <div id="message"></div>
 		<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
 			<source src="/videoStreaming" type="video/mp4" />
 		</video>
 	</section>
+
+    <!-- websocket javascript -->
+    <script>
+        var ws;
+        var messages = document.getElementById("message");
+        
+        function openSocket(){
+            if(ws!==undefined && ws.readyState!==WebSocket.CLOSED)
+            {
+                writeResponse("WebSocket is already opend.");
+                return;
+            } 
+            
+            //웹소켓 객체 만드는 코드
+            ws = new WebSocket('ws://localhost:6789/chatsocket');
+            
+            ws.onopen=function(event){
+                if(event.data===undefined) return;
+                writeResponse(event.data);
+            };
+            ws.onmessage=function(event){
+                writeResponse(event.data);
+            };
+            ws.onclose=function(event){
+                writeResponse("Connection closed");
+            }
+        }
+        function send(){
+            var text = document.getElementById("messageinput").value;
+            ws.send(text);
+            text="";
+        }
+        function closeSocket(){
+            ws.close();
+        }
+        function writeResponse(text){
+            message.innerHTML+="<br/>"+text;
+        }
+    </script>
+	
 	<p>
-	<footer> <jsp:include page="footer.jsp" /> </footer>
+	 
+   <footer> <jsp:include page="footer.jsp" /> </footer>
 </body>
 </html>

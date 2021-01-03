@@ -20,6 +20,9 @@
 						<param-value>/WEB-INF/spring/appServlet/dispatcher-servlet.xml</param-value>
 				</init-param>
 				<load-on-startup>1</load-on-startup>
+				
+				<async-supported>true</async-supported> 
+				<!-- websocket 비동기 지원 -->
 		</servlet>
 		<servlet-mapping>
 				<servlet-name>appServlet</servlet-name>
