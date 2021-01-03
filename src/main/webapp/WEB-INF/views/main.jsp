@@ -7,6 +7,8 @@
 <title>전국노래자랑</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
 <script src="<c:url value='/resources/js/common.js'/>" charset="utf-8"></script>
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
@@ -20,15 +22,9 @@
 	</header>
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
-	<div>
-        <input type="text" id="messageinput">
-    </div>
-    
-    <div>
-        <button onclick="openSocket();">Open</button>
-        <button onclick="send();">Send</button>
-        <button onclick="closeSocket();">close</button>
-    </div>
+	<input type="text" id="message" />
+	<input type="button" id="sendBtn" value="submit"/>
+	<div id="messageArea"></div>
     
     <div id="message"></div>
 		<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
@@ -38,41 +34,28 @@
 
     <!-- websocket javascript -->
     <script>
-        var ws;
-        var messages = document.getElementById("message");
-        
-        function openSocket(){
-            if(ws!==undefined && ws.readyState!==WebSocket.CLOSED)
-            {
-                writeResponse("WebSocket is already opend.");
-                return;
-            } 
-            
-            //웹소켓 객체 만드는 코드
-            ws = new WebSocket('ws://localhost:6789/chatsocket');
-            
-            ws.onopen=function(event){
-                if(event.data===undefined) return;
-                writeResponse(event.data);
-            };
-            ws.onmessage=function(event){
-                writeResponse(event.data);
-            };
-            ws.onclose=function(event){
-                writeResponse("Connection closed");
-            }
-        }
-        function send(){
-            var text = document.getElementById("messageinput").value;
-            ws.send(text);
-            text="";
-        }
-        function closeSocket(){
-            ws.close();
-        }
-        function writeResponse(text){
-            message.innerHTML+="<br/>"+text;
-        }
+    $("#sendBtn").click(function() {
+		sendMessage();
+		$('#message').val('')
+	});
+
+	let sock = new SockJS("/chat/");
+	sock.onmessage = onMessage;
+	sock.onclose = onClose;
+	// 메시지 전송
+	function sendMessage() {
+		sock.send($("#message").val());
+	}
+	// 서버로부터 메시지를 받았을 때
+	function onMessage(msg) {
+		var data = msg.data;
+		$("#messageArea").append(data + "<br/>");
+	}
+	// 서버와 연결을 끊었을 때
+	function onClose(evt) {
+		$("#messageArea").append("연결 끊김");
+
+	}
     </script>
 	
 	<p>
