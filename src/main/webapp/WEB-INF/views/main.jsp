@@ -24,6 +24,11 @@
 	<section>
 	<input type="text" id="message" />
 	<input type="button" id="sendBtn" value="submit"/>
+	<br>
+	<input type="text" id="sendto" />
+	<input type="text" id="whisper" />
+	<input type="button" id="sendtoBtn" value="sendto"/>
+	
 	<div id="messageArea"></div>
     
     <div id="message"></div>
@@ -36,7 +41,12 @@
     <script>
     $("#sendBtn").click(function() {
 		sendMessage();
-		$('#message').val('')
+		$('#message').val('');
+	});
+    
+    $("#sendtoBtn").click(function() {
+    	sock.send("dm," + $("#sendto").val() + "," + $("#whisper").val());
+		$('#whisper').val('');
 	});
 
 	let sock = new SockJS("/chat/");
@@ -44,7 +54,7 @@
 	sock.onclose = onClose;
 	// 메시지 전송
 	function sendMessage() {
-		sock.send($("#message").val());
+		sock.send("msg,"+$("#message").val());
 	}
 	// 서버로부터 메시지를 받았을 때
 	function onMessage(msg) {
