@@ -5,6 +5,12 @@ logintime varchar2(20) not null,
 browser varchar2(20) not null,
 device varchar2(20) not null,
 ip varchar2(30)
+)
+partition by range (logintime)
+(
+  partition log_logintime_part1 values less than ('20190101'),
+  partition log_logintime_part2 values less than ('20200101'),
+  partition log_logintime_part3 values less than ('20210101')
 );
 
 CREATE index idx_log_login_1
@@ -17,6 +23,12 @@ CREATE table log_error (
 erroruri varchar2(30) not null,
 errortime varchar2(20) not null,
 errormsg varchar2(300) not null
+)
+partition by range (errortime)
+(
+  partition log_error_part1 values less than ('20190101'),
+  partition log_error_part2 values less than ('20200101'),
+  partition log_error_part3 values less than ('20210101')
 );
 
 CREATE index idx_log_error_1
