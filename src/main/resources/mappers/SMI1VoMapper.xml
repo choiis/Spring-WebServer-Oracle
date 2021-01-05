@@ -37,10 +37,9 @@
 	  				T1.regdate,
 	  				T1.grade
 	  					from SM01 T1 where T1.brth = #{brth}
-	  					and not exists (
+	  					and not exists ( /*+ UNNEST NL_AJ  */
 	  					select 1 from SME1 E1 
 	  					where T1.userid = E1.userid
-	  					and rownum <![CDATA[ <= ]]> 1
 	  				)
 	  				) S
 					left outer join SMI1 S1
@@ -65,10 +64,9 @@
 	  				T1.regdate,
 	  				T1.grade
 	  					from SM01 T1 where T1.username like #{username}||'%'
-	  					and not exists (
+	  					and not exists ( /*+ UNNEST NL_AJ  */
 	  					select 1 from SME1 E1 
 	  					where T1.userid = E1.userid
-	  					and rownum <![CDATA[ <= ]]> 1
 	  				)
 	  				) S
 					left outer join SMI1 S1
@@ -98,10 +96,9 @@
 			 				and T1.pfnum = #{cellpfnum}
 			 			</if>
 						AND T1.infocode = 1
-						and not exists (
+						and not exists ( /*+ UNNEST NL_AJ  */
 	 				 	select 1 from SME1 E1 
 	  					where T1.userid = E1.userid
-	  					and rownum <![CDATA[ <= ]]> 1
 						)
 					) S
 				inner join SM01 S1
