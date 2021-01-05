@@ -77,6 +77,12 @@ public class CommController extends BaseController {
 		return model;
 	}
 
+	@RequestMapping(value = "/chatting", method = RequestMethod.GET)
+	public ModelAndView toShowChatting() throws Exception {
+		ModelAndView model = new ModelAndView("/chatting");
+		return model;
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/commMenu", method = RequestMethod.POST)
 	public ResponseEntity<CommVo> toInsertMenu(@RequestBody CommVo commVo, HttpServletRequest request)

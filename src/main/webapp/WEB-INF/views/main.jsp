@@ -22,70 +22,10 @@
 	</header>
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
-	<input type="text" id="message" />
-	<button onclick="send()" id="sendBtn">보내기</button>
-	<br>
-	
-	<input type="text" id="sendto" />
-	<input type="text" id="whisper" />
-	<button onclick="sendto()" id="sendBtn">귓속말</button>
-	<br>
-	<input type="file" id="fileUpload">
-	<button onclick="fileSend()" id="sendFileBtn">파일올리기</button>
-	<div id="messageArea"></div>
-    
-    <div id="message"></div>
 		<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
 			<source src="/videoStreaming" type="video/mp4" />
 		</video>
 	</section>
-
-    <!-- websocket javascript -->
-    <script>
-    var ws;
-
-	function wsOpen(){
-		ws = new WebSocket("ws://" + location.host + "/chat");
-		ws.onopen = function(data){
-			//소켓이 열리면 초기화 세팅하기
-		}
-		
-		ws.onmessage = function(msg) {
-			var data = msg.data;
-			if (data != null && data.type != '') {
-				$("#messageArea").append(data + "<br/>");		
-			} else {
-				var url = URL.createObjectURL(new Blob([data]));
-				$("#messageArea").append("<div class='img'><img class='msgImg' src="+url+"></div><div class='clearBoth'></div><br/>");
-			}
-		}
-	}
-    
-	function send() {
-		ws.send("msg,"+$("#message").val());
-		$("#message").val('');
-	}
-
-	function sendto() {
-		ws.send("dm," + $("#sendto").val() + "," + $("#whisper").val());
-		$('#whisper').val('');
-	}
-	
-	function fileSend() {
-		var file = document.querySelector("#fileUpload").files[0];
-		var fileReader = new FileReader();
-		fileReader.onload = function() {
-
-		    arrayBuffer = this.result;
-		    ws.binaryData = "blob";
-			ws.send(arrayBuffer); //파일 소켓 전송
-		};
-		fileReader.readAsArrayBuffer(file);
-	}
-	
-	wsOpen();
-    </script>
-	
 	<p>
 	 
    <footer> <jsp:include page="footer.jsp" /> </footer>
