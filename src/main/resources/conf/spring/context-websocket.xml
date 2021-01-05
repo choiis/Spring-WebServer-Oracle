@@ -22,5 +22,7 @@
     	<websocket:sockjs/>
 	</websocket:handlers>
 	
-	<beans:bean name="echoHandler" class="com.singer.util.EchoHandler"/>
+	<beans:bean id="echoHandler" class="com.singer.bean.EchoHandler"/>
+	
+
 </beans:beans>

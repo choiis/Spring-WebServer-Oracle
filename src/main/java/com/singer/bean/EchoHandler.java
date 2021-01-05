@@ -1,5 +1,10 @@
-package com.singer.util;
+package com.singer.bean;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +12,7 @@ import java.util.Map;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -17,15 +22,18 @@ import com.singer.common.CommonUtil;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Cleanup;
 import lombok.Getter;
 
-@RequestMapping("/chat")
 public class EchoHandler extends TextWebSocketHandler {
 
 	private static final Log logger = LogFactory.getLog(EchoHandler.class);
 
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
+	@SuppressWarnings("unchecked")
 	private Map<String, WebSocketSession> userMap = new HashedMap();
+
+	private static final String FILE_UPLOAD_PATH = "D:/tmp/";
 
 	protected String getUserName(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
@@ -82,6 +90,35 @@ public class EchoHandler extends TextWebSocketHandler {
 			}
 		}
 
+	}
+
+	@Override
+	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
+		ByteBuffer byteBuffer = message.getPayload();
+
+		String tempFileName = "temp.jpg";
+		File dir = new File(FILE_UPLOAD_PATH);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+
+		File imgFile = new File(FILE_UPLOAD_PATH, tempFileName);
+
+		try {
+			@Cleanup
+			FileOutputStream fos = new FileOutputStream(imgFile);
+			@Cleanup
+			FileChannel fileChannel = fos.getChannel();
+			byteBuffer.compact();
+			fileChannel.write(byteBuffer);
+			byteBuffer.position(0);
+			for (WebSocketSession webSocketSession : sessionList) {
+				webSocketSession.sendMessage(new BinaryMessage(byteBuffer));
+			}
+
+		} catch (IOException e) {
+			logger.error(e, e);
+		}
 	}
 
 	@Override

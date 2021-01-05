@@ -23,12 +23,15 @@
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
 	<input type="text" id="message" />
-	<input type="button" id="sendBtn" value="submit"/>
+	<button onclick="send()" id="sendBtn">보내기</button>
 	<br>
+	
 	<input type="text" id="sendto" />
 	<input type="text" id="whisper" />
-	<input type="button" id="sendtoBtn" value="sendto"/>
-	
+	<button onclick="sendto()" id="sendBtn">귓속말</button>
+	<br>
+	<input type="file" id="fileUpload">
+	<button onclick="fileSend()" id="sendFileBtn">파일올리기</button>
 	<div id="messageArea"></div>
     
     <div id="message"></div>
@@ -39,33 +42,48 @@
 
     <!-- websocket javascript -->
     <script>
-    $("#sendBtn").click(function() {
-		sendMessage();
-		$('#message').val('');
-	});
+    var ws;
+
+	function wsOpen(){
+		ws = new WebSocket("ws://" + location.host + "/chat");
+		ws.onopen = function(data){
+			//소켓이 열리면 초기화 세팅하기
+		}
+		
+		ws.onmessage = function(msg) {
+			var data = msg.data;
+			if (data != null && data.type != '') {
+				$("#messageArea").append(data + "<br/>");		
+			} else {
+				var url = URL.createObjectURL(new Blob([data]));
+				$("#messageArea").append("<div class='img'><img class='msgImg' src="+url+"></div><div class='clearBoth'></div><br/>");
+			}
+		}
+	}
     
-    $("#sendtoBtn").click(function() {
-    	sock.send("dm," + $("#sendto").val() + "," + $("#whisper").val());
+	function send() {
+		ws.send("msg,"+$("#message").val());
+		$("#message").val('');
+	}
+
+	function sendto() {
+		ws.send("dm," + $("#sendto").val() + "," + $("#whisper").val());
 		$('#whisper').val('');
-	});
+	}
+	
+	function fileSend() {
+		var file = document.querySelector("#fileUpload").files[0];
+		var fileReader = new FileReader();
+		fileReader.onload = function() {
 
-	let sock = new SockJS("/chat/");
-	sock.onmessage = onMessage;
-	sock.onclose = onClose;
-	// 메시지 전송
-	function sendMessage() {
-		sock.send("msg,"+$("#message").val());
+		    arrayBuffer = this.result;
+		    ws.binaryData = "blob";
+			ws.send(arrayBuffer); //파일 소켓 전송
+		};
+		fileReader.readAsArrayBuffer(file);
 	}
-	// 서버로부터 메시지를 받았을 때
-	function onMessage(msg) {
-		var data = msg.data;
-		$("#messageArea").append(data + "<br/>");
-	}
-	// 서버와 연결을 끊었을 때
-	function onClose(evt) {
-		$("#messageArea").append("연결 끊김");
-
-	}
+	
+	wsOpen();
     </script>
 	
 	<p>
