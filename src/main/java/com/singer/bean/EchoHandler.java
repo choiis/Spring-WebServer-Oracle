@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,6 +21,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.singer.common.CommonUtil;
+import com.singer.vo.SL01Vo;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,6 +37,9 @@ public class EchoHandler extends TextWebSocketHandler {
 	private Map<String, WebSocketSession> userMap = new HashedMap();
 
 	private static final String FILE_UPLOAD_PATH = "D:/tmp/";
+
+	@Inject
+	private LogSender logSender;
 
 	protected String getUserName(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
@@ -81,6 +87,10 @@ public class EchoHandler extends TextWebSocketHandler {
 			for (WebSocketSession webSocketSession : sessionList) {
 				webSocketSession.sendMessage(new TextMessage(sessionName + " : " + received[1]));
 			}
+			SL01Vo sl01Vo = new SL01Vo();
+			sl01Vo.setUsername(sessionName);
+			sl01Vo.setMessage(received[1]);
+			logSender.chatlogInsert(sl01Vo);
 		} else if (direction.DM.getDirect().equals(received[0])) {
 			WebSocketSession sendSession = userMap.get(received[1]);
 			if (sendSession != null) {

@@ -15,4 +15,8 @@ public class SL01Dao extends SuperDao {
 	public List<SL01Vo> selectSL01(SL01Vo sl01Vo) throws Exception {
 		return (List<SL01Vo>) selectList(namespace + ".selectSL01", sl01Vo);
 	}
+
+	public int insertChatLog(SL01Vo sl01Vo) throws Exception {
+		return insert(namespace + ".insertChatlog", sl01Vo);
+	}
 }

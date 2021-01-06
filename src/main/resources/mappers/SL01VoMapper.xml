@@ -54,5 +54,20 @@
 		inner join SM01 SM
 		on (SL.userid = SM.userid)
 	</select>	
-
+	
+	<insert id="insertChatlog"  parameterType="com.singer.vo.SL01Vo">
+	insert into log_chatting
+		(
+		username, logdate, message
+		<if test="chatroom != null" >
+		, chatroom
+		</if>
+		)
+		values (#{username}, sysdate, #{message}
+		<if test="chatroom != null" >
+		, #{chatroom}
+		</if>
+		) 
+	</insert>
+	
 </mapper>

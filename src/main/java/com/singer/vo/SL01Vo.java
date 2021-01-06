@@ -22,5 +22,6 @@ public class SL01Vo extends SuperVo {
 	private String lcnt;
 	private String username;
 	private USER_CODE usertype;
-
+	private String message;
+	private String chatroom;
 }
