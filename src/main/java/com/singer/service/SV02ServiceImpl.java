@@ -40,12 +40,8 @@ public class SV02ServiceImpl implements SV02Service {
 		stream.forEach(s -> {
 			s.setUserid(userid);
 			s.setRegdate(regDate);
-			try {
-				sv02Dao.insertSV03Vo(s);
-			} catch (Exception e) {
-			}
 		});
-
+		sv02Dao.insertSV03Vo(list);
 		return 1;
 	}
 

@@ -10,8 +10,8 @@ import com.singer.vo.SV02Vo;
 public class SV02Dao extends SuperDao {
 	private static final String namespace = "com.singer.mappers.SV02";
 
-	public int insertSV02Vo(SV02Vo sv02Vo) throws Exception {
-		return insert(namespace + ".insert", sv02Vo);
+	public int insertSV02Vo(List<SV02Vo> list) throws Exception {
+		return insert(namespace + ".insert", list);
 	}
 
 	public int updateSV02Vo(SV02Vo sv02Vo) throws Exception {
@@ -31,7 +31,7 @@ public class SV02Dao extends SuperDao {
 		return delete(namespace + ".delete", sv02Vo);
 	}
 
-	public int insertSV03Vo(SV02Vo sv02Vo) throws Exception {
-		return insert(namespace + ".insertSv03Vo", sv02Vo);
+	public int insertSV03Vo(List<SV02Vo> list) throws Exception {
+		return insert(namespace + ".insertSv03Vo", list);
 	}
 }

@@ -187,8 +187,14 @@
 				insert (S1.seq, S1.sessionid, S1.datelog, S1.hatelog ) values(#{seq}, #{sessionid}, #{datelog} , 'Y')
 		</update>
 		
-		<insert id="insertPhoto" parameterType="com.singer.vo.SR01Vo">
-				insert into SRP1 (seq, idx, regdate, photopath) values(#{seq}, #{idx}, #{regdate}, #{photopath})
+		<insert id="insertPhoto" parameterType="java.util.List">
+		insert all 
+			<foreach collection="list" item="item">
+			into SRP1 (seq, idx, regdate, photopath) 
+				values
+					(#{item.seq}, #{item.idx}, #{item.regdate}, #{item.photopath})
+			</foreach>
+			select * from dual
 		</insert>
 		
 		<select id="selectPhoto" parameterType="com.singer.vo.SR01Vo" resultType="java.lang.String">

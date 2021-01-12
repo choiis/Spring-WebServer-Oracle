@@ -1,7 +1,6 @@
 package com.singer.service;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.annotation.Resource;
 
@@ -46,6 +45,10 @@ public class SV01ServiceImpl implements SV01Service {
 
 		List<SV02Vo> list = sv01Vo.getSv02Vos();
 
+		String regDate = DateUtil.getTodayTime();
+		sv01Vo.setUserid(userid);
+		sv01Vo.setRegdate(regDate);
+		
 		if (CommonUtil.isZeroLength(list)) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
 		} else {
@@ -54,23 +57,13 @@ public class SV01ServiceImpl implements SV01Service {
 				if (CommonUtil.isNull(list.get(i).getContent())) {
 					throw new AppException(ExceptionMsg.EXT_MSG_INPUT_9);
 				}
+				list.get(i).setUserid(userid);
+				list.get(i).setRegdate(regDate);
 			}
 		}
 
-		String regDate = DateUtil.getTodayTime();
-		sv01Vo.setUserid(userid);
-		sv01Vo.setRegdate(regDate);
 		int result = sv01Dao.insertSV01Vo(sv01Vo);
-
-		Stream<SV02Vo> stream = list.stream();
-		stream.forEach(s -> {
-			s.setUserid(userid);
-			s.setRegdate(regDate);
-			try {
-				sv02Dao.insertSV02Vo(s);
-			} catch (Exception e) {
-			}
-		});
+		sv02Dao.insertSV02Vo(list);
 
 		return result;
 	}
@@ -85,9 +78,9 @@ public class SV01ServiceImpl implements SV01Service {
 	public List<SV01Vo> selectFindSV01Vo(SV01Vo sv01Vo) throws Exception {
 		if (CommonUtil.isNull(sv01Vo.getFindText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
-		} else if (sv01Vo.getSelection() == 1) { // 제목으로 검색
+		} else if (sv01Vo.getSelection() == 1) { // �젣紐⑹쑝濡� 寃��깋
 			sv01Vo.setTitle(sv01Vo.getFindText());
-		} else if (sv01Vo.getSelection() == 2) { // 아이디로 검색
+		} else if (sv01Vo.getSelection() == 2) { // �븘�씠�뵒濡� 寃��깋
 			sv01Vo.setUserid(sv01Vo.getFindText());
 		} else {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_11);
@@ -114,8 +107,8 @@ public class SV01ServiceImpl implements SV01Service {
 		sv02Vo.setUserid(userid);
 
 		List<SV02Vo> list = sv02Dao.selectSV02Vo(sv02Vo);
-		sv01Vo.setSv02Vos(list); // 투표항목 정보
-		sv01Vo.setTotCnt(sv02Dao.selectCnt(sv02Vo)); // 총 투표수
+		sv01Vo.setSv02Vos(list); // �닾�몴�빆紐� �젙蹂�
+		sv01Vo.setTotCnt(sv02Dao.selectCnt(sv02Vo)); // 珥� �닾�몴�닔
 
 		return sv01Vo;
 	}

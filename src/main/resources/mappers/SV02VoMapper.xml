@@ -7,14 +7,24 @@
 
 <mapper namespace="com.singer.mappers.SV02">		
 
-		<insert id="insert"  parameterType="com.singer.vo.SV02Vo">
-			insert into SV02 (seq, idx, content, userid, regdate)
-			values (SEQ_SV01.CURRVAL, #{idx}, #{content}, #{userid}, #{regdate} ) 
+		<insert id="insert" parameterType="java.util.List">
+			insert all 
+			<foreach collection="list" item="item">
+			into SV02 (seq, idx, content, userid, regdate)
+				values 
+					(SEQ_SV01.CURRVAL, #{item.idx}, #{item.content}, #{item.userid}, #{item.regdate} )
+			</foreach> 
+			select * from dual
 		</insert>
 		
-		<insert id="insertSv03Vo"  parameterType="com.singer.vo.SV02Vo">
-			insert into SV03 (seq, idx, userid, regdate)
-			values (#{seq}, #{idx}, #{userid}, #{regdate} ) 
+		<insert id="insertSv03Vo" parameterType="java.util.List">
+			insert all 
+			<foreach collection="list" item="item">
+			into SV03 (seq, idx, userid, regdate)
+				values 
+					(#{item.seq}, #{item.idx}, #{item.userid}, #{item.regdate} )
+			</foreach> 
+			select * from dual
 		</insert>
 		
 		<update id="update" parameterType="com.singer.vo.SV02Vo">

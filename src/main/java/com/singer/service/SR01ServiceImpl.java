@@ -106,14 +106,7 @@ public class SR01ServiceImpl implements SR01Service {
 
 			s3Util.putS3File(sb.toString(), file);
 		}
-
-		arrayList.stream().forEach(s -> {
-			try {
-				sr01Dao.insertImage(s);
-			} catch (Exception e) {
-
-			}
-		});
+		sr01Dao.insertImage(arrayList);
 		return sr01Vo.getSeq() > 0 ? 1 : 0;
 	}
 
@@ -127,9 +120,9 @@ public class SR01ServiceImpl implements SR01Service {
 	public List<SR01Vo> selectFindSR01Vo(SR01Vo sr01Vo) throws Exception {
 		if (CommonUtil.isNull(sr01Vo.getFindText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
-		} else if (sr01Vo.getSelection() == 1) { // 제목으로 검색
+		} else if (sr01Vo.getSelection() == 1) { // �젣紐⑹쑝濡� 寃��깋
 			sr01Vo.setTitle(sr01Vo.getFindText());
-		} else if (sr01Vo.getSelection() == 2) { // 아이디로 검색
+		} else if (sr01Vo.getSelection() == 2) { // �븘�씠�뵒濡� 寃��깋
 			sr01Vo.setUserid(sr01Vo.getFindText());
 		} else {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_11);

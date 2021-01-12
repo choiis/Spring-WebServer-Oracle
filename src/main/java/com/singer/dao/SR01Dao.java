@@ -61,8 +61,8 @@ public class SR01Dao extends SuperDao {
 		return (SR01Vo) selectOne(namespace + ".checkUser", sr01Vo);
 	}
 
-	public int insertImage(SR01Vo sr01Vo) throws Exception {
-		return insert(namespace + ".insertPhoto", sr01Vo);
+	public int insertImage(List<SR01Vo> list) throws Exception {
+		return insert(namespace + ".insertPhoto", list);
 	}
 
 	public String selectPhoto(SR01Vo sr01Vo) throws Exception {
