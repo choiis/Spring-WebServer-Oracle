@@ -2,6 +2,7 @@ package com.singer.util;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -63,5 +64,9 @@ public class S3Util {
 
 	public void deleteS3File(String fileName) {
 		s3client.deleteObject(bucketName, fileName);
+	}
+
+	public URL getS3Url(String fileName) {
+		return s3client.getUrl(bucketName, fileName);
 	}
 }

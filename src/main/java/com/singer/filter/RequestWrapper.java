@@ -22,15 +22,14 @@ import lombok.Cleanup;
 
 public class RequestWrapper extends HttpServletRequestWrapper {
 
-	private final Log log = LogFactory.getLog(RequestWrapper.class);
+	private final Log logger = LogFactory.getLog(RequestWrapper.class);
 	private byte[] bytes;
+	private String jsonType = "application/json;charset=UTF-8";
 
 	public RequestWrapper(HttpServletRequest request) {
 		super(request);
-		log.info("RequestWrapper init ");
-		if ("application/json;charset=UTF-8".equals(request.getContentType())) { // @RequestBody요청
+		if (jsonType.equals(request.getContentType())) { // @RequestBody
 			bytes = new String(getBody(request)).getBytes();
-
 		}
 	}
 
@@ -94,10 +93,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 			} else {
 				stringBuilder.append("");
 			}
-		} catch (IOException ex) {
-
+		} catch (IOException e) {
+			logger.error(e, e);
 		}
-
 		body = cleanXSS(stringBuilder.toString());
 		return body;
 	}
@@ -134,7 +132,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 					}
 				}
 			} catch (AppException e) {
-				log.info("AppException");
+				logger.info("AppException");
 			}
 
 		}
@@ -174,6 +172,8 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 		value = value.replaceAll("eval\\((.*)\\)", "");
 		value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
 		value = value.replaceAll("script", "");
+		value = value.replaceAll("alert", "");
+		value = value.replaceAll("image", "");
 		return value;
 	}
 }
