@@ -1,0 +1,27 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" 
+	updateCheck="true" 
+	monitoring="autodetect" 
+	maxBytesLocalHeap="300M"
+	dynamicConfig="true">
+
+	
+	<!-- default Cache 설정 (반드시 선언해야 하는 Cache) --> 
+	<defaultCache eternal="false"
+		 timeToIdleSeconds="0" 
+		 timeToLiveSeconds="1200" 
+		 overflowToDisk="false" 
+		 diskPersistent="false" 
+		 diskExpiryThreadIntervalSeconds="120" 
+		 memoryStoreEvictionPolicy="LRU"/>
+
+	<cache name="LocalCacheData" 
+		eternal="false" 
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="1200" 
+		overflowToDisk="false" 
+		diskPersistent="false" 
+		diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU"/>
+		
+</ehcache>
