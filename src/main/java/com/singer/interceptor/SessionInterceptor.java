@@ -18,7 +18,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants.USER_CODE;
 import com.singer.dao.CommDao;
-import com.singer.util.MenuListStruct;
 import com.singer.vo.CommVo;
 
 public class SessionInterceptor extends HandlerInterceptorAdapter {
@@ -34,9 +33,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 
 	@Resource(name = "commDao")
 	private CommDao commDao;
-
-	@Inject
-	private MenuListStruct menuListStruct;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -60,7 +56,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		if (!"/main".equals(uri)) {
 			CommVo commVo = new CommVo();
 			commVo.setMenuurl(uri);
-			List<CommVo> list = menuListStruct.getAllMenuList();
+			List<CommVo> list = commDao.selectAllMenu();
 
 			// 메뉴 권한 제어
 			if (list.stream().anyMatch(s -> uri.equals(s.getMenuurl()))) {

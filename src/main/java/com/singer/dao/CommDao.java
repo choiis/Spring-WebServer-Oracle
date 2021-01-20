@@ -2,6 +2,7 @@ package com.singer.dao;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import com.singer.vo.CommVo;
@@ -22,6 +23,7 @@ public class CommDao extends SuperDao {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Cacheable(value = "menuCacheData")
 	public List<CommVo> selectAllMenu() throws Exception {
 		return (List<CommVo>) selectList(namespace + ".selectAllMenu");
 	}

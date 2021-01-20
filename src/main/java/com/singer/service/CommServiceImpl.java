@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import javax.annotation.Resource;
-import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.singer.common.Constants.USER_CODE;
 import com.singer.common.DateUtil;
 import com.singer.dao.CommDao;
-import com.singer.util.MenuListStruct;
 import com.singer.vo.CommVo;
 
 @Service("commService")
@@ -22,9 +20,6 @@ public class CommServiceImpl implements CommService {
 
 	@Resource(name = "commDao")
 	private CommDao commDao;
-
-	@Inject
-	private MenuListStruct menuListStruct;
 
 	@Override
 	public List<CommVo> selectCode(CommVo vo) throws Exception {
@@ -34,7 +29,7 @@ public class CommServiceImpl implements CommService {
 	@Override
 	public List<CommVo> selectMenu(USER_CODE authlevel) throws Exception {
 
-		Stream<CommVo> stream = menuListStruct.getAllMenuList().stream()
+		Stream<CommVo> stream = commDao.selectAllMenu().stream()
 				.filter(s -> s.getAuthlevel().compareTo(authlevel) >= 0);
 		List<CommVo> list = new ArrayList<>();
 		for (Iterator<CommVo> i = stream.iterator(); i.hasNext();) {
