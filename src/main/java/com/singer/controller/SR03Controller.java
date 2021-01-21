@@ -63,6 +63,6 @@ public class SR03Controller extends BaseController {
 		sr03Service.deleteSR03Vo(sr03Vo);
 
 		log.debug("exit sr03 delete");
-		return new ResponseEntity<SR03Vo>(sr03Vo, HttpStatus.OK);
+		return new ResponseEntity<SR03Vo>(HttpStatus.NO_CONTENT);
 	}
 }

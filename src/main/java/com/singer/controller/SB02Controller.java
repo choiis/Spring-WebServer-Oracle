@@ -63,6 +63,6 @@ public class SB02Controller extends BaseController {
 		sb02Service.deleteSB02Vo(sb02Vo);
 
 		log.debug("exit sb02 delete");
-		return new ResponseEntity<SB02Vo>(sb02Vo, HttpStatus.OK);
+		return new ResponseEntity<SB02Vo>(HttpStatus.NO_CONTENT);
 	}
 }

@@ -48,7 +48,7 @@ public class SR02Controller extends BaseController {
 		sr02Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 
 		log.debug("exit sr02 delete");
-		return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.OK);
+		return new ResponseEntity<SR01Vo>(HttpStatus.NO_CONTENT);
 	}
 
 	@ResponseBody

@@ -119,7 +119,7 @@ public class SF01Controller extends BaseController {
 		sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
 
 		log.debug("exit sf01 delete");
-		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
+		return new ResponseEntity<SF01Vo>(HttpStatus.NO_CONTENT);
 	}
 
 	@ResponseBody

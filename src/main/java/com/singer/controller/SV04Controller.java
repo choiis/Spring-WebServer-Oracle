@@ -64,6 +64,6 @@ public class SV04Controller extends BaseController {
 		sv04Service.deleteSV04Vo(sv04Vo);
 
 		log.debug("exit sv04 delete");
-		return new ResponseEntity<SV04Vo>(sv04Vo, HttpStatus.OK);
+		return new ResponseEntity<SV04Vo>(HttpStatus.NO_CONTENT);
 	}
 }

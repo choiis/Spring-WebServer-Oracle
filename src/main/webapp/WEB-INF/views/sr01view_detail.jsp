@@ -75,10 +75,8 @@
 		$("#button_delete").on("click", function(e) {
 			if(confirm("삭제할까요?")) {
 				
-				gfn_ajaxRest("sr01/" + parseInt($("#seq").val()), "DELETE" , function(data) {
-					if(data.result) {
-						location.href='/sr01page';		
-					}
+				gfn_ajaxRest("sr01/" + parseInt($("#seq").val()), "DELETE" , function() {
+					location.href='/sr01page';
 				});		
 			}
 		});
@@ -170,7 +168,7 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			gfn_ajaxRest("sr03/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function(data) {
+			gfn_ajaxRest("sr03/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function() {
 				showSR03List(1);
 			});
 		}
