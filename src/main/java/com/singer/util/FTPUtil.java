@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AccessLevel;
+import lombok.Cleanup;
 import lombok.NoArgsConstructor;
 
 @Component("ftpUtil")
@@ -30,7 +31,7 @@ public class FTPUtil {
 	@Resource(name = "properties")
 	private Properties properties;
 
-	private String ftpIp; // FTP 가상머신 서버의 ip
+    private String ftpIp; // FTP 가상머신 서버의 ip
 
 	private int port;
 
@@ -69,7 +70,7 @@ public class FTPUtil {
 			ftp.setFileType(FTP.BINARY_FILE_TYPE);
 			ftp.enterLocalPassiveMode();
 		} catch (IOException e) {
-
+			log.error(e, e);
 		}
 		return ftp;
 	}
@@ -79,6 +80,7 @@ public class FTPUtil {
 			try {
 				ftp.disconnect();
 			} catch (IOException e) {
+				log.error(e, e);
 			}
 		}
 	}
@@ -86,21 +88,14 @@ public class FTPUtil {
 	public File downFile(String fileName) {
 		FTPClient ftp = initFTPClient();
 		File file = new File(path, fileName);
-		BufferedOutputStream os = null;
 
 		try {
-
-			os = new BufferedOutputStream(new FileOutputStream(file));
+			@Cleanup
+			BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(file));
 			ftp.retrieveFile(fileName, os);
 		} catch (IOException e) {
-
+			log.error(e, e);
 		} finally {
-			if (os != null) {
-				try {
-					os.close();
-				} catch (IOException e) {
-				}
-			}
 			closeFTPClient(ftp);
 		}
 		return file;
@@ -109,35 +104,28 @@ public class FTPUtil {
 	public boolean sendFile(String fileName, MultipartFile file) {
 		boolean isSuccess = false;
 		FTPClient ftp = initFTPClient();
-		InputStream is = null;
 
 		try {
-			is = file.getInputStream();
+			@Cleanup
+			InputStream is = file.getInputStream();
 			isSuccess = ftp.storeFile(fileName, is);
-
 		} catch (IOException e) {
 			isSuccess = false;
+			log.error(e, e);
 		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException e) {
-				}
-			}
 			closeFTPClient(ftp);
 		}
 		return isSuccess;
 	}
 
 	public boolean deleteFile(String fileName) {
-
 		boolean isSuccess = false;
 		FTPClient ftp = initFTPClient();
 
 		try {
 			isSuccess = ftp.deleteFile(fileName);
 		} catch (IOException e) {
-
+			log.error(e, e);
 		} finally {
 			closeFTPClient(ftp);
 		}

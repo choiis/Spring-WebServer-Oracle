@@ -17,7 +17,7 @@ public class DeleteFileBatch extends QuartzJobBean {
 
 	private final Log log = LogFactory.getLog(DeleteFileBatch.class);
 
-	// FTP다운 경로의 파일 삭제
+    // FTP다운 경로의 파일 삭제
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		ResourcePropertySource resourse;
@@ -32,7 +32,7 @@ public class DeleteFileBatch extends QuartzJobBean {
 				file.delete();
 			}
 		} catch (IOException e) {
-
+			log.error(e, e);
 		}
 
 	}

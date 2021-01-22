@@ -10,13 +10,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.web.servlet.view.AbstractView;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractExcelView extends AbstractView {
 
 	private static final String CONTENT_TYPE_XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-	protected AbstractExcelView() {
-
-	}
 
 	@Override
 	protected boolean generatesDownloadContent() {

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import javax.annotation.Resource;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -54,8 +53,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		USER_CODE usertype = (USER_CODE) session.getAttribute("usertype");
 		// 초기 로그인 케이스 아니면
 		if (!"/main".equals(uri)) {
-			CommVo commVo = new CommVo();
-			commVo.setMenuurl(uri);
 			List<CommVo> list = commDao.selectAllMenu();
 
 			// 메뉴 권한 제어

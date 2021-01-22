@@ -6,13 +6,14 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SuperDao {
+
 	@Inject
 	private SqlSession sqlSession;
-
-	protected SuperDao() {
-		// TODO Auto-generated constructor stub
-	}
 
 	@SuppressWarnings("rawtypes")
 	protected List selectList(String statement, Object vo) {

@@ -1,5 +1,9 @@
 package com.singer.exception;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExceptionMsg {
 	/** 아이디를 필수 입력해야 합니다! */
 	public static final String EXT_MSG_INF_1 = "아이디를 필수 입력해야 합니다!";

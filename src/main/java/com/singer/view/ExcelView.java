@@ -14,6 +14,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.singer.common.CommonUtil;
 import com.singer.vo.SB01Vo;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ExcelView extends AbstractExcelView {
 
 	@Override
