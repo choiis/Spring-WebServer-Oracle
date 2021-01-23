@@ -79,21 +79,19 @@
 		
 		<select id="select" resultType="com.singer.vo.SR01Vo"  parameterType="com.singer.vo.SR01Vo">
 				<![CDATA[
-			select T.*,
+			select S1.*,
 				(select count(*) 
-        			from SR03 s
-        			where T.seq = s.seq01
-        			and s.parents = 0
+        			from SR03 S
+        			where S1.seq = S.seq01
+        			and S.parents = 0
       			) as reply,
   				(select ROUND(AVG(S2.grade),2)
         			from SR02 S2
-        			where T.seq = S2.seq
+        			where S1.seq = S2.seq
       			) as avggrade,
       			(select count(*) /*+ INDEX_FFS(SR01 PK_SR01)*/
   					from SR01 
   				) as totCnt
-      			from
-  				(select S1.*
 				 from (
 					select /*+ index_desc(SR01 PK_SR01)*/
 					rownum as rown,
@@ -105,9 +103,8 @@
 					hit as hit, 
 					good as good
 			 	from SR01 
-				) S1 where S1.rown between 
-			#{startRownum} and #{endRownum}
-  			) T
+			 	where rownum <= #{endRownum} 
+				) S1 where S1.rown >= #{startRownum} 
   			]]>
 		</select>
 		

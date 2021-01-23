@@ -67,21 +67,19 @@
 		
 		<select id="select" resultType="com.singer.vo.SV01Vo"  parameterType="com.singer.vo.SV01Vo">
 				<![CDATA[
-			select T.*,
-				(select count(*) 
-        			from SV04 s
-        			where T.seq = s.seq01
-        			and s.parents = 0
+			select S1.*,
+				 (select count(*) 
+        			from SV04 S
+        			where S1.seq = S.seq01
+        			and S.parents = 0
       			) as reply,
   				(select count(*) 
-        			from SV03 s3
-        			where T.seq = s3.seq
+        			from SV03 S3
+        			where S1.seq = S3.seq
       			) as votedCnt,
       			(select count(*) /*+ INDEX_FFS(SV01 PK_SV01)*/
   					from SV01 
   				) as totCnt
-      			from
-  				(select S1.*
 				 from (
 					select /*+ index_desc(SV01 PK_SV01)*/
 					rownum as rown,
@@ -93,9 +91,8 @@
 					hit as hit, 
 					good as good
 			 	from SV01 
-				) S1 where S1.rown between 
-			#{startRownum} and #{endRownum}
-  			) T
+			 	where rownum <= #{endRownum} 
+				) S1 where S1.rown >= #{startRownum} 
   			]]>
 		</select>
 		

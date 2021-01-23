@@ -16,18 +16,23 @@
 	</select>
 	
 	<select id="select" resultType="com.singer.vo.SM02Vo"  parameterType="com.singer.vo.SM02Vo">
-		select * from
-		(select 
-			seq as seq,
-			ceil(row_number() over(order by regdate desc) / #{rowPerPage} ) as nowPage,
-			userid as userid,
-			title as title,
-			text as text, 
-			regdate as regdate,
-			count(*) over() as totCnt
-		 from SM02 
- 		where userid = #{userid}
-		)	where nowPage = #{nowPage}
+		<![CDATA[
+			select T.* from
+				(select S.*,
+   				 rownum as rown
+					from
+					(select /*+ index_desc(SM02 IDX_SM02_1)*/
+               	 	seq as seq,
+					userid as userid,
+					title as title,
+					text as text, 
+					regdate as regdate,
+					count(*) over() as totCnt
+			 		from SM02 
+ 					where userid = #{userid}
+					) S where rownum <= #{endRownum}
+        		) T where T.rown >= #{startRownum} 
+  			]]>
 	</select>
 		
 	<delete id="delete" parameterType="com.singer.vo.SM02Vo">

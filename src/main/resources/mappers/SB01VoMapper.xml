@@ -95,17 +95,15 @@
 		
 		<select id="select" resultType="com.singer.vo.SB01Vo"  parameterType="com.singer.vo.SB01Vo">
 		<![CDATA[
-			select T.*,
-  				(select count(*) 
-        			from SB02 s2
-        			where T.seq = s2.seq01
-        			and s2.parents = 0
+			select S1.*,
+				(select count(*) 
+        			from SB02 S2
+        			where S1.seq = S2.seq01
+        			and S2.parents = 0
       			) as reply,
       			(select count(*) /*+ INDEX_FFS(SB01 PK_SB01)*/
   					from SB01 
   				) as totCnt
-      			from
-  				(select S1.*
 				 from (
 					select /*+ index_desc(SB01 PK_SB01)*/
 					rownum as rown,
@@ -117,9 +115,8 @@
 					hit as hit, 
 					good as good
 			 	from SB01 
-				) S1 where S1.rown between 
-			#{startRownum} and #{endRownum}
-  			) T
+			 	where rownum <= #{endRownum} 
+				) S1 where S1.rown  >= #{startRownum} 
   			]]>
 		</select>
 		
