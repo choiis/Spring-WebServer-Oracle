@@ -112,36 +112,38 @@
 		</select>
 		
 		<select id="select" resultMap="SM01VoResult" parameterType="com.singer.vo.SM01Vo">
-		<![CDATA[
+			<![CDATA[
 			select 
-				/*+ ordered use_nl(T S1)*/
-				T.*,
+				/*+ ordered use_nl(T1 S1)*/
+				T1.*,
 				S1.pfnum as pfnum,
 	 			S1.pcnum as pcnum,
-				S1.pbnum as pbnum
+				S1.pbnum as pbnum,
+                (select /*+ INDEX_FFS(SM01 pk_SM01)*/
+                    count(*) 
+  					from SM01 
+  				) as totCnt    
 			from 
-			(select S1.*
-			 from (
-			select 
-				rownum as rown,
-				T.userid as userid,
-				T.username as username, 
-				T.brth as brth, 
-				T.grade as grade, 
-				T.regdate as regdate,
-				T.email as email,
-				T.usertype as usertype,
-				count(*) over() as totCnt
-				from ( select * from SM01
-				 order by regdate desc
-				) T
-			) S1 where S1.rown between 
-			#{startRownum} + 1 and #{endRownum}
-			) T
-			 left outer join SMI1 S1
-			 on T.userid = S1.userid
-			 and S1.INFOCODE = 1
-		]]>
+				(select S1.*
+				 from (
+					select  /*+ index_desc(SM01 idx_SM01_3)*/
+						rownum as rown,
+						userid as userid,
+						username as username, 
+						brth as brth, 
+						grade as grade, 
+						regdate as regdate,
+						email as email,
+						usertype as usertype
+						from SM01
+						where rownum <= #{endRownum}
+                 		order by regdate desc
+            		) S1 where S1.rown > #{startRownum}
+				) T1
+				 left outer join SMI1 S1
+			 	on T1.userid = S1.userid
+			 	and S1.INFOCODE = 1
+			]]>
 		</select>
 		
 		<delete id="delete" parameterType="com.singer.vo.SM01Vo">

@@ -18,6 +18,9 @@ on SM01(username);
 CREATE index idx_SM01_2
 on SM01(brth);
 
+CREATE index idx_SM01_3
+on SM01(regdate);
+
 CREATE TABLE SMP1(
 userid varchar2(10) not null,
 regdate varchar2(8) not null,
