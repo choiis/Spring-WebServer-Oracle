@@ -56,6 +56,13 @@
 			<beans:ref bean="sessionInterceptor" />
 		</interceptor>
 		
+		<interceptor>
+			<mapping path="/sm01page" />
+			<mapping path="/sm01One/*" />
+			<beans:bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+				<beans:property name="cacheSeconds" value="0"/>
+			</beans:bean>
+		</interceptor>
 	</interceptors>
 		
 	<aop:aspectj-autoproxy/>
