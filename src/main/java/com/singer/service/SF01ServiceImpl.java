@@ -34,7 +34,7 @@ public class SF01ServiceImpl implements SF01Service {
 	@Inject
 	FTPUtil ftp;
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int insertSF01Vo(SF01Vo sf01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
 
@@ -92,7 +92,6 @@ public class SF01ServiceImpl implements SF01Service {
 		return sf01Dao.selectFindSF01Vo(sf01vo);
 	}
 
-	@Transactional
 	@Override
 	public SF01Vo selectOneSF01Vo(SF01Vo sf01vo, String userid) throws Exception {
 
@@ -115,7 +114,7 @@ public class SF01ServiceImpl implements SF01Service {
 		return sf01Dao.updateSF01Vo(sf01vo);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public SF01Vo likeSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
 		sf01Dao.likeSF01Vo(sf01Vo);
@@ -129,7 +128,7 @@ public class SF01ServiceImpl implements SF01Service {
 		return sf01Vo;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public SF01Vo hateSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
 		sf01Dao.hateSF01Vo(sf01Vo);
@@ -143,7 +142,7 @@ public class SF01ServiceImpl implements SF01Service {
 		return sf01Vo;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int deleteSF01Vo(SF01Vo sf01Vo) throws Exception {
 

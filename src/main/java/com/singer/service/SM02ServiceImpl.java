@@ -19,7 +19,7 @@ public class SM02ServiceImpl implements SM02Service {
 	@Resource(name = "sm02Dao")
 	private SM02Dao sm02Dao;
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int insertSM02Vo(SM02Vo sm02Vo, String userid) throws Exception {
 
@@ -34,7 +34,6 @@ public class SM02ServiceImpl implements SM02Service {
 		return sm02Dao.insertSM02Vo(sm02Vo);
 	}
 
-	@Transactional
 	@Override
 	public List<SM02Vo> selectSM02Vo(SM02Vo sm02Vo, String userid) throws Exception {
 
@@ -42,13 +41,11 @@ public class SM02ServiceImpl implements SM02Service {
 		return sm02Dao.selectSM02Vo(sm02Vo);
 	}
 
-	@Transactional
 	@Override
 	public SM02Vo selectOneSM02Vo(SM02Vo sm02Vo) throws Exception {
 		return sm02Dao.selectOneSM02Vo(sm02Vo);
 	}
 
-	@Transactional
 	@Override
 	public int deleteSM02Vo(SM02Vo sm02Vo, String userid) throws Exception {
 
@@ -56,7 +53,7 @@ public class SM02ServiceImpl implements SM02Service {
 		return sm02Dao.deleteSM02Vo(sm02Vo);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int updateSM02Vo(SM02Vo sm02Vo) throws Exception {
 		if (CommonUtil.isNull(sm02Vo.getTitle())) {

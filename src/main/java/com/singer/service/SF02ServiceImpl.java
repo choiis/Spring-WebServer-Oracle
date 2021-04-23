@@ -37,7 +37,6 @@ public class SF02ServiceImpl implements SF02Service {
 		return sf02Dao.likeSF02Vo(sf02Vo);
 	}
 
-	@Transactional
 	@Override
 	public List<SF02Vo> selectSF02Vo(SF02Vo sf02Vo, String userid) throws Exception {
 
@@ -66,7 +65,7 @@ public class SF02ServiceImpl implements SF02Service {
 		return sf02Dao.updateSF02Vo(sf02Vo);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int deleteSF02Vo(SF02Vo sf02Vo) throws Exception {
 

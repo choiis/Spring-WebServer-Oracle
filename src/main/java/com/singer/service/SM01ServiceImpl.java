@@ -36,7 +36,7 @@ public class SM01ServiceImpl implements SM01Service {
 	// @Qualifier("aes256")
 	// private AES256Util aes256Util;
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public HashMap<String, Object> insertSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request) throws Exception {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
@@ -84,7 +84,6 @@ public class SM01ServiceImpl implements SM01Service {
 		return putHash;
 	}
 
-	@Transactional
 	@Override
 	public List<SM01Vo> selectSM01Vo(SM01Vo sm01Vo) throws Exception {
 
@@ -95,7 +94,6 @@ public class SM01ServiceImpl implements SM01Service {
 		return sm01Dao.selectSM01Vo(sm01Vo);
 	}
 
-	@Transactional
 	@Override
 	public SM01Vo selectOneSM01Vo(SM01Vo sm01Vo) throws Exception {
 		sm01Vo = sm01Dao.selectOneSM01Vo(sm01Vo);
@@ -123,19 +121,16 @@ public class SM01ServiceImpl implements SM01Service {
 		return sm01Vo;
 	}
 
-	@Transactional
 	@Override
 	public SM01Vo login(SM01Vo sm01Vo) throws Exception {
 		return sm01Dao.selectLoginSM01Vo(sm01Vo);
 	}
 
-	@Transactional
 	@Override
 	public int deleteSM01Vo(SM01Vo sm01Vo) throws Exception {
 		return sm01Dao.deleteSM01Vo(sm01Vo);
 	}
 
-	@Transactional
 	@Override
 	public InputStream selectImage(SM01Vo sm01Vo, HttpServletRequest request) throws Exception {
 
@@ -154,7 +149,7 @@ public class SM01ServiceImpl implements SM01Service {
 		return is;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public SM01Vo updateSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request, String userId) throws Exception {
 		if (CommonUtil.isNull(sm01Vo.getUserid())) {
@@ -235,7 +230,7 @@ public class SM01ServiceImpl implements SM01Service {
 		return sm01Dao.selectOneSM01Vo(sm01Vo);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int updateSME1Vo(SM01Vo sm01Vo, String userId) throws Exception {
 		sm01Vo.setInsertid(userId);

@@ -17,7 +17,6 @@ public class SMI1ServiceImpl implements SMI1Service {
 	@Resource(name = "smi1Dao")
 	private SMI1Dao smi1Dao;
 
-	@Transactional
 	@Override
 	public List<SM01Vo> selectSMI1Vo(SM01Vo sm01Vo) throws Exception {
 

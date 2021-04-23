@@ -33,7 +33,6 @@ public class SV04ServiceImpl implements SV04Service {
 		return sv04Dao.insertSV04Vo(sv04Vo);
 	}
 
-	@Transactional
 	@Override
 	public int likeSV04Vo(SV04Vo sv04Vo) throws Exception {
 		return sv04Dao.likeSV04Vo(sv04Vo);
@@ -66,7 +65,7 @@ public class SV04ServiceImpl implements SV04Service {
 		return sv04Dao.updateSV04Vo(sv04Vo);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int deleteSV04Vo(SV04Vo sv04Vo) throws Exception {
 

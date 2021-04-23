@@ -32,7 +32,7 @@ public class SV01ServiceImpl implements SV01Service {
 	@Resource(name = "sv04Dao")
 	private SV04Dao sv04Dao;
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int insertSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
 
@@ -48,7 +48,7 @@ public class SV01ServiceImpl implements SV01Service {
 		String regDate = DateUtil.getTodayTime();
 		sv01Vo.setUserid(userid);
 		sv01Vo.setRegdate(regDate);
-		
+
 		if (CommonUtil.isZeroLength(list)) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
 		} else {
@@ -89,7 +89,6 @@ public class SV01ServiceImpl implements SV01Service {
 		return sv01Dao.selectFindSV01Vo(sv01Vo);
 	}
 
-	@Transactional
 	@Override
 	public SV01Vo selectOneSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
 		if (sv01Vo.getRecall() == YES_NO.NO.getValue()) {
@@ -118,7 +117,7 @@ public class SV01ServiceImpl implements SV01Service {
 		return sv01Dao.updateSV01Vo(sv01Vo);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int deleteSV01Vo(SV01Vo sv01Vo) throws Exception {
 
@@ -130,7 +129,7 @@ public class SV01ServiceImpl implements SV01Service {
 		return sv01Dao.deleteSV01Vo(sv01Vo);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public SV01Vo likeSV01Vo(SV01Vo sv01Vo, String sessionid) throws Exception {
 		sv01Dao.likeSV01Vo(sv01Vo);
@@ -144,7 +143,7 @@ public class SV01ServiceImpl implements SV01Service {
 		return sv01Vo;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public SV01Vo hateSV01Vo(SV01Vo sv01Vo, String sessionid) throws Exception {
 		sv01Dao.hateSV01Vo(sv01Vo);

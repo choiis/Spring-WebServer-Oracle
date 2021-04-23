@@ -38,7 +38,7 @@ public class CommServiceImpl implements CommService {
 		return list;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public List<CommVo> insertMenu(CommVo commVo, String userid, USER_CODE authlevel) throws Exception {
 		commVo.setReguser(userid);
@@ -55,7 +55,7 @@ public class CommServiceImpl implements CommService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public List<CommVo> updateMenu(CommVo commVo, String userid, USER_CODE authlevel) throws Exception {
 		commVo.setModuser(userid);
@@ -70,7 +70,7 @@ public class CommServiceImpl implements CommService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public List<CommVo> deleteMenu(CommVo commVo, USER_CODE authlevel) throws Exception {
 		commDao.deleteMenu(commVo);

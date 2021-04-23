@@ -44,7 +44,7 @@ public class SB01ServiceImpl implements SB01Service {
 	@Resource(name = "properties")
 	private Properties properties;
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int insertSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
 
@@ -129,7 +129,7 @@ public class SB01ServiceImpl implements SB01Service {
 		return sb01Dao.selectFindSB01Vo(sb01Vo);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public SB01Vo selectOneSB01Vo(SB01Vo sb01Vo, String userid) throws Exception {
 
@@ -198,7 +198,7 @@ public class SB01ServiceImpl implements SB01Service {
 		return sb01Dao.updateSB01Vo(sb01Vo);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public SB01Vo likeSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
 		sb01Dao.likeSB01Vo(sb01Vo);
@@ -212,7 +212,7 @@ public class SB01ServiceImpl implements SB01Service {
 		return sb01Vo;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public SB01Vo hateSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
 		sb01Dao.hateSB01Vo(sb01Vo);
@@ -226,7 +226,7 @@ public class SB01ServiceImpl implements SB01Service {
 		return sb01Vo;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int deleteSB01Vo(SB01Vo sb01Vo) throws Exception {
 

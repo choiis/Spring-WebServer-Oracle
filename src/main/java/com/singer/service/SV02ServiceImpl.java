@@ -26,7 +26,7 @@ public class SV02ServiceImpl implements SV02Service {
 		return sv02Dao.updateSV02Vo(sv02Vo);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int insertSv03Vo(SV02Vo sv02Vo, String userid) throws Exception {
 		List<SV02Vo> list = sv02Vo.getSv02Vos();
