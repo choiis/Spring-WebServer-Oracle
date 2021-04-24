@@ -123,7 +123,7 @@ public class SR01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "sr01like/{seq}", method = RequestMethod.PUT)
+	@RequestMapping(value = "sr01like/{seq}", method = RequestMethod.PATCH)
 	public ResponseEntity<SR01Vo> likeSR01vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sr01like put");
@@ -136,7 +136,7 @@ public class SR01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "sr01hate/{seq}", method = RequestMethod.PUT)
+	@RequestMapping(value = "sr01hate/{seq}", method = RequestMethod.PATCH)
 	public ResponseEntity<SR01Vo> hateSR01vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sr01hate put");

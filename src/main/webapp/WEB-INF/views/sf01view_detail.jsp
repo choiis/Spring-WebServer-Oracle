@@ -234,7 +234,7 @@
 	
 	function like_sf01() {
 		
-		gfn_ajaxRest("sf01like/" + parseInt($("#seq01").val()), "PUT" , function(data) {
+		gfn_ajaxRest("sf01like/" + parseInt($("#seq01").val()), "PATCH" , function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.good);
 				$("#button_like").attr('disabled', true);
@@ -245,7 +245,7 @@
 	
 	function hate_sf01() {
 		
-		gfn_ajaxRest("sf01hate/" + parseInt($("#seq01").val()),"PUT" , function(data) {
+		gfn_ajaxRest("sf01hate/" + parseInt($("#seq01").val()),"PATCH" , function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.good);
 				$("#button_hate").attr('disabled', true);
