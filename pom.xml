@@ -291,9 +291,9 @@
 				<dependency>
 					<groupId>ojdbc</groupId>
 					<artifactId>ojdbc</artifactId>
-					<version>14</version>
+					<version>6</version>
 					<scope>system</scope>
-					<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc14-10.2.0.4.0.jar</systemPath>
+					<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6.jar</systemPath>
 				</dependency>
 				
 				<dependency>

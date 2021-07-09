@@ -1,5 +1,6 @@
 package com.singer.controller;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.ContentDisposition;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,7 +33,9 @@ public class ExcelController {
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Pragma", "public");
 		response.setHeader("Expires", "0");
-		response.setHeader("Content-Disposition", "attachment; filename = BoardList.xls");
+		String contentDisposition = ContentDisposition.builder("attachment")
+				.filename("BoardList.xls", StandardCharsets.UTF_8).build().toString();
+		response.setHeader("Content-Disposition", contentDisposition);
 
 		List<SB01Vo> excelList = sb01Service.selectSB01Vo(sb01Vo);
 

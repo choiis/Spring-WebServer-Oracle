@@ -3,12 +3,14 @@ package com.singer.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.ContentDisposition;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
@@ -34,8 +36,9 @@ public class FileDownloadView extends AbstractView {
 
 		res.setContentType(getContentType());
 		res.setContentLength((int) file.length());
-		res.setHeader("Content-Disposition",
-				"attachment; filename=\"" + java.net.URLEncoder.encode(fileName, "utf-8") + "\";");
+		String contentDisposition = ContentDisposition.builder("attachment").filename(fileName, StandardCharsets.UTF_8)
+				.build().toString();
+		res.setHeader("Content-Disposition", contentDisposition);
 		res.setHeader("Content-Transfer-Encoding", "binary");
 		@Cleanup
 		OutputStream out = res.getOutputStream();
