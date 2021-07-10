@@ -53,6 +53,9 @@
 			<exclude-mapping path="/sm01"/>
 			<exclude-mapping path="/login"/>
 			<exclude-mapping path="/sessionNotExist"/>
+			<exclude-mapping path="/sseFlux"/>
+			<exclude-mapping path="/sseMono"/>
+			<exclude-mapping path="/redis/*"/>
 			<beans:ref bean="sessionInterceptor" />
 		</interceptor>
 		

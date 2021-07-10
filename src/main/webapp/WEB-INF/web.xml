@@ -43,6 +43,7 @@
 		<filter>
 			<filter-name>encoding</filter-name>
 			<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+			<async-supported>true</async-supported>
 			<init-param>
 				<param-name>encoding</param-name>
 				<param-value>UTF-8</param-value>
@@ -58,6 +59,7 @@
 		<filter>
  	   	<filter-name>springMultipartFilter</filter-name>
     		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+    		<async-supported>true</async-supported> 
 		</filter>
 
 		<filter-mapping>
@@ -70,6 +72,7 @@
 		<filter>
 			<filter-name>XSS</filter-name>
 			<filter-class>com.singer.filter.CrossScriptingFilter</filter-class>
+			<async-supported>true</async-supported> 
 		</filter>
 		<filter-mapping>
 			<filter-name>XSS</filter-name>
