@@ -2,8 +2,7 @@ package com.singer.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +15,7 @@ import com.singer.vo.SM02Vo;
 
 @Service("sm02Service")
 public class SM02ServiceImpl implements SM02Service {
-	@Resource(name = "sm02Dao")
+	@Autowired
 	private SM02Dao sm02Dao;
 
 	@Transactional(rollbackFor = { Exception.class })
