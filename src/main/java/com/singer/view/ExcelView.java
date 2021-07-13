@@ -2,6 +2,7 @@ package com.singer.view;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,8 +11,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import com.singer.common.CommonUtil;
 import com.singer.vo.SB01Vo;
 
 import lombok.AccessLevel;
@@ -30,14 +29,13 @@ public class ExcelView extends AbstractExcelView {
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		Object excelType = model.get("excelType");
-		if (CommonUtil.isNull(excelType)) {
+		Optional<Object> excelType = Optional.of(model.get("excelType"));
+		if (!excelType.isPresent()) {
 			return;
 		}
-		String type = excelType.toString();
+		String type = excelType.get().toString();
 
 		if ("board".equals(type)) {
-			List<SB01Vo> excelList = (List<SB01Vo>) model.get("excelList");
 			Sheet sheet = workbook.createSheet(type);
 			Row row = null;
 			int rowCount = 0;
@@ -52,6 +50,11 @@ public class ExcelView extends AbstractExcelView {
 			row.createCell(cellCount++).setCellValue("조회수");
 			row.createCell(cellCount++).setCellValue("등록일자");
 
+			Optional<Object> optionalList = Optional.of(model.get("excelList"));
+			if (!optionalList.isPresent()) {
+				return;
+			}
+			List<SB01Vo> excelList = (List<SB01Vo>) optionalList.get();
 			for (SB01Vo vo : excelList) {
 				row = sheet.createRow(rowCount++);
 				cellCount = 0;

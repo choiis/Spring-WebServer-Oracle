@@ -12,6 +12,7 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.web.servlet.view.AbstractView;
 
 import lombok.AccessLevel;
+import lombok.Cleanup;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,6 +36,7 @@ public abstract class AbstractExcelView extends AbstractView {
 
 		this.buildExcelDocument(model, workbook, request, response);
 
+		@Cleanup
 		ServletOutputStream out = response.getOutputStream();
 		out.flush();
 		workbook.write(out);

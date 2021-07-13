@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
 import lombok.Cleanup;
+import oracle.sql.BLOB;
 
 public class FileDownloadView extends AbstractView {
 	public FileDownloadView() {
@@ -31,8 +33,9 @@ public class FileDownloadView extends AbstractView {
 
 		HashMap<String, Object> downloadFile = (HashMap<String, Object>) model.get("downloadFile");
 
-		File file = (File) downloadFile.get("downfile");
-		String fileName = (String) downloadFile.get("filename");
+		File file = (File) Optional.of(downloadFile.get("downfile")).orElseThrow(IllegalArgumentException::new);
+		String fileName = (String) (String) Optional.of(downloadFile.get("filename"))
+				.orElseThrow(IllegalArgumentException::new);
 
 		res.setContentType(getContentType());
 		res.setContentLength((int) file.length());

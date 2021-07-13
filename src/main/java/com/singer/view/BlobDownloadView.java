@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,8 +30,8 @@ public class BlobDownloadView extends AbstractView {
 			throws Exception {
 
 		HashMap<String, Object> downloadFile = (HashMap<String, Object>) model.get("downloadFile");
-		BLOB fileblob = (BLOB) downloadFile.get("fileblob");
-		String fileName = (String) downloadFile.get("filename");
+		BLOB fileblob = (BLOB) Optional.of(downloadFile.get("fileblob")).orElseThrow(IllegalArgumentException::new);
+		String fileName = (String) Optional.of(downloadFile.get("filename")).orElseThrow(IllegalArgumentException::new);
 
 		res.setContentType(getContentType());
 		res.setContentLength((int) fileblob.length());
