@@ -2,11 +2,14 @@ package com.singer.exception;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
 import com.singer.kafka.Producer;
 import com.singer.util.InputQueryUtil;
@@ -32,19 +34,27 @@ public class CommonExceptionHandler {
 	public ModelAndView clientExceptionHandler(HttpServletRequest request, HttpServletResponse response,
 			ClientException ext) throws IOException {
 		boolean isAjax = false;
-		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+
+		if (StringUtils.equals("XMLHttpRequest", request.getHeader("X-Requested-With"))) {
 			isAjax = true;
 		}
-		ModelAndView mv = null;
 		if (isAjax) {
-			mv = new ModelAndView("forward:/error");
+			Function<ClientException, ModelAndView> func = (ex) -> {
+				ModelAndView mv = new ModelAndView("forward:/error");
+				mv.addObject("errorCode", ex.getHttpStatusCode());
+				mv.addObject("errorMsg", ex.getLocalizedMessage());
+				return mv;
+			};
+			return func.apply(ext);
 		} else {
-			mv = new ModelAndView("forward:/" + ext.getHttpStatusCode().value());
+			Function<ClientException, ModelAndView> func = (ex) -> {
+				ModelAndView mv = new ModelAndView("forward:/" + ex.getHttpStatusCode().value());
+				mv.addObject("errorCode", ex.getHttpStatusCode());
+				mv.addObject("errorMsg", ex.getLocalizedMessage());
+				return mv;
+			};
+			return func.apply(ext);
 		}
-
-		mv.addObject("errorCode", ext.getHttpStatusCode());
-		mv.addObject("errorMsg", ext.getLocalizedMessage());
-		return mv;
 	}
 
 	@ExceptionHandler(SQLException.class)
@@ -52,19 +62,21 @@ public class CommonExceptionHandler {
 	public ModelAndView sQLExceptionHandler(HttpServletRequest request, SQLException ext) {
 		boolean isAjax = false;
 		log.info("SQLException");
-		if (CommonUtil.isNull(ext.getMessage())) {
+		if (StringUtils.isEmpty(ext.getMessage())) {
 			return null;
 		}
 		log.info(ext.getMessage());
 
-		InputQueryUtil queryUtil = new InputQueryUtil("log_error");
-		queryUtil.add(request.getRequestURI());
-		queryUtil.add(DateUtil.getTodayTime());
-		queryUtil.add(ext.getCause().getLocalizedMessage());
+		BiConsumer<String, String> queryConsumer = (uri, msg) -> {
+			InputQueryUtil queryUtil = new InputQueryUtil("log_error");
+			queryUtil.add(uri);
+			queryUtil.add(DateUtil.getTodayTime());
+			queryUtil.add(msg);
+			producer.send(queryUtil.getQuery());
+		};
+		queryConsumer.accept(request.getRequestURI(), ext.getLocalizedMessage());
 
-		producer.send(queryUtil.getQuery());
-
-		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+		if (StringUtils.equals("XMLHttpRequest", request.getHeader("X-Requested-With"))) {
 			isAjax = true;
 		}
 		ModelAndView mv = null;
@@ -83,12 +95,12 @@ public class CommonExceptionHandler {
 	public ModelAndView appExceptionHandler(HttpServletRequest request, AppException ext) {
 		boolean isAjax = false;
 		log.info("AppException");
-		if (CommonUtil.isNull(ext.getMessage())) {
+		if (StringUtils.isEmpty(ext.getMessage())) {
 			return null;
 		}
 		log.info(ext.getMessage());
 
-		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+		if (StringUtils.equals("XMLHttpRequest", request.getHeader("X-Requested-With"))) {
 			isAjax = true;
 		}
 		ModelAndView mv = null;
@@ -107,20 +119,22 @@ public class CommonExceptionHandler {
 	public ModelAndView noHandlerFoundException(HttpServletRequest request, NoHandlerFoundException ext) {
 		boolean isAjax = false;
 		log.info("NoHandlerFoundException");
-		if (CommonUtil.isNull(ext.getMessage())) {
+		if (StringUtils.isEmpty(ext.getMessage())) {
 			return null;
 		}
 		log.info(ext.getMessage());
 
-		InputQueryUtil queryUtil = new InputQueryUtil("log_error");
-		queryUtil.add(request.getRequestURI());
-		queryUtil.add(DateUtil.getTodayTime());
-		queryUtil.add(ext.getLocalizedMessage());
-
-		producer.send(queryUtil.getQuery());
+		BiConsumer<String, String> queryConsumer = (uri, msg) -> {
+			InputQueryUtil queryUtil = new InputQueryUtil("log_error");
+			queryUtil.add(uri);
+			queryUtil.add(DateUtil.getTodayTime());
+			queryUtil.add(msg);
+			producer.send(queryUtil.getQuery());
+		};
+		queryConsumer.accept(request.getRequestURI(), ext.getLocalizedMessage());
 
 		String errorURL = request.getRequestURL().toString();
-		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+		if (StringUtils.equals("XMLHttpRequest", request.getHeader("X-Requested-With"))) {
 			isAjax = true;
 		}
 		ModelAndView mv = null;
@@ -139,12 +153,12 @@ public class CommonExceptionHandler {
 	public ModelAndView exceptionHandler(HttpServletRequest request, Exception ext) {
 		boolean isAjax = false;
 		log.info("defaultException");
-		if (CommonUtil.isNull(ext.getMessage())) {
+		if (StringUtils.isEmpty(ext.getMessage())) {
 			return null;
 		}
 		log.info(ext.getMessage());
 
-		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+		if (StringUtils.equals("XMLHttpRequest", request.getHeader("X-Requested-With"))) {
 			isAjax = true;
 		}
 		ModelAndView mv = null;

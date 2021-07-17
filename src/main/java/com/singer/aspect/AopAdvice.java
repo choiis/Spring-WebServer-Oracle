@@ -1,12 +1,14 @@
 package com.singer.aspect;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
@@ -21,7 +23,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
 import com.singer.dao.CommDao;
 import com.singer.exception.ClientException;
@@ -93,11 +94,15 @@ public class AopAdvice {
 	}
 
 	@After("execution(* com.singer.controller.*Controller.show*(..))")
-	public void aopShow(JoinPoint pjp) {
+	public void aopShow(JoinPoint pjp) throws ClientException {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
-		HttpSession session = request.getSession();
-		String userid = (String) session.getAttribute("userid");
+		Optional<Object> sessionId = Optional.of(request.getSession().getAttribute("userid"));
+
+		if (!sessionId.isPresent()) {
+			throw new ClientException(HttpStatus.UNAUTHORIZED);
+		}
+		String userid = (String) sessionId.get();
 		Signature signature = pjp.getSignature();
 		String method = signature.getName().substring(4);
 
@@ -119,13 +124,13 @@ public class AopAdvice {
 				.getRequest();
 
 		Signature signature = pjp.getSignature();
+		Optional<Object> sessionId = Optional.of(request.getSession().getAttribute("userid"));
 
-		Object sessionId = request.getSession().getAttribute("userid");
-		if (sessionId == null) {
+		if (!sessionId.isPresent()) {
 			throw new ClientException(HttpStatus.UNAUTHORIZED);
 		}
 
-		String userid = (String) sessionId;
+		String userid = (String) sessionId.get();
 		CommVo commVo = new CommVo();
 
 		int seq = 0;
@@ -149,8 +154,8 @@ public class AopAdvice {
 		if (seq > 0) {
 			String createUser = commDao.checkCreateUser(commVo);
 			log.debug("session user " + userid + " create user " + createUser);
-			if (!CommonUtil.isNull(createUser)) {
-				if (!createUser.equals(userid)) {
+			if (!StringUtils.isEmpty(createUser)) {
+				if (!StringUtils.equals(createUser, userid)) {
 					throw new ClientException(HttpStatus.FORBIDDEN);
 				}
 			}

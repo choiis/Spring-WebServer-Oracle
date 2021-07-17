@@ -16,18 +16,15 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
 import lombok.Cleanup;
-import oracle.sql.BLOB;
 
 public class FileDownloadView extends AbstractView {
+
 	public FileDownloadView() {
-
 		setContentType("apllication/download; charset=utf-8");
-
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
 

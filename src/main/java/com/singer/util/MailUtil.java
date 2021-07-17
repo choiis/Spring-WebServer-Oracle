@@ -16,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.ResourcePropertySource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
-import com.singer.common.CommonUtil;
 import com.singer.common.Constants.RESULT_CODE;
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
@@ -40,11 +41,11 @@ public class MailUtil {
 
 	public int mailSend(MailVo mailVo) throws AppException {
 
-		if (CommonUtil.isNull(mailVo.getTitle())) {
+		if (StringUtils.isEmpty(mailVo.getTitle())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
 
 		}
-		if (CommonUtil.isNull(mailVo.getContents())) {
+		if (StringUtils.isEmpty(mailVo.getContents())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 
@@ -64,7 +65,7 @@ public class MailUtil {
 			message.setSubject(mailVo.getTitle()); // 메일제목은 생략이 가능하다
 			message.setText(mailVo.getContents(), "utf-8", "html"); // 메일 내용
 
-			if (!CommonUtil.isNull(mailVo.getFile()) && mailVo.getFile().getSize() != 0) {
+			if (!ObjectUtils.isEmpty(mailVo.getFile()) && mailVo.getFile().getSize() != 0) {
 				String fileName = new String(mailVo.getFile().getOriginalFilename().getBytes("KSC5601"), "8859_1");
 				is = mailVo.getFile().getInputStream();
 				resourse = new ResourcePropertySource(new ClassPathResource("conf/property/global.properties"));

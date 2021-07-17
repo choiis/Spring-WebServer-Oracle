@@ -31,11 +31,12 @@ public class ErrorController {
 	// CommonExceptionHandler에서 Ajax 아닌것들을 여기로 보낸다
 	@RequestMapping(value = "/forwardError")
 	public ModelAndView forwardError(HttpServletRequest request) throws Exception {
-		log.debug("server not ajax error");
 
 		ModelAndView mv = new ModelAndView("/serverError");
 		HttpStatus errorCode = (HttpStatus) request.getAttribute("errorCode");
 		String errorMsg = (String) request.getAttribute("errorMsg");
+		log.debug("server not ajax error ");
+		log.error("error msg " + errorMsg);
 		mv.addObject("errorCode", errorCode);
 		mv.addObject("errorMsg", errorMsg);
 		return mv;

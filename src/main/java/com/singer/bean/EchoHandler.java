@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.socket.BinaryMessage;
@@ -20,7 +23,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.singer.common.CommonUtil;
 import com.singer.vo.SL01Vo;
 
 import lombok.AccessLevel;
@@ -56,18 +58,28 @@ public class EchoHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
 		String username = getUserName(session);
-		if (CommonUtil.isNull(username)) {
+		if (StringUtils.isEmpty(username)) {
 			return;
 		}
 		sessionList.add(session);
 		userMap.put(username, session);
 		logger.info("websocket connected open : " + session.getId() + " " + username);
+		Iterator<String> iter = userMap.keySet().iterator();
+		StringBuilder nameList = new StringBuilder("");
+		while (iter.hasNext()) {
+			nameList.append(getUserName(userMap.get(iter.next())));
+			nameList.append("<br>");
+		}
+
+		for (WebSocketSession webSocketSession : sessionList) {
+			webSocketSession.sendMessage(new TextMessage(nameList.toString()));
+		}
 	}
 
 	@AllArgsConstructor(access = AccessLevel.PRIVATE)
 	@Getter
 	enum direction {
-		MSG("msg"), DM("dm");
+		MSG("msg"), DM("dm"), LIST("list");
 
 		private final String direct;
 	}
@@ -77,13 +89,17 @@ public class EchoHandler extends TextWebSocketHandler {
 
 		logger.info("websocket get text : " + session.getId() + " " + message.getPayload());
 		String sessionName = getUserName(session);
-		if (CommonUtil.isNull(sessionName)) {
+		if (StringUtils.isEmpty(sessionName)) {
 			return;
 		}
 
-		String[] received = message.getPayload().split(",");
+		Optional<String> optional = Optional.of(message.getPayload());
+		if (!optional.isPresent()) {
+			return;
+		}
+		String[] received = optional.get().split(",");
 
-		if (direction.MSG.getDirect().equals(received[0])) {
+		if (StringUtils.equals(direction.MSG.getDirect(), received[0])) {
 			for (WebSocketSession webSocketSession : sessionList) {
 				webSocketSession.sendMessage(new TextMessage(sessionName + " : " + received[1]));
 			}
@@ -91,12 +107,12 @@ public class EchoHandler extends TextWebSocketHandler {
 			sl01Vo.setUsername(sessionName);
 			sl01Vo.setMessage(received[1]);
 			logSender.chatlogInsert(sl01Vo);
-		} else if (direction.DM.getDirect().equals(received[0])) {
+		} else if (StringUtils.equals(direction.DM.getDirect(), received[0])) {
 			WebSocketSession sendSession = userMap.get(received[1]);
 			if (sendSession != null) {
-				sendSession.sendMessage(new TextMessage(sessionName + "(±Ó¼Ó¸») : " + received[2]));
+				sendSession.sendMessage(new TextMessage(sessionName + "(dm) : " + received[2]));
 			} else {
-				session.sendMessage(new TextMessage(received[1] + " ´ÔÀº ºÎÀçÁß ÀÔ´Ï´Ù"));
+				session.sendMessage(new TextMessage(received[1] + " ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½"));
 			}
 		}
 

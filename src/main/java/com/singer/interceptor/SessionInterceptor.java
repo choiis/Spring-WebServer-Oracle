@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.singer.common.CommonUtil;
 import com.singer.common.Constants.USER_CODE;
 import com.singer.dao.CommDao;
 import com.singer.vo.CommVo;
@@ -44,7 +44,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 
-		if (CommonUtil.isNull(userid)) { // 세션 없음
+		if (StringUtils.isEmpty(userid)) { // 세션 없음
 			log.debug("login need");
 			response.sendRedirect("/sessionNotExist?redirect_uri=" + uri);
 			return false;
