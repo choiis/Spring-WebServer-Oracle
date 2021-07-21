@@ -5,18 +5,18 @@ import java.util.Collections;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
-import org.springframework.data.domain.Range;
-import org.springframework.data.redis.core.ReactiveRedisOperations;
+import javax.inject.Inject;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.AllArgsConstructor;
+import com.singer.reactive.ReactiveRedisOps;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@AllArgsConstructor
 public class WebfluxController {
 
 	@GetMapping("/sse/Flux")
@@ -36,37 +36,32 @@ public class WebfluxController {
 		return Flux.fromStream(stream.limit(10)).map(st -> st);
 	}
 
-	private ReactiveRedisOperations<String, Object> redisOps;
+	@Inject
+	private ReactiveRedisOps reactiveOps;
 
 	@GetMapping("/redis/get/{param}")
 	public Mono<Object> redisGet(@PathVariable String param) {
-		return redisOps.opsForValue().get(param);
-	}
-
-	@GetMapping("/redis/sorted/{param}")
-	public Flux<Object> redisSorted(@PathVariable String param) {
-		Range<Long> range = Range.closed(new Long(0), new Long(-1));
-		return redisOps.opsForZSet().reverseRange(param, range);
+		return reactiveOps.getStringValue(param);
 	}
 
 	@GetMapping("/redis/hash/{param}")
 	public Flux<Entry<Object, Object>> redishash(@PathVariable String param) {
-		return redisOps.opsForHash().entries(param);
+		return reactiveOps.getHash(param);
 	}
 
 	@GetMapping("/redis/list/{param}")
 	public Flux<Object> redislist(@PathVariable String param) {
-		return redisOps.opsForList().range(param, 0, -1);
-	}
-
-	@GetMapping("/redis/keyType")
-	public Flux<Object> keyType() {
-		return redisOps.keys("*").flatMap(key -> redisOps.type(key));
+		return reactiveOps.getList(param);
 	}
 
 	@GetMapping("/redis/keys")
 	public Flux<Object> keys() {
-		return redisOps.keys("*").flatMap(key -> redisOps.scan());
+		return reactiveOps.keys();
+	}
+
+	@GetMapping("/redis/keyType")
+	public Flux<Object> keyType() {
+		return reactiveOps.keyType();
 	}
 
 }

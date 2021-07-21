@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.RedisConnectionFailureException;
+import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -30,6 +31,10 @@ public class RedisDao {
 
 	@Inject
 	private Producer producer;
+
+	public DataType type(String key) {
+		return redisTemplate.type(key);
+	}
 
 	public void zSet(String key, String value, double score) {
 		try {
