@@ -30,12 +30,13 @@ import com.singer.vo.SB02Vo;
 
 import lombok.Cleanup;
 
-@Service("sb01Service")
+@Service
 public class SB01ServiceImpl implements SB01Service {
-	@Resource(name = "sb01Dao")
+
+	@Inject
 	private SB01Dao sb01Dao;
 
-	@Resource(name = "sb02Dao")
+	@Inject
 	private SB02Dao sb02Dao;
 
 	@Inject

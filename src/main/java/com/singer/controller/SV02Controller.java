@@ -1,6 +1,6 @@
 package com.singer.controller;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.singer.service.SV02Service;
 import com.singer.vo.SV02Vo;
 
-@Controller("sv02Controller")
+@Controller
 public class SV02Controller extends BaseController {
 	private final Log log = LogFactory.getLog(SV02Controller.class);
 
-	@Resource(name = "sv02Service")
+	@Inject
 	private SV02Service sv02Service;
 
 	@ResponseBody

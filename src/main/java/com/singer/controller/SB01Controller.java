@@ -3,7 +3,7 @@ package com.singer.controller;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,12 +26,12 @@ import com.singer.vo.SB01Vo;
 
 import lombok.Cleanup;
 
-@Controller("sB01Controller")
+@Controller
 public class SB01Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SB01Controller.class);
 
-	@Resource(name = "sb01Service")
+	@Inject
 	private SB01Service sb01Service;
 
 	@RequestMapping(value = "/sb01page", method = RequestMethod.GET)

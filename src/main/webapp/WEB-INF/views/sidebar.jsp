@@ -23,7 +23,8 @@
 			e.preventDefault();
 			
 			if(confirm("로그아웃 하시겠습니까?")) {
-				location.href = "/logout";
+				const form = document.getElementById('out');
+				 form.submit();
 			} 
 		});
 	});
@@ -56,6 +57,8 @@
             <ul id="menuList" class="sub">
             </ul>
       	</li>
+      	<form id="out" ACTION="/logout" METHOD="post">
+      	</form>
     </ul>
 
 </html>

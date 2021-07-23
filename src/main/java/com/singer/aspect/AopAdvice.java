@@ -3,7 +3,6 @@ package com.singer.aspect;
 import java.util.Arrays;
 import java.util.Optional;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,10 +38,10 @@ public class AopAdvice {
 
 	private final Log log = LogFactory.getLog(AopAdvice.class);
 
-	@Resource(name = "redisDao")
+	@Inject
 	private RedisDao redisDao;
 
-	@Resource(name = "commDao")
+	@Inject
 	private CommDao commDao;
 
 	@Inject

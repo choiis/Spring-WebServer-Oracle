@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.vo.CommVo;
 
-@Controller("errorController")
+@Controller
 public class ErrorController {
 
 	private final Log log = LogFactory.getLog(ErrorController.class);

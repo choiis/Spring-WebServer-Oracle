@@ -1,6 +1,6 @@
 package com.singer.service;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
@@ -10,10 +10,10 @@ import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.vo.SR01Vo;
 
-@Service("sr02Service")
+@Service
 public class SR02ServiceImpl implements SR02Service {
 
-	@Resource(name = "sr02Dao")
+	@Inject
 	private SR02Dao sr02Dao;
 
 	@Override
@@ -37,7 +37,7 @@ public class SR02ServiceImpl implements SR02Service {
 
 	@Override
 	public int deleteSR02Vo(SR01Vo sr01Vo) throws Exception {
-	
+
 		return sr02Dao.deleteSR02Vo(sr01Vo);
 	}
 

@@ -2,17 +2,17 @@ package com.singer.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
 import com.singer.dao.SL01Dao;
 import com.singer.vo.SL01Vo;
 
-@Service("sl01Service")
+@Service
 public class SL01ServiceImpl implements SL01Service {
 
-	@Resource(name = "sl01Dao")
+	@Inject
 	private SL01Dao sl01Dao;
 
 	@Override

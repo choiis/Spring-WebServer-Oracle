@@ -1,6 +1,6 @@
 package com.singer.controller;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -18,11 +18,11 @@ import com.singer.common.Constants.RESULT_CODE;
 import com.singer.service.SR02Service;
 import com.singer.vo.SR01Vo;
 
-@Controller("sr02Controller")
+@Controller
 public class SR02Controller extends BaseController {
 	private final Log log = LogFactory.getLog(SR02Controller.class);
 
-	@Resource(name = "sr02Service")
+	@Inject
 	private SR02Service sr02Service;
 
 	@ResponseBody

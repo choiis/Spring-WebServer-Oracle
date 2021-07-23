@@ -2,7 +2,7 @@ package com.singer.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,16 +20,16 @@ import com.singer.vo.SV01Vo;
 import com.singer.vo.SV02Vo;
 import com.singer.vo.SV04Vo;
 
-@Service("sv01Service")
+@Service
 public class SV01ServiceImpl implements SV01Service {
 
-	@Resource(name = "sv01Dao")
+	@Inject
 	private SV01Dao sv01Dao;
 
-	@Resource(name = "sv02Dao")
+	@Inject
 	private SV02Dao sv02Dao;
 
-	@Resource(name = "sv04Dao")
+	@Inject
 	private SV04Dao sv04Dao;
 
 	@Transactional(rollbackFor = { Exception.class })

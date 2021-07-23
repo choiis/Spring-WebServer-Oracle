@@ -3,7 +3,7 @@ package com.singer.controller;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,12 +26,12 @@ import com.singer.vo.SM01Vo;
 
 import lombok.Cleanup;
 
-@Controller("sM01Controller")
+@Controller
 public class SM01Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SM01Controller.class);
 
-	@Resource(name = "sm01Service")
+	@Inject
 	private SM01Service sm01Service;
 
 	@RequestMapping(value = "/sm01joinPage", method = RequestMethod.GET)

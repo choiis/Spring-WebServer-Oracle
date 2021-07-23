@@ -3,7 +3,7 @@ package com.singer.service;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +15,10 @@ import com.singer.common.DateUtil;
 import com.singer.dao.SV04Dao;
 import com.singer.vo.SV04Vo;
 
-@Service("sv04Service")
+@Service
 public class SV04ServiceImpl implements SV04Service {
 
-	@Resource(name = "sv04Dao")
+	@Inject
 	private SV04Dao sv04Dao;
 
 	@Override

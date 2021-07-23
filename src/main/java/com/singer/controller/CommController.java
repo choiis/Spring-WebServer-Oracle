@@ -2,7 +2,7 @@ package com.singer.controller;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -28,7 +28,7 @@ import com.singer.vo.CommVo;
 public class CommController extends BaseController {
 	private final Log log = LogFactory.getLog(SB01Controller.class);
 
-	@Resource(name = "commService")
+	@Inject
 	private CommService commService;
 
 	@ResponseBody

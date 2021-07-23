@@ -3,7 +3,7 @@ package com.singer.controller;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,12 +23,12 @@ import com.singer.common.Constants.RESULT_CODE;
 import com.singer.service.SF01Service;
 import com.singer.vo.SF01Vo;
 
-@Controller("sF01Controller")
+@Controller
 public class SF01Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SF01Controller.class);
 
-	@Resource(name = "sf01Service")
+	@Inject
 	private SF01Service sf01Service;
 
 	@RequestMapping(value = "/sf01page", method = RequestMethod.GET)

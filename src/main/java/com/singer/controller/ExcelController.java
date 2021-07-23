@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
@@ -12,19 +12,20 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.http.ContentDisposition;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.singer.service.SB01Service;
 import com.singer.vo.SB01Vo;
 
-@Controller("excelController")
+@Controller
 public class ExcelController {
 
 	private final Log log = LogFactory.getLog(ExcelController.class);
 
-	@Resource(name = "sb01Service")
+	@Inject
 	private SB01Service sb01Service;
 
-	@RequestMapping(value = "/excelDown")
+	@RequestMapping(value = "/excelDown", method = RequestMethod.GET)
 	public String getExcelList(SB01Vo sb01Vo, Map<String, Object> modelMap, HttpServletResponse response)
 			throws Exception {
 		log.debug("enter excelDown");

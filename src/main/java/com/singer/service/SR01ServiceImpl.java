@@ -29,16 +29,16 @@ import com.singer.vo.SR03Vo;
 
 import lombok.Cleanup;
 
-@Service("sr01Service")
+@Service
 public class SR01ServiceImpl implements SR01Service {
 
-	@Resource(name = "sr01Dao")
+	@Inject
 	private SR01Dao sr01Dao;
 
-	@Resource(name = "sr02Dao")
+	@Inject
 	private SR02Dao sr02Dao;
 
-	@Resource(name = "sr03Dao")
+	@Inject
 	private SR03Dao sr03Dao;
 
 	@Inject

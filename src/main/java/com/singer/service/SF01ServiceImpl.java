@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -23,12 +22,13 @@ import com.singer.util.FTPUtil;
 import com.singer.vo.SF01Vo;
 import com.singer.vo.SF02Vo;
 
-@Service("sf01Service")
+@Service
 public class SF01ServiceImpl implements SF01Service {
-	@Resource(name = "sf01Dao")
+
+	@Inject
 	private SF01Dao sf01Dao;
 
-	@Resource(name = "sf02Dao")
+	@Inject
 	private SF02Dao sf02Dao;
 
 	@Inject

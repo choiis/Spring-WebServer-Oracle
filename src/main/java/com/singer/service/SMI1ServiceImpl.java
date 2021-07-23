@@ -2,7 +2,7 @@ package com.singer.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -12,10 +12,10 @@ import com.singer.dao.SMI1Dao;
 import com.singer.exception.ClientException;
 import com.singer.vo.SM01Vo;
 
-@Service("smi1Service")
+@Service
 public class SMI1ServiceImpl implements SMI1Service {
 
-	@Resource(name = "smi1Dao")
+	@Inject
 	private SMI1Dao smi1Dao;
 
 	@Override

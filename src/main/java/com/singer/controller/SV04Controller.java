@@ -2,7 +2,7 @@ package com.singer.controller;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.singer.service.SV04Service;
 import com.singer.vo.SV04Vo;
 
-@Controller("sV04Controller")
+@Controller
 public class SV04Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SV04Controller.class);
 
-	@Resource(name = "sv04Service")
+	@Inject
 	private SV04Service sv04Service;
 
 	@ResponseBody

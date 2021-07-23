@@ -2,7 +2,7 @@ package com.singer.controller;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -20,12 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.singer.service.SM02Service;
 import com.singer.vo.SM02Vo;
 
-@Controller("sM02Controller")
+@Controller
 public class SM02Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SM02Controller.class);
 
-	@Resource(name = "sm02Service")
+	@Inject
 	private SM02Service sm02Service;
 
 	@RequestMapping(value = "/sm02page", method = RequestMethod.GET)

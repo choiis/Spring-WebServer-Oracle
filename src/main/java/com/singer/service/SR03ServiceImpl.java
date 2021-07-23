@@ -3,7 +3,7 @@ package com.singer.service;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
@@ -14,10 +14,10 @@ import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.vo.SR03Vo;
 
-@Service("sr03Service")
+@Service
 public class SR03ServiceImpl implements SR03Service {
 
-	@Resource(name = "sr03Dao")
+	@Inject
 	private SR03Dao sr03Dao;
 
 	@Override

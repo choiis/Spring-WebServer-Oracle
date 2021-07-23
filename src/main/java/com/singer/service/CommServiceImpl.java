@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +15,10 @@ import com.singer.common.DateUtil;
 import com.singer.dao.CommDao;
 import com.singer.vo.CommVo;
 
-@Service("commService")
+@Service
 public class CommServiceImpl implements CommService {
 
-	@Resource(name = "commDao")
+	@Inject
 	private CommDao commDao;
 
 	@Override

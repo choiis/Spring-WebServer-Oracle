@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
@@ -26,10 +26,10 @@ import com.singer.vo.SM01Vo;
 
 import oracle.sql.BLOB;
 
-@Service("sm01Service")
+@Service
 public class SM01ServiceImpl implements SM01Service {
 
-	@Resource(name = "sm01Dao")
+	@Inject
 	private SM01Dao sm01Dao;
 
 	// @Autowired

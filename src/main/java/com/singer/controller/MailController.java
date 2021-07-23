@@ -18,7 +18,7 @@ import com.singer.exception.AppException;
 import com.singer.util.MailUtil;
 import com.singer.vo.MailVo;
 
-@Controller("mailController")
+@Controller
 public class MailController extends BaseController {
 
 	@Autowired
