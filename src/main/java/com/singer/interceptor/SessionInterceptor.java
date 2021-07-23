@@ -56,8 +56,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			List<CommVo> list = commDao.selectAllMenu();
 
 			// 메뉴 권한 제어
-			if (list.stream().anyMatch(s -> uri.equals(s.getMenuurl()))) {
-				Stream<CommVo> stream = list.stream().filter(s -> uri.equals(s.getMenuurl()));
+			if (list.stream().anyMatch(s -> StringUtils.equals(uri, s.getMenuurl()))) {
+				Stream<CommVo> stream = list.stream().filter(s -> StringUtils.equals(uri, s.getMenuurl()));
 				for (Iterator<CommVo> i = stream.iterator(); i.hasNext();) {
 					CommVo comm = i.next();
 					if (usertype.compareTo(comm.getAuthlevel()) > 0) {// 권한 없는 메뉴 uri로 접속시

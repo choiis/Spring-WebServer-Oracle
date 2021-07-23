@@ -9,9 +9,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,11 +34,13 @@ public class SMI1Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "smi1", method = RequestMethod.POST)
-	public ResponseEntity<SM01Vo> selectSMI1Vo(@RequestBody SM01Vo sm01Vo) throws Exception {
+	@RequestMapping(value = "smi1", method = RequestMethod.GET)
+	public ResponseEntity<SM01Vo> selectSMI1Vo(@RequestParam(value = "searchCode") String searchCode,
+			@RequestParam(value = "searchParam") String searchParam) throws Exception {
 		log.debug("enter smi1 get");
 
-		List<SM01Vo> list = smi1Service.selectSMI1Vo(sm01Vo);
+		List<SM01Vo> list = smi1Service.selectSMI1Vo(searchCode, searchParam);
+		SM01Vo sm01Vo = new SM01Vo();
 		sm01Vo.setList(list);
 
 		log.debug("exit smi1 get");

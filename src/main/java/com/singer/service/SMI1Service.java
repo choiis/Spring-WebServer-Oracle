@@ -6,5 +6,5 @@ import com.singer.vo.SM01Vo;
 
 public interface SMI1Service {
 
-	public List<SM01Vo> selectSMI1Vo(SM01Vo sm01Vo) throws Exception;
+	public List<SM01Vo> selectSMI1Vo(String searchCode, String searchParam) throws Exception;
 }

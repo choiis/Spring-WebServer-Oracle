@@ -24,7 +24,16 @@
 		ws.onmessage = function(msg) {
 			var data = msg.data;
 			if (data != null && data.type != '') {
-				$("#messageArea").append(data + "<br/>");		
+				var direction = data.substring(0,1);
+				var text = data.substr(1);
+				if (direction === 'A' || direction === 'D') {
+					$("#messageArea").append(text + "<br/>");				
+				} else if (direction === 'L') {
+					$("#ListArea").empty();	
+					$("#ListArea").append(text);	
+				} else if (direction === 'N') {
+					$("#nameArea").append("내이름 : " + text);
+				}
 			} else {
 				var url = URL.createObjectURL(new Blob([data]));
 				$("#messageArea").append("<div class='img'><img class='msgImg' src="+url+"></div><div class='clearBoth'></div><br/>");
@@ -66,6 +75,7 @@
 	<section>
 	<input type="text" id="message" />
 	<button onclick="send()" id="sendBtn">보내기</button>
+	<div id="nameArea"></div>
 	<br>
 	
 	<input type="text" id="sendto" />
@@ -74,10 +84,10 @@
 	<br>
 	<input type="file" id="fileUpload">
 	<button onclick="fileSend()" id="sendFileBtn">파일올리기</button>
-	<div id="messageArea"></div>
+	<div id="ListArea"></div>
+    <div id="messageArea"></div>
     
-    <div id="message"></div>
-		
+    	
 	</section>
 	<p>
 	<footer> <jsp:include page="footer.jsp" /> </footer>

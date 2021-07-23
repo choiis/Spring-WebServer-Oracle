@@ -84,20 +84,22 @@
 	
 	// 검색 함수
 	function findSM01() {
-		
-		var sendData = {
-		};
+
 		var selection = $("#selection").val();
-		
+		var searchCode = "";
+		var searchParam = "";
 		if(selection == 0) {
-			sendData.username = $("#username").val();
+			searchCode = "username";
+			searchParam = $("#username").val();
 		} else if (selection == 1) {
-			sendData.brth = $("#brth").val();
+			searchCode = "brth";
+			searchParam = $("#brth").val();
 		} else if (selection == 2) {
-			sendData.cellpbnum = $("#cellpbnum").val();
+			searchCode = "cellpbnum";
+			searchParam = $("#cellpbnum").val();
 		}
 		
-		gfn_ajaxRequestBody("smi1","POST" , sendData , function(data) {
+		gfn_ajaxRest("smi1?searchCode=" + searchCode + "&searchParam=" + searchParam ,"GET" , function(data) {
 			var html = "";
 			$.each(data.list, function(index, item) {
 				html += '<tr>';

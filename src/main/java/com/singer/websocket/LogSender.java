@@ -1,4 +1,4 @@
-package com.singer.bean;
+package com.singer.websocket;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
