@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.singer.service.SV02Service;
 import com.singer.vo.SV02Vo;
 
+@RequestMapping("/sv01")
 @Controller
 public class SV02Controller extends BaseController {
 	private final Log log = LogFactory.getLog(SV02Controller.class);

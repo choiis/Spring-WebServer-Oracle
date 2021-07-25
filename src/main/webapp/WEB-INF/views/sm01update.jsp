@@ -66,7 +66,7 @@ var product_code = {};
 
 		    $.ajax({
 		    	cache : false,
-		        url : "/sm01update", // 요기에
+		        url : "/sm01/update", // 요기에
 		        processData: false,
 		        contentType: false,
 		        type : 'POST', 
@@ -98,7 +98,7 @@ var product_code = {};
 				<div id="sb01insert" class="animate form">
 					<div id="login" class="animate form">
 						<h4>회원 정보를 입력해 주세요</h4>
-						<form id="form" name="updateform" method="post" enctype="multipart/form-data" action="/sm01update">
+						<form id="form" name="updateform" method="post" enctype="multipart/form-data" action="/sm01/update">
 							<input type="hidden" id="userid" name="userid" value="${sm01Vo.userid}"> <br>
 							<br> 이름:<input	type="text" id="username" name="username" value="${sm01Vo.username}" maxlength="6">
 							<br> 핸드폰번호:
@@ -117,7 +117,7 @@ var product_code = {};
 							<button id="save" type="button" >저장</button>
 							<input id="fileInput" type="file" name="imgFile" />				
 						</form>
-						<img id="showTempImage" alt="" name="photo" src="/sm01photo/${sm01Vo.userid}" height="170px" width="150px"/>
+						<img id="showTempImage" alt="" name="photo" src="/sm01/photo/${sm01Vo.userid}" height="170px" width="150px"/>
 					</div>
 				</div>
 			</div>

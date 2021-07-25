@@ -34,14 +34,14 @@ public class SR01Controller extends BaseController {
 	@Inject
 	private SR01Service sr01Service;
 
-	@RequestMapping(value = "/sr01page", method = RequestMethod.GET)
+	@RequestMapping(value = "/sr01/page", method = RequestMethod.GET)
 	public ModelAndView showSR01() throws Exception {
 		ModelAndView model = new ModelAndView("/sr01view");
 		return model;
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sr01show_detail/{seq}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sr01/show_detail/{seq}", method = RequestMethod.GET)
 	public ModelAndView selectDetailSR01Vo(@ModelAttribute SR01Vo sr01Vo) throws Exception {
 		log.debug("enter sr01show_detail get");
 
@@ -52,7 +52,7 @@ public class SR01Controller extends BaseController {
 		return model;
 	}
 
-	@RequestMapping(value = "sr01insertPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/sr01/insertPage", method = RequestMethod.GET)
 	public ModelAndView insertPageSR01() throws Exception {
 		ModelAndView model = new ModelAndView("/sr01insert");
 		return model;
@@ -71,7 +71,7 @@ public class SR01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sr01find/{selection}/{findText}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sr01/find/{selection}/{findText}", method = RequestMethod.GET)
 	public ResponseEntity<SR01Vo> selectFindSR01Vo(@ModelAttribute SR01Vo sr01Vo) throws Exception {
 		log.debug("enter sr01find get");
 
@@ -97,7 +97,7 @@ public class SR01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sr01One/{seq}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sr01/one/{seq}", method = RequestMethod.GET)
 	public ResponseEntity<SR01Vo> selectOneSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sr01One get");
@@ -110,7 +110,7 @@ public class SR01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "sr01/{seq}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/sr01/{seq}", method = RequestMethod.DELETE)
 	public ResponseEntity<SR01Vo> deleteSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sr01 delete");
@@ -123,7 +123,7 @@ public class SR01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "sr01like/{seq}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/sr01/like/{seq}", method = RequestMethod.PATCH)
 	public ResponseEntity<SR01Vo> likeSR01vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sr01like put");
@@ -136,7 +136,7 @@ public class SR01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "sr01hate/{seq}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/sr01/hate/{seq}", method = RequestMethod.PATCH)
 	public ResponseEntity<SR01Vo> hateSR01vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sr01hate put");
@@ -149,7 +149,7 @@ public class SR01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sr01photo/{seq}/{idx}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sr01/photo/{seq}/{idx}", method = RequestMethod.GET)
 	public void selectPhotoSR01Vo(@ModelAttribute SR01Vo sr01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter sr01photo get");

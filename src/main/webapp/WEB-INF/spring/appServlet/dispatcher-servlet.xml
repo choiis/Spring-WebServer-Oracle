@@ -49,7 +49,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/**" />
-			<exclude-mapping path="/sm01joinPage"/>
+			<exclude-mapping path="/sm01/joinPage"/>
 			<exclude-mapping path="/sm01"/>
 			<exclude-mapping path="/login"/>
 			<exclude-mapping path="/sessionNotExist"/>
@@ -60,8 +60,8 @@
 		</interceptor>
 		
 		<interceptor>
-			<mapping path="/sm01page" />
-			<mapping path="/sm01One/*" />
+			<mapping path="/sm01/page" />
+			<mapping path="/sm01/one/*" />
 			<beans:bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
 				<beans:property name="cacheSeconds" value="0"/>
 			</beans:bean>

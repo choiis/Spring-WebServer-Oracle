@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.singer.service.SR03Service;
 import com.singer.vo.SR03Vo;
 
+@RequestMapping("/sr01")
 @Controller
 public class SR03Controller extends BaseController {
 

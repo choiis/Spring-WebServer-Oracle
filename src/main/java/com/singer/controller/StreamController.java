@@ -26,7 +26,7 @@ public class StreamController extends BaseController {
 	@Resource(name = "properties")
 	private Properties properties;
 
-	@RequestMapping(value = "/videoStreaming", method = RequestMethod.GET)
+	@RequestMapping(value = "/comm/videoStreaming", method = RequestMethod.GET)
 	public ResponseEntity<ResourceRegion> videoStreaming(@RequestHeader HttpHeaders headers) throws IOException {
 		log.info("videoStreaming!!!");
 

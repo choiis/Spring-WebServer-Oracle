@@ -16,7 +16,7 @@
 	var ws;
 
 	function wsOpen(){
-		ws = new WebSocket("ws://" + location.host + "/chat");
+		ws = new WebSocket("ws://" + location.host + "/chat/init");
 		ws.onopen = function(data){
 		//소켓이 열리면 초기화 세팅하기
 		}

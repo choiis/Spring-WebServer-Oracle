@@ -23,7 +23,7 @@
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
 		<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
-			<source src="/videoStreaming" type="video/mp4" />
+			<source src="/comm/videoStreaming" type="video/mp4" />
 		</video>
 	</section>
 	<p>

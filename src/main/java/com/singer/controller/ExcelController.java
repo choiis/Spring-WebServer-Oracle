@@ -25,7 +25,7 @@ public class ExcelController {
 	@Inject
 	private SB01Service sb01Service;
 
-	@RequestMapping(value = "/excelDown", method = RequestMethod.GET)
+	@RequestMapping(value = "/comm/excelDown", method = RequestMethod.GET)
 	public String getExcelList(SB01Vo sb01Vo, Map<String, Object> modelMap, HttpServletResponse response)
 			throws Exception {
 		log.debug("enter excelDown");

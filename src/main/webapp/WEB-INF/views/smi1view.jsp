@@ -75,8 +75,7 @@
 
 			$("#userId").val(userid);
 			var popTitle = "회원정보상세";
-			var url = "sm01One/" + userid;	
-			window.open(url, "", popTitle);
+			window.open("/sm01/one/" + userid, "", popTitle);
 			
 		});
 		

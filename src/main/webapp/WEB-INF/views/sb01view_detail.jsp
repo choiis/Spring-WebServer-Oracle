@@ -69,7 +69,7 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			gfn_ajaxRest("sb02/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function() {
+			gfn_ajaxRest("sb01/sb02/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function() {
 				showSB02List(1);
 			});
 		}
@@ -77,7 +77,7 @@
 	
 	function showSB02List(nowPage) {
 		
-		gfn_ajaxRest("sb02/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + nowPage,"GET" , function(data) {
+		gfn_ajaxRest("sb01/sb02/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + nowPage,"GET" , function(data) {
 			var html = drawTable(data);
 	        
 	        html += '<tr>';
@@ -97,7 +97,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajaxRequestBody("sb02","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("sb01/sb02","POST" , sendData , function(data) {
 			showSB02List(1);
 		});
 	};
@@ -107,7 +107,7 @@
 			return;
 		}
 		
-		gfn_ajaxRest("sb02/" + parseInt($("#seq01").val()) + "/" + 0 +"/" + page,"GET" , function(data) {
+		gfn_ajaxRest("sb01/sb02/" + parseInt($("#seq01").val()) + "/" + 0 +"/" + page,"GET" , function(data) {
 			var html = drawTable(data);
 	        
 	        $('#sb02viewTbody > tr:last').remove();
@@ -145,7 +145,7 @@
 	
 	function showSB02ReplyList(seq, seq01) {
 		
-		gfn_ajaxRest("sb02/" + seq01 + "/" + seq + "/" + 0, "GET" , function(data) {
+		gfn_ajaxRest("sb01/sb02/" + seq01 + "/" + seq + "/" + 0, "GET" , function(data) {
 			for (var i = 0; i < $("#sb02viewTbody").find("tr").length; i++) {
 				var tr = $("#sb02viewTbody").find("tr").eq(i);
 				if(tr.find("td").eq(0).text() == data.parents) {
@@ -193,7 +193,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajaxRequestBody("sb02","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("sb01/sb02","POST" , sendData , function(data) {
 			for (var i = 0; i < $("#sb02viewTbody").find("tr").length; i++) {
 				var tr = $("#sb02viewTbody").find("tr").eq(i);
 				if(tr.find("td").eq(0).text() == data.parents) {
@@ -234,7 +234,7 @@
 	
 	function like_sb01() {
 	
-		gfn_ajaxRest("sb01like/" + parseInt($("#seq01").val()), "PATCH", function(data) {
+		gfn_ajaxRest("sb01/like/" + parseInt($("#seq01").val()), "PATCH", function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.good);
 				$("#button_like").attr('disabled', true);
@@ -245,7 +245,7 @@
 	
 	function hate_sb01() {
 		
-		gfn_ajaxRest("sb01hate/" + parseInt($("#seq01").val()), "PATCH" , function(data) {
+		gfn_ajaxRest("sb01/hate/" + parseInt($("#seq01").val()), "PATCH" , function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.good);
 				$("#button_hate").attr('disabled', true);
@@ -300,12 +300,12 @@
     		<c:choose>
 				<c:when test="${sb01Vo.videobool == 'YES'}">
 					<video id="showVideo" width="640" height="360" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
-			    		<source src="/sb01Video/${sb01Vo.seq}/${sb01Vo.title}" type="video/mp4" />
+			    		<source src="/sb01/video/${sb01Vo.seq}/${sb01Vo.title}" type="video/mp4" />
 					</video>
 				</c:when>
 				<c:otherwise>
 					<audio id="showAudio" autoplay controls>
-    					<source src="/sb01Video/${sb01Vo.seq}/${sb01Vo.title}" type="audio/mp3">
+    					<source src="/sb01/video/${sb01Vo.seq}/${sb01Vo.title}" type="audio/mp3">
 					</audio>
 				</c:otherwise>
 			</c:choose>

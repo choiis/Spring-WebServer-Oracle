@@ -68,7 +68,7 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			gfn_ajaxRest("sf02/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function() {
+			gfn_ajaxRest("sf01/sf02/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function() {
 				showSF02List(1);
 			});
 		}
@@ -76,7 +76,7 @@
 	
 	function showSF02List(page) {
 		
-		gfn_ajaxRest("sf02/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
+		gfn_ajaxRest("sf01/sf02/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
 			var html = drawTable(data);
 
 			html += '<tr>';
@@ -96,7 +96,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajaxRequestBody("sf02","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("sf01/sf02","POST" , sendData , function(data) {
 			showSF02List(1);
 		});
 	};
@@ -106,7 +106,7 @@
 			return;
 		}
 		
-		gfn_ajaxRest("sf02/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
+		gfn_ajaxRest("sf01/sf02/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
 			var html = drawTable(data);
 			
 			$('#sf02viewTbody > tr:last').remove();
@@ -143,7 +143,7 @@
 	}
 	
 	function showSF02ReplyList(seq, seq01) {
-		gfn_ajaxRest("sf02/" + seq01 + "/" + seq + "/" + 0, "GET" , function(data) {
+		gfn_ajaxRest("sf01/sf02/" + seq01 + "/" + seq + "/" + 0, "GET" , function(data) {
 			
 			for (var i = 0; i < $("#sf02viewTbody").find("tr").length; i++) {
 				var tr = $("#sf02viewTbody").find("tr").eq(i);
@@ -193,7 +193,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajaxRequestBody("sf02","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("sf01/sf02","POST" , sendData , function(data) {
 			for (var i = 0; i < $("#sf02viewTbody").find("tr").length; i++) {
 				var tr = $("#sf02viewTbody").find("tr").eq(i);
 				if(tr.find("td").eq(0).text() == data.parents) {
@@ -234,7 +234,7 @@
 	
 	function like_sf01() {
 		
-		gfn_ajaxRest("sf01like/" + parseInt($("#seq01").val()), "PATCH" , function(data) {
+		gfn_ajaxRest("sf01/like/" + parseInt($("#seq01").val()), "PATCH" , function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.good);
 				$("#button_like").attr('disabled', true);
@@ -245,7 +245,7 @@
 	
 	function hate_sf01() {
 		
-		gfn_ajaxRest("sf01hate/" + parseInt($("#seq01").val()),"PATCH" , function(data) {
+		gfn_ajaxRest("sf01/hate/" + parseInt($("#seq01").val()),"PATCH" , function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.good);
 				$("#button_hate").attr('disabled', true);
@@ -298,7 +298,7 @@
 			</c:choose>
 			
 			<p>파일명 : ${sf01Vo.filename}</p>
-			<a href="/sf01File/${sf01Vo.seq}/${sf01Vo.regdate}">파일 받기</a>
+			<a href="/sf01/file/${sf01Vo.seq}/${sf01Vo.regdate}">파일 받기</a>
 		</div>
 		
 		<div class="container">

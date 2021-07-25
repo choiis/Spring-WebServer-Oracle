@@ -31,13 +31,13 @@ public class SF01Controller extends BaseController {
 	@Inject
 	private SF01Service sf01Service;
 
-	@RequestMapping(value = "/sf01page", method = RequestMethod.GET)
+	@RequestMapping(value = "/sf01/page", method = RequestMethod.GET)
 	public ModelAndView showSF01() throws Exception {
 		ModelAndView model = new ModelAndView("/sf01view");
 		return model;
 	}
 
-	@RequestMapping(value = "/sf01insertPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/sf01/insertPage", method = RequestMethod.GET)
 	public ModelAndView insertPageSF01() throws Exception {
 		ModelAndView model = new ModelAndView("/sf01insert");
 		return model;
@@ -83,7 +83,7 @@ public class SF01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01show_detail/{seq}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sf01/show_detail/{seq}", method = RequestMethod.GET)
 	public ModelAndView selectOneSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request) throws Exception {
 		log.debug("enter sf01show_detail get");
 
@@ -98,7 +98,7 @@ public class SF01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01File/{seq}/{regdate}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sf01/file/{seq}/{regdate}", method = RequestMethod.GET)
 	public ModelAndView selectFileSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter sf01File get");
@@ -123,7 +123,7 @@ public class SF01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01like/{seq}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/sf01/like/{seq}", method = RequestMethod.PATCH)
 	public ResponseEntity<SF01Vo> likeSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sf01like put");
@@ -137,7 +137,7 @@ public class SF01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01hate/{seq}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/sf01/hate/{seq}", method = RequestMethod.PATCH)
 	public ResponseEntity<SF01Vo> hateSF01Vo(@ModelAttribute SF01Vo sf01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sf01hate put");

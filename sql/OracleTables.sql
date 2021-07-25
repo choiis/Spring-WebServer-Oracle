@@ -78,16 +78,16 @@ CREATE table MENU (
 alter table MENU
 add constraint pk_MENU primary key(menucd);
 
-insert into MENU values('01','코드관리','/codepage',1,'admin','20180901','admin','20180901');
-insert into MENU values('02','공지사항','/commandpage',2,'admin','20180901','admin','20180901');
-insert into MENU values('03','회원관리','/sm01page',2,'admin','20180901','admin','20180901');
-insert into MENU values('04','노래 동영상','/sb01page',4,'admin','20180901','admin','20180901');
-insert into MENU values('05','파일 게시판','/sf01page',4,'admin','20180901','admin','20180901');
-insert into MENU values('06','투표 게시판','/sv01page',4,'admin','20180901','admin','20180901');
-insert into MENU values('07','맛집 추천','/sr01page',4,'admin','20180901','admin','20180901');
-insert into MENU values('08','나의 메모장','/sm02page',4,'admin','20180901','admin','20180901');
-insert into MENU values('09','유저 검색','/smi1Page',4,'admin','20180901','admin','20180901');
-insert into MENU values('10','채팅방','/chatting',4,'admin','20210105','admin','20210105');
+insert into MENU values('01','코드관리','/comm/code/page',1,'admin','20180901','admin','20210725');
+insert into MENU values('02','공지사항','/comm/command/page',2,'admin','20180901','admin','20210725');
+insert into MENU values('03','회원관리','/sm01/page',2,'admin','20180901','admin','20210725');
+insert into MENU values('04','노래 동영상','/sb01/page',4,'admin','20180901','admin','20210725');
+insert into MENU values('05','파일 게시판','/sf01/page',4,'admin','20180901','admin','20210725');
+insert into MENU values('06','투표 게시판','/sv01/page',4,'admin','20180901','admin','20210725');
+insert into MENU values('07','맛집 추천','/sr01/page',4,'admin','20180901','admin','20210725');
+insert into MENU values('08','나의 메모장','/sm02/page',4,'admin','20180901','admin','20210725');
+insert into MENU values('09','유저 검색','/smi1/page',4,'admin','20180901','admin','20210725');
+insert into MENU values('10','채팅방','/comm/chat/page',4,'admin','20210105','admin','20210725');
 
 CREATE table CODE_GRP (
 codegrp varchar2(5) not null,

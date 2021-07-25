@@ -26,7 +26,7 @@ public class SMI1Controller {
 	@Inject
 	private SMI1Service smi1Service;
 
-	@RequestMapping(value = "/smi1Page", method = RequestMethod.GET)
+	@RequestMapping(value = "/smi1/page", method = RequestMethod.GET)
 	public ModelAndView page() {
 		ModelAndView model = new ModelAndView("smi1view");
 
@@ -34,7 +34,7 @@ public class SMI1Controller {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "smi1", method = RequestMethod.GET)
+	@RequestMapping(value = "/smi1", method = RequestMethod.GET)
 	public ResponseEntity<SM01Vo> selectSMI1Vo(@RequestParam(value = "searchCode") String searchCode,
 			@RequestParam(value = "searchParam") String searchParam) throws Exception {
 		log.debug("enter smi1 get");

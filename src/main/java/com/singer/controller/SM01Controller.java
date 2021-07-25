@@ -34,7 +34,7 @@ public class SM01Controller extends BaseController {
 	@Inject
 	private SM01Service sm01Service;
 
-	@RequestMapping(value = "/sm01joinPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm01/joinPage", method = RequestMethod.GET)
 	public ModelAndView joinPage() {
 
 		ModelAndView model = new ModelAndView("/join");
@@ -52,7 +52,7 @@ public class SM01Controller extends BaseController {
 		return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/sm01page", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm01/page", method = RequestMethod.GET)
 	public ModelAndView showSM01() {
 		ModelAndView model = new ModelAndView("/sm01list");
 		return model;
@@ -70,7 +70,7 @@ public class SM01Controller extends BaseController {
 		return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/sm01update", method = RequestMethod.POST)
+	@RequestMapping(value = "/sm01/update", method = RequestMethod.POST)
 	public ModelAndView upateSM01Vo(@ModelAttribute SM01Vo sm01Vo, MultipartHttpServletRequest request)
 			throws Exception {
 		log.debug("enter sm01update post");
@@ -86,7 +86,7 @@ public class SM01Controller extends BaseController {
 		return model;
 	}
 
-	@RequestMapping(value = "/sm01change", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm01/change", method = RequestMethod.GET)
 	public ModelAndView selectOneChangeSM01Vo(HttpServletRequest request) throws Exception {
 		SM01Vo sm01Vo = new SM01Vo();
 		log.debug("enter sm01change post");
@@ -103,7 +103,7 @@ public class SM01Controller extends BaseController {
 		return model;
 	}
 
-	@RequestMapping(value = "/sm01One/{userid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm01/one/{userid}", method = RequestMethod.GET)
 	public ModelAndView selectOneSM01Vo(@ModelAttribute SM01Vo sm01Vo) throws Exception {
 		ModelAndView model = new ModelAndView("/sm01show");
 		log.debug("enter sm01One get");
@@ -116,7 +116,7 @@ public class SM01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sm01photo/{userid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sm01/photo/{userid}", method = RequestMethod.GET)
 	public void selectPhotoSM01Vo(@ModelAttribute SM01Vo sm01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter sm01photo get");
@@ -130,7 +130,7 @@ public class SM01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sme1", method = RequestMethod.PUT)
+	@RequestMapping(value = "/sm01/sme1", method = RequestMethod.PUT)
 	public ResponseEntity<SM01Vo> upateSME1Vo(@RequestBody SM01Vo sm01Vo, HttpServletRequest request) throws Exception {
 		log.debug("enter sme1 put");
 

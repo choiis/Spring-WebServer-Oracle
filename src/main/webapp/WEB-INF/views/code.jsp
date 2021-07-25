@@ -55,7 +55,7 @@
 					codenm : tr.children("td#nm").children("input#codenm").val(),
 					codegrp :$("#code_grp").val()
 				};
-				gfn_ajaxRequestBody("commCode.do","POST" , sendData , function(data) {
+				gfn_ajaxRequestBody("comm/Code","POST" , sendData , function(data) {
 						
 				});	
 			}
@@ -67,7 +67,7 @@
 			if(confirm("삭제하시겠습니까 ??")) {
 				var tr = $(this).parent().parent("tr");
 
-				gfn_ajaxRest("commCode/" + $("#code_grp").val() + "/" + tr.children("td#codecd").text(), "DELETE" , function(data) {
+				gfn_ajaxRest("comm/code/" + $("#code_grp").val() + "/" + tr.children("td#codecd").text(), "DELETE" , function(data) {
 					var html = "";
 			       	
 			        $.each(data.commList, function(index, item) {
@@ -90,7 +90,7 @@
 	selectGrpList = function(id) {
 		var combo ='<option value="" selected>선택</option>';
 		
-		gfn_ajaxRest("commCodeGrp", "GET" , function(data) {
+		gfn_ajaxRest("comm/codeGrp", "GET" , function(data) {
 			if(!gfn_isNull(data.commList)){
 	    		if(data.commList.length > 0) {
 	    			for(var i = 0 ; i < data.commList.length ;i++) {
@@ -131,7 +131,7 @@
 			codenm :$("#input_codenm").val()
 		};
 		
-		gfn_ajaxRequestBody("commCode","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("comm/code","POST" , sendData , function(data) {
 			var html = "";
 	       	
 	        $.each(data.commList, function(index, item) {

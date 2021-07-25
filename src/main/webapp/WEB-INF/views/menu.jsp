@@ -41,7 +41,7 @@ var user_code = {};
 					menuurl : tr.children("td#url").children("input#menuurl").val(),
 					authlevel : tr.children("td#level").children("select#authlevel").val()
 				};
-				gfn_ajaxRequestBody("commMenu","PUT" , sendData , function(data) {
+				gfn_ajaxRequestBody("comm/menu","PUT" , sendData , function(data) {
 					if(data.result == 1){
 					}
 				});	
@@ -54,7 +54,7 @@ var user_code = {};
 			if(confirm("삭제하시겠습니까 ??")) {
 				var tr = $(this).parent().parent("tr");
 
-				gfn_ajaxRest("commMenu/" + tr.children("td#menucd").text(), "DELETE" , function(data) {
+				gfn_ajaxRest("comm/menu/" + tr.children("td#menucd").text(), "DELETE" , function(data) {
 					var html = "";
 			       	
 			        $.each(data.commList, function(index, item) {
@@ -120,7 +120,7 @@ var user_code = {};
 			authlevel :$("#input_authlevel").val()
 		};
 		
-		gfn_ajaxRequestBody("commMenu","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("comm/menu","POST" , sendData , function(data) {
 			var html = "";
 	       	
 	        $.each(data.commList, function(index, item) {
@@ -141,7 +141,7 @@ var user_code = {};
 	function showMenuList() {
 		console.log("showMenuList");
 		
-		gfn_ajaxRest("commMenu", "GET" , function(data) {
+		gfn_ajaxRest("comm/menu", "GET" , function(data) {
 			var html = "";
 	       	
 	        $.each(data.commList, function(index, item) {

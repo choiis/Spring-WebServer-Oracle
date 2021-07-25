@@ -73,13 +73,13 @@
 			return false;
 		}
 		
-		gfn_ajaxRest("sb01find/" + $("#likeSelect").val() + "/" + $("#findText").val(), "GET" , function(data) {
+		gfn_ajaxRest("sb01/find/" + $("#likeSelect").val() + "/" + $("#findText").val(), "GET" , function(data) {
 			var html = "";
 			
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50"><a href="/sb01show_detail/'+
+	            html += '<td scope="col" width="50"><a href="/sb01/show_detail/'+
 	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
@@ -110,7 +110,7 @@
 			$.each(data.list, function(index, item) {
 				html += '<tr>';
 	            html += '<td scope="col" width="50">' + item.seq + '</td>';
-	            html += '<td scope="col" width="50"><a href="/sb01show_detail/'+
+	            html += '<td scope="col" width="50"><a href="/sb01/show_detail/'+
 	            item.seq +'">' + 
 	            item.title + '</a></td>';
 	            html += '<td scope="col" width="30">' + item.reply + '</td>';
@@ -173,7 +173,7 @@
 		<div id="pagenation">
 		
 		</div>
-			<form id="write_form" action="/sb01insertPage" method="get">
+			<form id="write_form" action="/sb01/insertPage" method="get">
 			<button id="btn_write_button" type="button" >게시물 등록</button>
 			</form>
 		</div>

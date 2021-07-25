@@ -18,6 +18,7 @@ import com.singer.common.Constants.RESULT_CODE;
 import com.singer.service.SR02Service;
 import com.singer.vo.SR01Vo;
 
+@RequestMapping("/sr01")
 @Controller
 public class SR02Controller extends BaseController {
 	private final Log log = LogFactory.getLog(SR02Controller.class);

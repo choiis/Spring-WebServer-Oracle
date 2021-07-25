@@ -34,13 +34,13 @@ public class SB01Controller extends BaseController {
 	@Inject
 	private SB01Service sb01Service;
 
-	@RequestMapping(value = "/sb01page", method = RequestMethod.GET)
+	@RequestMapping(value = "/sb01/page", method = RequestMethod.GET)
 	public ModelAndView showSB01() throws Exception {
 		ModelAndView model = new ModelAndView("/sb01view");
 		return model;
 	}
 
-	@RequestMapping(value = "/sb01insertPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/sb01/insertPage", method = RequestMethod.GET)
 	public ModelAndView insertPageSB01() throws Exception {
 		ModelAndView model = new ModelAndView("/sb01insert");
 		return model;
@@ -74,7 +74,7 @@ public class SB01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sb01find/{selection}/{findText}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sb01/find/{selection}/{findText}", method = RequestMethod.GET)
 	public ResponseEntity<SB01Vo> selectFindSB01Vo(@ModelAttribute SB01Vo sb01Vo) throws Exception {
 		log.debug("enter sb01find get");
 
@@ -86,7 +86,7 @@ public class SB01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sb01show_detail/{seq}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sb01/show_detail/{seq}", method = RequestMethod.GET)
 	public ModelAndView selectOneSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request) throws Exception {
 		log.debug("enter sb01show_detail get");
 
@@ -101,7 +101,7 @@ public class SB01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sb01Video/{seq}/{title}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sb01/video/{seq}/{title}", method = RequestMethod.GET)
 	public void selectVideoSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.debug("enter sb01Video get");
@@ -127,7 +127,7 @@ public class SB01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sb01like/{seq}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/sb01/like/{seq}", method = RequestMethod.PATCH)
 	public ResponseEntity<SB01Vo> likeSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sb01like put");
@@ -141,7 +141,7 @@ public class SB01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sb01hate/{seq}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/sb01/hate/{seq}", method = RequestMethod.PATCH)
 	public ResponseEntity<SB01Vo> hateSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sb01hate put");

@@ -15,7 +15,7 @@
 		
  	<!-- Websocket -->
     <websocket:handlers>
-    	<websocket:mapping handler="echoHandler" path="/chat"/>
+    	<websocket:mapping handler="echoHandler" path="/chat/init"/>
     	<websocket:handshake-interceptors>
     		<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
     	</websocket:handshake-interceptors>

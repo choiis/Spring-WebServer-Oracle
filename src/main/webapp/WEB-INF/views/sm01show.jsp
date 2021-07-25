@@ -70,7 +70,7 @@
 			<p>가입일 : ${sM01Vo.regdate}</p>
 			<p>전화번호 : ${sM01Vo.cellpfnum}- ${sM01Vo.cellpcnum} - ${sM01Vo.cellpbnum}</p>
 			
-			<img id="showTempImage" alt="" src="/sm01photo/${sM01Vo.userid}" height="170px" width="150px"/>
+			<img id="showTempImage" alt="" src="/sm01/photo/${sM01Vo.userid}" height="170px" width="150px"/>
 			<form id="form" method="post" enctype="multipart/form-data" action="/sendMail">
 			이메일 :<input type="text" value='${sM01Vo.email}' disabled><br>
 			<input type="text" id="email" name="email" value='${sM01Vo.email}' style="display:none;">

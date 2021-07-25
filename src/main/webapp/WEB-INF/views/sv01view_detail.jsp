@@ -84,7 +84,7 @@
 				
 				sendData.sv02Vos = list;
 				
-				gfn_ajaxRequestBody("sv03", "POST", sendData, function(data) {
+				gfn_ajaxRequestBody("sv01/sv03", "POST", sendData, function(data) {
 					if(confirm("투표 완료!")) {
 						showSV01One(1);
 					}	
@@ -139,7 +139,7 @@
 	
 	function showSV01One(recall) {
 		
-		gfn_ajaxRest("sv01One/" + parseInt($("#seq").val()) + "/" + recall, "GET" , function(data) {
+		gfn_ajaxRest("sv01/one/" + parseInt($("#seq").val()) + "/" + recall, "GET" , function(data) {
 		
 			$("#writer").text(data.userid);
 			$("#title").text(data.title);
@@ -200,7 +200,7 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			gfn_ajaxRest("sv04/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function() {
+			gfn_ajaxRest("sv01/sv04/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function() {
 				showSV04List(1);
 			});
 		}
@@ -209,7 +209,7 @@
 	
 	function showSV04List(page) {
 		
-		gfn_ajaxRest("sv04/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
+		gfn_ajaxRest("sv01/sv04/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
 			var html = drawTable(data);
 
 			html += '<tr>';
@@ -229,7 +229,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajaxRequestBody("sv04","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("sv01/sv04","POST" , sendData , function(data) {
 			showSV04List(1);
 		});
 	};
@@ -240,7 +240,7 @@
 			return;
 		}
 		
-		gfn_ajaxRest("sv04/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
+		gfn_ajaxRest("sv01/sv04/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
 			var html = drawTable(data);
 			
 			$('#sv04viewTbody > tr:last').remove();
@@ -277,7 +277,7 @@
 	}
 	
 	function showSV04ReplyList(seq, seq01) {
-		gfn_ajaxRest("sv04/" + seq01 + "/" + seq + "/" + 0, "GET" , function(data) {
+		gfn_ajaxRest("sv01/sv04/" + seq01 + "/" + seq + "/" + 0, "GET" , function(data) {
 			
 			for (var i = 0; i < $("#sv04viewTbody").find("tr").length; i++) {
 				var tr = $("#sv04viewTbody").find("tr").eq(i);
@@ -327,7 +327,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajaxRequestBody("sv04","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("sv01/sv04","POST" , sendData , function(data) {
 			for (var i = 0; i < $("#sv04viewTbody").find("tr").length; i++) {
 				var tr = $("#sv04viewTbody").find("tr").eq(i);
 				if(tr.find("td").eq(0).text() == data.parents) {
@@ -368,7 +368,7 @@
 	
 	function like_sv01() {
 		
-		gfn_ajaxRest("sv01like/" + parseInt($("#seq").val()), "PATCH", function(data) {
+		gfn_ajaxRest("sv01/like/" + parseInt($("#seq").val()), "PATCH", function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.good);
 				$("#button_like").attr('disabled', true);
@@ -379,7 +379,7 @@
 	
 	function hate_sv01() {
 		
-		gfn_ajaxRest("sv01hate/" + parseInt($("#seq").val()), "PATCH" , function(data) {
+		gfn_ajaxRest("sv01/hate/" + parseInt($("#seq").val()), "PATCH" , function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.good);
 				$("#button_hate").attr('disabled', true);

@@ -353,7 +353,7 @@ $(document).ready(function() {
 		var combo ='<option value="" selected>선택</option>';
 
 		$.ajax({
-		    url : "commCode/" + codeGrpCd,
+		    url : "/comm/code/" + codeGrpCd,
 		    type : "GET",
 		    async: false,
 		    success : function(data) {
@@ -394,7 +394,7 @@ $(document).ready(function() {
 		var common_code;
 		
 		$.ajax({
-		    url : "commCode/" + codeGrpCd,
+		    url : "/comm/code/" + codeGrpCd,
 		    type : "GET",
 		    async: false,
 		    success : function(data) {

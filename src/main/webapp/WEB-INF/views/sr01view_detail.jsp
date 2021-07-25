@@ -62,7 +62,7 @@
 				"seq" : $("#seq").val(),
 				"grade"  : $("#grade").val()
 			};
-			gfn_ajaxRequestBody("sr02", "POST", sendData, function(data) {
+			gfn_ajaxRequestBody("sr01/sr02", "POST", sendData, function(data) {
 				if(confirm("점수 주기 완료!")) {
 					$("#avggrade").text(data.avggrade);	
 					$("#button_grade").attr('disabled', true);
@@ -97,7 +97,7 @@
 	
 	function showSR01One() {
 		
-		gfn_ajaxRest("sr01One/" + parseInt($("#seq").val()), "GET" , function(data) {
+		gfn_ajaxRest("sr01/one/" + parseInt($("#seq").val()), "GET" , function(data) {
 		
 			$("#writer").text(data.userid);
 			$("#title").text(data.title);
@@ -110,7 +110,7 @@
 				
 				var html = "";
 				for(var i = 0 ; i < data.photocnt; i++) {
-					html += '<img id="showPhoto" alt="" name="photo" src="/sr01photo/'  + data.seq + '/' + i + '" height="200px" width="170px"/>';
+					html += '<img id="showPhoto" alt="" name="photo" src="/sr01/photo/'  + data.seq + '/' + i + '" height="200px" width="170px"/>';
 					html += '<br>';
 				}
 				$("#photoDiv").empty();
@@ -155,7 +155,7 @@
 
 	function showSR02One() {
 		
-		gfn_ajaxRest("sr02/" + parseInt($("#seq").val()), "GET" , function(data) {
+		gfn_ajaxRest("sr01/sr02/" + parseInt($("#seq").val()), "GET" , function(data) {
 			
 			if(data.result === 1) {
 				$("#button_grade").attr('disabled', true);
@@ -168,7 +168,7 @@
 		
 		if(confirm("삭제할까요?")) {
 			
-			gfn_ajaxRest("sr03/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function() {
+			gfn_ajaxRest("sr01/sr03/" + seq + "/" + seq01 + "/" + seq , "DELETE" , function() {
 				showSR03List(1);
 			});
 		}
@@ -177,7 +177,7 @@
 	
 	function showSR03List(page) {
 		
-		gfn_ajaxRest("sr03/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
+		gfn_ajaxRest("sr01/sr03/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
 			var html = drawTable(data);
 
 			html += '<tr>';
@@ -197,7 +197,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajaxRequestBody("sr03","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("sr01/sr03","POST" , sendData , function(data) {
 			showSR03List(1);
 		});
 	};
@@ -208,7 +208,7 @@
 			return;
 		}
 		
-		gfn_ajaxRest("sr03/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
+		gfn_ajaxRest("sr01/sr03/" + parseInt($("#seq01").val()) + "/" + 0 + "/" + page , "GET" , function(data) {
 			var html = drawTable(data);
 			
 			$('#sr03viewTbody > tr:last').remove();
@@ -245,7 +245,7 @@
 	}
 	
 	function showSR03ReplyList(seq, seq01) {
-		gfn_ajaxRest("sr03/" + seq01 + "/" + seq + "/" + 0, "GET" , function(data) {
+		gfn_ajaxRest("sr01/sr03/" + seq01 + "/" + seq + "/" + 0, "GET" , function(data) {
 			
 			for (var i = 0; i < $("#sr03viewTbody").find("tr").length; i++) {
 				var tr = $("#sr03viewTbody").find("tr").eq(i);
@@ -295,7 +295,7 @@
         	"nowPage" : 1
         };
 
-		gfn_ajaxRequestBody("sr03","POST" , sendData , function(data) {
+		gfn_ajaxRequestBody("sr01/sr03","POST" , sendData , function(data) {
 			for (var i = 0; i < $("#sr03viewTbody").find("tr").length; i++) {
 				var tr = $("#sr03viewTbody").find("tr").eq(i);
 				if(tr.find("td").eq(0).text() == data.parents) {
@@ -336,7 +336,7 @@
 	
 	function like_sr01() {
 		
-		gfn_ajaxRest("sr01like/" + parseInt($("#seq").val()), "PATCH", function(data) {
+		gfn_ajaxRest("sr01/like/" + parseInt($("#seq").val()), "PATCH", function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.good);
 				$("#button_like").attr('disabled', true);
@@ -347,7 +347,7 @@
 	
 	function hate_sr01() {
 		
-		gfn_ajaxRest("sr01hate/" + parseInt($("#seq").val()), "PATCH" , function(data) {
+		gfn_ajaxRest("sr01/hate/" + parseInt($("#seq").val()), "PATCH" , function(data) {
 			if(data.result == 1) {
 				$("#good").text(data.good);
 				$("#button_hate").attr('disabled', true);

@@ -158,7 +158,7 @@
 	<nav> <jsp:include page="sidebar.jsp" /> </nav>
 	<section>
 		<div class="container">
-		<form id="form" method="post" action="/sm02insert.do">
+		<form id="form" method="post">
 			<input type="hidden" id="userid" name="userid" value="<%=session.getAttribute("userid")%>">
 			제목:<input type="text" id="title" name="title"> <br>
 			내용<textarea id="text" name="text" rows="5" cols="70"></textarea>
