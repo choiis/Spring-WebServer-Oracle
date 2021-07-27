@@ -16,12 +16,20 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import redis.clients.jedis.JedisPoolConfig;
+
 import org.springframework.data.redis.serializer.RedisSerializationContext.RedisSerializationContextBuilder;
 
 @Configuration
 public class RedisConfig {
 
 	private final Log log = LogFactory.getLog(RedisConfig.class);
+
+	@Bean(name = "jedisPoolConfig")
+	public JedisPoolConfig jedisPoolConfig() {
+		return new JedisPoolConfig();
+	}
 
 	@SuppressWarnings("deprecation")
 	@Bean

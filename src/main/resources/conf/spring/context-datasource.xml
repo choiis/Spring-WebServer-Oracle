@@ -77,9 +77,6 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig" />
-	
-	
 	<tx:annotation-driven />
 	
 	<!-- mybatis:scan 사용 -->

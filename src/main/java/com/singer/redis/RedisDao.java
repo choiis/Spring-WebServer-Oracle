@@ -21,7 +21,7 @@ import com.singer.kafka.Producer;
 import com.singer.util.InputQueryUtil;
 import com.singer.vo.SortedSetVo;
 
-@Repository("redisDao")
+@Repository
 public class RedisDao {
 
 	private final Log log = LogFactory.getLog(RedisDao.class);
