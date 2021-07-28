@@ -1,8 +1,9 @@
 package com.singer.common;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import com.singer.common.Constants.BROWSER_CODE;
 
@@ -13,124 +14,10 @@ import lombok.NoArgsConstructor;
 public class CommonUtil {
 
 	/**
-	 * 배열 길이를 반환한다
-	 */
-	public static int getLength(Object[] array) {
-		return array.length;
-	}
-
-	/**
-	 * 배열 길이를 반환한다
-	 */
-	public static int getLength(List<?> array) {
-		if (isNull(array)) {
-			return 0;
-		} else {
-			return array.size();
-		}
-	}
-
-	/**
-	 * 배열 길이를 반환한다
-	 */
-	public static int getLength(int[] array) {
-		return array.length;
-	}
-
-	/**
-	 * 배열 길이를 반환한다
-	 */
-	public static int getLength(long[] array) {
-		return array.length;
-	}
-
-	/**
-	 * 배열 길이를 반환한다
-	 */
-	public static int getLength(char[] array) {
-		return array.length;
-	}
-
-	/**
-	 * 배열 길이를 반환한다
-	 */
-	public static int getLength(String[] array) {
-		return array.length;
-	}
-
-	/**
-	 * 배열 길이가 0인가?
-	 */
-	public static boolean isZeroLength(Object[] array) {
-		if (isNull(array)) {
-			return true;
-		} else {
-			return array.length == 0;
-		}
-	}
-
-	/**
-	 * 배열 길이가 0인가?
-	 */
-	public static boolean isZeroLength(List<?> array) {
-		if (isNull(array)) {
-			return true;
-		} else {
-			return array.size() == 0;
-		}
-	}
-
-	/**
-	 * 널 체크
-	 */
-	public static boolean isNull(Object obj) {
-		if (obj == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * 널 체크
-	 */
-	public static boolean isNull(String obj) {
-		if (obj == null) {
-			return true;
-		} else if ("".equals(obj.trim())) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * 널 체크
-	 */
-	public static boolean isNull(int obj) {
-		if (obj == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * 널 체크
-	 */
-	public static boolean isNull(long obj) {
-		if (obj == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
 	 * Oracle nvl
 	 */
 	public static String nvl(String str, String nvl) {
-		if (isNull(str)) {
+		if (StringUtils.isEmpty(str)) {
 			return nvl;
 		} else {
 			return str;
@@ -141,7 +28,7 @@ public class CommonUtil {
 	 * Oracle nvl
 	 */
 	public static Object nvl(Object obj, String nvl) {
-		if (isNull(obj)) {
+		if (ObjectUtils.isEmpty(obj)) {
 			return nvl;
 		} else {
 			return obj;

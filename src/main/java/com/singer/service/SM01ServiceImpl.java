@@ -8,9 +8,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -41,14 +44,14 @@ public class SM01ServiceImpl implements SM01Service {
 	public HashMap<String, Object> insertSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request) throws Exception {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
-		if (CommonUtil.isNull(sm01Vo.getUserid())) {
+		if (StringUtils.isEmpty(sm01Vo.getUserid())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INF_1);
 		}
-		if (CommonUtil.isNull(sm01Vo.getPasswd())) {
+		if (StringUtils.isEmpty(sm01Vo.getPasswd())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INF_2);
 		}
 
-		if (CommonUtil.isNull(sm01Vo.getUsername())) {
+		if (StringUtils.isEmpty(sm01Vo.getUsername())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INF_3);
 		}
 
@@ -60,7 +63,7 @@ public class SM01ServiceImpl implements SM01Service {
 
 		MultipartFile photo = null;
 		Iterator<String> itr = request.getFileNames();
-		if (CommonUtil.isNull(itr)) {
+		if (ObjectUtils.isEmpty(itr)) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_3);
 		}
 		while (itr.hasNext()) {
@@ -137,7 +140,7 @@ public class SM01ServiceImpl implements SM01Service {
 		InputStream is = null;
 
 		HashMap<String, Object> hashMap = sm01Dao.selectImage(sm01Vo);
-		if (CommonUtil.isNull(hashMap)) {
+		if (CollectionUtils.isEmpty(hashMap)) {
 			throw new ClientException(HttpStatus.NOT_FOUND);
 		} else { // 이미지 불러오기 성공시
 			BLOB images = (BLOB) hashMap.get("PHOTO");
@@ -152,11 +155,11 @@ public class SM01ServiceImpl implements SM01Service {
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public SM01Vo updateSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request, String userId) throws Exception {
-		if (CommonUtil.isNull(sm01Vo.getUserid())) {
+		if (StringUtils.isEmpty(sm01Vo.getUserid())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INF_1);
 		}
 
-		if (CommonUtil.isNull(sm01Vo.getUsername())) {
+		if (StringUtils.isEmpty(sm01Vo.getUsername())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INF_3);
 		}
 
@@ -169,7 +172,7 @@ public class SM01ServiceImpl implements SM01Service {
 		// 저장후
 		sm01Dao.updateSM01Vo(sm01Vo);
 		// 전화번호 변경
-		if (!CommonUtil.isNull(sm01Vo.getCellpcnum()) && !CommonUtil.isNull(sm01Vo.getCellpbnum())) {
+		if (!StringUtils.isEmpty(sm01Vo.getCellpcnum()) && !StringUtils.isEmpty(sm01Vo.getCellpbnum())) {
 			SM01Vo vo = new SM01Vo();
 			vo.setUserid(sm01Vo.getUserid());
 			vo.setInfocode(PHONE_INFO_CODE.CELL);
@@ -180,7 +183,7 @@ public class SM01ServiceImpl implements SM01Service {
 			sm01Dao.insertSMI1Vo(vo);
 		}
 
-		if (!CommonUtil.isNull(sm01Vo.getHomepcnum()) && !CommonUtil.isNull(sm01Vo.getHomepbnum())) {
+		if (!StringUtils.isEmpty(sm01Vo.getHomepcnum()) && !StringUtils.isEmpty(sm01Vo.getHomepbnum())) {
 			SM01Vo vo = new SM01Vo();
 			vo.setUserid(sm01Vo.getUserid());
 			vo.setInfocode(PHONE_INFO_CODE.HOME);
@@ -191,7 +194,7 @@ public class SM01ServiceImpl implements SM01Service {
 			sm01Dao.insertSMI1Vo(vo);
 		}
 
-		if (!CommonUtil.isNull(sm01Vo.getCompanypcnum()) && !CommonUtil.isNull(sm01Vo.getCompanypbnum())) {
+		if (!StringUtils.isEmpty(sm01Vo.getCompanypcnum()) && !StringUtils.isEmpty(sm01Vo.getCompanypbnum())) {
 			SM01Vo vo = new SM01Vo();
 			vo.setUserid(sm01Vo.getUserid());
 			vo.setInfocode(PHONE_INFO_CODE.COMPANY);
@@ -202,7 +205,7 @@ public class SM01ServiceImpl implements SM01Service {
 			sm01Dao.insertSMI1Vo(vo);
 		}
 
-		if (!CommonUtil.isNull(sm01Vo.getOtherpcnum()) && !CommonUtil.isNull(sm01Vo.getOtherpbnum())) {
+		if (!StringUtils.isEmpty(sm01Vo.getOtherpcnum()) && !StringUtils.isEmpty(sm01Vo.getOtherpbnum())) {
 			SM01Vo vo = new SM01Vo();
 			vo.setUserid(sm01Vo.getUserid());
 			vo.setInfocode(PHONE_INFO_CODE.OTHER);
@@ -213,7 +216,7 @@ public class SM01ServiceImpl implements SM01Service {
 			sm01Dao.insertSMI1Vo(vo);
 		}
 
-		if (!CommonUtil.isNull(photo.getSize())) {
+		if (photo.getSize() != 0) {
 
 			if (!CommonUtil.chkIMGFile(photo.getOriginalFilename())) {
 				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_4);

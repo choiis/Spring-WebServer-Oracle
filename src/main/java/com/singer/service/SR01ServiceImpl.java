@@ -10,8 +10,10 @@ import java.util.Properties;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -50,13 +52,13 @@ public class SR01ServiceImpl implements SR01Service {
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int insertSR01Vo(SR01Vo sr01Vo, MultipartHttpServletRequest request, String sessionid) throws Exception {
-		if (CommonUtil.isNull(sr01Vo.getTitle())) {
+		if (StringUtils.isEmpty(sr01Vo.getTitle())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
 		}
-		if (CommonUtil.isNull(sr01Vo.getText())) {
+		if (StringUtils.isEmpty(sr01Vo.getText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
-		if (CommonUtil.isNull(sr01Vo.getMarkertitle())) {
+		if (StringUtils.isEmpty(sr01Vo.getMarkertitle())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_6);
 		}
 		if (sr01Vo.getGrade() < 0 || sr01Vo.getGrade() > 5) {
@@ -118,7 +120,7 @@ public class SR01ServiceImpl implements SR01Service {
 	@Override
 
 	public List<SR01Vo> selectFindSR01Vo(SR01Vo sr01Vo) throws Exception {
-		if (CommonUtil.isNull(sr01Vo.getFindText())) {
+		if (StringUtils.isEmpty(sr01Vo.getFindText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
 		} else if (sr01Vo.getSelection() == 1) { // �젣紐⑹쑝濡� 寃��깋
 			sr01Vo.setTitle(sr01Vo.getFindText());
@@ -138,7 +140,7 @@ public class SR01ServiceImpl implements SR01Service {
 
 		sr01Vo.setUserid(userid);
 		sr01Vo = sr01Dao.selectOneSR01Vo(sr01Vo);
-		if (!CommonUtil.isNull(sr01Vo)) {
+		if (!ObjectUtils.isEmpty(sr01Vo)) {
 			if (userid.equals(sr01Vo.getUserid())) {
 				sr01Vo.setDeleteYn(true);
 			}

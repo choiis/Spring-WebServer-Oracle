@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,7 +70,7 @@ public class LoginController {
 		String userId = sm01Vo.getUserid();
 
 		SM01Vo one = sm01Service.login(sm01Vo);
-		if (CommonUtil.isNull(one)) { // 계정없음
+		if (ObjectUtils.isEmpty(one)) { // 계정없음
 
 			hashMap.put("code", RESULT_CODE.FAIL.getValue());
 			hashMap.put("msg", ExceptionMsg.EXT_MSG_LOGIN_1);

@@ -4,14 +4,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import com.singer.dao.SV02Dao;
 import com.singer.dao.SV04Dao;
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
-import com.singer.common.CommonUtil;
 import com.singer.common.Constants.RESULT_CODE;
 import com.singer.common.Constants.YES_NO;
 import com.singer.common.DateUtil;
@@ -36,10 +38,10 @@ public class SV01ServiceImpl implements SV01Service {
 	@Override
 	public int insertSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
 
-		if (CommonUtil.isNull(sv01Vo.getTitle())) {
+		if (StringUtils.isEmpty(sv01Vo.getTitle())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
 		}
-		if (CommonUtil.isNull(sv01Vo.getText())) {
+		if (StringUtils.isEmpty(sv01Vo.getText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 
@@ -49,12 +51,12 @@ public class SV01ServiceImpl implements SV01Service {
 		sv01Vo.setUserid(userid);
 		sv01Vo.setRegdate(regDate);
 
-		if (CommonUtil.isZeroLength(list)) {
+		if (CollectionUtils.isEmpty(list)) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
 		} else {
 			int size = list.size();
 			for (int i = 0; i < size; i++) {
-				if (CommonUtil.isNull(list.get(i).getContent())) {
+				if (StringUtils.isEmpty(list.get(i).getContent())) {
 					throw new AppException(ExceptionMsg.EXT_MSG_INPUT_9);
 				}
 				list.get(i).setUserid(userid);
@@ -76,7 +78,7 @@ public class SV01ServiceImpl implements SV01Service {
 
 	@Override
 	public List<SV01Vo> selectFindSV01Vo(SV01Vo sv01Vo) throws Exception {
-		if (CommonUtil.isNull(sv01Vo.getFindText())) {
+		if (StringUtils.isEmpty(sv01Vo.getFindText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
 		} else if (sv01Vo.getSelection() == 1) { // �젣紐⑹쑝濡� 寃��깋
 			sv01Vo.setTitle(sv01Vo.getFindText());
@@ -96,7 +98,7 @@ public class SV01ServiceImpl implements SV01Service {
 		}
 		sv01Vo.setUserid(userid);
 		sv01Vo = sv01Dao.selectOneSV01Vo(sv01Vo);
-		if (!CommonUtil.isNull(sv01Vo)) {
+		if (!ObjectUtils.isEmpty(sv01Vo)) {
 			if (userid.equals(sv01Vo.getUserid())) {
 				sv01Vo.setDeleteYn(true);
 			}

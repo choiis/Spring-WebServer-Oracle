@@ -6,8 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import javax.inject.Inject;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -38,17 +40,17 @@ public class SF01ServiceImpl implements SF01Service {
 	@Override
 	public int insertSF01Vo(SF01Vo sf01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
 
-		if (CommonUtil.isNull(sf01Vo.getTitle())) {
+		if (StringUtils.isEmpty(sf01Vo.getTitle())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
 		}
-		if (CommonUtil.isNull(sf01Vo.getText())) {
+		if (StringUtils.isEmpty(sf01Vo.getText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 
 		MultipartFile file = null;
 		Iterator<String> itr = request.getFileNames();
 
-		if (CommonUtil.isNull(itr)) {
+		if (ObjectUtils.isEmpty(itr)) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_3);
 		}
 		sf01Vo.setUserid(userid);
@@ -79,7 +81,7 @@ public class SF01ServiceImpl implements SF01Service {
 	@Override
 	public List<SF01Vo> selectFindSF01Vo(SF01Vo sf01vo) throws Exception {
 
-		if (CommonUtil.isNull(sf01vo.getFindText())) {
+		if (StringUtils.isEmpty(sf01vo.getFindText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
 		} else if (sf01vo.getSelection() == 1) { // 제목으로 검색
 			sf01vo.setTitle(sf01vo.getFindText());
@@ -98,7 +100,7 @@ public class SF01ServiceImpl implements SF01Service {
 		sf01Dao.clickSF01Vo(sf01vo);
 		sf01vo.setSessionid(userid);
 		sf01vo = sf01Dao.selectOneSF01Vo(sf01vo);
-		if (!CommonUtil.isNull(sf01vo)) {
+		if (!ObjectUtils.isEmpty(sf01vo)) {
 			if (userid.equals(sf01vo.getUserid())) {
 				sf01vo.setDeleteYn(true);
 			}

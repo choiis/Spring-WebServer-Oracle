@@ -11,8 +11,10 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -49,10 +51,10 @@ public class SB01ServiceImpl implements SB01Service {
 	@Override
 	public int insertSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
 
-		if (CommonUtil.isNull(sb01Vo.getTitle())) {
+		if (StringUtils.isEmpty(sb01Vo.getTitle())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
 		}
-		if (CommonUtil.isNull(sb01Vo.getText())) {
+		if (StringUtils.isEmpty(sb01Vo.getText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 
@@ -60,7 +62,7 @@ public class SB01ServiceImpl implements SB01Service {
 		MultipartFile video = null;
 		Iterator<String> itr = request.getFileNames();
 
-		if (CommonUtil.isNull(itr)) {
+		if (ObjectUtils.isEmpty(itr)) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_3);
 		}
 		while (itr.hasNext()) {
@@ -117,7 +119,7 @@ public class SB01ServiceImpl implements SB01Service {
 	@Override
 	public List<SB01Vo> selectFindSB01Vo(SB01Vo sb01Vo) throws Exception {
 
-		if (CommonUtil.isNull(sb01Vo.getFindText())) {
+		if (StringUtils.isEmpty(sb01Vo.getFindText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
 		} else if (sb01Vo.getSelection() == 1) { // 제목으로 검색
 			sb01Vo.setTitle(sb01Vo.getFindText());
@@ -137,7 +139,7 @@ public class SB01ServiceImpl implements SB01Service {
 		sb01Dao.clickSB01Vo(sb01Vo);
 		sb01Vo.setSessionid(userid);
 		SB01Vo sb01vo = sb01Dao.selectOneSB01Vo(sb01Vo);
-		if (!CommonUtil.isNull(sb01vo)) {
+		if (!ObjectUtils.isEmpty(sb01vo)) {
 			if (userid.equals(sb01vo.getUserid())) {
 				sb01vo.setDeleteYn(true);
 			}
@@ -152,7 +154,7 @@ public class SB01ServiceImpl implements SB01Service {
 		MultipartFile video = null;
 		Iterator<String> itr = request.getFileNames();
 
-		if (!CommonUtil.isNull(itr)) {
+		if (!ObjectUtils.isEmpty(itr)) {
 			while (itr.hasNext()) {
 				video = request.getFile(itr.next());
 			}

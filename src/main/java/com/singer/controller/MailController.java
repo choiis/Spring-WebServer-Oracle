@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.singer.common.CommonUtil;
 import com.singer.exception.AppException;
 import com.singer.util.MailUtil;
 import com.singer.vo.MailVo;
@@ -37,7 +37,7 @@ public class MailController extends BaseController {
 		while (itr.hasNext()) {
 			file = request.getFile(itr.next());
 		}
-		if (!CommonUtil.isNull(file) && file.getSize() != 0) {
+		if (!ObjectUtils.isEmpty(file) && file.getSize() != 0) {
 			mailVo.setFile(file);
 		}
 		log.debug("sendMail " + mailVo);

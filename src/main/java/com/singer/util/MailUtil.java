@@ -9,7 +9,6 @@ import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -93,13 +92,7 @@ public class MailUtil {
 
 			}
 			mailSender.send(message);
-		} catch (IOException e) {
-			log.debug("MAIL FAIL " + e.getLocalizedMessage());
-			return RESULT_CODE.FAIL.getValue();
-		} catch (AddressException e) {
-			log.debug("MAIL FAIL " + e.getLocalizedMessage());
-			return RESULT_CODE.FAIL.getValue();
-		} catch (MessagingException e) {
+		} catch (IOException | MessagingException e) {
 			log.debug("MAIL FAIL " + e.getLocalizedMessage());
 			return RESULT_CODE.FAIL.getValue();
 		} finally {

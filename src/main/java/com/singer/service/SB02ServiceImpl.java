@@ -5,12 +5,12 @@ import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
+import org.apache.cxf.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
-import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
 import com.singer.dao.SB02Dao;
 import com.singer.vo.SB02Vo;
@@ -23,7 +23,7 @@ public class SB02ServiceImpl implements SB02Service {
 
 	@Override
 	public int insertSB02Vo(SB02Vo sb02Vo, String userid) throws Exception {
-		if (CommonUtil.isNull(sb02Vo.getText())) {
+		if (StringUtils.isEmpty(sb02Vo.getText())) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 		sb02Vo.setUserid(userid);
