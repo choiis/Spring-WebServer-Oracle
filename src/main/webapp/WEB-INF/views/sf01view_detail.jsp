@@ -33,7 +33,7 @@
 			if(confirm("삭제할까요?")) {
 				
 				gfn_ajaxRest("sf01/" + parseInt($("#seq01").val()), "DELETE" , function() {
-					location.href='/sf01page';
+					location.href='/sf01/page';
 				});		
 			}
 		});

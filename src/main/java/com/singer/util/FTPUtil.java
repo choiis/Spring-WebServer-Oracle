@@ -22,7 +22,7 @@ import lombok.AccessLevel;
 import lombok.Cleanup;
 import lombok.NoArgsConstructor;
 
-@Component("ftpUtil")
+@Component
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FTPUtil {
 
@@ -31,7 +31,7 @@ public class FTPUtil {
 	@Resource(name = "properties")
 	private Properties properties;
 
-    private String ftpIp; // FTP 가상머신 서버의 ip
+	private String ftpIp; // FTP 가상머신 서버의 ip
 
 	private int port;
 
@@ -47,7 +47,7 @@ public class FTPUtil {
 		port = Integer.parseInt(properties.getProperty("global.ftp.port"));
 		username = properties.getProperty("global.ftp.username");
 		password = properties.getProperty("global.ftp.password");
-		path = properties.getProperty("global.ftp.path");
+		path = properties.getProperty("global.temp.path");
 	}
 
 	private FTPClient initFTPClient() {

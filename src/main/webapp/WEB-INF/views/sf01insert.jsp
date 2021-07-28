@@ -58,7 +58,7 @@
 	            success:function(data) {
 	            	if(data.result === 1) {
 	            		alert("게시물 입력 완료");
-		        		location.href = "/sf01page";		
+		        		location.href = "/sf01/page";		
 	            	}
 	            },
 	            error : function(data, status, error) {

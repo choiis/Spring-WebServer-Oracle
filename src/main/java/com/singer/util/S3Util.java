@@ -22,7 +22,7 @@ import com.amazonaws.services.s3.model.S3Object;
 @Component("s3util")
 public class S3Util {
 
-	private Regions clientRegion = Regions.AP_NORTHEAST_2;
+	private Regions clientRegion = Regions.AP_NORTHEAST_1;
 
 	@Resource(name = "properties")
 	private Properties properties;

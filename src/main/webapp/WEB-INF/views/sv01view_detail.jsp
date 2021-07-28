@@ -98,7 +98,7 @@
 			if(confirm("삭제할까요?")) {
 				
 				gfn_ajaxRest("sv01/" + parseInt($("#seq").val()), "DELETE" , function() {
-					location.href='/sv01page';
+					location.href='/sv01/page';
 				});		
 			}
 		});

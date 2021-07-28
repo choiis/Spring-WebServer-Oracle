@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.internet.InternetAddress;
@@ -15,12 +16,11 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.support.ResourcePropertySource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -30,6 +30,8 @@ import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
 import com.singer.vo.MailVo;
 
+import lombok.Cleanup;
+
 @Component("mailUtil")
 public class MailUtil {
 
@@ -37,6 +39,9 @@ public class MailUtil {
 	private JavaMailSenderImpl mailSender;
 
 	private final Log log = LogFactory.getLog(MailUtil.class);
+
+	@Inject
+	private PropertyUtil propertyUtil;
 
 	public int mailSend(MailVo mailVo) throws AppException {
 
@@ -48,12 +53,14 @@ public class MailUtil {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 
-		InputStream is = null;
 		File file = null;
-		FileOutputStream fos = null;
-		ResourcePropertySource resourse;
-
 		try {
+
+			@Cleanup
+			InputStream is = null;
+			@Cleanup
+			FileOutputStream fos = null;
+
 			MimeMessage message = mailSender.createMimeMessage();
 			StringBuilder setfrom = new StringBuilder(mailVo.getSender());
 			setfrom.append("@company.co.kr");
@@ -67,19 +74,13 @@ public class MailUtil {
 			if (!ObjectUtils.isEmpty(mailVo.getFile()) && mailVo.getFile().getSize() != 0) {
 				String fileName = new String(mailVo.getFile().getOriginalFilename().getBytes("KSC5601"), "8859_1");
 				is = mailVo.getFile().getInputStream();
-				resourse = new ResourcePropertySource(new ClassPathResource("conf/property/global.properties"));
-				StringBuilder path = new StringBuilder((String) resourse.getProperty("global.mailFile.path"));
+				StringBuilder path = new StringBuilder(propertyUtil.getS3FilePath());
 				path.append("/");
 				path.append(fileName);
 				file = new File(path.toString());
 				fos = new FileOutputStream(path.toString());
-				int read = 0;
 
-				byte[] bytes = new byte[1024];
-
-				while ((read = is.read(bytes)) != -1) {
-					fos.write(bytes, 0, read);
-				}
+				IOUtils.copy(is, fos);
 
 				MimeBodyPart mimeBodyPart = new MimeBodyPart();
 				FileDataSource dataSource = new FileDataSource(file);
@@ -96,20 +97,9 @@ public class MailUtil {
 			log.debug("MAIL FAIL " + e.getLocalizedMessage());
 			return RESULT_CODE.FAIL.getValue();
 		} finally {
-			try {
-				if (is != null) {
-					is.close();
-				}
-				if (fos != null) {
-					fos.close();
-				}
-				if (file != null) {
-					file.delete();
-				}
-			} catch (IOException e) {
-				log.debug("Resource delete" + e.getLocalizedMessage());
+			if (file != null) {
+				file.delete();
 			}
-
 		}
 
 		log.debug("MAIL SUCCESS");

@@ -1,8 +1,8 @@
 package com.singer.controller;
 
 import java.io.IOException;
-import java.util.Properties;
-import javax.annotation.Resource;
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.UrlResource;
@@ -18,19 +18,21 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.singer.util.PropertyUtil;
+
 @Controller
 public class StreamController extends BaseController {
 
 	private final Log log = LogFactory.getLog(StreamController.class);
 
-	@Resource(name = "properties")
-	private Properties properties;
+	@Inject
+	private PropertyUtil propertyUtil;
 
 	@RequestMapping(value = "/comm/videoStreaming", method = RequestMethod.GET)
 	public ResponseEntity<ResourceRegion> videoStreaming(@RequestHeader HttpHeaders headers) throws IOException {
 		log.info("videoStreaming!!!");
 
-		String streamurl = properties.getProperty("global.stream.path");
+		String streamurl = propertyUtil.getS3StreamPath();
 		UrlResource video = new UrlResource(streamurl);
 		ResourceRegion region = getResourceRegion(video, headers);
 

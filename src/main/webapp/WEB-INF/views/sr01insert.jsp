@@ -80,7 +80,7 @@
 	            data : formData, 
 	            success : function(data) {
 	            	if(confirm("맛집 등록되었습니다!")) {
-						location.href='/sr01page';
+						location.href='/sr01/page';
 					}
 	            }, // success 
 	            error : function(data, status, error) {

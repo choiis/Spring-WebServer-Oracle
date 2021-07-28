@@ -1,13 +1,10 @@
 package com.singer.service;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
+import com.singer.util.PropertyUtil;
 import com.singer.util.S3Util;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants.RESULT_CODE;
@@ -29,8 +27,6 @@ import com.singer.dao.SB01Dao;
 import com.singer.dao.SB02Dao;
 import com.singer.vo.SB01Vo;
 import com.singer.vo.SB02Vo;
-
-import lombok.Cleanup;
 
 @Service
 public class SB01ServiceImpl implements SB01Service {
@@ -44,8 +40,8 @@ public class SB01ServiceImpl implements SB01Service {
 	@Inject
 	S3Util s3Util;
 
-	@Resource(name = "properties")
-	private Properties properties;
+	@Inject
+	private PropertyUtil propertyUtil;
 
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
@@ -82,20 +78,9 @@ public class SB01ServiceImpl implements SB01Service {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
 		}
 
-		String path = properties.getProperty("global.ftp.path");
+		String path = propertyUtil.getS3FilePath();
 		File file = new File(path + "/" + sb.toString());
-
-		@Cleanup
-		InputStream in = video.getInputStream();
-
-		@Cleanup
-		FileOutputStream fos = new FileOutputStream(file);
-		byte[] bytes = new byte[1024];
-		int read;
-
-		while ((read = in.read(bytes)) != -1) {
-			fos.write(bytes, 0, read);
-		}
+		video.transferTo(file);
 
 		s3Util.putS3File(sb.toString(), file);
 
@@ -172,20 +157,9 @@ public class SB01ServiceImpl implements SB01Service {
 				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
 			}
 
-			String path = properties.getProperty("global.ftp.path");
+			String path = propertyUtil.getS3FilePath();
 			File file = new File(path + "/" + sb.toString());
-
-			@Cleanup
-			InputStream in = video.getInputStream();
-
-			@Cleanup
-			FileOutputStream fos = new FileOutputStream(file);
-			byte[] bytes = new byte[1024];
-			int read;
-
-			while ((read = in.read(bytes)) != -1) {
-				fos.write(bytes, 0, read);
-			}
+			video.transferTo(file);
 			String deletedPath = sb01Dao.selectVideo(sb01Vo);
 			s3Util.deleteS3File(deletedPath); // S3 파일삭제
 

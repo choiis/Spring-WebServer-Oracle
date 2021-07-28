@@ -76,7 +76,7 @@
 			if(confirm("삭제할까요?")) {
 				
 				gfn_ajaxRest("sr01/" + parseInt($("#seq").val()), "DELETE" , function() {
-					location.href='/sr01page';
+					location.href='/sr01/page';
 				});		
 			}
 		});

@@ -1,11 +1,13 @@
 package com.singer.service;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import javax.inject.Inject;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +22,12 @@ import com.singer.dao.SF01Dao;
 import com.singer.dao.SF02Dao;
 import com.singer.exception.AppException;
 import com.singer.exception.ExceptionMsg;
-import com.singer.util.FTPUtil;
+import com.singer.util.PropertyUtil;
+import com.singer.util.S3Util;
 import com.singer.vo.SF01Vo;
 import com.singer.vo.SF02Vo;
+
+import lombok.Cleanup;
 
 @Service
 public class SF01ServiceImpl implements SF01Service {
@@ -34,7 +39,12 @@ public class SF01ServiceImpl implements SF01Service {
 	private SF02Dao sf02Dao;
 
 	@Inject
-	FTPUtil ftp;
+	private PropertyUtil propertyUtil;
+
+	private static final String S3_FILE_PATH = "sf01/";
+
+	@Inject
+	private S3Util s3Util;
 
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
@@ -47,7 +57,7 @@ public class SF01ServiceImpl implements SF01Service {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
 		}
 
-		MultipartFile file = null;
+		MultipartFile multipartFile = null;
 		Iterator<String> itr = request.getFileNames();
 
 		if (ObjectUtils.isEmpty(itr)) {
@@ -57,19 +67,21 @@ public class SF01ServiceImpl implements SF01Service {
 		sf01Vo.setRegdate(DateUtil.getTodayTime());
 
 		while (itr.hasNext()) {
-			file = request.getFile(itr.next());
+			multipartFile = request.getFile(itr.next());
 		}
-		String filename = file.getOriginalFilename();
+		String filename = multipartFile.getOriginalFilename();
 		sf01Vo.setFilename(filename);
 
 		String ftpfilename = sf01Vo.getRegdate() + "." + CommonUtil.getExtensionName(filename);
 
 		sf01Vo.setFtpfilename(ftpfilename);
-		int ok = sf01Dao.insertSF01Vo(sf01Vo);
+		File file = new File(propertyUtil.getS3FilePath() + "/" + ftpfilename);
+		multipartFile.transferTo(file);
 
-		ftp.sendFile(ftpfilename, file);
+		s3Util.putS3File(S3_FILE_PATH + ftpfilename, file);
+		file.delete();
 
-		return ok;
+		return sf01Dao.insertSF01Vo(sf01Vo);
 	}
 
 	@Override
@@ -155,7 +167,7 @@ public class SF01ServiceImpl implements SF01Service {
 
 		sf01Vo = sf01Dao.selectFile(sf01Vo);
 
-		ftp.deleteFile(sf01Vo.getFtpfilename());
+		s3Util.deleteS3File(S3_FILE_PATH + sf01Vo.getFtpfilename());
 
 		return sf01Dao.deleteSF01Vo(sf01Vo);
 	}
@@ -166,11 +178,15 @@ public class SF01ServiceImpl implements SF01Service {
 		sf01Vo = sf01Dao.selectFile(sf01Vo);
 
 		String filename = sf01Vo.getFtpfilename();
-		File downloadFile = ftp.downFile(filename);
+		@Cleanup
+		InputStream inputStream = s3Util.getS3FileStream(S3_FILE_PATH + filename);
+
+		File file = new File(propertyUtil.getS3FilePath() + "/" + filename);
+		FileUtils.copyInputStreamToFile(inputStream, file);
 
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
-		hashMap.put("downfile", downloadFile);
+		hashMap.put("downfile", file);
 		hashMap.put("filename", sf01Vo.getFilename());
 
 		return hashMap;

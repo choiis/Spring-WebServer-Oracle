@@ -34,7 +34,7 @@
 			if(confirm("삭제할까요?")) {
 				
 				gfn_ajaxRest("sb01/" + parseInt($("#seq01").val()), "DELETE" , function() {
-					location.href='/sb01page';
+					location.href='/sb01/page';
 				});
 			}
 		});
