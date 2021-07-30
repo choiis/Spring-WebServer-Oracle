@@ -5,8 +5,11 @@
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
@@ -16,7 +19,9 @@
 	<context:component-scan base-package="com.singer"/>
 
 	<import resource="classpath:conf/spring/context-*.xml"/>
-
+    <util:properties id="global" location="classpath:/conf/property/global.properties"/>
+    <util:properties id="kafka" location="classpath:/conf/property/kafka.properties"/>
+	
 	<context:property-placeholder location="classpath:/conf/property/global.properties" ignore-unresolvable="true"/>
 	<aop:config/>
 </beans>

@@ -3,47 +3,30 @@ package com.singer.util;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 
 @Component("s3util")
 public class S3Util {
 
-	private Regions clientRegion = Regions.AP_NORTHEAST_1;
-
-	@Resource(name = "properties")
-	private Properties properties;
-
-	private String access;
-	private String secret;
+	@Inject
 	private AmazonS3 s3client;
 
 	private String bucketName;
 
+	@Inject
+	private PropertyUtil propertyUtil;
+
 	@PostConstruct
 	private void init() throws Exception {
-
-		access = properties.getProperty("global.aws.s3access");
-		secret = properties.getProperty("global.aws.s3secret");
-		bucketName = properties.getProperty("global.aws.s3bucket");
-
-		AWSCredentials credentials = new BasicAWSCredentials(access, secret);
-
-		s3client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials))
-				.withRegion(clientRegion).build();
+		bucketName = propertyUtil.getS3Bucket();
 	}
 
 	public InputStream getS3FileStream(String fileName) {

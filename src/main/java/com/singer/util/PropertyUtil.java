@@ -1,10 +1,6 @@
 package com.singer.util;
 
-import java.util.Properties;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import lombok.AccessLevel;
@@ -16,17 +12,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PropertyUtil {
 
-	@Resource(name = "properties")
-	@Getter(value = AccessLevel.NONE)
-	private Properties properties;
-
+	@Value("#{global['global.stream.path']}")
 	private String s3StreamPath;
 
+	@Value("#{global['global.temp.path']}")
 	private String s3FilePath;
 
-	@PostConstruct
-	private void init() {
-		s3FilePath = properties.getProperty("global.temp.path");
-		s3StreamPath = properties.getProperty("global.stream.path");
-	}
+	@Value("#{global['global.aws.s3bucket']}")
+	private String s3Bucket;
+
+	@Value("#{global['global.aws.s3access']}")
+	private String s3access;
+
+	@Value("#{global['global.aws.s3secret']}")
+	private String s3secret;
+
+	@Value("#{global['global.ftp.server']}")
+	private String ftpServer;
+
+	@Value("#{global['global.ftp.port']}")
+	private int ftpPort;
+
+	@Value("#{global['global.ftp.username']}")
+	private String ftpUsername;
+
+	@Value("#{global['global.ftp.password']}")
+	private String ftpPassword;
+
 }

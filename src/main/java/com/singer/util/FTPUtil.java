@@ -5,10 +5,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,8 +27,8 @@ public class FTPUtil {
 
 	private final Log log = LogFactory.getLog(FTPUtil.class);
 
-	@Resource(name = "properties")
-	private Properties properties;
+	@Inject
+	private PropertyUtil propertyUtil;
 
 	private String ftpIp; // FTP 가상머신 서버의 ip
 
@@ -43,11 +42,11 @@ public class FTPUtil {
 
 	@PostConstruct
 	private void init() {
-		ftpIp = properties.getProperty("global.ftp.server");
-		port = Integer.parseInt(properties.getProperty("global.ftp.port"));
-		username = properties.getProperty("global.ftp.username");
-		password = properties.getProperty("global.ftp.password");
-		path = properties.getProperty("global.temp.path");
+		ftpIp = propertyUtil.getFtpServer();
+		port = propertyUtil.getFtpPort();
+		username = propertyUtil.getFtpUsername();
+		password = propertyUtil.getFtpPassword();
+		path = propertyUtil.getS3FilePath();
 	}
 
 	private FTPClient initFTPClient() {
