@@ -3,10 +3,9 @@ package com.singer.batch;
 import java.io.File;
 import java.util.function.Consumer;
 
-import javax.inject.Inject;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -14,12 +13,15 @@ import org.springframework.stereotype.Component;
 
 import com.singer.util.PropertyUtil;
 
+import lombok.Setter;
+
+@Setter
 @Component
+@DisallowConcurrentExecution
 public class DeleteFileBatch extends QuartzJobBean {
 
 	private final Log log = LogFactory.getLog(DeleteFileBatch.class);
 
-	@Inject
 	private PropertyUtil propertyUtil;
 
 	// FTP다운 경로의 파일 삭제
