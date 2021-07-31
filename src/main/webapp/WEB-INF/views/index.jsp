@@ -66,21 +66,29 @@
         	"device" : gfn_getDevice()
         };
 		
-		gfn_ajaxRequestBody("login","POST" , sendData , function(data) {
-			if(data.code == 1){
-				
-				var redirect = "${redirect_uri}";
-				if(gfn_isNull(redirect) || gfn_isNumber(redirect)) {
+		$.ajax({
+		    url : "/login",
+		    type : "POST",
+		    cache : false,
+		    data : gfn_jsonSerialize(sendData),
+		    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+		    success : function(data,status) {
+		    	var redirect = "${redirect_uri}";
+				if ((gfn_isNull(redirect) || gfn_isNumber(redirect)) && data === "SUCCESS") {
 					location.href='/main';		
-				} else {
+				} else if (data === "SUCCESS") {
 					location.href=redirect;
+				} else {
+					alert("아이디와 비밀번호를 확인해 주세요");
 				}
-				
-			} else {
-				alert(data.msg);
-			}
-			
-		});	
+		    },
+		    error : function(data, status, error) {
+		    	debugger;
+		    	var errorData = JSON.parse(data.responseText);
+		    	alert(errorData.errorCode + " " + errorData.errorMsg);
+		    }
+		});
+		
 	}
 </script>
 	<div class="container">

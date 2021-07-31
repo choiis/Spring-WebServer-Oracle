@@ -12,8 +12,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,7 +61,7 @@ public class LoginController {
 
 	@ResponseBody
 	@PostMapping(value = "/login")
-	public HashMap<String, Object> login(@RequestBody SM01Vo sm01Vo, HttpSession session, HttpServletRequest request)
+	public HashMap<String, Object> login(@ModelAttribute SM01Vo sm01Vo, HttpSession session, HttpServletRequest request)
 			throws Exception {
 		log.debug("sm01Vo : " + sm01Vo);
 
