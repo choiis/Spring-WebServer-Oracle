@@ -1,5 +1,7 @@
 package com.singer.security;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
@@ -10,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import com.singer.service.SM01Service;
 import com.singer.vo.SM01Vo;
@@ -29,15 +30,13 @@ public class AuthProvider implements AuthenticationProvider {
 		SM01Vo sm01Vo = new SM01Vo();
 		try {
 			sm01Vo.setUserid(userid);
-			sm01Vo.setPasswd(passwd);
-			sm01Vo = sm01Service.login(sm01Vo);
+			sm01Vo = Optional.of(sm01Service.login(sm01Vo))
+					.orElseThrow(() -> new BadCredentialsException("account not found"));
 
-			if (!ObjectUtils.isEmpty(sm01Vo) && StringUtils.equals(passwd, sm01Vo.getPasswd())) {
+			if (StringUtils.equals(passwd, sm01Vo.getPasswd())) {
 				return new UsernamePasswordAuthenticationToken(userid, passwd);
-			} else if (!ObjectUtils.isEmpty(sm01Vo) && !StringUtils.equals(passwd, sm01Vo.getPasswd())) {
-				throw new BadCredentialsException("password mismatch");
 			} else {
-				throw new BadCredentialsException("account not found");
+				throw new BadCredentialsException("password mismatch");
 			}
 		} catch (Exception e) {
 			throw new BadCredentialsException("SQL fail");
