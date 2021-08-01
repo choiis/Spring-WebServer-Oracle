@@ -2,6 +2,8 @@ package com.singer.bean;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.view.BeanNameViewResolver;
 
 import com.singer.view.BlobDownloadView;
 import com.singer.view.ExcelView;
@@ -9,6 +11,20 @@ import com.singer.view.FileDownloadView;
 
 @Configuration
 public class ViewConfigs {
+
+	@Bean(name = "viewNameResolver")
+	public BeanNameViewResolver nameViewResolver() {
+		BeanNameViewResolver nameViewResolver = new BeanNameViewResolver();
+		nameViewResolver.setOrder(0);
+		return nameViewResolver;
+	}
+
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver multiPartResolver() {
+		CommonsMultipartResolver multiPartResolver = new CommonsMultipartResolver();
+		multiPartResolver.setMaxUploadSize(10485760);
+		return multiPartResolver;
+	}
 
 	@Bean(name = "excelView")
 	public ExcelView excelView() {

@@ -2,10 +2,12 @@ package com.singer.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -26,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
 		.antMatchers("/", "/resources/**", "/logout", "/sm**", "/main", "/sb**", "/sb**", "/sf**",
-				"/sr**", "/sv**", "/chat/**", "/comm/*");
+				"/sr**", "/sv**", "/chat/**", "/comm/*", "/index");
 
 	}
 
@@ -35,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 
 				//.antMatchers("/", "/sm**", "/main", "/sb**", "/sb**", "/sf**", "/sr**", "/sv**", "/chat/**", "/comm/*")
-		.antMatchers("/main")		
+		.antMatchers("/main", "/index")		
 		.permitAll()
 		.and()
 		.csrf().disable()
@@ -44,11 +46,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.usernameParameter("userid").passwordParameter("passwd")
 				.successHandler(successHandler)
 				.failureHandler(failureHandler)
-				.and().authenticationProvider(authenticationProvider);
+				.and().authenticationProvider(authenticationProvider)
 				
-				http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
-				.invalidateHttpSession(true);
+				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logoutUrl","POST")).logoutSuccessUrl("/index")
+				.invalidateHttpSession(true).permitAll();
 
+	}
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
 	}
 
 }

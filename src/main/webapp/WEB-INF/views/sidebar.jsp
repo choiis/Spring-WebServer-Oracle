@@ -57,7 +57,7 @@
             <ul id="menuList" class="sub">
             </ul>
       	</li>
-      	<form id="out" ACTION="/logout" METHOD="post">
+      	<form id="out" ACTION="/logoutUrl" METHOD="POST">
       	</form>
     </ul>
 

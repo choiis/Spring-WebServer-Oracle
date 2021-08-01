@@ -40,7 +40,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		String userid = (String) session.getAttribute("userid");
 		String uri = request.getRequestURI();
 		// 세션 만료 케이스
-		if ("/sessionExpire".equals(uri) || "/".equals(uri) || "/forwardError".equals(uri) || "/error".equals(uri)) {
+		if ("/index".equals(uri) || "/sessionExpire".equals(uri) || "/".equals(uri) || "/forwardError".equals(uri)
+				|| "/error".equals(uri)) {
 			return true;
 		}
 
