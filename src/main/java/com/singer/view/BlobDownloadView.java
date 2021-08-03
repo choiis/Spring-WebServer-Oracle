@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
@@ -21,7 +23,8 @@ import oracle.sql.BLOB;
 
 public class BlobDownloadView extends AbstractView {
 	public BlobDownloadView() {
-		setContentType("apllication/download; charset=utf-8");
+		// setContentType("apllication/download; charset=utf-8");
+		setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -37,8 +40,8 @@ public class BlobDownloadView extends AbstractView {
 		res.setContentLength((int) fileblob.length());
 		String contentDisposition = ContentDisposition.builder("attachment").filename(fileName, StandardCharsets.UTF_8)
 				.build().toString();
-		res.setHeader("Content-Disposition", contentDisposition);
-		res.setHeader("Content-Transfer-Encoding", "binary");
+		res.addHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
+		res.addHeader(HttpHeaders.TRANSFER_ENCODING, "binary");
 		@Cleanup
 		OutputStream out = res.getOutputStream();
 
