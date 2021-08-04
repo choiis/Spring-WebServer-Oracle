@@ -1,9 +1,8 @@
 package com.singer.common;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -13,107 +12,79 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DateUtil {
 
-	protected static SimpleDateFormat sdfDay_8 = new SimpleDateFormat("yyyyMMdd");
-	protected static SimpleDateFormat sdfDay_14 = new SimpleDateFormat("yyyyMMddHHmmss");
+	protected static DateTimeFormatter sdfDay_14 = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+	protected static DateTimeFormatter sdfDay_8 = DateTimeFormatter.ofPattern("yyyyMMdd");
 
 	/**
 	 * 오늘 날짜를 반환한다
 	 */
 	public static String getToday() {
-		Calendar cal = Calendar.getInstance();
-
-		return sdfDay_8.format(cal.getTime());
+		LocalDate now = LocalDate.now();
+		return now.format(sdfDay_8);
 	}
 
 	/**
 	 * 오늘 상세날짜를 반환한다
 	 */
 	public static String getTodayTime() {
-		Calendar cal = Calendar.getInstance();
-
-		return sdfDay_14.format(cal.getTime());
+		LocalDateTime now = LocalDateTime.now();
+		return now.format(sdfDay_14);
 	}
 
-	private static Date stringToDayTime(String date) {
-		try {
-			return sdfDay_8.parse(date);
-		} catch (ParseException e) {
-			throw new IllegalArgumentException();
-		}
+	public static LocalDate stringToDayTime(String date) {
+		return LocalDate.parse(date, sdfDay_8);
 	}
 
-	private static Date stringDetailToDate(String date) {
-		try {
-			return sdfDay_14.parse(date);
-		} catch (ParseException e) {
-			throw new IllegalArgumentException();
-		}
+	public static LocalDateTime stringDetailToDate(String date) {
+		return LocalDateTime.parse(date, sdfDay_14);
 	}
 
-	protected static String addMonth_8(String str, int month) {
-		Date date = stringToDayTime(str);
-
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.MONTH, month);
-
-		return sdfDay_8.format(cal.getTime());
+	protected static String addMonth_8(int month) {
+		LocalDate now = LocalDate.now();
+		return now.plusMonths(month).format(sdfDay_8);
 	}
 
-	protected static String addMonth_14(String str, int month) {
-		Date date = stringDetailToDate(str);
-
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.MONTH, month);
-
-		return sdfDay_14.format(cal.getTime());
+	protected static String addMonth_14(int month) {
+		LocalDateTime now = LocalDateTime.now();
+		return now.plusMonths(month).format(sdfDay_14);
 	}
 
 	/**
 	 * 날짜에 월을 더한다
 	 */
-	public static String addMonth(String str, int month) {
-		if (str.length() == 8) {
-			return addMonth_8(str, month);
-		} else if (str.length() == 14) {
-			return addMonth_14(str, month);
-		} else {
-			throw new IllegalArgumentException();
-		}
+	public static String getAddMonth(int month) {
+		return addMonth_8(month);
 	}
 
-	protected static String addDay_8(String str, int day) {
-		Date date = stringToDayTime(str);
-
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.DATE, day);
-
-		return sdfDay_8.format(cal.getTime());
+	/**
+	 * 날짜에 월을 더한다
+	 */
+	public static String getAddMonthTime(int month) {
+		return addMonth_14(month);
 	}
 
-	protected static String addDay_14(String str, int day) {
-		Date date = stringDetailToDate(str);
+	protected static String addDay_8(int day) {
+		LocalDate now = LocalDate.now();
+		return now.plusDays(day).format(sdfDay_8);
+	}
 
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.DATE, day);
-
-		return sdfDay_14.format(cal.getTime());
+	protected static String addDay_14(int day) {
+		LocalDateTime now = LocalDateTime.now();
+		return now.plusDays(day).format(sdfDay_14);
 	}
 
 	/**
 	 * 날짜에 일을 더한다
 	 */
-	public static String addDay(String str, int day) {
-		if (str.length() == 8) {
-			return addDay_8(str, day);
-		} else if (str.length() == 14) {
-			return addDay_14(str, day);
-		} else {
-			throw new IllegalArgumentException();
-		}
+	public static String getAddDay(int day) {
+		return addDay_8(day);
+	}
+
+	/**
+	 * 날짜에 일을 더한다
+	 */
+	public static String getAddDayTime(int day) {
+		return addDay_14(day);
 	}
 
 	/**
