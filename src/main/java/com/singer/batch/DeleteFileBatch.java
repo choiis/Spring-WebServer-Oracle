@@ -1,7 +1,12 @@
 package com.singer.batch;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,13 +33,21 @@ public class DeleteFileBatch extends QuartzJobBean {
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		String path = propertyUtil.getS3FilePath();
-		File deletePath = new File(path);
-		Consumer<File> consumer = filePath -> {
-			File[] files = filePath.listFiles();
-			log.debug("There is " + files.length + " files in path");
-			log.debug("file delete");
-			for (File file : files) {
-				file.delete();
+		Path deletePath = Paths.get(path);
+		Consumer<Path> consumer = filePath -> {
+			Stream<Path> stream;
+			try {
+				stream = Files.list(deletePath);
+				Iterator<Path> files = stream.iterator();
+				while (files.hasNext()) {
+					Path file = files.next();
+					log.debug(file.getFileName());
+					if (!Files.isDirectory(file)) {
+						Files.delete(file);
+					}
+				}
+			} catch (IOException e) {
+				log.error(e, e);
 			}
 		};
 		consumer.accept(deletePath);

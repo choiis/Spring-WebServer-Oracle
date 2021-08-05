@@ -1,11 +1,15 @@
 package com.singer.common;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.util.ObjectUtils;
 
 import com.singer.common.Constants.BROWSER_CODE;
+import com.singer.exception.ClientException;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -46,7 +50,7 @@ public class CommonUtil {
 	 * 첨부문서 파일 확인
 	 */
 	public static boolean chkDOCFile(String fileName) throws Exception {
-		if (fileName == null || "".equals(fileName))
+		if (StringUtils.isEmpty(fileName))
 			throw new Exception("NullFileException");
 		if (fileName.toLowerCase().endsWith(".doc") || fileName.toLowerCase().endsWith(".docx")
 				|| fileName.toLowerCase().endsWith(".xls") || fileName.toLowerCase().endsWith(".xlsx")
@@ -61,7 +65,7 @@ public class CommonUtil {
 	 * 이미지 파일 확인
 	 */
 	public static boolean chkIMGFile(String fileName) throws Exception {
-		if (fileName == null || "".equals(fileName))
+		if (StringUtils.isEmpty(fileName))
 			throw new Exception("NullFileException");
 		if (fileName.toLowerCase().endsWith(".png") || fileName.toLowerCase().endsWith(".bmp")
 				|| fileName.toLowerCase().endsWith(".jpg") || fileName.toLowerCase().endsWith(".jpeg")
@@ -77,7 +81,7 @@ public class CommonUtil {
 	 * 동영상 파일 확인
 	 */
 	public static boolean chkVideoFile(String fileName) throws Exception {
-		if (fileName == null || "".equals(fileName))
+		if (StringUtils.isEmpty(fileName))
 			throw new Exception("NullFileException");
 		if (fileName.toLowerCase().endsWith(".avi") || fileName.toLowerCase().endsWith(".mp4")
 				|| fileName.toLowerCase().endsWith(".wmv") || fileName.toLowerCase().endsWith(".asf")
@@ -94,7 +98,7 @@ public class CommonUtil {
 	 * 오디오 파일 확인
 	 */
 	public static boolean chkAudioFile(String fileName) throws Exception {
-		if (fileName == null || "".equals(fileName))
+		if (StringUtils.isEmpty(fileName))
 			throw new Exception("NullFileException");
 		if (fileName.toLowerCase().endsWith(".mp3") || fileName.toLowerCase().endsWith(".ogg")
 				|| fileName.toLowerCase().endsWith(".wma") || fileName.toLowerCase().endsWith(".wav")
@@ -108,7 +112,7 @@ public class CommonUtil {
 	/**
 	 * 파일명 확장자 추출
 	 */
-	public static String getExtensionName(String fileName) {
+	public static String getExtensionName(@NonNull String fileName) {
 		int idx = fileName.lastIndexOf(".");
 		if (idx != -1) {
 			String ext = fileName.substring(idx + 1);
@@ -144,8 +148,9 @@ public class CommonUtil {
 
 	}
 
-	public static BROWSER_CODE getBrower(HttpServletRequest request) {
-		String browserInfo = request.getHeader("User-Agent");
+	public static BROWSER_CODE getBrower(HttpServletRequest request) throws ClientException {
+		String browserInfo = Optional.of(request.getHeader("User-Agent"))
+				.orElseThrow(() -> new ClientException("BrowserNotFound"));
 
 		if (browserInfo.indexOf("Chrome") > -1) {
 			return BROWSER_CODE.CHROME;
