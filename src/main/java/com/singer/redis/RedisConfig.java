@@ -26,6 +26,9 @@ public class RedisConfig {
 
 	private final Log log = LogFactory.getLog(RedisConfig.class);
 
+	private final String REDIS_HOST = "127.0.0.1";
+	private final int REDIS_PORT = 6379;
+
 	@Bean(name = "jedisPoolConfig")
 	public JedisPoolConfig jedisPoolConfig() {
 		return new JedisPoolConfig();
@@ -35,8 +38,8 @@ public class RedisConfig {
 	@Bean
 	public JedisConnectionFactory jedisConnectionFactory() {
 		JedisConnectionFactory conn = new JedisConnectionFactory();
-		conn.setHostName("127.0.0.1");
-		conn.setPort(6379);
+		conn.setHostName(REDIS_HOST);
+		conn.setPort(REDIS_PORT);
 		return conn;
 	}
 
@@ -59,7 +62,7 @@ public class RedisConfig {
 		LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
 				.commandTimeout(Duration.ofSeconds(2)).shutdownTimeout(Duration.ZERO).build();
 
-		return new LettuceConnectionFactory(new RedisStandaloneConfiguration("localhost", 6379), clientConfig);
+		return new LettuceConnectionFactory(new RedisStandaloneConfiguration(REDIS_HOST, REDIS_PORT), clientConfig);
 	}
 
 	@Bean

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 
 import com.singer.common.Constants.USER_CODE;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,9 +16,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 public class CommVo extends SuperVo {
 
-	private static final long serialVersionUID = 924492385649962278L;
+	private static final long serialVersionUID = -8496452258072990844L;
 
 	private int seq;
 

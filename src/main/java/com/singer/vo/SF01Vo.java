@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.singer.common.CommonUtil;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +14,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 public class SF01Vo extends BoardVo {
 
-	private static final long serialVersionUID = 3928577641125222184L;
+	private static final long serialVersionUID = 4512643967365591032L;
 	private String filename;
 	private String ftpfilename;
 

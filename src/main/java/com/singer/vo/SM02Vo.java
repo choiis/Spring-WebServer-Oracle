@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.singer.common.CommonUtil;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,9 +12,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 public class SM02Vo extends BoardVo {
 
-	private static final long serialVersionUID = 6789449111366146090L;
+	private static final long serialVersionUID = -2264127018331896497L;
 	private List<SM02Vo> list;
 
 	public void setList(List<SM02Vo> list) {

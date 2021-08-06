@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.singer.common.CommonUtil;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +14,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 public class SV01Vo extends BoardVo {
 
-	private static final long serialVersionUID = 2664458173473543079L;
+	private static final long serialVersionUID = -3009192462921744979L;
 	private int recall;
 	private int votedCnt;
 	private int multiselect;

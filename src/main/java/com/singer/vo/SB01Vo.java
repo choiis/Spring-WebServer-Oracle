@@ -5,6 +5,7 @@ import java.util.List;
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants.YES_NO;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,9 +15,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 public class SB01Vo extends BoardVo {
 
-	private static final long serialVersionUID = 5522985426890393310L;
+	private static final long serialVersionUID = -6895941086562069423L;
 
 	private String video;
 

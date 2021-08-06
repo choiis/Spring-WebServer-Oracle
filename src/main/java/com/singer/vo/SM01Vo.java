@@ -8,6 +8,7 @@ import com.singer.common.CommonUtil;
 import com.singer.common.Constants.PHONE_INFO_CODE;
 import com.singer.common.Constants.USER_CODE;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,9 +18,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 public class SM01Vo extends SuperVo {
 
-	private static final long serialVersionUID = -3086307924530620773L;
+	private static final long serialVersionUID = 5452779898991723254L;
 	private String userid;
 	private String passwd;
 	private String username;

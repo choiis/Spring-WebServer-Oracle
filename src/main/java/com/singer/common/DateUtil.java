@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.lang.NonNull;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -31,11 +32,11 @@ public class DateUtil {
 		return now.format(sdfDay_14);
 	}
 
-	public static LocalDate stringToDayTime(String date) {
+	public static LocalDate stringToDayTime(@NonNull String date) {
 		return LocalDate.parse(date, sdfDay_8);
 	}
 
-	public static LocalDateTime stringDetailToDate(String date) {
+	public static LocalDateTime stringDetailToDate(@NonNull String date) {
 		return LocalDateTime.parse(date, sdfDay_14);
 	}
 

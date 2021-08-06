@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.singer.common.CommonUtil;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,9 +16,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 public class SR01Vo extends BoardVo {
 
-	private static final long serialVersionUID = 1103708805378444703L;
+	private static final long serialVersionUID = -460762083171126264L;
 	private String markertitle;
 	private double mapx;
 	private double mapy;

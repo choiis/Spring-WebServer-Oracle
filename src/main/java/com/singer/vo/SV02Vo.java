@@ -2,6 +2,7 @@ package com.singer.vo;
 
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,9 +12,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 public class SV02Vo extends SuperVo {
 
-	private static final long serialVersionUID = 5374258406705298004L;
+	private static final long serialVersionUID = 1769936264551524793L;
 	private int seq;
 	private int idx;
 	private String content;

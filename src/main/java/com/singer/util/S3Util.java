@@ -7,6 +7,7 @@ import java.net.URL;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import com.amazonaws.services.s3.AmazonS3;
@@ -29,23 +30,23 @@ public class S3Util {
 		bucketName = propertyUtil.getS3Bucket();
 	}
 
-	public InputStream getS3FileStream(String fileName) {
+	public InputStream getS3FileStream(@NonNull String fileName) {
 		S3Object s3Object = s3client.getObject(bucketName, fileName);
 
 		return s3Object.getObjectContent();
 	}
 
-	public void putS3File(String fileName, File file) {
+	public void putS3File(@NonNull String fileName, File file) {
 		s3client.putObject(bucketName, fileName, file);
 	}
 
-	public ObjectMetadata getS3Meta(String fileName) {
+	public ObjectMetadata getS3Meta(@NonNull String fileName) {
 		S3Object s3Object = s3client.getObject(bucketName, fileName);
 
 		return s3Object.getObjectMetadata();
 	}
 
-	public void deleteS3File(String fileName) {
+	public void deleteS3File(@NonNull String fileName) {
 		s3client.deleteObject(bucketName, fileName);
 	}
 
