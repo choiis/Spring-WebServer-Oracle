@@ -10,7 +10,8 @@ partition by range (logintime)
 (
   partition log_logintime_part1 values less than ('20190101'),
   partition log_logintime_part2 values less than ('20200101'),
-  partition log_logintime_part3 values less than ('20210101')
+  partition log_logintime_part3 values less than ('20210101'),
+  partition log_logintime_part4 values less than ('20220101')
 );
 
 create index idx_log_login_1
@@ -58,19 +59,28 @@ on log_click_goods(logtime);
 
 create table log_chatting (
     username varchar2(10) not null,
-    logdate date not null,
+	logdate varchar2(20) not null,
     message varchar2(400) not null,
     chatroom varchar2(20) 
 )
 partition by range (logdate)
 (
-  partition log_chatting_part1 values less than (to_date('2021/01/01','yyyy/mm/dd')),
-  partition log_chatting_part2 values less than (to_date('2021/04/01','yyyy/mm/dd')),
-  partition log_chatting_part3 values less than (to_date('2021/07/01','yyyy/mm/dd')),
-  partition log_chatting_part4 values less than (to_date('2021/10/01','yyyy/mm/dd')),
+  partition log_chatting_part1 values less than ('20210101000000'),
+  partition log_chatting_part2 values less than ('20210701000000'),
+  partition log_chatting_part3 values less than ('20220101000000'),
+  partition log_chatting_part4 values less than ('20220701000000'),
   partition log_chatting_max values less than (maxvalue)
 );
 
 
 create index idx_log_chatting_1
 on log_chatting(logdate);
+
+create table daily (
+regdate varchar(10) not null,
+uniqueuser NUMBER,
+chattraffic NUMBER
+);
+
+alter table daily
+add constraint pk_daily primary key(regdate);

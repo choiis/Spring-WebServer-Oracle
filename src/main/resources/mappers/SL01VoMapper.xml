@@ -55,6 +55,11 @@
 		on (SL.userid = SM.userid)
 	</select>	
 	
+	<insert id="insertLoginlog"  parameterType="com.singer.vo.SL01Vo">
+	insert into log_login(userid, logintime, browser, device, ip)
+		values (#{userid}, #{logintime}, #{browser}, #{device}, #{ip}) 
+	</insert>
+	
 	<insert id="insertChatlog"  parameterType="com.singer.vo.SL01Vo">
 	insert into log_chatting
 		(
@@ -63,7 +68,7 @@
 		, chatroom
 		</if>
 		)
-		values (#{username}, sysdate, #{message}
+		values (#{username}, #{logdate}, #{message}
 		<if test="chatroom != null" >
 		, #{chatroom}
 		</if>

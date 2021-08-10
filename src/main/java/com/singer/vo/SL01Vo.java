@@ -15,9 +15,11 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class SL01Vo extends SuperVo {
 
-	private static final long serialVersionUID = 4329332221278039946L;
+	private static final long serialVersionUID = -4783391185566339335L;
+
 	private String userid;
 	private String logintime;
+	private String logdate;
 	private String ip;
 	private String browser;
 	private String device;
