@@ -35,20 +35,6 @@
 				return false;
 			}
 		
-			if(!gfn_isKor($("#username").val())) {
-				alert("이름엔 한글만 입력하세요");
-				return false;
-			}
-			
-			if(!gfn_isEmail($("#email").val())) {
-				alert("이메일 형식에 맞게 입력하세요");
-				return false;
-			}
-			
-			if(!gfn_isNumber($("#brth").val())) {
-				alert("생년월일에 숫자만 입력하세요");
-				return false;
-			}
 			
 			if(gfn_isNull($("input[name=imgFile]")[0].files[0])) {
 				alert("사진을 입력하세요");

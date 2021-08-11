@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
 import com.singer.kafka.Producer;
 import com.singer.util.InputQueryUtil;
@@ -30,11 +31,6 @@ public class CommonExceptionHandler {
 
 	@Inject
 	private Producer producer;
-
-	private boolean ajaxCheck(HttpServletRequest request) {
-
-		return StringUtils.equals("XMLHttpRequest", request.getHeader("X-Requested-With")) ? true : false;
-	}
 
 	private ModelAndView getErrorModelAndView(boolean isAjax, @NonNull String message) {
 		ModelAndView mv = null;
@@ -51,9 +47,8 @@ public class CommonExceptionHandler {
 	@ExceptionHandler(ClientException.class)
 	public ModelAndView clientExceptionHandler(HttpServletRequest request, HttpServletResponse response,
 			ClientException ext) throws IOException {
-		boolean isAjax = ajaxCheck(request);
 
-		if (isAjax) {
+		if (CommonUtil.ajaxCheck(request)) {
 			Function<ClientException, ModelAndView> func = (ex) -> {
 				ModelAndView mv = new ModelAndView("forward:/error");
 				mv.addObject("errorCode", ex.getHttpStatusCode());
@@ -90,7 +85,7 @@ public class CommonExceptionHandler {
 		};
 		queryConsumer.accept(request.getRequestURI(), ext.getLocalizedMessage());
 
-		boolean isAjax = ajaxCheck(request);
+		boolean isAjax = CommonUtil.ajaxCheck(request);
 		return getErrorModelAndView(isAjax, ext.getCause().getLocalizedMessage());
 	}
 
@@ -102,8 +97,7 @@ public class CommonExceptionHandler {
 		}
 		log.info(ext.getMessage());
 
-		boolean isAjax = ajaxCheck(request);
-		return getErrorModelAndView(isAjax, ext.getMessage());
+		return getErrorModelAndView(CommonUtil.ajaxCheck(request), ext.getMessage());
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
@@ -125,8 +119,7 @@ public class CommonExceptionHandler {
 		queryConsumer.accept(request.getRequestURI(), ext.getLocalizedMessage());
 
 		String errorURL = request.getRequestURL().toString();
-		boolean isAjax = ajaxCheck(request);
-		return getErrorModelAndView(isAjax, "error Url" + errorURL + " || " + ext.getMessage());
+		return getErrorModelAndView(CommonUtil.ajaxCheck(request), "error Url" + errorURL + " || " + ext.getMessage());
 	}
 
 	@ExceptionHandler(Exception.class)
@@ -137,7 +130,6 @@ public class CommonExceptionHandler {
 		}
 		log.info(ext.getMessage());
 
-		boolean isAjax = ajaxCheck(request);
-		return getErrorModelAndView(isAjax, ext.getMessage());
+		return getErrorModelAndView(CommonUtil.ajaxCheck(request), ext.getMessage());
 	}
 }

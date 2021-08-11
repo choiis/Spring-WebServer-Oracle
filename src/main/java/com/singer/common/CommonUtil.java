@@ -172,4 +172,9 @@ public class CommonUtil {
 			return null;
 		}
 	}
+
+	public static boolean ajaxCheck(HttpServletRequest request) {
+
+		return StringUtils.equals("XMLHttpRequest", request.getHeader("X-Requested-With")) ? true : false;
+	}
 }

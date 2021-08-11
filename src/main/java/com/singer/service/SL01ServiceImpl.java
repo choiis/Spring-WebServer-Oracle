@@ -26,6 +26,12 @@ public class SL01ServiceImpl implements SL01Service {
 	}
 
 	@Override
+	public int insertChatFilelog(SL01Vo sl01Vo) throws Exception {
+		return sl01Dao.insertChatFilelog(sl01Vo);
+
+	}
+
+	@Override
 	public int insertLoginlog(SL01Vo sl01Vo) throws Exception {
 		return sl01Dao.insertLoginlog(sl01Vo);
 	}

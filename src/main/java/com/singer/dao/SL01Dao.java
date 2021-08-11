@@ -20,6 +20,10 @@ public class SL01Dao extends SuperDao {
 		return insert(namespace + ".insertChatlog", sl01Vo);
 	}
 
+	public int insertChatFilelog(SL01Vo sl01Vo) throws Exception {
+		return insert(namespace + ".insertChatFilelog", sl01Vo);
+	}
+
 	public int insertLoginlog(SL01Vo sl01Vo) throws Exception {
 		return insert(namespace + ".insertLoginlog", sl01Vo);
 	}

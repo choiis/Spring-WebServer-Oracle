@@ -28,4 +28,5 @@ public class SL01Vo extends SuperVo {
 	private USER_CODE usertype;
 	private String message;
 	private String chatroom;
+	private String s3filename;
 }

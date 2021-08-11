@@ -10,5 +10,7 @@ public interface SL01Service {
 
 	public int insertChatLog(SL01Vo sl01Vo) throws Exception;
 
+	public int insertChatFilelog(SL01Vo sl01Vo) throws Exception;
+
 	public int insertLoginlog(SL01Vo sl01Vo) throws Exception;
 }

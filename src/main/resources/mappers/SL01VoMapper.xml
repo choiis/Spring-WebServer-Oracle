@@ -75,4 +75,9 @@
 		) 
 	</insert>
 	
+	<insert id="insertChatFilelog"  parameterType="com.singer.vo.SL01Vo">
+	insert into log_chat_file(userid, logdate, s3filename, ip)
+		values (#{userid}, #{logdate}, #{s3filename}, #{ip}) 
+	</insert>
+	
 </mapper>

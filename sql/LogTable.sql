@@ -76,6 +76,24 @@ partition by range (logdate)
 create index idx_log_chatting_1
 on log_chatting(logdate);
 
+create table log_chat_file(
+userid varchar2(10) not null,
+logdate varchar2(20) not null,
+s3filename varchar2(100) not null,
+ip varchar2(30)
+)
+partition by range (logdate)
+(
+  partition log_chat_file_part1 values less than ('20210101'),
+  partition log_chat_file_part2 values less than ('20220101')
+);
+
+create index log_chat_file_1
+on log_chat_file(logdate);
+
+create index log_chat_file_2
+on log_chat_file(userid);
+
 create table daily (
 regdate varchar(10) not null,
 uniqueuser NUMBER,

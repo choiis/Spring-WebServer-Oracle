@@ -23,6 +23,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.singer.common.DateUtil;
+import com.singer.util.S3Util;
 import com.singer.vo.SL01Vo;
 
 import lombok.AccessLevel;
@@ -44,6 +46,21 @@ public class EchoHandler extends TextWebSocketHandler {
 	private static final String PACKET_HEADER_DM = "D";
 	private static final String PACKET_HEADER_LIST = "L";
 	private static final String PACKET_HEADER_ALL = "A";
+
+	private static final String S3_FILE_PATH = "chatupload/";
+
+	private static final String JPG_EXTENSION = ".jpg";
+
+	@AllArgsConstructor(access = AccessLevel.PRIVATE)
+	@Getter
+	enum direction {
+		MSG("msg"), DM("dm"), LIST("list");
+
+		private final String direct;
+	}
+
+	@Inject
+	private S3Util s3Util;
 
 	@Inject
 	private LogSender logSender;
@@ -82,14 +99,6 @@ public class EchoHandler extends TextWebSocketHandler {
 		session.sendMessage(new TextMessage(PACKET_HEADER_NAME + username));
 	}
 
-	@AllArgsConstructor(access = AccessLevel.PRIVATE)
-	@Getter
-	enum direction {
-		MSG("msg"), DM("dm"), LIST("list");
-
-		private final String direct;
-	}
-
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
@@ -124,11 +133,26 @@ public class EchoHandler extends TextWebSocketHandler {
 
 	}
 
+	private void filelogSend(String datetime, String name, File uploadFile, String address) {
+
+		String uploadFilename = S3_FILE_PATH + datetime + JPG_EXTENSION;
+		s3Util.putS3File(uploadFilename, uploadFile);
+
+		SL01Vo sl01Vo = new SL01Vo();
+		sl01Vo.setUserid(name);
+		sl01Vo.setLogdate(datetime);
+		sl01Vo.setS3filename(uploadFilename);
+		sl01Vo.setIp(address);
+		logger.info(name + " send and upload file " + uploadFilename);
+		logSender.insertChatFilelog(sl01Vo);
+	}
+
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 		ByteBuffer byteBuffer = message.getPayload();
 
-		String tempFileName = "temp.jpg";
+		String datetime = DateUtil.getTodayTime();
+		String tempFileName = datetime + JPG_EXTENSION;
 		File dir = new File(FILE_UPLOAD_PATH);
 		if (!dir.exists()) {
 			dir.mkdirs();
@@ -144,10 +168,15 @@ public class EchoHandler extends TextWebSocketHandler {
 			byteBuffer.compact();
 			fileChannel.write(byteBuffer);
 			byteBuffer.position(0);
+
 			for (WebSocketSession webSocketSession : sessionList) {
 				webSocketSession.sendMessage(new BinaryMessage(byteBuffer));
 			}
+			fileChannel.write(byteBuffer);
+			filelogSend(datetime, getUserName(session), imgFile,
+					session.getRemoteAddress().getAddress().getHostAddress());
 
+			imgFile.delete();
 		} catch (IOException e) {
 			logger.error(e, e);
 		}

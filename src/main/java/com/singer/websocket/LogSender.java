@@ -29,4 +29,14 @@ public class LogSender {
 			logger.error(e, e);
 		}
 	}
+
+	@Async("threadPoolTaskExecutor")
+	public void insertChatFilelog(SL01Vo sl01Vo) {
+		try {
+			sl01Service.insertChatFilelog(sl01Vo);
+		} catch (Exception e) {
+			logger.error(e, e);
+		}
+	}
+	
 }

@@ -36,6 +36,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 	@Inject
 	private SL01Service sl01Service;
 
+	private static String UNKNOWN = "unknown";
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
@@ -56,8 +58,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
 			List<CommVo> menuList = commService.selectMenu(sm01Vo.getUsertype());
 			session.setAttribute("menuList", menuList);
-			String browser = Optional.of(request.getParameter("browser")).orElseGet(() -> "unknown");
-			String device = Optional.of(request.getParameter("device")).orElseGet(() -> "unknown");
+			String browser = Optional.of(request.getParameter("browser")).orElseGet(() -> UNKNOWN);
+			String device = Optional.of(request.getParameter("device")).orElseGet(() -> UNKNOWN);
 			String ip = CommonUtil.getIp(request);
 			SL01Vo sl01Vo = new SL01Vo();
 			sl01Vo.setUserid(userid);
