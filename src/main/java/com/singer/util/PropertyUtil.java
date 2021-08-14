@@ -12,6 +12,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PropertyUtil {
 
+	@Value("#{global['global.db.driver']}")
+	private String oracleDriver;
+
+	@Value("#{global['global.db.url']}")
+	private String oracleUrl;
+
+	@Value("#{global['global.db.username']}")
+	private String oracleUsername;
+
+	@Value("#{global['global.db.password']}")
+	private String oraclePassword;
+
 	@Value("#{global['global.stream.path']}")
 	private String s3StreamPath;
 
