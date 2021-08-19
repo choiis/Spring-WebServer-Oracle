@@ -1,17 +1,12 @@
 package com.singer.filter;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.xml.sax.SAXException;
 
-import com.singer.exception.AppException;
-import com.singer.util.XmlUtil;
-
-public class B2CConfig extends XmlUtil {
+public class B2CConfig {
 
 	private final Log log = LogFactory.getLog(B2CConfig.class);
 
@@ -21,6 +16,9 @@ public class B2CConfig extends XmlUtil {
 		return b2cConfig;
 	}
 
+	List<String> skipParam;
+	List<String> blackList;
+
 	private B2CConfig() {
 		super();
 		loadConfigXml();
@@ -28,32 +26,28 @@ public class B2CConfig extends XmlUtil {
 	}
 
 	private void loadConfigXml() {
-		InputStream is = B2CConfig.class.getResourceAsStream("/conf/b2c-config.xml");
-
-		try {
-			super.parse(is);
-		} catch (SAXException e) {
-			log.info("SAXException");
-		} catch (AppException e) {
-			log.info("AppException");
-		}
+		skipParam = new ArrayList<>();
+		skipParam.add("action");
+		skipParam.add("javax");
+		skipParam.add("user_id");
+		skipParam.add("email");
+		blackList = new ArrayList<>();
+		blackList.add("alter");
+		blackList.add("delete");
+		blackList.add("drop");
+		blackList.add("begin");
+		blackList.add("cursor");
+		blackList.add("create");
+		blackList.add("declare");
+		blackList.add("1=1");
 	}
 
 	public List<String> getSqlInjectionSkipParam() {
-		List<String> list = new ArrayList<String>();
-		String[] skipArr = super.getNodeList("sql-skip-param").split(",");
-		for (int i = 0; i < skipArr.length; i++) {
-			list.add(skipArr[i]);
-		}
-		return list;
+		return skipParam;
 	}
 
 	public List<String> getSqlInjectionBlackList() {
-		List<String> list = new ArrayList<String>();
-		String[] skipArr = super.getNodeList("sql-injection-blacklist").split(",");
-		for (int i = 0; i < skipArr.length; i++) {
-			list.add(skipArr[i]);
-		}
-		return list;
+
+		return blackList;
 	}
 }
