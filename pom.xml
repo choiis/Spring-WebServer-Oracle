@@ -8,7 +8,7 @@
 		<version>1.0.0</version>
 		<properties>
 				<java-version>11</java-version>
-				<org.springframework-version>5.2.9.RELEASE</org.springframework-version>
+				<org.springframework-version>5.2.11.RELEASE</org.springframework-version>
 				<org.aspectj-version>1.6.10</org.aspectj-version>
 				<org.slf4j-version>1.6.6</org.slf4j-version>
 				<org.mybatis-version>3.5.6</org.mybatis-version>
