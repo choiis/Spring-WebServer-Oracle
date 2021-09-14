@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -43,8 +44,8 @@ public class SM01Controller extends BaseController {
 	}
 
 	@RequestMapping(value = "/sm01", method = RequestMethod.POST)
-	public ResponseEntity<SM01Vo> insertSM01Vo(@ModelAttribute SM01Vo sm01Vo, MultipartHttpServletRequest request)
-			throws Exception {
+	public ResponseEntity<SM01Vo> insertSM01Vo(@ModelAttribute @Valid SM01Vo sm01Vo,
+			MultipartHttpServletRequest request) throws Exception {
 		log.debug("enter sm01 pot");
 		sm01Service.insertSM01Vo(sm01Vo, request);
 

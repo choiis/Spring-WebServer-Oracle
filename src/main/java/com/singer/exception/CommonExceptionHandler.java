@@ -14,6 +14,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -120,6 +123,41 @@ public class CommonExceptionHandler {
 
 		String errorURL = request.getRequestURL().toString();
 		return getErrorModelAndView(CommonUtil.ajaxCheck(request), "error Url" + errorURL + " || " + ext.getMessage());
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ModelAndView methodArgumentNotValidException(HttpServletRequest request, HttpServletResponse response,
+			MethodArgumentNotValidException ext) throws IOException {
+
+		if (CommonUtil.ajaxCheck(request)) {
+			Function<MethodArgumentNotValidException, ModelAndView> func = (ex) -> {
+				ModelAndView mv = new ModelAndView("forward:/error");
+				mv.addObject("errorCode", HttpStatus.BAD_REQUEST);
+				mv.addObject("errorMsg", makeValidErrorMessage(ex.getBindingResult()));
+				return mv;
+			};
+			return func.apply(ext);
+		} else {
+			Function<MethodArgumentNotValidException, ModelAndView> func = (ex) -> {
+				ModelAndView mv = new ModelAndView("forward:/" + HttpStatus.BAD_REQUEST.value());
+				mv.addObject("errorCode", HttpStatus.BAD_REQUEST);
+				mv.addObject("errorMsg", makeValidErrorMessage(ex.getBindingResult()));
+				return mv;
+			};
+			return func.apply(ext);
+		}
+	}
+
+	private String makeValidErrorMessage(BindingResult bindingResult) {
+		StringBuilder builder = new StringBuilder();
+		for (FieldError fieldError : bindingResult.getFieldErrors()) {
+			builder.append("[");
+			// builder.append(fieldError.getField());
+			builder.append(fieldError.getDefaultMessage());
+			builder.append("]");
+		}
+
+		return builder.toString();
 	}
 
 	@ExceptionHandler(Exception.class)

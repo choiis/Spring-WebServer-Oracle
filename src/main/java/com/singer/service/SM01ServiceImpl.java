@@ -44,17 +44,6 @@ public class SM01ServiceImpl implements SM01Service {
 	public HashMap<String, Object> insertSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request) throws Exception {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
-		if (StringUtils.isEmpty(sm01Vo.getUserid())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INF_1);
-		}
-		if (StringUtils.isEmpty(sm01Vo.getPasswd())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INF_2);
-		}
-
-		if (StringUtils.isEmpty(sm01Vo.getUsername())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INF_3);
-		}
-
 		// String pw = aes256Util.aesEncode(sm01Vo.getPasswd());
 		// sm01Vo.setPasswd(pw);
 

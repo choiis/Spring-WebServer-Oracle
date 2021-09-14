@@ -1,5 +1,9 @@
 package com.singer.vo;
 
+import javax.validation.constraints.NotEmpty;
+
+import com.singer.exception.ExceptionMsg;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +16,9 @@ public class BoardVo extends SuperVo {
 
 	private static final long serialVersionUID = 7956711521174141824L;
 	protected int seq;
+	@NotEmpty(message = ExceptionMsg.EXT_MSG_INPUT_1)
 	protected String title;
+	@NotEmpty(message = ExceptionMsg.EXT_MSG_INPUT_2)
 	protected String text;
 	protected String userid;
 	protected String regdate;

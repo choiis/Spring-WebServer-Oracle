@@ -24,12 +24,6 @@ public class SM02ServiceImpl implements SM02Service {
 	@Override
 	public int insertSM02Vo(SM02Vo sm02Vo, String userid) throws Exception {
 
-		if (StringUtils.isEmpty(sm02Vo.getTitle())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
-		}
-		if (StringUtils.isEmpty(sm02Vo.getText())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
-		}
 		sm02Vo.setUserid(userid);
 		sm02Vo.setRegdate(DateUtil.getTodayTime());
 		return sm02Dao.insertSM02Vo(sm02Vo);
