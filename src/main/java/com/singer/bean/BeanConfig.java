@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -25,9 +26,15 @@ public class BeanConfig {
 		return new CommonExceptionHandler();
 	}
 
+	@Bean(name = "multipartResolver")
+	public StandardServletMultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
+	}
+
 	@Bean
 	public JavaMailSenderImpl javaMailSenderImpl() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
 		mailSender.setPort(25);
 		mailSender.setHost("relay.company.co.kr");
 		Properties mailProperties = new Properties();

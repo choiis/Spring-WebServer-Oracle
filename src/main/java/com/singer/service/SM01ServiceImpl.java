@@ -144,13 +144,6 @@ public class SM01ServiceImpl implements SM01Service {
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public SM01Vo updateSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request, String userId) throws Exception {
-		if (StringUtils.isEmpty(sm01Vo.getUserid())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INF_1);
-		}
-
-		if (StringUtils.isEmpty(sm01Vo.getUsername())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INF_3);
-		}
 
 		MultipartFile photo = null;
 		Iterator<String> itr = request.getFileNames();

@@ -47,6 +47,12 @@ public class ExceptionMsg {
 	/** 검색구분을 선택하세요 */
 	public static final String EXT_MSG_INPUT_11 = "검색구분을 선택하세요";
 
+	/** 8자리 생년월일을 입력하세요 */
+	public static final String EXT_MSG_INPUT_12 = "8자리 생년월일을 입력하세요";
+
+	/** 이메일 형식에 맞아야 합니다 */
+	public static final String EXT_MSG_INPUT_13 = "이메일 형식에 맞아야 합니다";
+
 	/** SQL Injection 위험이 있습니다 */
 	public static final String EXT_MSG_SECURE_1 = "SQL Injection 위험이 있습니다";
 

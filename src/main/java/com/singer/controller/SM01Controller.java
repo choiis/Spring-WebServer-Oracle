@@ -72,7 +72,7 @@ public class SM01Controller extends BaseController {
 	}
 
 	@RequestMapping(value = "/sm01/update", method = RequestMethod.POST)
-	public ModelAndView upateSM01Vo(@ModelAttribute SM01Vo sm01Vo, MultipartHttpServletRequest request)
+	public ModelAndView upateSM01Vo(@ModelAttribute @Valid SM01Vo sm01Vo, MultipartHttpServletRequest request)
 			throws Exception {
 		log.debug("enter sm01update post");
 

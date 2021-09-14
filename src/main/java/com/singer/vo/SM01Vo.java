@@ -2,7 +2,9 @@ package com.singer.vo;
 
 import java.util.List;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,10 +34,14 @@ public class SM01Vo extends SuperVo {
 	private String passwd;
 	@NotEmpty(message = ExceptionMsg.EXT_MSG_INF_3)
 	private String username;
+
+	@Pattern(regexp = "^(19[0-9][0-9]|20\\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$", message = ExceptionMsg.EXT_MSG_INPUT_12)
 	private String brth;
 	private USER_CODE grade;
 	private String regdate;
 	private String phone;
+
+	@Email(message = ExceptionMsg.EXT_MSG_INPUT_13)
 	private String email;
 	private USER_CODE usertype;
 	private MultipartFile photo;

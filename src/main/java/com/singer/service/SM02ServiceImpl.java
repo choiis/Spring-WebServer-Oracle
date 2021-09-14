@@ -4,12 +4,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.singer.exception.AppException;
-import com.singer.exception.ExceptionMsg;
 import com.singer.common.DateUtil;
 import com.singer.dao.SM02Dao;
 import com.singer.vo.SM02Vo;
@@ -51,12 +48,6 @@ public class SM02ServiceImpl implements SM02Service {
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int updateSM02Vo(SM02Vo sm02Vo) throws Exception {
-		if (StringUtils.isEmpty(sm02Vo.getTitle())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
-		}
-		if (StringUtils.isEmpty(sm02Vo.getText())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
-		}
 
 		return sm02Dao.updateSM02Vo(sm02Vo);
 	}
