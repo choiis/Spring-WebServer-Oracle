@@ -24,6 +24,7 @@ import com.singer.dao.SR01Dao;
 import com.singer.dao.SR02Dao;
 import com.singer.dao.SR03Dao;
 import com.singer.vo.SR01Vo;
+import com.singer.vo.SR02Vo;
 import com.singer.vo.SR03Vo;
 
 @Service
@@ -47,24 +48,13 @@ public class SR01ServiceImpl implements SR01Service {
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public int insertSR01Vo(SR01Vo sr01Vo, MultipartHttpServletRequest request, String sessionid) throws Exception {
-		if (StringUtils.isEmpty(sr01Vo.getTitle())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
-		}
-		if (StringUtils.isEmpty(sr01Vo.getText())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
-		}
-		if (StringUtils.isEmpty(sr01Vo.getMarkertitle())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_6);
-		}
-		if (sr01Vo.getGrade() < 0 || sr01Vo.getGrade() > 5) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_7);
-		}
 
 		sr01Vo.setUserid(sessionid);
 		sr01Vo.setRegdate(DateUtil.getTodayTime());
 
 		sr01Dao.insertSR01Vo(sr01Vo);
-		sr02Dao.insertSR02Vo(sr01Vo);
+		SR02Vo sr02Vo = new SR02Vo(sr01Vo.getSeq(), sessionid, DateUtil.getTodayTime(), sr01Vo.getGrade());
+		sr02Dao.insertSR02Vo(sr02Vo);
 		List<MultipartFile> fileList = request.getFiles("file");
 		int idx = 0;
 		ArrayList<SR01Vo> arrayList = new ArrayList<>();

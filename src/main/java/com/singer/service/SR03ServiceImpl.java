@@ -5,13 +5,10 @@ import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
-import org.apache.cxf.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.singer.common.DateUtil;
 import com.singer.dao.SR03Dao;
-import com.singer.exception.AppException;
-import com.singer.exception.ExceptionMsg;
 import com.singer.vo.SR03Vo;
 
 @Service
@@ -22,9 +19,7 @@ public class SR03ServiceImpl implements SR03Service {
 
 	@Override
 	public int insertSR03Vo(SR03Vo sr03Vo, String userid) throws Exception {
-		if (StringUtils.isEmpty(sr03Vo.getText())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
-		}
+
 		sr03Vo.setUserid(userid);
 		sr03Vo.setRegdate(DateUtil.getTodayTime());
 

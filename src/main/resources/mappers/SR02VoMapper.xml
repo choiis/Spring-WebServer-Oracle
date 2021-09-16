@@ -25,7 +25,7 @@
 	    	where seq = #{seq}
 		</select>
 		
-		<insert id="insert"  parameterType="com.singer.vo.SR01Vo">
+		<insert id="insert"  parameterType="com.singer.vo.SR02Vo">
 			insert into SR02 (seq, userid, grade, regdate)
 			values (#{seq}, #{userid}, #{grade}, #{regdate}) 
 		</insert>

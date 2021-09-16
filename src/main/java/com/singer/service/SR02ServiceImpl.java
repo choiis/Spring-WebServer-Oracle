@@ -6,9 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.singer.common.DateUtil;
 import com.singer.dao.SR02Dao;
-import com.singer.exception.AppException;
-import com.singer.exception.ExceptionMsg;
 import com.singer.vo.SR01Vo;
+import com.singer.vo.SR02Vo;
 
 @Service
 public class SR02ServiceImpl implements SR02Service {
@@ -17,15 +16,14 @@ public class SR02ServiceImpl implements SR02Service {
 	private SR02Dao sr02Dao;
 
 	@Override
-	public SR01Vo insertSR02Vo(SR01Vo sr01Vo, String sessionid) throws Exception {
-		if (sr01Vo.getGrade() < 0 || sr01Vo.getGrade() > 5) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_7);
-		}
+	public SR01Vo insertSR02Vo(SR02Vo sr02Vo, String sessionid) throws Exception {
 
-		sr01Vo.setUserid(sessionid);
-		sr01Vo.setRegdate(DateUtil.getTodayTime());
-		sr02Dao.insertSR02Vo(sr01Vo);
+		sr02Vo.setUserid(sessionid);
+		sr02Vo.setRegdate(DateUtil.getTodayTime());
+		sr02Dao.insertSR02Vo(sr02Vo);
 
+		SR01Vo sr01Vo = new SR01Vo();
+		sr01Vo.setSeq(sr02Vo.getSeq());
 		return sr02Dao.selectGradeSR02Vo(sr01Vo);
 	}
 

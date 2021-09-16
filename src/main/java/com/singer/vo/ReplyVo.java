@@ -1,5 +1,9 @@
 package com.singer.vo;
 
+import javax.validation.constraints.NotEmpty;
+
+import com.singer.exception.ExceptionMsg;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +18,7 @@ public class ReplyVo extends SuperVo {
 	protected int seq;
 	protected int seq01;
 	protected int parents;
+	@NotEmpty(message = ExceptionMsg.EXT_MSG_INPUT_2)
 	protected String text;
 	protected String userid;
 	protected String regdate;

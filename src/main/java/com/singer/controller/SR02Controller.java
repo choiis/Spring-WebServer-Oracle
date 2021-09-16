@@ -2,6 +2,7 @@ package com.singer.controller;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.singer.common.Constants.RESULT_CODE;
 import com.singer.service.SR02Service;
 import com.singer.vo.SR01Vo;
+import com.singer.vo.SR02Vo;
 
 @RequestMapping("/sr01")
 @Controller
@@ -28,15 +30,15 @@ public class SR02Controller extends BaseController {
 
 	@ResponseBody
 	@RequestMapping(value = "/sr02", method = RequestMethod.POST)
-	public ResponseEntity<SR01Vo> insertSR02Vo(@RequestBody SR01Vo sr02Vo, HttpServletRequest request)
+	public ResponseEntity<SR01Vo> insertSR02Vo(@RequestBody @Valid SR02Vo sr02Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sr02 post");
 
 		String userid = getSessionId(request);
-		sr02Vo = sr02Service.insertSR02Vo(sr02Vo, userid);
+		SR01Vo sr01Vo = sr02Service.insertSR02Vo(sr02Vo, userid);
 
 		log.debug("exit sr02 post");
-		return new ResponseEntity<SR01Vo>(sr02Vo, HttpStatus.CREATED);
+		return new ResponseEntity<SR01Vo>(sr01Vo, HttpStatus.CREATED);
 	}
 
 	@ResponseBody

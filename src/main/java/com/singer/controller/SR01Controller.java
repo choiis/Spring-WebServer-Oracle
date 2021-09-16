@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -84,8 +85,8 @@ public class SR01Controller extends BaseController {
 
 	@ResponseBody
 	@RequestMapping(value = "/sr01", method = RequestMethod.POST)
-	public ResponseEntity<SR01Vo> insertSR01Vo(@ModelAttribute SR01Vo sr01Vo, MultipartHttpServletRequest request)
-			throws Exception {
+	public ResponseEntity<SR01Vo> insertSR01Vo(@ModelAttribute @Valid SR01Vo sr01Vo,
+			MultipartHttpServletRequest request) throws Exception {
 		log.debug("enter sr01 post");
 
 		String userid = getSessionId(request);

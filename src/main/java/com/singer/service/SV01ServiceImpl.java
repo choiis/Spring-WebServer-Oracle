@@ -38,13 +38,6 @@ public class SV01ServiceImpl implements SV01Service {
 	@Override
 	public int insertSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
 
-		if (StringUtils.isEmpty(sv01Vo.getTitle())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
-		}
-		if (StringUtils.isEmpty(sv01Vo.getText())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
-		}
-
 		List<SV02Vo> list = sv01Vo.getSv02Vos();
 
 		String regDate = DateUtil.getTodayTime();

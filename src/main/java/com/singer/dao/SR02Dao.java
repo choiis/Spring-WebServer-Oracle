@@ -3,13 +3,14 @@ package com.singer.dao;
 import org.springframework.stereotype.Repository;
 
 import com.singer.vo.SR01Vo;
+import com.singer.vo.SR02Vo;
 
 @Repository("sr02Dao")
 public class SR02Dao extends SuperDao {
 
 	private static final String namespace = "com.singer.mappers.SR02";
 
-	public int insertSR02Vo(SR01Vo sr01Vo) throws Exception {
+	public int insertSR02Vo(SR02Vo sr01Vo) throws Exception {
 		return insert(namespace + ".insert", sr01Vo);
 	}
 

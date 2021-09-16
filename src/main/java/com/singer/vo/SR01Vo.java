@@ -2,9 +2,13 @@ package com.singer.vo;
 
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.singer.common.CommonUtil;
+import com.singer.exception.ExceptionMsg;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,12 +24,15 @@ import lombok.ToString;
 public class SR01Vo extends BoardVo {
 
 	private static final long serialVersionUID = -460762083171126264L;
+
+	@NotEmpty(message = ExceptionMsg.EXT_MSG_INPUT_6)
 	private String markertitle;
 	private double mapx;
 	private double mapy;
 	private MultipartFile photo;
 	private String photopath;
 
+	@Range(min = 0, max = 5, message = ExceptionMsg.EXT_MSG_INPUT_7)
 	private double grade;
 	private double avggrade;
 	private int idx;

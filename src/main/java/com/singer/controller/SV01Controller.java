@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -79,7 +80,7 @@ public class SV01Controller extends BaseController {
 
 	@ResponseBody
 	@RequestMapping(value = "/sv01", method = RequestMethod.POST)
-	public ResponseEntity<SV01Vo> insertSV01Vo(@RequestBody SV01Vo sv01Vo, HttpServletRequest request)
+	public ResponseEntity<SV01Vo> insertSV01Vo(@RequestBody @Valid SV01Vo sv01Vo, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sv01 post");
 

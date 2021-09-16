@@ -50,13 +50,6 @@ public class SF01ServiceImpl implements SF01Service {
 	@Override
 	public int insertSF01Vo(SF01Vo sf01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
 
-		if (StringUtils.isEmpty(sf01Vo.getTitle())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
-		}
-		if (StringUtils.isEmpty(sf01Vo.getText())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
-		}
-
 		MultipartFile multipartFile = null;
 		Iterator<String> itr = request.getFileNames();
 

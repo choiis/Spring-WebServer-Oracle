@@ -47,13 +47,6 @@ public class SB01ServiceImpl implements SB01Service {
 	@Override
 	public int insertSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
 
-		if (StringUtils.isEmpty(sb01Vo.getTitle())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_1);
-		}
-		if (StringUtils.isEmpty(sb01Vo.getText())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_2);
-		}
-
 		sb01Vo.setUserid(userid);
 		MultipartFile video = null;
 		Iterator<String> itr = request.getFileNames();
