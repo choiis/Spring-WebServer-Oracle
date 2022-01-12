@@ -67,7 +67,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 			sl01Vo.setIp(ip);
 			sl01Vo.setBrowser(browser);
 			sl01Vo.setDevice(device);
-			sl01Service.insertLoginlog(sl01Vo);
+			//sl01Service.insertLoginlog(sl01Vo);
 		} catch (Exception e) {
 			response.getWriter().write(RESULT_CODE.FAIL.name());
 			response.getWriter().flush();

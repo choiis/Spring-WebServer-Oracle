@@ -3,7 +3,6 @@ package com.singer.redis;
 import java.util.Set;
 import java.util.Vector;
 import java.util.stream.Stream;
-import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,7 +16,6 @@ import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Repository;
 
 import com.singer.common.DateUtil;
-import com.singer.kafka.Producer;
 import com.singer.util.InputQueryUtil;
 import com.singer.vo.SortedSetVo;
 
@@ -28,9 +26,6 @@ public class RedisDao {
 
 	@Autowired
 	RedisTemplate<String, Object> redisTemplate;
-
-	@Inject
-	private Producer producer;
 
 	public DataType type(String key) {
 		return redisTemplate.type(key);
@@ -46,7 +41,6 @@ public class RedisDao {
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add("zSet");
 
-			producer.send(queryUtil.getQuery());
 		}
 	}
 
@@ -60,7 +54,6 @@ public class RedisDao {
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add("zSetIncre");
 
-			producer.send(queryUtil.getQuery());
 		}
 	}
 
@@ -78,7 +71,6 @@ public class RedisDao {
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add("hmSetIncre");
 
-			producer.send(queryUtil.getQuery());
 		}
 	}
 
@@ -95,7 +87,6 @@ public class RedisDao {
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add("hmSet");
 
-			producer.send(queryUtil.getQuery());
 		}
 	}
 

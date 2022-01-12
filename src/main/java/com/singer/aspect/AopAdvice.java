@@ -25,7 +25,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.singer.common.DateUtil;
 import com.singer.dao.CommDao;
 import com.singer.exception.ClientException;
-import com.singer.kafka.Producer;
 import com.singer.redis.RedisDao;
 import com.singer.util.InputQueryUtil;
 import com.singer.vo.BoardVo;
@@ -43,9 +42,6 @@ public class AopAdvice {
 
 	@Inject
 	private CommDao commDao;
-
-	@Inject
-	private Producer producer;
 
 	@After("execution(* com.singer.service.*Impl.selectOne*(..))")
 	public void clickBoardLog(JoinPoint jp) {
@@ -72,7 +68,6 @@ public class AopAdvice {
 			queryUtil.add(method);
 			queryUtil.add(number);
 
-			producer.send(queryUtil.getQuery());
 		}
 
 		redisDao.zSetIncre("selectOne", method);
@@ -110,8 +105,6 @@ public class AopAdvice {
 		queryUtil.add(userid);
 		queryUtil.add(method);
 		queryUtil.add("0");
-
-		producer.send(queryUtil.getQuery());
 
 		redisDao.hmSetIncre(DateUtil.getToday(), method);
 

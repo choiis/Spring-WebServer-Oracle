@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,15 +24,11 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
-import com.singer.kafka.Producer;
 import com.singer.util.InputQueryUtil;
 
 @ControllerAdvice
 public class CommonExceptionHandler {
 	private static final Log log = LogFactory.getLog(ExceptionHandler.class);
-
-	@Inject
-	private Producer producer;
 
 	private ModelAndView getErrorModelAndView(boolean isAjax, @NonNull String message) {
 		ModelAndView mv = null;
@@ -84,7 +79,6 @@ public class CommonExceptionHandler {
 			queryUtil.add(uri);
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add(msg);
-			producer.send(queryUtil.getQuery());
 		};
 		queryConsumer.accept(request.getRequestURI(), ext.getLocalizedMessage());
 
@@ -117,7 +111,6 @@ public class CommonExceptionHandler {
 			queryUtil.add(uri);
 			queryUtil.add(DateUtil.getTodayTime());
 			queryUtil.add(msg);
-			producer.send(queryUtil.getQuery());
 		};
 		queryConsumer.accept(request.getRequestURI(), ext.getLocalizedMessage());
 

@@ -20,7 +20,6 @@
 
 	<import resource="classpath:conf/spring/context-*.xml"/>
     <util:properties id="global" location="classpath:/conf/property/global.properties"/>
-    <util:properties id="kafka" location="classpath:/conf/property/kafka.properties"/>
 	
 	<context:property-placeholder location="classpath:/conf/property/global.properties" ignore-unresolvable="true"/>
 	<aop:config/>
