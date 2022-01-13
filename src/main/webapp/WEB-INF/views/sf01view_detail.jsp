@@ -278,6 +278,7 @@
 			<div>내용 :<p>${sf01Vo.text}</p></div>
 			<div>조회수 :<p>${sf01Vo.hit}</p></div>
 			<div>좋아요 :<p id="good">${sf01Vo.good}</p></div>
+			<div>다운로드 수 :<p>${sf01Vo.downcnt}</p></div>
 			
 			<c:choose>
 				<c:when test="${sf01Vo.goodlog!='Y'}">

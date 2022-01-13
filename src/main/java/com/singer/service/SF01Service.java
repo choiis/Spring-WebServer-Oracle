@@ -12,6 +12,8 @@ public interface SF01Service {
 
 	public List<SF01Vo> selectSF01Vo(SF01Vo sf01Vo) throws Exception;
 
+	public int selectSF01Count() throws Exception;
+
 	public List<SF01Vo> selectFindSF01Vo(SF01Vo sf01Vo) throws Exception;
 
 	public SF01Vo selectOneSF01Vo(SF01Vo sf01Vo, String userid) throws Exception;
@@ -24,5 +26,5 @@ public interface SF01Service {
 
 	public int deleteSF01Vo(SF01Vo sf01Vo) throws Exception;
 
-	public HashMap<String, Object> selectFile(SF01Vo sf01Vo) throws Exception;
+	public HashMap<String, Object> selectFile(SF01Vo sf01Vo, String userid) throws Exception;
 }

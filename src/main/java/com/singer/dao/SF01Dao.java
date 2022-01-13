@@ -20,6 +20,10 @@ public class SF01Dao extends SuperDao {
 		return (List<SF01Vo>) selectList(namespace + ".select", SF01Vo);
 	}
 
+	public SF01Vo selectSF01Count() throws Exception {
+		return (SF01Vo) selectOne(namespace + ".selectCount");
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<SF01Vo> selectFindSF01Vo(SF01Vo SF01Vo) throws Exception {
 		return (List<SF01Vo>) selectList(namespace + ".selectFind", SF01Vo);
@@ -63,5 +67,9 @@ public class SF01Dao extends SuperDao {
 
 	public int hatelogSF01Vo(SF01Vo SF01Vo) throws Exception {
 		return update(namespace + ".hatelog", SF01Vo);
+	}
+
+	public int mergeSFD1Vo(SF01Vo sf01vo) throws Exception {
+		return update(namespace + ".mergesf01", sf01vo);
 	}
 }

@@ -20,6 +20,10 @@ public class SuperDao {
 		return sqlSession.selectList(statement, vo);
 	}
 
+	protected Object selectOne(String statement) {
+		return sqlSession.selectOne(statement);
+	}
+
 	protected Object selectOne(String statement, Object vo) {
 		return sqlSession.selectOne(statement, vo);
 	}

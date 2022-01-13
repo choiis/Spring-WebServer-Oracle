@@ -95,6 +95,12 @@ public class SB01ServiceImpl implements SB01Service {
 	}
 
 	@Override
+	public int selectSB01Count() throws Exception {
+		SB01Vo vo = sb01Dao.selectSB01VoCount();
+		return ObjectUtils.isEmpty(vo) ? 0 : CommonUtil.getPageCnt(vo.getTotCnt());
+	}
+
+	@Override
 	public List<SB01Vo> selectFindSB01Vo(SB01Vo sb01Vo) throws Exception {
 
 		if (StringUtils.isEmpty(sb01Vo.getFindText())) {

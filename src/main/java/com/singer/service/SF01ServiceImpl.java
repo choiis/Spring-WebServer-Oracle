@@ -84,6 +84,12 @@ public class SF01ServiceImpl implements SF01Service {
 	}
 
 	@Override
+	public int selectSF01Count() throws Exception {
+		SF01Vo vo = sf01Dao.selectSF01Count();
+		return ObjectUtils.isEmpty(vo) ? 0 : CommonUtil.getPageCnt(vo.getTotCnt());
+	}
+
+	@Override
 	public List<SF01Vo> selectFindSF01Vo(SF01Vo sf01vo) throws Exception {
 
 		if (StringUtils.isEmpty(sf01vo.getFindText())) {
@@ -166,7 +172,7 @@ public class SF01ServiceImpl implements SF01Service {
 	}
 
 	@Override
-	public HashMap<String, Object> selectFile(SF01Vo sf01Vo) throws Exception {
+	public HashMap<String, Object> selectFile(SF01Vo sf01Vo, String userid) throws Exception {
 
 		sf01Vo = sf01Dao.selectFile(sf01Vo);
 
@@ -181,6 +187,10 @@ public class SF01ServiceImpl implements SF01Service {
 
 		hashMap.put("downfile", file);
 		hashMap.put("filename", sf01Vo.getFilename());
+
+		sf01Vo.setDownuserid(userid);
+		sf01Vo.setRegdate(DateUtil.getTodayTime());
+		sf01Dao.mergeSFD1Vo(sf01Vo);
 
 		return hashMap;
 	}

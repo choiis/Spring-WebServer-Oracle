@@ -14,6 +14,8 @@ public interface SB01Service {
 
 	public List<SB01Vo> selectSB01Vo(SB01Vo sb01Vo) throws Exception;
 
+	public int selectSB01Count() throws Exception;
+
 	public List<SB01Vo> selectFindSB01Vo(SB01Vo sb01Vo) throws Exception;
 
 	public SB01Vo selectOneSB01Vo(SB01Vo sb01Vo, String userid) throws Exception;

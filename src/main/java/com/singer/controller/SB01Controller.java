@@ -69,7 +69,7 @@ public class SB01Controller extends BaseController {
 
 		List<SB01Vo> list = sb01Service.selectSB01Vo(sb01Vo);
 		sb01Vo.setList(list);
-
+		sb01Vo.setTotCnt(sb01Service.selectSB01Count());
 		log.debug("exit sb01 get");
 		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
 	}

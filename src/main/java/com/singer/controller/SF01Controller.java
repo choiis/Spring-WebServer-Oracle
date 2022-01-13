@@ -66,7 +66,7 @@ public class SF01Controller extends BaseController {
 
 		List<SF01Vo> list = sf01Service.selectSF01Vo(sf01Vo);
 		sf01Vo.setList(list);
-
+		sf01Vo.setTotCnt(sf01Service.selectSF01Count());
 		log.debug("exit sf01 get");
 		return new ResponseEntity<SF01Vo>(sf01Vo, HttpStatus.OK);
 	}
@@ -104,7 +104,8 @@ public class SF01Controller extends BaseController {
 			HttpServletResponse response) throws Exception {
 		log.debug("enter sf01File get");
 
-		HashMap<String, Object> downloadFile = sf01Service.selectFile(sf01Vo);
+		String userid = getSessionId(request);
+		HashMap<String, Object> downloadFile = sf01Service.selectFile(sf01Vo, userid);
 
 		log.debug("exit sf01File get");
 		return new ModelAndView("filedownloadView", "downloadFile", downloadFile);

@@ -292,6 +292,22 @@ add constraint pk_SFG1 primary key(seq,sessionid);
 alter table SFG1
 add constraint fk_sfg1 foreign key(seq) references SF01(seq) on delete cascade;
 
+create table SFD1(
+  seq number not null,
+  userid varchar2(20) not null,
+  downuserid varchar2(20) not null,
+  regdate varchar2(20) not null
+);
+
+alter table SFD1
+add constraint pk_SFD1 primary key(seq, userid, downuserid);
+
+alter table SFD1
+add constraint fk_sfd1 foreign key(seq) references SF01(seq) on delete cascade;
+
+CREATE index idx_SFD1_1
+on SFD1(downuserid);
+
 CREATE SEQUENCE seq_SV01
 START WITH 1 INCREMENT BY 1 ;
 

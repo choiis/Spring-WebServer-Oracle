@@ -20,6 +20,10 @@ public class SB01Dao extends SuperDao {
 		return (List<SB01Vo>) selectList(namespace + ".select", sb01Vo);
 	}
 
+	public SB01Vo selectSB01VoCount() throws Exception {
+		return (SB01Vo) selectOne(namespace + ".selectCount");
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<SB01Vo> selectFindSB01Vo(SB01Vo sb01Vo) throws Exception {
 		return (List<SB01Vo>) selectList(namespace + ".selectFind", sb01Vo);
