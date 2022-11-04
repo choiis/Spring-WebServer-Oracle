@@ -36,9 +36,9 @@
 		// 저장 버튼을 클릭할때 이벤트 발생
 		$("#save").on("click", function(e) {
 
-			if(!fn_PreSave()) {
-				return ;
-			}
+			//if(!fn_PreSave()) {
+			//	return ;
+			//}
 
 			var sendData = {
 				"title" : $("#title").val(),

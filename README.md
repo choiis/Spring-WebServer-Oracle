@@ -16,10 +16,15 @@
 docker-compose up
 ```
 ### Build and Execution
+
+* Build executable jar
 ```
-./mvnw clean install
+./mvnw clean package
 ```
 
-* Run Spring Boot Project
+* Run Spring Boot project executable jar
+```
+./target/Spring-WebServer-Oracle.jar
+```
 
-* Check at http://localhost:8090
+* Check the web project at http://localhost:8090

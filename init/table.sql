@@ -82,16 +82,16 @@ CREATE table insung.MENU (
 alter table insung.MENU
 add constraint pk_MENU primary key(menucd);
 
-insert into insung.MENU values('01','코드관리','/comm/code/page',1,'admin','20180901','admin','20210725');
-insert into insung.MENU values('02','공지사항','/comm/command/page',2,'admin','20180901','admin','20210725');
-insert into insung.MENU values('03','회원관리','/sm01/page',2,'admin','20180901','admin','20210725');
-insert into insung.MENU values('04','노래 동영상','/sb01/page',4,'admin','20180901','admin','20210725');
-insert into insung.MENU values('05','파일 게시판','/sf01/page',4,'admin','20180901','admin','20210725');
-insert into insung.MENU values('06','투표 게시판','/sv01/page',4,'admin','20180901','admin','20210725');
-insert into insung.MENU values('07','맛집 추천','/sr01/page',4,'admin','20180901','admin','20210725');
-insert into insung.MENU values('08','나의 메모장','/sm02/page',4,'admin','20180901','admin','20210725');
-insert into insung.MENU values('09','유저 검색','/smi1/page',4,'admin','20180901','admin','20210725');
-insert into insung.MENU values('10','채팅방','/comm/chat/page',4,'admin','20210105','admin','20210725');
+insert into insung.MENU values('01','code manage','/comm/code/page',1,'admin','20180901','admin','20210725');
+insert into insung.MENU values('02','announce','/comm/command/page',2,'admin','20180901','admin','20210725');
+insert into insung.MENU values('03','accout manage','/sm01/page',2,'admin','20180901','admin','20210725');
+insert into insung.MENU values('04','video board','/sb01/page',4,'admin','20180901','admin','20210725');
+insert into insung.MENU values('05','file board','/sf01/page',4,'admin','20180901','admin','20210725');
+insert into insung.MENU values('06','vote board','/sv01/page',4,'admin','20180901','admin','20210725');
+insert into insung.MENU values('07','restaurant board','/sr01/page',4,'admin','20180901','admin','20210725');
+insert into insung.MENU values('08','my memo','/sm02/page',4,'admin','20180901','admin','20210725');
+insert into insung.MENU values('09','user search','/smi1/page',4,'admin','20180901','admin','20210725');
+insert into insung.MENU values('10','chatting room','/comm/chat/page',4,'admin','20210105','admin','20210725');
 
 CREATE table insung.CODE_GRP (
 codegrp varchar2(5) not null,
@@ -122,10 +122,10 @@ insert into insung.CODE_GRP values('U001','유저등급코드','admin','20180901
 insert into insung.CODE_GRP values('P001','판매상태코드','admin','20180901');
 insert into insung.CODE_GRP values('P002','판매상품코드','admin','20180901');
 
-insert into insung.CODE values('01','관리자','U001','admin','20180901');
-insert into insung.CODE values('02','특별회원','U001','admin','20180901');
-insert into insung.CODE values('03','우수회원','U001','admin','20180901');
-insert into insung.CODE values('04','사용자','U001','admin','20180901');
+insert into insung.CODE values('01','admin','U001','admin','20180901');
+insert into insung.CODE values('02','special','U001','admin','20180901');
+insert into insung.CODE values('03','grade','U001','admin','20180901');
+insert into insung.CODE values('04','normal','U001','admin','20180901');
 
 insert into insung.CODE values('01','판매대기','P001','admin','20180901');
 insert into insung.CODE values('02','판매신청','P001','admin','20180901');

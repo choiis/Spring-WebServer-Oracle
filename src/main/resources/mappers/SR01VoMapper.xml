@@ -7,7 +7,7 @@
 
 <mapper namespace="com.singer.mappers.SR01">	
 
-		<insert id="insert"  parameterType="com.singer.vo.SR01Vo">
+		<insert id="insert"  parameterType="com.singer.domain.vo.sr.SR01Vo">
 			<selectKey  keyProperty="seq"  resultType="java.lang.Integer" order="AFTER">
    			 SELECT SEQ_SR01.CURRVAL FROM DUAL
   			</selectKey>
@@ -15,7 +15,7 @@
 			values (SEQ_SR01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{markertitle}, #{mapx}, #{mapy}) 
 		</insert>
 		
-		<update id="update" parameterType="com.singer.vo.SR01Vo">
+		<update id="update" parameterType="com.singer.domain.vo.sr.SR01Vo">
 			update SR01 
 			set title = #{title},
 				text = #{text},
@@ -25,7 +25,7 @@
 			where seq = #{seq}
 		</update>
 	
-		<update id="click" parameterType="com.singer.vo.SR01Vo">
+		<update id="click" parameterType="com.singer.domain.vo.sr.SR01Vo">
 			update SR01
 			set hit = (select hit 
 				from SR01
@@ -34,7 +34,7 @@
 			where seq = #{seq}
 		</update>
 	
-		<select id="selectOne" resultType="com.singer.vo.SR01Vo" parameterType="com.singer.vo.SR01Vo">	
+		<select id="selectOne" resultType="com.singer.domain.vo.sr.SR01Vo" parameterType="com.singer.domain.vo.sr.SR01Vo">
 		select 
     		S1.seq as seq,
     		S1.title as title, 
@@ -69,7 +69,7 @@
     	where S1.seq = #{seq}
 		</select>
 		
-		<select id="checkUser" resultType="com.singer.vo.SR01Vo" parameterType="com.singer.vo.SR01Vo">	
+		<select id="checkUser" resultType="com.singer.domain.vo.sr.SR01Vo" parameterType="com.singer.domain.vo.sr.SR01Vo">
 		select 
     		S1.seq as seq,
     		S1.userid as userid
@@ -77,7 +77,7 @@
     	where S1.seq = #{seq}
 		</select>
 		
-		<select id="select" resultType="com.singer.vo.SR01Vo"  parameterType="com.singer.vo.SR01Vo">
+		<select id="select" resultType="com.singer.domain.vo.sr.SR01Vo"  parameterType="com.singer.domain.vo.sr.SR01Vo">
 				<![CDATA[
 			select S1.*,
 				(select count(*) 
@@ -109,7 +109,7 @@
 		</select>
 		
 		
-		<select id="selectFind" resultType="com.singer.vo.SR01Vo"  parameterType="com.singer.vo.SR01Vo">
+		<select id="selectFind" resultType="com.singer.domain.vo.sr.SR01Vo"  parameterType="com.singer.domain.vo.sr.SR01Vo">
 			select T.*,
 				(select count(*) 
         			from SR03 s
@@ -137,12 +137,12 @@
   				) T
 		</select>
 		
-		<delete id="delete" parameterType="com.singer.vo.SR01Vo">
+		<delete id="delete" parameterType="com.singer.domain.vo.sr.SR01Vo">
 			delete from SR01
 			where seq = #{seq}
 		</delete>
 		
-		<insert id="like" parameterType="com.singer.vo.SR01Vo">
+		<insert id="like" parameterType="com.singer.domain.vo.sr.SR01Vo">
 			<selectKey  keyProperty="good"  resultType="java.lang.Integer" order="AFTER">
 		 		select good from SR01 where seq = #{seq}
 		 	</selectKey>
@@ -151,7 +151,7 @@
 			where seq = #{seq}
 		</insert>
 		
-		<insert id="hate" parameterType="com.singer.vo.SR01Vo">
+		<insert id="hate" parameterType="com.singer.domain.vo.sr.SR01Vo">
 			<selectKey  keyProperty="good"  resultType="java.lang.Integer" order="AFTER">
 		 		select good from SR01 where seq = #{seq}
 		 	</selectKey>
@@ -160,7 +160,7 @@
 			where seq = #{seq}
 		</insert>
 		
-		<update id="likelog" parameterType="com.singer.vo.SR01Vo">
+		<update id="likelog" parameterType="com.singer.domain.vo.sr.SR01Vo">
 			merge into SRG1 S1
 				using dual
 				on (S1.seq = #{seq}
@@ -172,7 +172,7 @@
 				insert (S1.seq, S1.sessionid, S1.datelog, S1.goodlog ) values(#{seq}, #{sessionid}, #{datelog} , 'Y')
 		</update>
 		
-		<update id="hatelog" parameterType="com.singer.vo.SR01Vo">
+		<update id="hatelog" parameterType="com.singer.domain.vo.sr.SR01Vo">
 			merge into SRG1 S1
 				using dual
 				on (S1.seq = #{seq}
@@ -194,7 +194,7 @@
 			select * from dual
 		</insert>
 		
-		<select id="selectPhoto" parameterType="com.singer.vo.SR01Vo" resultType="java.lang.String">
+		<select id="selectPhoto" parameterType="com.singer.domain.vo.sr.SR01Vo" resultType="java.lang.String">
 			select photopath from SRP1 
 				where seq = #{seq}
 				and idx = #{idx}

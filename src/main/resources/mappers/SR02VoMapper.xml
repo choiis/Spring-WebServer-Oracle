@@ -7,7 +7,7 @@
 
 <mapper namespace="com.singer.mappers.SR02">		
 
-		<select id="selectOne" resultType="com.singer.vo.SR01Vo" parameterType="com.singer.vo.SR01Vo">	
+		<select id="selectOne" resultType="com.singer.domain.vo.sr.SR01Vo" parameterType="com.singer.domain.vo.sr.SR01Vo">
 			select 
 	    		S2.seq as seq,
 	    		S2.userid as userid, 
@@ -18,19 +18,19 @@
 			and userid = #{userid}
 		</select>
 		
-		<select id="selectGrade" resultType="com.singer.vo.SR01Vo" parameterType="com.singer.vo.SR01Vo">	
+		<select id="selectGrade" resultType="com.singer.domain.vo.sr.SR01Vo" parameterType="com.singer.domain.vo.sr.SR01Vo">
 			select 
 	    		ROUND(AVG(S2.grade),2) avggrade
 	    		from SR02 S2
 	    	where seq = #{seq}
 		</select>
 		
-		<insert id="insert"  parameterType="com.singer.vo.SR02Vo">
+		<insert id="insert"  parameterType="com.singer.domain.vo.sr.SR02Vo">
 			insert into SR02 (seq, userid, grade, regdate)
 			values (#{seq}, #{userid}, #{grade}, #{regdate}) 
 		</insert>
 		
-		<delete id="delete" parameterType="com.singer.vo.SR01Vo">
+		<delete id="delete" parameterType="com.singer.domain.vo.sr.SR01Vo">
 			delete from SR02
 			where seq = #{seq}
 			and userid = #{userid}

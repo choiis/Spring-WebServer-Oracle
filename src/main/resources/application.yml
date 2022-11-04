@@ -21,7 +21,7 @@ spring:
       max-request-size: 1000MB
 
 mybatis:
-  type-aliases-package: com.singer.vo
+  type-aliases-package: com.singer.domain.vo
   mapper-locations: classpath*:mappers/*Mapper.xml
 management:
   server:

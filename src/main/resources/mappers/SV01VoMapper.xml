@@ -6,12 +6,12 @@
 -->
 
 <mapper namespace="com.singer.mappers.SV01">		
-		<insert id="insert"  parameterType="com.singer.vo.SV01Vo">
+		<insert id="insert"  parameterType="com.singer.domain.vo.sv.SV01Vo">
 			insert into SV01 (seq, title, text, userid, regdate, multiselect)
 			values (SEQ_SV01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{multiselect}) 
 		</insert>
 		
-		<update id="update" parameterType="com.singer.vo.SV01Vo">
+		<update id="update" parameterType="com.singer.domain.vo.sv.SV01Vo">
 			update SV01 
 			set title = #{title},
 				text = #{text},
@@ -19,7 +19,7 @@
 			where seq = #{seq}
 		</update>
 	
-		<update id="click" parameterType="com.singer.vo.SV01Vo">
+		<update id="click" parameterType="com.singer.domain.vo.sv.SV01Vo">
 			update SV01
 			set hit = (select hit 
 				from SV01
@@ -28,7 +28,7 @@
 			where seq = #{seq}
 		</update>
 	
-		<select id="selectOne" resultType="com.singer.vo.SV01Vo" parameterType="com.singer.vo.SV01Vo">	
+		<select id="selectOne" resultType="com.singer.domain.vo.sv.SV01Vo" parameterType="com.singer.domain.vo.sv.SV01Vo">
 		select 
     		S1.seq as seq,
     		S1.title as title, 
@@ -57,7 +57,7 @@
     	where S1.seq = #{seq}
 		</select>
 		
-		<select id="checkUser" resultType="com.singer.vo.SV01Vo" parameterType="com.singer.vo.SV01Vo">	
+		<select id="checkUser" resultType="com.singer.domain.vo.sv.SV01Vo" parameterType="com.singer.domain.vo.sv.SV01Vo">
 		select 
     		S1.seq as seq,
     		S1.userid as userid
@@ -65,7 +65,7 @@
 		where S1.seq = #{seq}
 		</select>
 		
-		<select id="select" resultType="com.singer.vo.SV01Vo"  parameterType="com.singer.vo.SV01Vo">
+		<select id="select" resultType="com.singer.domain.vo.sv.SV01Vo"  parameterType="com.singer.domain.vo.sv.SV01Vo">
 				<![CDATA[
 			with tot as (
     			/*+ materialize */
@@ -101,7 +101,7 @@
   			]]>
 		</select>
 		
-		<select id="selectFind" resultType="com.singer.vo.SV01Vo"  parameterType="com.singer.vo.SV01Vo">
+		<select id="selectFind" resultType="com.singer.domain.vo.sv.SV01Vo"  parameterType="com.singer.domain.vo.sv.SV01Vo">
 			select T.*,
 				(select count(*) 
         			from SV04 s
@@ -130,12 +130,12 @@
   				) T
 		</select>
 		
-		<delete id="delete" parameterType="com.singer.vo.SV01Vo">
+		<delete id="delete" parameterType="com.singer.domain.vo.sv.SV01Vo">
 			delete from SV01
 			where seq = #{seq}
 		</delete>
 		
-		<insert id="like" parameterType="com.singer.vo.SV01Vo">
+		<insert id="like" parameterType="com.singer.domain.vo.sv.SV01Vo">
 			<selectKey  keyProperty="good"  resultType="java.lang.Integer" order="AFTER">
 		 		select good from SV01 where seq = #{seq}
 		 	</selectKey>
@@ -144,7 +144,7 @@
 			where seq = #{seq}
 		</insert>
 		
-		<insert id="hate" parameterType="com.singer.vo.SV01Vo">
+		<insert id="hate" parameterType="com.singer.domain.vo.sv.SV01Vo">
 			<selectKey  keyProperty="good"  resultType="java.lang.Integer" order="AFTER">
 		 		select good from SV01 where seq = #{seq}
 		 	</selectKey>
@@ -153,7 +153,7 @@
 			where seq = #{seq}
 		</insert>
 		
-		<update id="likelog" parameterType="com.singer.vo.SV01Vo">
+		<update id="likelog" parameterType="com.singer.domain.vo.sv.SV01Vo">
 			merge into SVG1 S1
 				using dual
 				on (S1.seq = #{seq}
@@ -165,7 +165,7 @@
 				insert (S1.seq, S1.sessionid, S1.datelog, S1.goodlog ) values(#{seq}, #{sessionid}, #{datelog} , 'Y')
 		</update>
 		
-		<update id="hatelog" parameterType="com.singer.vo.SV01Vo">
+		<update id="hatelog" parameterType="com.singer.domain.vo.sv.SV01Vo">
 			merge into SVG1 S1
 				using dual
 				on (S1.seq = #{seq}

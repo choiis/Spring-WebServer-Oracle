@@ -27,14 +27,14 @@
 			select * from dual
 		</insert>
 		
-		<update id="update" parameterType="com.singer.vo.SV02Vo">
+		<update id="update" parameterType="com.singer.domain.vo.sv.SV02Vo">
 			update SV02 
 			set content = #{content}
 			where seq = #{seq}
 			and idx = #{idx}
 		</update>
 		
-		<select id="select" resultType="com.singer.vo.SV02Vo"  parameterType="com.singer.vo.SV02Vo">
+		<select id="select" resultType="com.singer.domain.vo.sv.SV02Vo"  parameterType="com.singer.domain.vo.sv.SV02Vo">
 			<![CDATA[
 			select /*+ INDEX(SV03 PK_SV03)*/
 				s2.seq as seq,
@@ -50,7 +50,7 @@
 			  ]]>
 		</select>
 		
-		<select id="selectTot" resultType="java.lang.Integer"  parameterType="com.singer.vo.SV02Vo">
+		<select id="selectTot" resultType="java.lang.Integer"  parameterType="com.singer.domain.vo.sv.SV02Vo">
 			<![CDATA[
 			select /*+ INDEX(SV03 PK_SV03)*/
 				count(*) as totVoted
@@ -59,7 +59,7 @@
 			 ]]>
 		</select>
 		
-		<delete id="delete" parameterType="com.singer.vo.SV02Vo">
+		<delete id="delete" parameterType="com.singer.domain.vo.sv.SV02Vo">
 			delete from SV02
 			where seq = #{seq}
 			and idx = #{idx}

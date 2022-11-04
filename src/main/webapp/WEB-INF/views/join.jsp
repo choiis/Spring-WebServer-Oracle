@@ -36,10 +36,7 @@
 			}
 		
 			
-			if(gfn_isNull($("input[name=imgFile]")[0].files[0])) {
-				alert("사진을 입력하세요");
-				return false;
-			}
+			
 			
 			return true;
 		}
