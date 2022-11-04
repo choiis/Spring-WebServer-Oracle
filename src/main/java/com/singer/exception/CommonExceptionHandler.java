@@ -8,7 +8,7 @@ import java.util.function.Function;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -24,143 +24,125 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.singer.common.CommonUtil;
 import com.singer.common.DateUtil;
-import com.singer.util.InputQueryUtil;
-
 @ControllerAdvice
 public class CommonExceptionHandler {
-	private static final Log log = LogFactory.getLog(ExceptionHandler.class);
+    private static final Log log = LogFactory.getLog(ExceptionHandler.class);
 
-	private ModelAndView getErrorModelAndView(boolean isAjax, @NonNull String message) {
-		ModelAndView mv = null;
-		if (isAjax) {
-			mv = new ModelAndView("forward:/error");
-		} else {
-			mv = new ModelAndView("forward:/forwardError");
-		}
-		mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
-		mv.addObject("errorMsg", message);
-		return mv;
-	}
+    private ModelAndView getErrorModelAndView(boolean isAjax, @NonNull String message) {
+        ModelAndView mv = null;
+        if (isAjax) {
+            mv = new ModelAndView("forward:/errors");
+        } else {
+            mv = new ModelAndView("forward:/forwardError");
+        }
+        mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
+        mv.addObject("errorMsg", message);
+        return mv;
+    }
 
-	@ExceptionHandler(ClientException.class)
-	public ModelAndView clientExceptionHandler(HttpServletRequest request, HttpServletResponse response,
-			ClientException ext) throws IOException {
+    @ExceptionHandler(ClientException.class)
+    public ModelAndView clientExceptionHandler(HttpServletRequest request, HttpServletResponse response,
+        ClientException ext) throws IOException {
 
-		if (CommonUtil.ajaxCheck(request)) {
-			Function<ClientException, ModelAndView> func = (ex) -> {
-				ModelAndView mv = new ModelAndView("forward:/error");
-				mv.addObject("errorCode", ex.getHttpStatusCode());
-				mv.addObject("errorMsg", ex.getLocalizedMessage());
-				return mv;
-			};
-			return func.apply(ext);
-		} else {
-			Function<ClientException, ModelAndView> func = (ex) -> {
-				ModelAndView mv = new ModelAndView("forward:/" + ex.getHttpStatusCode().value());
-				mv.addObject("errorCode", ex.getHttpStatusCode());
-				mv.addObject("errorMsg", ex.getLocalizedMessage());
-				return mv;
-			};
-			return func.apply(ext);
-		}
-	}
+        if (CommonUtil.ajaxCheck(request)) {
+            Function<ClientException, ModelAndView> func = (ex) -> {
+                ModelAndView mv = new ModelAndView("forward:/errors");
+                mv.addObject("errorCode", ex.getHttpStatusCode());
+                mv.addObject("errorMsg", ex.getLocalizedMessage());
+                return mv;
+            };
+            return func.apply(ext);
+        } else {
+            Function<ClientException, ModelAndView> func = (ex) -> {
+                ModelAndView mv = new ModelAndView("forward:/" + ex.getHttpStatusCode().value());
+                mv.addObject("errorCode", ex.getHttpStatusCode());
+                mv.addObject("errorMsg", ex.getLocalizedMessage());
+                return mv;
+            };
+            return func.apply(ext);
+        }
+    }
 
-	@ExceptionHandler(SQLException.class)
-	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "your message")
-	public ModelAndView sQLExceptionHandler(HttpServletRequest request, SQLException ext) {
-		log.info("SQLException");
-		if (StringUtils.isEmpty(ext.getMessage())) {
-			return null;
-		}
-		log.info(ext.getMessage());
+    @ExceptionHandler(SQLException.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "your message")
+    public ModelAndView sQLExceptionHandler(HttpServletRequest request, SQLException ext) {
+        log.info("SQLException");
+        if (StringUtils.isEmpty(ext.getMessage())) {
+            return null;
+        }
+        log.info(ext.getMessage());
 
-		BiConsumer<String, String> queryConsumer = (uri, msg) -> {
-			InputQueryUtil queryUtil = new InputQueryUtil("log_error");
-			queryUtil.add(uri);
-			queryUtil.add(DateUtil.getTodayTime());
-			queryUtil.add(msg);
-		};
-		queryConsumer.accept(request.getRequestURI(), ext.getLocalizedMessage());
+        boolean isAjax = CommonUtil.ajaxCheck(request);
+        return getErrorModelAndView(isAjax, ext.getCause().getLocalizedMessage());
+    }
 
-		boolean isAjax = CommonUtil.ajaxCheck(request);
-		return getErrorModelAndView(isAjax, ext.getCause().getLocalizedMessage());
-	}
+    @ExceptionHandler(AppException.class)
+    public ModelAndView appExceptionHandler(HttpServletRequest request, AppException ext) {
+        log.info("AppException");
+        if (StringUtils.isEmpty(ext.getMessage())) {
+            return null;
+        }
+        log.info(ext.getMessage());
 
-	@ExceptionHandler(AppException.class)
-	public ModelAndView appExceptionHandler(HttpServletRequest request, AppException ext) {
-		log.info("AppException");
-		if (StringUtils.isEmpty(ext.getMessage())) {
-			return null;
-		}
-		log.info(ext.getMessage());
+        return getErrorModelAndView(CommonUtil.ajaxCheck(request), ext.getMessage());
+    }
 
-		return getErrorModelAndView(CommonUtil.ajaxCheck(request), ext.getMessage());
-	}
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ModelAndView noHandlerFoundException(HttpServletRequest request, NoHandlerFoundException ext) {
 
-	@ExceptionHandler(NoHandlerFoundException.class)
-	public ModelAndView noHandlerFoundException(HttpServletRequest request, NoHandlerFoundException ext) {
+        log.info("NoHandlerFoundException");
+        if (StringUtils.isEmpty(ext.getMessage())) {
+            return null;
+        }
+        log.info(ext.getMessage());
 
-		log.info("NoHandlerFoundException");
-		if (StringUtils.isEmpty(ext.getMessage())) {
-			return null;
-		}
-		log.info(ext.getMessage());
+        String errorURL = request.getRequestURL().toString();
+        return getErrorModelAndView(CommonUtil.ajaxCheck(request), "error Url" + errorURL + " || " + ext.getMessage());
+    }
 
-		BiConsumer<String, String> queryConsumer = (uri, msg) -> {
-			InputQueryUtil queryUtil = new InputQueryUtil("log_error");
-			queryUtil.add(uri);
-			queryUtil.add(DateUtil.getTodayTime());
-			queryUtil.add(msg);
-		};
-		queryConsumer.accept(request.getRequestURI(), ext.getLocalizedMessage());
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ModelAndView methodArgumentNotValidException(HttpServletRequest request, HttpServletResponse response,
+        MethodArgumentNotValidException ext) throws IOException {
 
-		String errorURL = request.getRequestURL().toString();
-		return getErrorModelAndView(CommonUtil.ajaxCheck(request), "error Url" + errorURL + " || " + ext.getMessage());
-	}
+        if (CommonUtil.ajaxCheck(request)) {
+            Function<MethodArgumentNotValidException, ModelAndView> func = (ex) -> {
+                ModelAndView mv = new ModelAndView("forward:/errors");
+                mv.addObject("errorCode", HttpStatus.BAD_REQUEST);
+                mv.addObject("errorMsg", makeValidErrorMessage(ex.getBindingResult()));
+                return mv;
+            };
+            return func.apply(ext);
+        } else {
+            Function<MethodArgumentNotValidException, ModelAndView> func = (ex) -> {
+                ModelAndView mv = new ModelAndView("forward:/" + HttpStatus.BAD_REQUEST.value());
+                mv.addObject("errorCode", HttpStatus.BAD_REQUEST);
+                mv.addObject("errorMsg", makeValidErrorMessage(ex.getBindingResult()));
+                return mv;
+            };
+            return func.apply(ext);
+        }
+    }
 
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ModelAndView methodArgumentNotValidException(HttpServletRequest request, HttpServletResponse response,
-			MethodArgumentNotValidException ext) throws IOException {
+    private String makeValidErrorMessage(BindingResult bindingResult) {
+        StringBuilder builder = new StringBuilder();
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            builder.append("[");
+            // builder.append(fieldError.getField());
+            builder.append(fieldError.getDefaultMessage());
+            builder.append("]");
+        }
 
-		if (CommonUtil.ajaxCheck(request)) {
-			Function<MethodArgumentNotValidException, ModelAndView> func = (ex) -> {
-				ModelAndView mv = new ModelAndView("forward:/error");
-				mv.addObject("errorCode", HttpStatus.BAD_REQUEST);
-				mv.addObject("errorMsg", makeValidErrorMessage(ex.getBindingResult()));
-				return mv;
-			};
-			return func.apply(ext);
-		} else {
-			Function<MethodArgumentNotValidException, ModelAndView> func = (ex) -> {
-				ModelAndView mv = new ModelAndView("forward:/" + HttpStatus.BAD_REQUEST.value());
-				mv.addObject("errorCode", HttpStatus.BAD_REQUEST);
-				mv.addObject("errorMsg", makeValidErrorMessage(ex.getBindingResult()));
-				return mv;
-			};
-			return func.apply(ext);
-		}
-	}
+        return builder.toString();
+    }
 
-	private String makeValidErrorMessage(BindingResult bindingResult) {
-		StringBuilder builder = new StringBuilder();
-		for (FieldError fieldError : bindingResult.getFieldErrors()) {
-			builder.append("[");
-			// builder.append(fieldError.getField());
-			builder.append(fieldError.getDefaultMessage());
-			builder.append("]");
-		}
+    @ExceptionHandler(Exception.class)
+    public ModelAndView exceptionHandler(HttpServletRequest request, Exception ext) {
+        log.info("defaultException");
+        if (StringUtils.isEmpty(ext.getMessage())) {
+            return null;
+        }
+        log.info(ext.getMessage());
 
-		return builder.toString();
-	}
-
-	@ExceptionHandler(Exception.class)
-	public ModelAndView exceptionHandler(HttpServletRequest request, Exception ext) {
-		log.info("defaultException");
-		if (StringUtils.isEmpty(ext.getMessage())) {
-			return null;
-		}
-		log.info(ext.getMessage());
-
-		return getErrorModelAndView(CommonUtil.ajaxCheck(request), ext.getMessage());
-	}
+        return getErrorModelAndView(CommonUtil.ajaxCheck(request), ext.getMessage());
+    }
 }

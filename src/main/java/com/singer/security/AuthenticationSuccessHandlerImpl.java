@@ -4,37 +4,34 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import com.singer.common.CommonUtil;
 import com.singer.common.Constants.RESULT_CODE;
-import com.singer.common.DateUtil;
 import com.singer.service.CommService;
-import com.singer.service.SL01Service;
 import com.singer.service.SM01Service;
 import com.singer.vo.CommVo;
-import com.singer.vo.SL01Vo;
 import com.singer.vo.SM01Vo;
 
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
 
-	@Inject
+	@Autowired
 	private SM01Service sm01Service;
 
-	@Inject
+	@Autowired
 	private CommService commService;
 
-	@Inject
-	private SL01Service sl01Service;
+//	@Inject
+//	private SL01Service sl01Service;
 
 	private static String UNKNOWN = "unknown";
 
@@ -61,13 +58,13 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 			String browser = Optional.of(request.getParameter("browser")).orElseGet(() -> UNKNOWN);
 			String device = Optional.of(request.getParameter("device")).orElseGet(() -> UNKNOWN);
 			String ip = CommonUtil.getIp(request);
-			SL01Vo sl01Vo = new SL01Vo();
-			sl01Vo.setUserid(userid);
-			sl01Vo.setLogintime(DateUtil.getTodayTime());
-			sl01Vo.setIp(ip);
-			sl01Vo.setBrowser(browser);
-			sl01Vo.setDevice(device);
-			//sl01Service.insertLoginlog(sl01Vo);
+//			SL01Vo sl01Vo = new SL01Vo();
+//			sl01Vo.setUserid(userid);
+//			sl01Vo.setLogintime(DateUtil.getTodayTime());
+//			sl01Vo.setIp(ip);
+//			sl01Vo.setBrowser(browser);
+//			sl01Vo.setDevice(device);
+//			//sl01Service.insertLoginlog(sl01Vo);
 		} catch (Exception e) {
 			response.getWriter().write(RESULT_CODE.FAIL.name());
 			response.getWriter().flush();

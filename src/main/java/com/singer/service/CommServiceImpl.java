@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ import com.singer.vo.CommVo;
 @Service
 public class CommServiceImpl implements CommService {
 
-	@Inject
+	@Autowired
 	private CommDao commDao;
 
 	@Override

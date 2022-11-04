@@ -13,36 +13,27 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-	private final Log log = LogFactory.getLog(LoginController.class);
+    private final Log log = LogFactory.getLog(LoginController.class);
 
-	@GetMapping(value = "/index")
-	public ModelAndView index(HttpSession session) throws Exception {
+    @GetMapping(value = "/index")
+    public ModelAndView index(HttpSession session) throws Exception {
 
-		return new ModelAndView("index");
-	}
+        return new ModelAndView("index");
+    }
 
-//			InputQueryUtil queryUtil = new InputQueryUtil("log_login");
-//			queryUtil.add(userId);
-//			queryUtil.add(DateUtil.getTodayTime());
-//			queryUtil.add(brower.toString());
-//			queryUtil.add(sm01Vo.getDevice());
-//			queryUtil.add(CommonUtil.getIp(request));
-//
-//			producer.send(queryUtil.getQuery());
+    @GetMapping(value = "/main")
+    public ModelAndView goMain() throws Exception {
+        ModelAndView model = new ModelAndView("/main");
+        log.info("go main page");
+        return model;
+    }
 
-	@GetMapping(value = "/main")
-	public ModelAndView goMain() throws Exception {
-		ModelAndView model = new ModelAndView("/main");
-		log.info("go main page");
-		return model;
-	}
-
-	@RequestMapping(value = "/sessionNotExist")
-	public ModelAndView redirect_uri(HttpServletRequest request) throws Exception {
-		String redirect = request.getParameter("redirect_uri");
-		ModelAndView model = new ModelAndView("/index");
-		log.info("redirect_uri " + redirect);
-		model.addObject("redirect_uri", redirect);
-		return model;
-	}
+    @RequestMapping(value = "/sessionNotExist")
+    public ModelAndView redirect_uri(HttpServletRequest request) throws Exception {
+        String redirect = request.getParameter("redirect_uri");
+        ModelAndView model = new ModelAndView("/index");
+        log.info("redirect_uri " + redirect);
+        model.addObject("redirect_uri", redirect);
+        return model;
+    }
 }

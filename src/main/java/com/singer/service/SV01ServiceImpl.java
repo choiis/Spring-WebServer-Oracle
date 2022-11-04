@@ -2,9 +2,9 @@ package com.singer.service;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -25,13 +25,13 @@ import com.singer.vo.SV04Vo;
 @Service
 public class SV01ServiceImpl implements SV01Service {
 
-	@Inject
+	@Autowired
 	private SV01Dao sv01Dao;
 
-	@Inject
+	@Autowired
 	private SV02Dao sv02Dao;
 
-	@Inject
+	@Autowired
 	private SV04Dao sv04Dao;
 
 	@Transactional(rollbackFor = { Exception.class })

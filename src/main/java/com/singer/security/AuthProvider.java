@@ -2,10 +2,9 @@ package com.singer.security;
 
 import java.util.Optional;
 
-import javax.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 
-import org.apache.commons.lang.StringUtils;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +18,7 @@ import com.singer.vo.SM01Vo;
 @Component
 public class AuthProvider implements AuthenticationProvider {
 
-	@Inject
+	@Autowired
 	private SM01Service sm01Service;
 
 	@Override

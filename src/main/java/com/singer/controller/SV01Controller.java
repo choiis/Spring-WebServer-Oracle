@@ -2,7 +2,7 @@ package com.singer.controller;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -27,7 +27,7 @@ public class SV01Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SV01Controller.class);
 
-	@Inject
+	@Autowired
 	private SV01Service sv01Service;
 
 	@RequestMapping(value = "/sv01/page", method = RequestMethod.GET)

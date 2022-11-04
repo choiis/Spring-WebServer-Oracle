@@ -1,7 +1,7 @@
 package com.singer.controller;
 
 import java.io.IOException;
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,7 +25,7 @@ public class StreamController extends BaseController {
 
 	private final Log log = LogFactory.getLog(StreamController.class);
 
-	@Inject
+	@Autowired
 	private PropertyUtil propertyUtil;
 
 	@RequestMapping(value = "/comm/videoStreaming", method = RequestMethod.GET)

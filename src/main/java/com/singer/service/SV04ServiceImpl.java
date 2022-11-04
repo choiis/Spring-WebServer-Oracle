@@ -3,9 +3,8 @@ package com.singer.service;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import org.apache.cxf.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +17,7 @@ import com.singer.vo.SV04Vo;
 @Service
 public class SV04ServiceImpl implements SV04Service {
 
-	@Inject
+	@Autowired
 	private SV04Dao sv04Dao;
 
 	@Override

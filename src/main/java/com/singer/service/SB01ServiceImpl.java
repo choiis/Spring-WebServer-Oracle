@@ -5,10 +5,10 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -31,16 +31,16 @@ import com.singer.vo.SB02Vo;
 @Service
 public class SB01ServiceImpl implements SB01Service {
 
-	@Inject
+	@Autowired
 	private SB01Dao sb01Dao;
 
-	@Inject
+	@Autowired
 	private SB02Dao sb02Dao;
 
-	@Inject
+	@Autowired
 	S3Util s3Util;
 
-	@Inject
+	@Autowired
 	private PropertyUtil propertyUtil;
 
 	@Transactional(rollbackFor = { Exception.class })

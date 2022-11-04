@@ -3,7 +3,7 @@ package com.singer.service;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ import com.singer.vo.SV02Vo;
 @Service
 public class SV02ServiceImpl implements SV02Service {
 
-	@Inject
+	@Autowired
 	private SV02Dao sv02Dao;
 
 	@Override

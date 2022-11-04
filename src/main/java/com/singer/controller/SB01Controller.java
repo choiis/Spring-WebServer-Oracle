@@ -3,7 +3,7 @@ package com.singer.controller;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -32,7 +32,7 @@ public class SB01Controller extends BaseController {
 
 	private final Log log = LogFactory.getLog(SB01Controller.class);
 
-	@Inject
+	@Autowired
 	private SB01Service sb01Service;
 
 	@RequestMapping(value = "/sb01/page", method = RequestMethod.GET)

@@ -2,7 +2,7 @@ package com.singer.controller;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -28,7 +28,7 @@ import com.singer.vo.CommVo;
 public class CommController extends BaseController {
 	private final Log log = LogFactory.getLog(SB01Controller.class);
 
-	@Inject
+	@Autowired
 	private CommService commService;
 
 	@RequestMapping(value = "/comm/chat/page", method = RequestMethod.GET)

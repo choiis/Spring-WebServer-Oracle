@@ -1,0 +1,25 @@
+Invoke top-level Maven targets
+Maven Version : MAVEN_HOME
+Goals : clean install
+
+Jenkins Deploy war/ear to a container
+WAR/EAR files : **/*.war
+Context Path : /
+
+tomcat-users.xml
+<role rolename="tomcat"/>
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<role rolename="manager-jmx"/>
+<role rolename="manager-status"/>
+<role rolename="admin-gui"/>
+<role rolename="admin-script"/>
+<user username="admin" password="admin"
+ roles="tomcat,manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script"/>
+
+Tomcat의 server.xml <Context/> 부분 주석처리 Deploy war/ear의 Context Path와 충돌
+context.xml의 <Context/> 에서 server.xml 대신 
+allowCasualMultipartParsing="true" sessionCookieName="JSESSIONID"
+처리 가능
+
+Tomcat서버 떠있는 상태에서 Jenkins 연결 배포가능

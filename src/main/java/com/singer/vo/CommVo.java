@@ -19,46 +19,46 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class CommVo extends SuperVo {
 
-	private static final long serialVersionUID = -8496452258072990844L;
+    private static final long serialVersionUID = -8496452258072990844L;
 
-	private int seq;
+    private int seq;
 
-	private String codecd;
+    private String codecd;
 
-	private String codenm;
+    private String codenm;
 
-	private String codegrp;
+    private String codegrp;
 
-	private String username;
+    private String username;
 
-	private String regdate;
+    private String regdate;
 
-	private String reguser;
+    private String reguser;
 
-	private String menucd;
+    private String menucd;
 
-	private String menunm;
+    private String menunm;
 
-	private String menuurl;
+    private String menuurl;
 
-	private USER_CODE authlevel;
+    private USER_CODE authlevel;
 
-	private String moduser;
+    private String moduser;
 
-	private String moddate;
+    private String moddate;
 
-	private String codegrpnm;
+    private String codegrpnm;
 
-	private String password;
+    private String password;
 
-	private HttpStatus errorCode;
+    private HttpStatus errorCode;
 
-	private String errorMsg;
+    private String errorMsg;
 
-	private List<CommVo> commList;
+    private List<CommVo> commList;
 
-	private String userId;
+    private String userId;
 
-	private String tableName;
+    private String tableName;
 
 }

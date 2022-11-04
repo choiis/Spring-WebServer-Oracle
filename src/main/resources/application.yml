@@ -1,0 +1,47 @@
+server:
+  port: 8090
+  shutdown: graceful
+
+spring:
+  application:
+    name: webserver-oracle
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@127.0.0.1:1521/xe
+    username: insung
+    password: 12345678
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+
+mybatis:
+  type-aliases-package: com.singer.vo
+  mapper-locations: classpath*:mappers/*Mapper.xml
+management:
+  server:
+    port: 28090
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+
+aws:
+  s3:
+    temp:
+      path: /workspace/temp/
+    bucket:
+      name: enterbucket
+    access: enteraccess
+    secret: entersecret
+    stream:
+      path: enters3path

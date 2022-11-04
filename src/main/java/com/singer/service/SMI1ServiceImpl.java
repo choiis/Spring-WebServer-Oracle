@@ -2,9 +2,9 @@ package com.singer.service;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import com.singer.vo.SM01Vo;
 @Service
 public class SMI1ServiceImpl implements SMI1Service {
 
-	@Inject
+	@Autowired
 	private SMI1Dao smi1Dao;
 
 	@Override

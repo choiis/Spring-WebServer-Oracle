@@ -1,6 +1,6 @@
 package com.singer.service;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import com.singer.vo.SR02Vo;
 @Service
 public class SR02ServiceImpl implements SR02Service {
 
-	@Inject
+	@Autowired
 	private SR02Dao sr02Dao;
 
 	@Override

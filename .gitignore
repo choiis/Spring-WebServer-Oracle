@@ -1,2 +1,10 @@
 #
-target/
+/target/
+
+*.class
+*.DS_Store
+
+.idea/
+.idea_modules/
+
+/Spring-WebServer-Oracle.iml

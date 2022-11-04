@@ -18,7 +18,7 @@ public class ErrorController {
 	private final Log log = LogFactory.getLog(ErrorController.class);
 
 	// CommonExceptionHandler에서 Ajax Request들을 여기로 보낸다
-	@RequestMapping(value = "/error")
+	@RequestMapping(value = "/errors")
 	public ResponseEntity<CommVo> errorJson(CommVo commVo, HttpServletRequest request) {
 		log.debug("server ajax error");
 		HttpStatus errorCode = (HttpStatus) request.getAttribute("errorCode");

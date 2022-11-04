@@ -1,6 +1,6 @@
 package com.singer.controller;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -21,7 +21,7 @@ import com.singer.vo.SV02Vo;
 public class SV02Controller extends BaseController {
 	private final Log log = LogFactory.getLog(SV02Controller.class);
 
-	@Inject
+	@Autowired
 	private SV02Service sv02Service;
 
 	@ResponseBody

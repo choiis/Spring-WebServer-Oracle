@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -30,19 +30,19 @@ import com.singer.vo.SR03Vo;
 @Service
 public class SR01ServiceImpl implements SR01Service {
 
-	@Inject
+	@Autowired
 	private SR01Dao sr01Dao;
 
-	@Inject
+	@Autowired
 	private SR02Dao sr02Dao;
 
-	@Inject
+	@Autowired
 	private SR03Dao sr03Dao;
 
-	@Inject
+	@Autowired
 	S3Util s3Util;
 
-	@Inject
+	@Autowired
 	private PropertyUtil propertyUtil;
 
 	@Transactional(rollbackFor = { Exception.class })

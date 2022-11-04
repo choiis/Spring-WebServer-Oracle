@@ -1,6 +1,6 @@
 package com.singer.controller;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -25,7 +25,7 @@ import com.singer.vo.SR02Vo;
 public class SR02Controller extends BaseController {
 	private final Log log = LogFactory.getLog(SR02Controller.class);
 
-	@Inject
+	@Autowired
 	private SR02Service sr02Service;
 
 	@ResponseBody

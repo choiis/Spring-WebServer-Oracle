@@ -1,12 +1,9 @@
 package com.singer.bean;
 
-import java.util.Properties;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -21,44 +18,26 @@ import com.singer.util.PropertyUtil;
 @Configuration
 public class BeanConfig {
 
-	@Bean
-	public CommonExceptionHandler exceptionHandler() {
-		return new CommonExceptionHandler();
-	}
+    @Bean
+    public CommonExceptionHandler exceptionHandler() {
+        return new CommonExceptionHandler();
+    }
 
-	@Bean(name = "multipartResolver")
-	public StandardServletMultipartResolver multipartResolver() {
-		return new StandardServletMultipartResolver();
-	}
+    @Bean(name = "multipartResolver")
+    public StandardServletMultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
+    }
 
-	@Bean
-	public JavaMailSenderImpl javaMailSenderImpl() {
-		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+    @Autowired
+    private PropertyUtil propertyUtil;
 
-		mailSender.setPort(25);
-		mailSender.setHost("relay.company.co.kr");
-		Properties mailProperties = new Properties();
+    @Bean
+    public AmazonS3 amazonS3() {
 
-		mailProperties.put("mail.transport.protocol", "smtp");
-		mailProperties.put("mail.smtp.auth", false);
-		mailProperties.put("mail.smtp.starttls.enable", false);
-		mailProperties.put("mail.smtp.debug", true);
-		mailProperties.put("mail.smtp.ssl.enable", false);
+        AWSCredentials credentials = new BasicAWSCredentials(propertyUtil.getS3access(), propertyUtil.getS3secret());
 
-		mailSender.setJavaMailProperties(mailProperties);
-		return mailSender;
-	}
-
-	@Inject
-	private PropertyUtil propertyUtil;
-
-	@Bean
-	public AmazonS3 amazonS3() {
-
-		AWSCredentials credentials = new BasicAWSCredentials(propertyUtil.getS3access(), propertyUtil.getS3secret());
-
-		return AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials))
-				.withRegion(Regions.AP_NORTHEAST_1).build();
-	}
+        return AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials))
+            .withRegion(Regions.AP_NORTHEAST_1).build();
+    }
 
 }

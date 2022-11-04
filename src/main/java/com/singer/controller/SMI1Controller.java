@@ -2,7 +2,7 @@ package com.singer.controller;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,7 +23,7 @@ public class SMI1Controller {
 
 	private final Log log = LogFactory.getLog(SMI1Controller.class);
 
-	@Inject
+	@Autowired
 	private SMI1Service smi1Service;
 
 	@RequestMapping(value = "/smi1/page", method = RequestMethod.GET)

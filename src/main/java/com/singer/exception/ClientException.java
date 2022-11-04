@@ -9,11 +9,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ClientException extends Exception {
 
-	private static final long serialVersionUID = -2649662521414292331L;
+    private static final long serialVersionUID = -2649662521414292331L;
 
-	private HttpStatus httpStatusCode;
+    private HttpStatus httpStatusCode;
 
-	public ClientException(String msg) {
-		super(msg);
-	}
+    public ClientException(String msg) {
+        super(msg);
+    }
 }

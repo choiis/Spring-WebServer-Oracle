@@ -1,0 +1,38 @@
+version: "3.3"
+services:
+  oracle:
+    container_name: oracle-11g
+    image: oracleinanutshell/oracle-xe-11g
+    environment:
+      - ORACLE_ALLOW_REMOTE=true
+      - ORACLE_PWD=12345678
+    ports:
+      - "1521:1521"
+    volumes:
+      - ./init/:/docker-entrypoint-initdb.d/
+      - oracle-backup:/opt/oracle/oradata
+  minio:
+    image: minio/minio:RELEASE.2021-07-15T22-27-34Z
+    command: server /data --console-address ":9001"
+    restart: always
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - "s3:/data"
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set myminio http://minio:9000 accesskey secretkey;
+      /usr/bin/mc mb myminio/s3-storage;
+      /usr/bin/mc policy set public myminio/s3-storage;
+      exit 0;"
+
+volumes:
+  oracle-backup:
+    driver: local
+  s3:
+    driver: local

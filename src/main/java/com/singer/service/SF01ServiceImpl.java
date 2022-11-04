@@ -5,10 +5,10 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -32,18 +32,18 @@ import lombok.Cleanup;
 @Service
 public class SF01ServiceImpl implements SF01Service {
 
-	@Inject
+	@Autowired
 	private SF01Dao sf01Dao;
 
-	@Inject
+	@Autowired
 	private SF02Dao sf02Dao;
 
-	@Inject
+	@Autowired
 	private PropertyUtil propertyUtil;
 
 	private static final String S3_FILE_PATH = "sf01/";
 
-	@Inject
+	@Autowired
 	private S3Util s3Util;
 
 	@Transactional(rollbackFor = { Exception.class })
