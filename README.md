@@ -16,7 +16,9 @@
 docker-compose up
 ```
 ### Build and Execution
-* ./mvnw clean install
+```
+./mvnw clean install
+```
 
 * Run Spring Boot Project
 
