@@ -1,6 +1,10 @@
 package com.singer.common.bean;
 
 
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.util.AwsHostNameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,8 +40,14 @@ public class BeanConfig {
 
         AWSCredentials credentials = new BasicAWSCredentials(propertyUtil.getS3access(), propertyUtil.getS3secret());
 
+        // minio 참고
+        //https://stackoverflow.com/questions/49332533/using-s3-java-sdk-to-talk-to-s3-compatible-storage-minio
         return AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials))
-            .withRegion(Regions.AP_NORTHEAST_1).build();
+            .withPathStyleAccessEnabled(true)
+            .withEndpointConfiguration(
+                new EndpointConfiguration(propertyUtil.getS3Endpoint(),
+                    AwsHostNameUtils.parseRegion(propertyUtil.getS3Endpoint(), AmazonS3Client.S3_SERVICE_NAME))
+            ).build();
     }
 
 }

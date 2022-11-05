@@ -37,11 +37,12 @@ management:
 
 aws:
   s3:
+    endpoint: http://localhost:9000
     temp:
       path: /workspace/temp/
     bucket:
-      name: enterbucket
-    access: enteraccess
-    secret: entersecret
+      name: s3-storage
+    access: minioadmin
+    secret: minioadmin
     stream:
       path: enters3path

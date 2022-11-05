@@ -13,6 +13,10 @@ public class PropertyUtil {
 
     @Value("${aws.s3.temp.path}")
     private String s3FilePath;
+
+    @Value("${aws.s3.endpoint}")
+    private String s3Endpoint;
+
     @Value("${aws.s3.bucket.name}")
     private String s3Bucket;
 
