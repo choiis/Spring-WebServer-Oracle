@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.singer.domain.vo.sm.SM02Vo;
+import com.singer.domain.entity.sm.SM02Vo;
 
 @Mapper
 public interface SM02Dao {

@@ -3,8 +3,8 @@ package com.singer.domain.dao.sr;
 import com.singer.domain.dao.SuperDao;
 import org.springframework.stereotype.Repository;
 
-import com.singer.domain.vo.sr.SR01Vo;
-import com.singer.domain.vo.sr.SR02Vo;
+import com.singer.domain.entity.sr.SR01Vo;
+import com.singer.domain.entity.sr.SR02Vo;
 
 @Repository("sr02Dao")
 public class SR02Dao extends SuperDao {

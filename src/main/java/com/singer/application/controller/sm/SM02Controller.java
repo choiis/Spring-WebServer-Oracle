@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.application.service.sm.SM02Service;
-import com.singer.domain.vo.sm.SM02Vo;
+import com.singer.domain.entity.sm.SM02Vo;
 
 @Controller
 public class SM02Controller extends BaseController {

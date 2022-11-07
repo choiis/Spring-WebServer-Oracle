@@ -13,7 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 import com.singer.application.service.sm.SM01Service;
-import com.singer.domain.vo.sm.SM01Vo;
+import com.singer.domain.entity.sm.SM01Vo;
 
 @Component
 public class AuthProvider implements AuthenticationProvider {

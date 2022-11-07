@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.application.service.sm.SMI1Service;
-import com.singer.domain.vo.sm.SM01Vo;
+import com.singer.domain.entity.sm.SM01Vo;
 
 @Controller
 public class SMI1Controller {

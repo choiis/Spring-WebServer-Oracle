@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.singer.domain.dao.sm.SMI1Dao;
 import com.singer.common.exception.ClientException;
-import com.singer.domain.vo.sm.SM01Vo;
+import com.singer.domain.entity.sm.SM01Vo;
 
 @Service
 public class SMI1ServiceImpl implements SMI1Service {

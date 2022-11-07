@@ -25,7 +25,7 @@ import com.singer.common.util.Constants;
 import com.singer.common.util.Constants.PHONE_INFO_CODE;
 import com.singer.common.util.DateUtil;
 import com.singer.domain.dao.sm.SM01Dao;
-import com.singer.domain.vo.sm.SM01Vo;
+import com.singer.domain.entity.sm.SM01Vo;
 
 import oracle.sql.BLOB;
 

@@ -1,5 +1,6 @@
 package com.singer.infrastructure.util;
 
+import com.singer.infrastructure.config.S3Properties;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -23,11 +24,11 @@ public class S3Util {
     private String bucketName;
 
     @Autowired
-    private PropertyUtil propertyUtil;
+    private S3Properties s3Properties;
 
     @PostConstruct
     private void init() throws Exception {
-        bucketName = propertyUtil.getS3Bucket();
+        bucketName = s3Properties.getBucketName();
     }
 
     public InputStream getS3FileStream(@NonNull String fileName) {

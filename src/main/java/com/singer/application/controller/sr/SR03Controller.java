@@ -1,6 +1,9 @@
 package com.singer.application.controller.sr;
 
 import com.singer.application.controller.BaseController;
+import com.singer.application.dto.sr.SR03ListResponse;
+import com.singer.application.dto.sr.SR03Request;
+import com.singer.application.dto.sr.SR03Response;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,59 +16,61 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.singer.application.service.sr.SR03Service;
-import com.singer.domain.vo.sr.SR03Vo;
+import com.singer.domain.entity.sr.SR03Vo;
 
 @RequestMapping("/sr01")
 @Controller
 public class SR03Controller extends BaseController {
 
-	private final Log log = LogFactory.getLog(SR03Controller.class);
+    private final Log log = LogFactory.getLog(SR03Controller.class);
 
-	@Autowired
-	private SR03Service sr03Service;
+    @Autowired
+    private SR03Service sr03Service;
 
-	@ResponseBody
-	@RequestMapping(value = "/sr03/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
-	public ResponseEntity<SR03Vo> selectsr03Vo(@ModelAttribute SR03Vo sr03Vo, HttpServletRequest request)
-			throws Exception {
-		log.debug("enter sr03 get");
+    @ResponseBody
+    @RequestMapping(value = "/sr03/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
+    public ResponseEntity<SR03ListResponse> selectsr03Vo(@PathVariable int seq01,
+        @PathVariable int parents, @PathVariable int nowPage, HttpServletRequest request)
+        throws Exception {
+        log.debug("enter sr03 get");
 
-		String userid = getSessionId(request);
-		List<SR03Vo> list = sr03Service.selectSR03Vo(sr03Vo, userid);
-		sr03Vo.setList(list);
+        String userid = getSessionId(request);
+        SR03ListResponse listResponse = sr03Service.selectSR03Vo(seq01, parents, nowPage, userid);
 
-		log.debug("exit sr03 get");
-		return new ResponseEntity<SR03Vo>(sr03Vo, HttpStatus.OK);
-	}
+        log.debug("exit sr03 get");
+        return new ResponseEntity<SR03ListResponse>(listResponse, HttpStatus.OK);
+    }
 
-	@ResponseBody
-	@RequestMapping(value = "/sr03", method = RequestMethod.POST)
-	public ResponseEntity<SR03Vo> insertsr03Vo(@RequestBody @Valid SR03Vo sr03Vo, HttpServletRequest request)
-			throws Exception {
-		log.debug("enter sr03 post");
+    @ResponseBody
+    @RequestMapping(value = "/sr03", method = RequestMethod.POST)
+    public ResponseEntity<SR03Response> insertsr03Vo(@RequestBody @Valid SR03Request sr03Request, HttpServletRequest request)
+        throws Exception {
+        log.debug("enter sr03 post");
 
-		String userid = getSessionId(request);
-		sr03Service.insertSR03Vo(sr03Vo, userid);
+        String userid = getSessionId(request);
+        SR03Response sr03Response = sr03Service.insertSR03Vo(sr03Request, userid);
 
-		log.debug("exit sr03 post");
-		return new ResponseEntity<SR03Vo>(sr03Vo, HttpStatus.CREATED);
-	}
+        log.debug("exit sr03 post");
+        return new ResponseEntity<SR03Response>(sr03Response, HttpStatus.CREATED);
+    }
 
-	@ResponseBody
-	@RequestMapping(value = "/sr03/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
-	public ResponseEntity<SR03Vo> deletesr03Vo(@ModelAttribute SR03Vo sr03Vo, HttpServletRequest request)
-			throws Exception {
-		log.debug("enter sr03 delete");
+    @ResponseBody
+    @RequestMapping(value = "/sr03/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
+    public ResponseEntity<SR03Response> deletesr03Vo(@PathVariable int seq,
+        @PathVariable int seq01, @PathVariable int parents, HttpServletRequest request)
+        throws Exception {
+        log.debug("enter sr03 delete");
 
-		sr03Service.deleteSR03Vo(sr03Vo);
+        sr03Service.deleteSR03Vo(seq, seq01, parents);
 
-		log.debug("exit sr03 delete");
-		return new ResponseEntity<SR03Vo>(HttpStatus.NO_CONTENT);
-	}
+        log.debug("exit sr03 delete");
+        return new ResponseEntity<SR03Response>(HttpStatus.NO_CONTENT);
+    }
 }

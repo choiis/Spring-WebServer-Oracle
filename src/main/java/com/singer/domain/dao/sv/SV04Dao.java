@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.singer.domain.vo.sv.SV04Vo;
+import com.singer.domain.entity.sv.SV04Vo;
 
 @Repository("sv04Dao")
 public class SV04Dao extends SuperDao {

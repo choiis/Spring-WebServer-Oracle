@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="com.singer.domain.vo.sb.SB01Vo"%>
+<%@page import="com.singer.domain.entity.sb.SB01Vo"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -159,7 +159,7 @@
 			         	html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[j].regdate) + '</td>';
 			         	if(data.list[j].deleteYn) {
 			        		html += '<td scope="col" width="50">' + 
-				            '<input type="button" value="삭제" onclick="deleteSF02(' + data.list[j].seq + ',' + data.list[j].seq01 +')">'
+				            '<input type="button" value="삭제" onclick="deletesb02(' + data.list[j].seq + ',' + data.list[j].seq01 +')">'
 				            + '</td>';
 			         	} else {
 			          		html += '<td scope="col" width="50"></td>';
@@ -207,7 +207,7 @@
 				        html += '<td scope="col" width="70">' + gfn_dateFormat(data.list[j].regdate) + '</td>';
 				        if(data.list[j].deleteYn) {
 				        	html += '<td scope="col" width="50">' + 
-					        '<input type="button" value="삭제" onclick="deleteSB02(' + data.list[j].seq + ',' + data.list[j].seq01 +')">'
+					        '<input type="button" value="삭제" onclick="deletesb02(' + data.list[j].seq + ',' + data.list[j].seq01 +')">'
 					        + '</td>';
 				        } else {
 				          	html += '<td scope="col" width="50"></td>';

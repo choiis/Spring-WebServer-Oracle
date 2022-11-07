@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.singer.infrastructure.util.PropertyUtil;
+import com.singer.infrastructure.config.S3Properties;
 
 @Controller
 public class StreamController extends BaseController {
@@ -27,13 +27,13 @@ public class StreamController extends BaseController {
 	private final Log log = LogFactory.getLog(StreamController.class);
 
 	@Autowired
-	private PropertyUtil propertyUtil;
+	private S3Properties s3Properties;
 
 	@RequestMapping(value = "/comm/videoStreaming", method = RequestMethod.GET)
 	public ResponseEntity<ResourceRegion> videoStreaming(@RequestHeader HttpHeaders headers) throws IOException {
 		log.info("videoStreaming!!!");
 
-		String streamurl = propertyUtil.getS3StreamPath();
+		String streamurl = s3Properties.getStreamPath();
 		UrlResource video = new UrlResource(streamurl);
 		ResourceRegion region = getResourceRegion(video, headers);
 

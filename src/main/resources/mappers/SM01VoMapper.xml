@@ -7,7 +7,7 @@
 
 <mapper namespace="com.singer.mappers.SM01">
 
-    <resultMap type="com.singer.domain.vo.sm.SM01Vo" id="SM01VoResult">
+    <resultMap type="com.singer.domain.entity.sm.SM01Vo" id="SM01VoResult">
         <result column="userid" property="userid"/>
         <result column="username" property="username"/>
         <result column="passwd" property="passwd"/>
@@ -24,12 +24,12 @@
 
     </resultMap>
 
-    <insert id="insert"  parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <insert id="insert"  parameterType="com.singer.domain.entity.sm.SM01Vo">
         insert into SM01 (userid, passwd, username, brth, grade, regdate, email, usertype)
         values (#{userid}, #{passwd}, #{username}, #{brth}, #{grade, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, #{regdate}, #{email}, 4)
     </insert>
 
-    <update id="insertSMI1"  parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <update id="insertSMI1"  parameterType="com.singer.domain.entity.sm.SM01Vo">
         merge into SMI1 S1
             using dual
             on (S1.userid = #{userid}
@@ -45,17 +45,17 @@
                     values (#{userid}, #{infocode, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, #{pfnum}, #{pcnum}, #{pbnum}, #{regdate})
     </update>
 
-    <insert id="insertSME1"  parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <insert id="insertSME1"  parameterType="com.singer.domain.entity.sm.SM01Vo">
         insert into SME1 (userid, regdate, insertid)
         values (#{userid}, #{regdate}, #{insertid})
     </insert>
 
-    <delete id="deleteSME1" parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <delete id="deleteSME1" parameterType="com.singer.domain.entity.sm.SM01Vo">
         delete from SME1
         where userid = #{userid}
     </delete>
 
-    <update id="update" parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <update id="update" parameterType="com.singer.domain.entity.sm.SM01Vo">
         update SM01
         set username = #{username},
         brth = #{brth},
@@ -66,14 +66,14 @@
         where userid  = #{userid}
     </update>
 
-    <update id="updateUserType" parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <update id="updateUserType" parameterType="com.singer.domain.entity.sm.SM01Vo">
         update SM01
         set usertype = #{usertype}
         where userid  = #{userid}
     </update>
 
 
-    <select id="selectOne" resultMap="SM01VoResult" parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <select id="selectOne" resultMap="SM01VoResult" parameterType="com.singer.domain.entity.sm.SM01Vo">
         select
             S.userid as userid,
             S.username as username,
@@ -86,7 +86,7 @@
         where S.userid = #{userid}
     </select>
 
-    <select id="selectLogin" resultMap="SM01VoResult" parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <select id="selectLogin" resultMap="SM01VoResult" parameterType="com.singer.domain.entity.sm.SM01Vo">
         select
             S.userid as userid,
             S.username as username,
@@ -100,7 +100,7 @@
         where S.userid = #{userid}
     </select>
 
-    <select id="selectSMI1" resultMap="SM01VoResult" parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <select id="selectSMI1" resultMap="SM01VoResult" parameterType="com.singer.domain.entity.sm.SM01Vo">
         select
             S.userid as userid,
             S.infocode as infocode,
@@ -111,7 +111,7 @@
         where S.userid = #{userid}
     </select>
 
-    <select id="select" resultMap="SM01VoResult" parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <select id="select" resultMap="SM01VoResult" parameterType="com.singer.domain.entity.sm.SM01Vo">
 			<![CDATA[
         select
             /*+ ordered use_nl(T1 S1)*/
@@ -146,7 +146,7 @@
         ]]>
 		</select>
 
-    <delete id="delete" parameterType="com.singer.domain.vo.sm.SM01Vo">
+    <delete id="delete" parameterType="com.singer.domain.entity.sm.SM01Vo">
         delete from SM01
         where userid = #{userid}
     </delete>
@@ -155,7 +155,7 @@
         insert into SMP1 values(#{userid}, #{regdate}, #{photo})
     </insert>
 
-    <select id="selectImage" parameterType="com.singer.domain.vo.sm.SM01Vo" resultType="java.util.Map">
+    <select id="selectImage" parameterType="com.singer.domain.entity.sm.SM01Vo" resultType="java.util.Map">
         select photo from SMP1 where userid  = #{userid}
     </select>
 

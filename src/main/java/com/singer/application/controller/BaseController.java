@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.singer.common.util.Constants.USER_CODE;
-import com.singer.domain.vo.CommVo;
+import com.singer.domain.entity.CommVo;
 
 public class BaseController {
 

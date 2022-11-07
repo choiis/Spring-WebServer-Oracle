@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.singer.common.util.Constants.RESULT_CODE;
 import com.singer.application.service.sr.SR02Service;
-import com.singer.domain.vo.sr.SR01Vo;
-import com.singer.domain.vo.sr.SR02Vo;
+import com.singer.domain.entity.sr.SR01Vo;
+import com.singer.domain.entity.sr.SR02Vo;
 
 @RequestMapping("/sr01")
 @Controller

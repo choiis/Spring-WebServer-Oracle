@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
-import com.singer.domain.vo.CommVo;
+import com.singer.domain.entity.CommVo;
 
 @Repository("commDao")
 public class CommDao extends SuperDao {

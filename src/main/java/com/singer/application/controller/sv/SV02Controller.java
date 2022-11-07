@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.singer.application.service.sv.SV02Service;
-import com.singer.domain.vo.sv.SV02Vo;
+import com.singer.domain.entity.sv.SV02Vo;
 
 @RequestMapping("/sv01")
 @Controller

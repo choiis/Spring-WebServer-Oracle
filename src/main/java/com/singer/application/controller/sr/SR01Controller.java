@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.util.Constants.RESULT_CODE;
 import com.singer.application.service.sr.SR01Service;
-import com.singer.domain.vo.sr.SR01Vo;
+import com.singer.domain.entity.sr.SR01Vo;
 
 import lombok.Cleanup;
 

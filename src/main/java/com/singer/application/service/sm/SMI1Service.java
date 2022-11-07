@@ -2,7 +2,7 @@ package com.singer.application.service.sm;
 
 import java.util.List;
 
-import com.singer.domain.vo.sm.SM01Vo;
+import com.singer.domain.entity.sm.SM01Vo;
 
 public interface SMI1Service {
 

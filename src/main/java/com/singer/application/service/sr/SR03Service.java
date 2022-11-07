@@ -1,18 +1,77 @@
 package com.singer.application.service.sr;
 
+import com.singer.application.dto.sr.SR03Composer;
+import com.singer.application.dto.sr.SR03ListResponse;
+import com.singer.application.dto.sr.SR03Request;
+import com.singer.application.dto.sr.SR03Response;
 import java.util.List;
+import java.util.stream.Stream;
 
-import com.singer.domain.vo.sr.SR03Vo;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public interface SR03Service {
+import org.springframework.stereotype.Service;
 
-	public int insertSR03Vo(SR03Vo sr03Vo, String userid) throws Exception;
+import com.singer.domain.dao.sr.SR03Dao;
+import com.singer.domain.entity.sr.SR03Vo;
 
-	public int likeSR03Vo(SR03Vo sr03Vo) throws Exception;
+@Service
+public class SR03Service {
 
-	public List<SR03Vo> selectSR03Vo(SR03Vo sr03Vo, String userid) throws Exception;
+    @Autowired
+    private SR03Dao sr03Dao;
 
-	public int updateSR03Vo(SR03Vo sr03Vo) throws Exception;
+    public SR03Response insertSR03Vo(SR03Request request, String userid) throws Exception {
 
-	public int deleteSR03Vo(SR03Vo sr03Vo) throws Exception;
+        SR03Vo sr03Vo = SR03Composer.requestToEntity(request, userid);
+
+        sr03Dao.insertSR03Vo(sr03Vo);
+
+        return SR03Composer.entityToResponse(sr03Vo);
+    }
+
+    public int likeSR03Vo(SR03Vo sr03Vo) throws Exception {
+        return sr03Dao.likeSR03Vo(sr03Vo);
+    }
+
+    public SR03ListResponse selectSR03Vo(int seq01,
+        int parents, int nowPage, String userid) throws Exception {
+
+        SR03Vo sr03Vo = SR03Composer.selectInfoToEntity(seq01, parents, nowPage);
+        if (sr03Vo.getNowPage() == 1) { // 첫페이지 요청시 Total알아야한다
+            sr03Vo.setTotCnt(sr03Dao.selectSR03Total(sr03Vo));
+        }
+        List<SR03Vo> list;
+        if (sr03Vo.getParents() > 0) {
+            list = sr03Dao.selectReplySR03Vo(sr03Vo);
+        } else {
+            list = sr03Dao.selectSR03Vo(sr03Vo);
+        }
+
+        Stream<SR03Vo> stream = list.stream();
+        stream.forEach(s -> {
+            if (userid.equals(s.getUserid())) {
+                s.setDeleteYn(true);
+            }
+        });
+
+        return SR03Composer.entityListToResponse(list, sr03Vo.getParents(), sr03Vo.getNowPage(), sr03Vo.getTotCnt());
+    }
+
+    public int updateSR03Vo(SR03Vo sr03Vo) throws Exception {
+        return sr03Dao.updateSR03Vo(sr03Vo);
+    }
+
+    public int deleteSR03Vo(int seq,
+        int seq01, int parents) throws Exception {
+
+        SR03Vo sr03Vo = SR03Composer.deleteInfoToEntity(seq, seq01, parents);
+
+        if (sr03Vo.getParents() > 0) {
+            sr03Dao.deleteChild(sr03Vo);
+            sr03Vo.setParents(0);
+        }
+
+        return sr03Dao.deleteSR03Vo(sr03Vo);
+    }
+
 }

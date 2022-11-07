@@ -9,6 +9,7 @@ target/
 build/
 buildSrc/.gradle
 buildSrc/build
+.metadata/
 
 ### STS ###
 .apt_generated

@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.util.Constants.RESULT_CODE;
 import com.singer.application.service.sv.SV01Service;
-import com.singer.domain.vo.sv.SV01Vo;
+import com.singer.domain.entity.sv.SV01Vo;
 
 @Controller
 public class SV01Controller extends BaseController {

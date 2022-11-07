@@ -1,6 +1,7 @@
 package com.singer.application.controller.sb;
 
 import com.singer.application.controller.BaseController;
+import com.singer.application.service.sb.SB01Service;
 import java.io.InputStream;
 import java.util.List;
 
@@ -23,8 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.util.Constants.RESULT_CODE;
-import com.singer.application.service.sb.SB01Service;
-import com.singer.domain.vo.sb.SB01Vo;
+import com.singer.domain.entity.sb.SB01Vo;
 
 import lombok.Cleanup;
 

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.singer.common.util.DateUtil;
 import com.singer.domain.dao.sm.SM02Dao;
-import com.singer.domain.vo.sm.SM02Vo;
+import com.singer.domain.entity.sm.SM02Vo;
 
 @Service
 public class SM02ServiceImpl implements SM02Service {

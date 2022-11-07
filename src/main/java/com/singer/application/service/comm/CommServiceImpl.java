@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.singer.common.util.Constants.USER_CODE;
 import com.singer.common.util.DateUtil;
 import com.singer.domain.dao.CommDao;
-import com.singer.domain.vo.CommVo;
+import com.singer.domain.entity.CommVo;
 
 @Service
 public class CommServiceImpl implements CommService {

@@ -2,7 +2,7 @@ package com.singer.application.service.sm;
 
 import java.util.List;
 
-import com.singer.domain.vo.sm.SM02Vo;
+import com.singer.domain.entity.sm.SM02Vo;
 
 public interface SM02Service {
 	public int insertSM02Vo(SM02Vo sm02Vo, String userid) throws Exception;

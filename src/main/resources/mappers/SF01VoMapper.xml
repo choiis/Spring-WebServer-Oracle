@@ -6,19 +6,19 @@
 -->
 
 <mapper namespace="com.singer.mappers.SF01">		
-		<insert id="insert"  parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<insert id="insert"  parameterType="com.singer.domain.entity.sf.SF01Vo">
 			insert into SF01 (seq, title, text, userid, regdate, filename, ftpfilename)
 			values (SEQ_SF01.NEXTVAL, #{title}, #{text}, #{userid}, #{regdate}, #{filename}, #{ftpfilename}) 
 		</insert>
 		
-		<update id="update" parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<update id="update" parameterType="com.singer.domain.entity.sf.SF01Vo">
 			update SF01 
 			set title = #{title},
 				text = #{text}
 			where seq = #{seq}
 		</update>
 		
-		<insert id="like" parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<insert id="like" parameterType="com.singer.domain.entity.sf.SF01Vo">
 			<selectKey  keyProperty="good"  resultType="java.lang.Integer" order="AFTER">
 		 		select good from SF01 where seq = #{seq}
 		 	</selectKey>
@@ -27,7 +27,7 @@
 			where seq = #{seq}
 		</insert>
 		
-		<insert id="hate" parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<insert id="hate" parameterType="com.singer.domain.entity.sf.SF01Vo">
 			<selectKey  keyProperty="good"  resultType="java.lang.Integer" order="AFTER">
 		 		select good from SF01 where seq = #{seq}
 		 	</selectKey>
@@ -36,7 +36,7 @@
 			where seq = #{seq}
 		</insert>
 		
-		<update id="click" parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<update id="click" parameterType="com.singer.domain.entity.sf.SF01Vo">
 			update SF01
 			set hit = (select hit 
 				from SF01
@@ -45,7 +45,7 @@
 			where seq = #{seq}
 		</update>
 		
-		<select id="selectOne" resultType="com.singer.domain.vo.sf.SF01Vo" parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<select id="selectOne" resultType="com.singer.domain.entity.sf.SF01Vo" parameterType="com.singer.domain.entity.sf.SF01Vo">
 			select 
 				S1.seq as seq,
 				S1.title as title, 
@@ -72,7 +72,7 @@
 			 where S1.seq = #{seq}
 		</select>
 		
-		<select id="checkUser" resultType="com.singer.domain.vo.sf.SF01Vo" parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<select id="checkUser" resultType="com.singer.domain.entity.sf.SF01Vo" parameterType="com.singer.domain.entity.sf.SF01Vo">
 			select 
 				S1.seq as seq,
 				S1.userid as userid
@@ -80,7 +80,7 @@
 			where S1.seq = #{seq}
 		</select>
 		
-		<select id="selectCount" resultType="com.singer.domain.vo.sf.SF01Vo">
+		<select id="selectCount" resultType="com.singer.domain.entity.sf.SF01Vo">
 		<![CDATA[
 			with tot as (select count(*) as cnt /*+ INDEX_FFS(SF01 PK_SF01)*/
   					from SF01 )
@@ -88,7 +88,7 @@
 		]]>
 		</select>
 		
-		<select id="select" resultType="com.singer.domain.vo.sf.SF01Vo"  parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<select id="select" resultType="com.singer.domain.entity.sf.SF01Vo"  parameterType="com.singer.domain.entity.sf.SF01Vo">
 		<![CDATA[
 			select S1.*,
 				(select count(*) 
@@ -112,7 +112,7 @@
   			]]>
 		</select>
 		
-		<select id="selectFind" resultType="com.singer.domain.vo.sf.SF01Vo"  parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<select id="selectFind" resultType="com.singer.domain.entity.sf.SF01Vo"  parameterType="com.singer.domain.entity.sf.SF01Vo">
 			select T.*,
   				(select count(*) 
         			from SF02 s2
@@ -140,12 +140,12 @@
   				) T
 		</select>
 		
-		<delete id="delete" parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<delete id="delete" parameterType="com.singer.domain.entity.sf.SF01Vo">
 			delete from SF01
 			where seq = #{seq}
 		</delete>
 		
-		<select id="selectFile" parameterType="com.singer.domain.vo.sf.SF01Vo" resultType="com.singer.domain.vo.sf.SF01Vo">
+		<select id="selectFile" parameterType="com.singer.domain.entity.sf.SF01Vo" resultType="com.singer.domain.entity.sf.SF01Vo">
 			select 
 				seq as seq,
 				userid as userid,
@@ -155,7 +155,7 @@
 			where seq = #{seq}
 		</select>
 		
-		<update id="likelog" parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<update id="likelog" parameterType="com.singer.domain.entity.sf.SF01Vo">
 			merge into SFG1 S1
 				using dual
 				on (S1.seq = #{seq}
@@ -167,7 +167,7 @@
 				insert (S1.seq, S1.sessionid, S1.datelog, S1.goodlog ) values(#{seq}, #{sessionid}, #{datelog} , 'Y')
 		</update>
 		
-		<update id="hatelog" parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<update id="hatelog" parameterType="com.singer.domain.entity.sf.SF01Vo">
 			merge into SFG1 S1
 				using dual
 				on (S1.seq = #{seq}
@@ -179,7 +179,7 @@
 				insert (S1.seq, S1.sessionid, S1.datelog, S1.hatelog ) values(#{seq}, #{sessionid}, #{datelog} , 'Y')
 		</update>
 		
-		<update id="mergesf01" parameterType="com.singer.domain.vo.sf.SF01Vo">
+		<update id="mergesf01" parameterType="com.singer.domain.entity.sf.SF01Vo">
 			merge into SFD1 S1
 				using dual
 				on (S1.seq = #{seq}

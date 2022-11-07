@@ -6,31 +6,31 @@
 -->
 
 <mapper namespace="com.singer.mappers.SV04">		
-		<insert id="insert"  parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<insert id="insert"  parameterType="com.singer.domain.entity.sv.SV04Vo">
 			insert into SV04 (seq, seq01, parents, text, userid, regdate)
 			values (SEQ_SV04.NEXTVAL, #{seq01}, #{parents}, #{text}, #{userid}, #{regdate}) 
 		</insert>
 		
-		<update id="update" parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<update id="update" parameterType="com.singer.domain.entity.sv.SV04Vo">
 			update SV04 
 			set text = #{text}
 			where seq = #{seq}
 			and seq01 = #{seq01}
 		</update>
 		
-		<update id="like" parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<update id="like" parameterType="com.singer.domain.entity.sv.SV04Vo">
 			update SV04 
 			set good = (select good from SV04 where seq = #{seq}) + 1
 			where seq = #{seq}
 		</update>
 		
-		<update id="hate" parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<update id="hate" parameterType="com.singer.domain.entity.sv.SV04Vo">
 			update SV04 
 			set good = (select good from SV04 where seq = #{seq}) - 1
 			where seq = #{seq}
 		</update>
 		
-		<select id="select" resultType="com.singer.domain.vo.sv.SV04Vo"  parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<select id="select" resultType="com.singer.domain.entity.sv.SV04Vo"  parameterType="com.singer.domain.entity.sv.SV04Vo">
 			<![CDATA[
 			select T.*
 				,(select count(*) 
@@ -56,7 +56,7 @@
     		]]>
 		</select>
 		
-		<select id="selectReply" resultType="com.singer.domain.vo.sv.SV04Vo"  parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<select id="selectReply" resultType="com.singer.domain.entity.sv.SV04Vo"  parameterType="com.singer.domain.entity.sv.SV04Vo">
 			<![CDATA[
 				select  /*+ INDEX_DESC(SV04 IDX_SV04_1)*/
         			rownum as rown,
@@ -72,7 +72,7 @@
 			]]>
 		</select>
 		
-		<select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.singer.domain.entity.sv.SV04Vo">
 			<![CDATA[
  			select  /*+ INDEX_FFS(SV04 IDX_SV04_1)*/
  				count(*) as totCnt
@@ -82,13 +82,13 @@
   			]]>
 		</select>
 		
-		<delete id="delete" parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<delete id="delete" parameterType="com.singer.domain.entity.sv.SV04Vo">
 			delete from SV04
 			where seq = #{seq}
 			and seq01 = #{seq01}
 		</delete>
 		
-		<select id="checkUser" resultType="com.singer.domain.vo.sv.SV04Vo" parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<select id="checkUser" resultType="com.singer.domain.entity.sv.SV04Vo" parameterType="com.singer.domain.entity.sv.SV04Vo">
 			select 
     			seq as seq,
     			userid as userid
@@ -96,12 +96,12 @@
 			where seq = #{seq}
 		</select>
 		
-		<delete id="delete_seq01" parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<delete id="delete_seq01" parameterType="com.singer.domain.entity.sv.SV04Vo">
 			delete from SV04
 			where seq01 = #{seq01}
 		</delete>
 		
-		<delete id="deleteChild" parameterType="com.singer.domain.vo.sv.SV04Vo">
+		<delete id="deleteChild" parameterType="com.singer.domain.entity.sv.SV04Vo">
 			delete from SV04
 			where seq01 = #{seq01}
 			and parents = #{parents}

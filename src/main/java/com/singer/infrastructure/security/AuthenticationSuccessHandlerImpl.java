@@ -18,8 +18,8 @@ import com.singer.common.util.CommonUtil;
 import com.singer.common.util.Constants.RESULT_CODE;
 import com.singer.application.service.comm.CommService;
 import com.singer.application.service.sm.SM01Service;
-import com.singer.domain.vo.CommVo;
-import com.singer.domain.vo.sm.SM01Vo;
+import com.singer.domain.entity.CommVo;
+import com.singer.domain.entity.sm.SM01Vo;
 
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {

@@ -3,7 +3,7 @@ package com.singer.application.service.comm;
 import java.util.List;
 
 import com.singer.common.util.Constants.USER_CODE;
-import com.singer.domain.vo.CommVo;
+import com.singer.domain.entity.CommVo;
 
 public interface CommService {
 	public List<CommVo> selectCode(CommVo vo) throws Exception;

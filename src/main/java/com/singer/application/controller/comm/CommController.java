@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.singer.common.util.Constants.USER_CODE;
 import com.singer.application.service.comm.CommService;
-import com.singer.domain.vo.CommVo;
+import com.singer.domain.entity.CommVo;
 
 @Controller
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)

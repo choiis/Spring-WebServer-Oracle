@@ -18,7 +18,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.singer.common.util.Constants.USER_CODE;
 import com.singer.domain.dao.CommDao;
-import com.singer.domain.vo.CommVo;
+import com.singer.domain.entity.CommVo;
 
 @Component
 public class SessionInterceptor extends HandlerInterceptorAdapter {

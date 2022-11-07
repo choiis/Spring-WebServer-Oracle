@@ -1,6 +1,7 @@
 package com.singer.application.controller.sf;
 
 import com.singer.application.controller.BaseController;
+import com.singer.application.service.sf.SF01Service;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,8 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.common.util.Constants.RESULT_CODE;
-import com.singer.application.service.sf.SF01Service;
-import com.singer.domain.vo.sf.SF01Vo;
+import com.singer.domain.entity.sf.SF01Vo;
 
 @Controller
 public class SF01Controller extends BaseController {
