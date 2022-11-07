@@ -1,5 +1,9 @@
 package com.singer.application.service.sb;
 
+import com.singer.application.dto.sb.SB01Composer;
+import com.singer.application.dto.sb.SB01ListResponse;
+import com.singer.application.dto.sb.SB01Request;
+import com.singer.application.dto.sb.SB01Response;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -8,7 +12,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -31,183 +34,184 @@ import com.singer.domain.entity.sb.SB02Vo;
 @Service
 public class SB01Service {
 
-	@Autowired
-	private SB01Dao sb01Dao;
+    @Autowired
+    private SB01Dao sb01Dao;
 
-	@Autowired
-	private SB02Dao sb02Dao;
+    @Autowired
+    private SB02Dao sb02Dao;
 
-	@Autowired
-	S3Util s3Util;
+    @Autowired
+    S3Util s3Util;
 
-	@Autowired
-	private S3Properties s3Properties;
+    @Autowired
+    private S3Properties s3Properties;
 
-	@Transactional(rollbackFor = { Exception.class })
-	public int insertSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
+    @Transactional(rollbackFor = {Exception.class})
+    public SB01Response insertSB01Vo(SB01Request sb01Request, MultipartHttpServletRequest request, String userid)
+        throws Exception {
 
-		sb01Vo.setUserid(userid);
-		MultipartFile video = null;
-		Iterator<String> itr = request.getFileNames();
+        SB01Vo sb01Vo = SB01Composer.requestToentity(sb01Request, userid);
+        MultipartFile video = null;
+        Iterator<String> itr = request.getFileNames();
 
-		if (ObjectUtils.isEmpty(itr)) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_3);
-		}
-		while (itr.hasNext()) {
-			video = request.getFile(itr.next());
-		}
-		String timestamp = DateUtil.getTodayTime();
-		StringBuilder sb = new StringBuilder("video/" + timestamp);
-		sb01Vo.setRegdate(timestamp);
+        if (ObjectUtils.isEmpty(itr)) {
+            throw new AppException(ExceptionMsg.EXT_MSG_INPUT_3);
+        }
+        while (itr.hasNext()) {
+            video = request.getFile(itr.next());
+        }
+        String timestamp = DateUtil.getTodayTime();
+        StringBuilder sb = new StringBuilder("video/" + timestamp);
+        sb01Vo.setRegdate(timestamp);
 
-		if (CommonUtil.chkVideoFile(video.getOriginalFilename())) {
-			sb01Vo.setVideobool(YES_NO.YES);
-			sb.append(".mp4");
-		} else if (CommonUtil.chkAudioFile(video.getOriginalFilename())) {
-			sb01Vo.setVideobool(YES_NO.NO);
-			sb.append(".mp3");
-		} else {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
-		}
+        if (CommonUtil.chkVideoFile(video.getOriginalFilename())) {
+            sb01Vo.setVideobool(YES_NO.YES);
+            sb.append(".mp4");
+        } else if (CommonUtil.chkAudioFile(video.getOriginalFilename())) {
+            sb01Vo.setVideobool(YES_NO.NO);
+            sb.append(".mp3");
+        } else {
+            throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
+        }
 
-		String path = s3Properties.getTempPath();
-		File file = new File(path + "/" + sb.toString());
-		video.transferTo(file);
+        String path = s3Properties.getTempPath();
+        File file = new File(path + "/" + sb.toString());
+        video.transferTo(file);
 
-		s3Util.putS3File(sb.toString(), file);
+        s3Util.putS3File(sb.toString(), file);
 
-		sb01Dao.insertSB01Vo(sb01Vo);
+        sb01Dao.insertSB01Vo(sb01Vo);
 
-		SB01Vo sb01Vo2 = new SB01Vo();
-		sb01Vo2.setSeq(sb01Vo.getSeq());
-		sb01Vo2.setRegdate(DateUtil.getToday());
-		sb01Vo2.setVideopath(sb.toString());
-		file.delete();
-		return sb01Dao.insertVideo(sb01Vo2);
+        SB01Vo sb01Vo2 = new SB01Vo();
+        sb01Vo2.setSeq(sb01Vo.getSeq());
+        sb01Vo2.setRegdate(DateUtil.getToday());
+        sb01Vo2.setVideopath(sb.toString());
+        file.delete();
+        int success = sb01Dao.insertVideo(sb01Vo2);
+        sb01Vo.setResult(success);
+        return SB01Composer.entityToResponse(sb01Vo);
 
-	}
+    }
 
-	public List<SB01Vo> selectSB01Vo(SB01Vo sb01Vo) throws Exception {
+    public SB01ListResponse selectSB01Vo(int nowPage) throws Exception {
 
-		return sb01Dao.selectSB01Vo(sb01Vo);
-	}
+        SB01Vo sb01Vo = new SB01Vo();
+        sb01Vo.setNowPage(nowPage);
+        List<SB01Vo> list = sb01Dao.selectSB01Vo(sb01Vo);
+        SB01Vo vo = sb01Dao.selectSB01VoCount();
+        int totalCount = ObjectUtils.isEmpty(vo) ? 0 : CommonUtil.getPageCnt(vo.getTotCnt());
 
-	public int selectSB01Count() throws Exception {
-		SB01Vo vo = sb01Dao.selectSB01VoCount();
-		return ObjectUtils.isEmpty(vo) ? 0 : CommonUtil.getPageCnt(vo.getTotCnt());
-	}
+        return SB01Composer.entityListToResponse(list, nowPage, totalCount);
+    }
 
-	public List<SB01Vo> selectFindSB01Vo(SB01Vo sb01Vo) throws Exception {
 
-		if (StringUtils.isEmpty(sb01Vo.getFindText())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
-		} else if (sb01Vo.getSelection() == 1) { // 제목으로 검색
-			sb01Vo.setTitle(sb01Vo.getFindText());
-		} else if (sb01Vo.getSelection() == 2) { // 아이디로 검색
-			sb01Vo.setUserid(sb01Vo.getFindText());
-		} else {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_11);
-		}
 
-		return sb01Dao.selectFindSB01Vo(sb01Vo);
-	}
+    @Transactional(rollbackFor = {Exception.class})
+    public SB01Response selectOneSB01Vo(int seq, String userid) throws Exception {
 
-	@Transactional(rollbackFor = { Exception.class })
-	public SB01Vo selectOneSB01Vo(SB01Vo sb01Vo, String userid) throws Exception {
+        SB01Vo sb01Vo = new SB01Vo();
+        sb01Vo.setSeq(seq);
+        sb01Dao.clickSB01Vo(sb01Vo);
+        sb01Vo.setSessionid(userid);
+        SB01Vo sb01voResult = sb01Dao.selectOneSB01Vo(sb01Vo);
+        if (!ObjectUtils.isEmpty(sb01voResult)) {
+            if (userid.equals(sb01voResult.getUserid())) {
+                sb01voResult.setDeleteYn(true);
+            }
+        }
+        sb01voResult.setShowDate(DateUtil.getDateFormat(sb01voResult.getRegdate()));
+        return SB01Composer.entityToResponse(sb01voResult);
+    }
 
-		sb01Dao.clickSB01Vo(sb01Vo);
-		sb01Vo.setSessionid(userid);
-		SB01Vo sb01vo = sb01Dao.selectOneSB01Vo(sb01Vo);
-		if (!ObjectUtils.isEmpty(sb01vo)) {
-			if (userid.equals(sb01vo.getUserid())) {
-				sb01vo.setDeleteYn(true);
-			}
-		}
-		sb01Vo.setShowDate(DateUtil.getDateFormat(sb01Vo.getRegdate()));
-		return sb01vo;
-	}
+    public int updateSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request) throws Exception {
 
-	public int updateSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request) throws Exception {
+        MultipartFile video = null;
+        Iterator<String> itr = request.getFileNames();
 
-		MultipartFile video = null;
-		Iterator<String> itr = request.getFileNames();
+        if (!ObjectUtils.isEmpty(itr)) {
+            while (itr.hasNext()) {
+                video = request.getFile(itr.next());
+            }
+            String timestamp = DateUtil.getTodayTime();
+            StringBuilder sb = new StringBuilder("video/" + timestamp);
+            sb01Vo.setRegdate(timestamp);
 
-		if (!ObjectUtils.isEmpty(itr)) {
-			while (itr.hasNext()) {
-				video = request.getFile(itr.next());
-			}
-			String timestamp = DateUtil.getTodayTime();
-			StringBuilder sb = new StringBuilder("video/" + timestamp);
-			sb01Vo.setRegdate(timestamp);
+            if (CommonUtil.chkVideoFile(video.getOriginalFilename())) {
+                sb01Vo.setVideobool(YES_NO.YES);
+                sb.append(".mp4");
+            } else if (CommonUtil.chkAudioFile(video.getOriginalFilename())) {
+                sb01Vo.setVideobool(YES_NO.NO);
+                sb.append(".mp3");
+            } else {
+                throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
+            }
 
-			if (CommonUtil.chkVideoFile(video.getOriginalFilename())) {
-				sb01Vo.setVideobool(YES_NO.YES);
-				sb.append(".mp4");
-			} else if (CommonUtil.chkAudioFile(video.getOriginalFilename())) {
-				sb01Vo.setVideobool(YES_NO.NO);
-				sb.append(".mp3");
-			} else {
-				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
-			}
+            String path = s3Properties.getTempPath();
+            File file = new File(path + "/" + sb.toString());
+            video.transferTo(file);
+            String deletedPath = sb01Dao.selectVideo(sb01Vo);
+            s3Util.deleteS3File(deletedPath); // S3 파일삭제
 
-			String path = s3Properties.getTempPath();
-			File file = new File(path + "/" + sb.toString());
-			video.transferTo(file);
-			String deletedPath = sb01Dao.selectVideo(sb01Vo);
-			s3Util.deleteS3File(deletedPath); // S3 파일삭제
+            SB01Vo sb01Vo2 = new SB01Vo();
+            sb01Vo2.setSeq(sb01Vo.getSeq());
+            sb01Vo2.setRegdate(DateUtil.getToday());
+            sb01Vo2.setVideopath(sb.toString());
+            file.delete();
 
-			SB01Vo sb01Vo2 = new SB01Vo();
-			sb01Vo2.setSeq(sb01Vo.getSeq());
-			sb01Vo2.setRegdate(DateUtil.getToday());
-			sb01Vo2.setVideopath(sb.toString());
-			file.delete();
+            sb01Dao.updateVideo(sb01Vo2);
+        }
 
-			sb01Dao.updateVideo(sb01Vo2);
-		}
+        return sb01Dao.updateSB01Vo(sb01Vo);
+    }
 
-		return sb01Dao.updateSB01Vo(sb01Vo);
-	}
+    @Transactional(rollbackFor = {Exception.class})
+    public SB01Response likeSB01Vo(int seq, String sessionid) throws Exception {
+        SB01Vo sb01Vo = new SB01Vo();
+        sb01Vo.setSeq(seq);
+        sb01Dao.likeSB01Vo(sb01Vo);
 
-	@Transactional(rollbackFor = { Exception.class })
-	public SB01Vo likeSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
-		sb01Dao.likeSB01Vo(sb01Vo);
+        sb01Vo.setSessionid(sessionid);
+        sb01Vo.setDatelog(DateUtil.getTodayTime());
 
-		sb01Vo.setSessionid(sessionid);
-		sb01Vo.setDatelog(DateUtil.getTodayTime());
+        sb01Dao.likelogSB01Vo(sb01Vo);
 
-		sb01Dao.likelogSB01Vo(sb01Vo);
+        sb01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
+        return SB01Composer.entityToResponse(sb01Vo);
+    }
 
-		sb01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		return sb01Vo;
-	}
+    @Transactional(rollbackFor = {Exception.class})
+    public SB01Response hateSB01Vo(int seq, String sessionid) throws Exception {
+        SB01Vo sb01Vo = new SB01Vo();
+        sb01Vo.setSeq(seq);
+        sb01Dao.hateSB01Vo(sb01Vo);
 
-	@Transactional(rollbackFor = { Exception.class })
-	public SB01Vo hateSB01Vo(SB01Vo sb01Vo, String sessionid) throws Exception {
-		sb01Dao.hateSB01Vo(sb01Vo);
+        sb01Vo.setSessionid(sessionid);
+        sb01Vo.setDatelog(DateUtil.getTodayTime());
 
-		sb01Vo.setSessionid(sessionid);
-		sb01Vo.setDatelog(DateUtil.getTodayTime());
+        sb01Dao.hatelogSB01Vo(sb01Vo);
 
-		sb01Dao.hatelogSB01Vo(sb01Vo);
+        sb01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
+        return SB01Composer.entityToResponse(sb01Vo);
+    }
 
-		sb01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		return sb01Vo;
-	}
+    @Transactional(rollbackFor = {Exception.class})
+    public int deleteSB01Vo(int seq) throws Exception {
 
-	@Transactional(rollbackFor = { Exception.class })
-	public int deleteSB01Vo(SB01Vo sb01Vo) throws Exception {
+        SB01Vo sb01Vo = new SB01Vo();
+        sb01Vo.setSeq(seq);
+        SB02Vo sb02Vo = new SB02Vo();
+        sb02Vo.setSeq01(sb01Vo.getSeq());
 
-		SB02Vo sb02Vo = new SB02Vo();
-		sb02Vo.setSeq01(sb01Vo.getSeq());
+        sb02Dao.delete_seqSB02Vo(sb02Vo);
 
-		sb02Dao.delete_seqSB02Vo(sb02Vo);
+        return sb01Dao.deleteSB01Vo(sb01Vo);
+    }
 
-		return sb01Dao.deleteSB01Vo(sb01Vo);
-	}
+    public InputStream selectVideo(int seq, HttpServletRequest request) throws Exception {
 
-	public InputStream selectVideo(SB01Vo sb01Vo, HttpServletRequest request) throws Exception {
-
-		return s3Util.getS3FileStream(sb01Dao.selectVideo(sb01Vo));
-	}
+        SB01Vo sb01Vo = new SB01Vo();
+        sb01Vo.setSeq(seq);
+        return s3Util.getS3FileStream(sb01Dao.selectVideo(sb01Vo));
+    }
 
 }

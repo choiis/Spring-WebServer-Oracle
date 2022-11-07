@@ -69,7 +69,7 @@
 				};
 				list.push(vo);
 			}
-			sendData.sv02Vos = list;
+			sendData.list = list;
 			
 			gfn_ajaxRequestBody("sv01", "POST", sendData, function(data) {
 				

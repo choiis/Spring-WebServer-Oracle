@@ -1,9 +1,11 @@
 package com.singer.application.controller.sb;
 
 import com.singer.application.controller.BaseController;
+import com.singer.application.dto.sb.SB01ListResponse;
+import com.singer.application.dto.sb.SB01Request;
+import com.singer.application.dto.sb.SB01Response;
 import com.singer.application.service.sb.SB01Service;
 import java.io.InputStream;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
@@ -17,141 +19,139 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.singer.common.util.Constants.RESULT_CODE;
-import com.singer.domain.entity.sb.SB01Vo;
-
 import lombok.Cleanup;
 
 @Controller
 public class SB01Controller extends BaseController {
 
-	private final Log log = LogFactory.getLog(SB01Controller.class);
+    private final Log log = LogFactory.getLog(SB01Controller.class);
 
-	@Autowired
-	private SB01Service sb01Service;
+    @Autowired
+    private SB01Service sb01Service;
 
-	@RequestMapping(value = "/sb01/page", method = RequestMethod.GET)
-	public ModelAndView showSB01() throws Exception {
-		ModelAndView model = new ModelAndView("/sb01view");
-		return model;
-	}
+    @RequestMapping(value = "/sb01/page", method = RequestMethod.GET)
+    public ModelAndView showSB01() throws Exception {
+        ModelAndView model = new ModelAndView("/sb01view");
+        return model;
+    }
 
-	@RequestMapping(value = "/sb01/insertPage", method = RequestMethod.GET)
-	public ModelAndView insertPageSB01() throws Exception {
-		ModelAndView model = new ModelAndView("/sb01insert");
-		return model;
-	}
+    @RequestMapping(value = "/sb01/insertPage", method = RequestMethod.GET)
+    public ModelAndView insertPageSB01() throws Exception {
+        ModelAndView model = new ModelAndView("/sb01insert");
+        return model;
+    }
 
-	@ResponseBody
-	@RequestMapping(value = "/sb01", method = RequestMethod.POST)
-	public ResponseEntity<SB01Vo> insertSB01Vo(@ModelAttribute @Valid SB01Vo sb01Vo,
-			MultipartHttpServletRequest request) throws Exception {
-		log.debug("enter sb01 post");
+    @ResponseBody
+    @RequestMapping(value = "/sb01/show_detail/{seq}", method = RequestMethod.GET)
+    public ModelAndView selectOneSB01View(@PathVariable int seq, HttpServletRequest request) throws Exception {
+        log.debug("enter sb01show_detail get");
 
-		String userid = getSessionId(request);
+        ModelAndView model = new ModelAndView("/sb01view_detail");
 
-		int success = sb01Service.insertSB01Vo(sb01Vo, request, userid);
-		sb01Vo.setResult(success);
+        String userid = getSessionId(request);
+        SB01Response response = sb01Service.selectOneSB01Vo(seq, userid);
+        model.addObject("sb01Vo", response);
 
-		log.debug("exit sb01 post");
-		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
-	}
+        log.debug("exit sb01show_detail get");
+        return model;
+    }
 
-	@ResponseBody
-	@RequestMapping(value = "/sb01/{nowPage}", method = RequestMethod.GET)
-	public ResponseEntity<SB01Vo> selectSB01Vo(@ModelAttribute SB01Vo sb01Vo) throws Exception {
-		log.debug("enter sb01 get");
+    @ResponseBody
+    @RequestMapping(value = "/sb01", method = RequestMethod.POST)
+    public ResponseEntity<SB01Response> insertSB01Vo(@ModelAttribute @Valid SB01Request sb01Request,
+        MultipartHttpServletRequest request) throws Exception {
+        log.debug("enter sb01 post");
 
-		List<SB01Vo> list = sb01Service.selectSB01Vo(sb01Vo);
-		sb01Vo.setList(list);
-		sb01Vo.setTotCnt(sb01Service.selectSB01Count());
-		log.debug("exit sb01 get");
-		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
-	}
+        String userid = getSessionId(request);
 
-	@ResponseBody
-	@RequestMapping(value = "/sb01/find/{selection}/{findText}", method = RequestMethod.GET)
-	public ResponseEntity<SB01Vo> selectFindSB01Vo(@ModelAttribute SB01Vo sb01Vo) throws Exception {
-		log.debug("enter sb01find get");
+        SB01Response response = sb01Service.insertSB01Vo(sb01Request, request, userid);
 
-		List<SB01Vo> list = sb01Service.selectFindSB01Vo(sb01Vo);
-		sb01Vo.setList(list);
+        log.debug("exit sb01 post");
+        return new ResponseEntity<SB01Response>(response, HttpStatus.OK);
+    }
 
-		log.debug("exit sb01find get");
-		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
-	}
+    @ResponseBody
+    @RequestMapping(value = "/sb01/{nowPage}", method = RequestMethod.GET)
+    public ResponseEntity<SB01ListResponse> selectSB01Vo(@PathVariable int nowPage) throws Exception {
+        log.debug("enter sb01 get");
 
-	@ResponseBody
-	@RequestMapping(value = "/sb01/show_detail/{seq}", method = RequestMethod.GET)
-	public ModelAndView selectOneSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request) throws Exception {
-		log.debug("enter sb01show_detail get");
+        SB01ListResponse listResponse = sb01Service.selectSB01Vo(nowPage);
 
-		ModelAndView model = new ModelAndView("/sb01view_detail");
+        log.debug("exit sb01 get");
+        return new ResponseEntity<SB01ListResponse>(listResponse, HttpStatus.OK);
+    }
 
-		String userid = getSessionId(request);
-		sb01Vo = sb01Service.selectOneSB01Vo(sb01Vo, userid);
-		model.addObject("sb01Vo", sb01Vo);
+    @ResponseBody
+    @RequestMapping(value = "/sb01/seq/{seq}", method = RequestMethod.GET)
+    public ResponseEntity<SB01Response> selectOneSB01Vo(@PathVariable int seq, HttpServletRequest request)
+        throws Exception {
+        log.debug("enter sb01/seq get");
 
-		log.debug("exit sb01show_detail get");
-		return model;
-	}
+        String userid = getSessionId(request);
+        SB01Response response = sb01Service.selectOneSB01Vo(seq, userid);
 
-	@ResponseBody
-	@RequestMapping(value = "/sb01/video/{seq}/{title}", method = RequestMethod.GET)
-	public void selectVideoSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		log.debug("enter sb01Video get");
-		@Cleanup
-		InputStream is = sb01Service.selectVideo(sb01Vo, request);
+        log.debug("exit sb01/seq get");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
-		IOUtils.copy(is, response.getOutputStream());
+    @ResponseBody
+    @RequestMapping(value = "/sb01/video/{seq}", method = RequestMethod.GET)
+    public void selectVideoSB01Vo(@PathVariable int seq, HttpServletRequest request,
+        HttpServletResponse response) throws Exception {
+        log.debug("enter sb01Video get");
 
-		log.debug("exit sb01Video get");
-	}
+        @Cleanup
+        InputStream is = sb01Service.selectVideo(seq, request);
 
-	@ResponseBody
-	@RequestMapping(value = "/sb01/{seq}", method = RequestMethod.DELETE)
-	public ResponseEntity<SB01Vo> deleteSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request)
-			throws Exception {
-		log.debug("enter sb01 delete");
+        IOUtils.copy(is, response.getOutputStream());
 
-		sb01Service.deleteSB01Vo(sb01Vo);
-		sb01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
+        log.debug("exit sb01Video get");
+    }
 
-		log.debug("exit sb01 delete");
-		return new ResponseEntity<SB01Vo>(HttpStatus.NO_CONTENT);
-	}
+    @ResponseBody
+    @RequestMapping(value = "/sb01/{seq}", method = RequestMethod.DELETE)
+    public ResponseEntity<SB01Response> deleteSB01Vo(@PathVariable int seq, HttpServletRequest request)
+        throws Exception {
+        log.debug("enter sb01 delete");
 
-	@ResponseBody
-	@RequestMapping(value = "/sb01/like/{seq}", method = RequestMethod.PATCH)
-	public ResponseEntity<SB01Vo> likeSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request)
-			throws Exception {
-		log.debug("enter sb01like put");
+        sb01Service.deleteSB01Vo(seq);
 
-		String sessionid = getSessionId(request);
+        log.debug("exit sb01 delete");
+        return new ResponseEntity<SB01Response>(HttpStatus.NO_CONTENT);
+    }
 
-		sb01Vo = sb01Service.likeSB01Vo(sb01Vo, sessionid);
+    @ResponseBody
+    @RequestMapping(value = "/sb01/like/{seq}", method = RequestMethod.PATCH)
+    public ResponseEntity<SB01Response> likeSB01Vo(@PathVariable int seq, HttpServletRequest request)
+        throws Exception {
+        log.debug("enter sb01like put");
 
-		log.debug("exit sb01like put");
-		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
-	}
+        String sessionid = getSessionId(request);
 
-	@ResponseBody
-	@RequestMapping(value = "/sb01/hate/{seq}", method = RequestMethod.PATCH)
-	public ResponseEntity<SB01Vo> hateSB01Vo(@ModelAttribute SB01Vo sb01Vo, HttpServletRequest request)
-			throws Exception {
-		log.debug("enter sb01hate put");
+        SB01Response sb01Response = sb01Service.likeSB01Vo(seq, sessionid);
 
-		String sessionid = getSessionId(request);
-		sb01Vo = sb01Service.hateSB01Vo(sb01Vo, sessionid);
+        log.debug("exit sb01like put");
+        return new ResponseEntity<SB01Response>(sb01Response, HttpStatus.OK);
+    }
 
-		log.debug("exit sb01hate put");
-		return new ResponseEntity<SB01Vo>(sb01Vo, HttpStatus.OK);
-	}
+    @ResponseBody
+    @RequestMapping(value = "/sb01/hate/{seq}", method = RequestMethod.PATCH)
+    public ResponseEntity<SB01Response> hateSB01Vo(@PathVariable int seq, HttpServletRequest request)
+        throws Exception {
+        log.debug("enter sb01hate put");
+
+        String sessionid = getSessionId(request);
+        SB01Response sb01Response = sb01Service.hateSB01Vo(seq, sessionid);
+
+        log.debug("exit sb01hate put");
+        return new ResponseEntity<SB01Response>(sb01Response, HttpStatus.OK);
+    }
+
 }

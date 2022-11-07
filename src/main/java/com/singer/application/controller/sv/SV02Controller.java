@@ -1,6 +1,8 @@
 package com.singer.application.controller.sv;
 
 import com.singer.application.controller.BaseController;
+import com.singer.application.dto.sv.SV03ListRequest;
+import com.singer.application.dto.sv.SV04Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,26 +17,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.singer.application.service.sv.SV02Service;
-import com.singer.domain.entity.sv.SV02Vo;
 
 @RequestMapping("/sv01")
 @Controller
 public class SV02Controller extends BaseController {
-	private final Log log = LogFactory.getLog(SV02Controller.class);
 
-	@Autowired
-	private SV02Service sv02Service;
+    private final Log log = LogFactory.getLog(SV02Controller.class);
 
-	@ResponseBody
-	@RequestMapping(value = "/sv03", method = RequestMethod.POST)
-	public ResponseEntity<SV02Vo> insertSV03Vo(@RequestBody SV02Vo sv02Vo, HttpServletRequest request)
-			throws Exception {
-		log.debug("enter sv03 post");
+    @Autowired
+    private SV02Service sv02Service;
 
-		String userid = getSessionId(request);
-		sv02Service.insertSv03Vo(sv02Vo, userid);
+    @ResponseBody
+    @RequestMapping(value = "/sv03", method = RequestMethod.POST)
+    public ResponseEntity<SV04Response> insertSV03Vo(@RequestBody SV03ListRequest listRequest,
+        HttpServletRequest request)
+        throws Exception {
+        log.debug("enter sv03 post");
 
-		log.debug("exit sv03 post");
-		return new ResponseEntity<SV02Vo>(sv02Vo, HttpStatus.CREATED);
-	}
+        String userid = getSessionId(request);
+        sv02Service.insertSv03Vo(listRequest, userid);
+
+        log.debug("exit sv03 post");
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }

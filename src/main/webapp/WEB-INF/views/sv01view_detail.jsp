@@ -82,9 +82,9 @@
 					}
 				}
 				
-				sendData.sv02Vos = list;
+				sendData.list = list;
 				
-				gfn_ajaxRequestBody("sv01/sv03", "POST", sendData, function(data) {
+				gfn_ajaxRequestBody("sv01/sv03", "POST", sendData, function() {
 					if(confirm("투표 완료!")) {
 						showSV01One(1);
 					}	

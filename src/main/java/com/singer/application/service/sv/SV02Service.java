@@ -1,5 +1,7 @@
 package com.singer.application.service.sv;
 
+import com.singer.application.dto.sv.SV03Composer;
+import com.singer.application.dto.sv.SV03ListRequest;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -18,29 +20,29 @@ import com.singer.domain.entity.sv.SV02Vo;
 @Service
 public class SV02Service {
 
-	@Autowired
-	private SV02Dao sv02Dao;
+    @Autowired
+    private SV02Dao sv02Dao;
 
-	public int updateSV01Vo(SV02Vo sv02Vo) throws Exception {
-		return sv02Dao.updateSV02Vo(sv02Vo);
-	}
+    public int updateSV01Vo(SV02Vo sv02Vo) throws Exception {
+        return sv02Dao.updateSV02Vo(sv02Vo);
+    }
 
-	@Transactional(rollbackFor = { Exception.class })
-	public int insertSv03Vo(SV02Vo sv02Vo, String userid) throws Exception {
-		List<SV02Vo> list = sv02Vo.getSv02Vos();
-		if (CollectionUtils.isEmpty(list)) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
-		}
+    @Transactional(rollbackFor = {Exception.class})
+    public int insertSv03Vo(SV03ListRequest listRequest, String userid) throws Exception {
+        List<SV02Vo> list = SV03Composer.requsetListToEntityList(listRequest.getList());
+        if (CollectionUtils.isEmpty(list)) {
+            throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
+        }
 
-		String regDate = DateUtil.getTodayTime();
+        String regDate = DateUtil.getTodayTime();
 
-		Stream<SV02Vo> stream = list.stream();
-		stream.forEach(s -> {
-			s.setUserid(userid);
-			s.setRegdate(regDate);
-		});
-		sv02Dao.insertSV03Vo(list);
-		return 1;
-	}
+        Stream<SV02Vo> stream = list.stream();
+        stream.forEach(s -> {
+            s.setUserid(userid);
+            s.setRegdate(regDate);
+        });
+        sv02Dao.insertSV03Vo(list);
+        return 1;
+    }
 
 }

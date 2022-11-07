@@ -1,5 +1,12 @@
 package com.singer.application.service.sv;
 
+import com.singer.application.dto.sv.SV01Composer;
+import com.singer.application.dto.sv.SV01ListResponse;
+import com.singer.application.dto.sv.SV01Request;
+import com.singer.application.dto.sv.SV01Response;
+import com.singer.application.dto.sv.SV02Response;
+import com.singer.common.util.CommonUtil;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,127 +28,131 @@ import com.singer.domain.dao.sv.SV01Dao;
 import com.singer.domain.entity.sv.SV01Vo;
 import com.singer.domain.entity.sv.SV02Vo;
 import com.singer.domain.entity.sv.SV04Vo;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class SV01Service {
 
-	@Autowired
-	private SV01Dao sv01Dao;
+    @Autowired
+    private SV01Dao sv01Dao;
 
-	@Autowired
-	private SV02Dao sv02Dao;
+    @Autowired
+    private SV02Dao sv02Dao;
 
-	@Autowired
-	private SV04Dao sv04Dao;
+    @Autowired
+    private SV04Dao sv04Dao;
 
-	@Transactional(rollbackFor = { Exception.class })
-	public int insertSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
+    @Transactional(rollbackFor = {Exception.class})
+    public SV01Response insertSV01Vo(SV01Request sv01Request, String userid) throws Exception {
 
-		List<SV02Vo> list = sv01Vo.getSv02Vos();
+        SV01Vo sv01Vo = SV01Composer.requestToEntity(sv01Request);
+        List<SV02Vo> list = SV01Composer.requestListToEntityList(sv01Request.getList());
 
-		String regDate = DateUtil.getTodayTime();
-		sv01Vo.setUserid(userid);
-		sv01Vo.setRegdate(regDate);
+        String regDate = DateUtil.getTodayTime();
+        sv01Vo.setUserid(userid);
+        sv01Vo.setRegdate(regDate);
 
-		if (CollectionUtils.isEmpty(list)) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
-		} else {
-			int size = list.size();
-			for (int i = 0; i < size; i++) {
-				if (StringUtils.isEmpty(list.get(i).getContent())) {
-					throw new AppException(ExceptionMsg.EXT_MSG_INPUT_9);
-				}
-				list.get(i).setUserid(userid);
-				list.get(i).setRegdate(regDate);
-			}
-		}
+        if (CollectionUtils.isEmpty(list)) {
+            throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);
+        } else {
+            int size = list.size();
+            for (int i = 0; i < size; i++) {
+                if (StringUtils.isEmpty(list.get(i).getContent())) {
+                    throw new AppException(ExceptionMsg.EXT_MSG_INPUT_9);
+                }
+                list.get(i).setUserid(userid);
+                list.get(i).setRegdate(regDate);
+            }
+        }
 
-		int result = sv01Dao.insertSV01Vo(sv01Vo);
-		sv02Dao.insertSV02Vo(list);
+        int result = sv01Dao.insertSV01Vo(sv01Vo);
+        sv02Dao.insertSV02Vo(list);
 
-		return result;
-	}
+        return SV01Composer.entityToResponse(sv01Vo, Collections.emptyList());
+    }
 
-	public List<SV01Vo> selectSV01Vo(SV01Vo sv01Vo) throws Exception {
+    public SV01ListResponse selectSV01Vo(int nowPage) throws Exception {
 
-		return sv01Dao.selectSV01Vo(sv01Vo);
-	}
+        SV01Vo sv01Vo = new SV01Vo();
+        sv01Vo.setNowPage(nowPage);
+        List<SV01Vo> list = sv01Dao.selectSV01Vo(sv01Vo);
+        int totalCount = ObjectUtils.isEmpty(list) ? 0 : CommonUtil.getPageCnt(list.get(0).getTotCnt());
+        return SV01Composer.entityListToResponse(list, null, nowPage, totalCount);
+    }
 
-	public List<SV01Vo> selectFindSV01Vo(SV01Vo sv01Vo) throws Exception {
-		if (StringUtils.isEmpty(sv01Vo.getFindText())) {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
-		} else if (sv01Vo.getSelection() == 1) { // �젣紐⑹쑝濡� 寃��깋
-			sv01Vo.setTitle(sv01Vo.getFindText());
-		} else if (sv01Vo.getSelection() == 2) { // �븘�씠�뵒濡� 寃��깋
-			sv01Vo.setUserid(sv01Vo.getFindText());
-		} else {
-			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_11);
-		}
 
-		return sv01Dao.selectFindSV01Vo(sv01Vo);
-	}
+    public SV01Response selectOneSV01Vo(int seq, @PathVariable int recall, String userid) throws Exception {
+        SV01Vo sv01Vo = new SV01Vo();
+        sv01Vo.setSeq(seq);
+        sv01Vo.setRecall(recall);
+        if (sv01Vo.getRecall() == YES_NO.NO.getValue()) {
+            sv01Dao.clickSV01Vo(sv01Vo);
+        }
+        sv01Vo.setUserid(userid);
+        sv01Vo = sv01Dao.selectOneSV01Vo(sv01Vo);
+        if (!ObjectUtils.isEmpty(sv01Vo)) {
+            if (userid.equals(sv01Vo.getUserid())) {
+                sv01Vo.setDeleteYn(true);
+            }
+        }
+        SV02Vo sv02Vo = new SV02Vo();
+        sv02Vo.setSeq(sv01Vo.getSeq());
+        sv02Vo.setUserid(userid);
 
-	public SV01Vo selectOneSV01Vo(SV01Vo sv01Vo, String userid) throws Exception {
-		if (sv01Vo.getRecall() == YES_NO.NO.getValue()) {
-			sv01Dao.clickSV01Vo(sv01Vo);
-		}
-		sv01Vo.setUserid(userid);
-		sv01Vo = sv01Dao.selectOneSV01Vo(sv01Vo);
-		if (!ObjectUtils.isEmpty(sv01Vo)) {
-			if (userid.equals(sv01Vo.getUserid())) {
-				sv01Vo.setDeleteYn(true);
-			}
-		}
-		SV02Vo sv02Vo = new SV02Vo();
-		sv02Vo.setSeq(sv01Vo.getSeq());
-		sv02Vo.setUserid(userid);
+        List<SV02Vo> list = sv02Dao.selectSV02Vo(sv02Vo);
+        sv01Vo.setSv02Vos(list);
+        sv01Vo.setTotCnt(sv02Dao.selectCnt(sv02Vo));
+        List<SV02Response> responseList = SV01Composer.entityListToResponseList(list);
+        return SV01Composer.entityToResponse(sv01Vo, responseList);
+    }
 
-		List<SV02Vo> list = sv02Dao.selectSV02Vo(sv02Vo);
-		sv01Vo.setSv02Vos(list); // �닾�몴�빆紐� �젙蹂�
-		sv01Vo.setTotCnt(sv02Dao.selectCnt(sv02Vo)); // 珥� �닾�몴�닔
+    public int updateSV01Vo(SV01Vo sv01Vo) throws Exception {
+        return sv01Dao.updateSV01Vo(sv01Vo);
+    }
 
-		return sv01Vo;
-	}
+    @Transactional(rollbackFor = {Exception.class})
+    public SV01Response deleteSV01Vo(int seq) throws Exception {
 
-	public int updateSV01Vo(SV01Vo sv01Vo) throws Exception {
-		return sv01Dao.updateSV01Vo(sv01Vo);
-	}
+        SV01Vo sv01Vo = new SV01Vo();
+        sv01Vo.setSeq(seq);
+        SV04Vo sv04Vo = new SV04Vo();
+        sv04Vo.setSeq(sv01Vo.getSeq());
 
-	@Transactional(rollbackFor = { Exception.class })
-	public int deleteSV01Vo(SV01Vo sv01Vo) throws Exception {
+        sv04Dao.delete_seqSV04Vo(sv04Vo);
 
-		SV04Vo sv04Vo = new SV04Vo();
-		sv04Vo.setSeq(sv01Vo.getSeq());
+        sv01Dao.deleteSV01Vo(sv01Vo);
+        sv01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
+        return SV01Composer.entityToResponse(sv01Vo, Collections.emptyList());
+    }
 
-		sv04Dao.delete_seqSV04Vo(sv04Vo);
+    @Transactional(rollbackFor = {Exception.class})
+    public SV01Response likeSV01Vo(int seq, String sessionid) throws Exception {
+        SV01Vo sv01Vo = new SV01Vo();
+        sv01Vo.setSeq(seq);
+        sv01Dao.likeSV01Vo(sv01Vo);
 
-		return sv01Dao.deleteSV01Vo(sv01Vo);
-	}
+        sv01Vo.setSessionid(sessionid);
+        sv01Vo.setDatelog(DateUtil.getTodayTime());
 
-	@Transactional(rollbackFor = { Exception.class })
-	public SV01Vo likeSV01Vo(SV01Vo sv01Vo, String sessionid) throws Exception {
-		sv01Dao.likeSV01Vo(sv01Vo);
+        sv01Dao.likelogSV01Vo(sv01Vo);
 
-		sv01Vo.setSessionid(sessionid);
-		sv01Vo.setDatelog(DateUtil.getTodayTime());
+        sv01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
+        return SV01Composer.entityToResponse(sv01Vo, Collections.emptyList());
+    }
 
-		sv01Dao.likelogSV01Vo(sv01Vo);
+    @Transactional(rollbackFor = {Exception.class})
+    public SV01Response hateSV01Vo(int seq, String sessionid) throws Exception {
+        SV01Vo sv01Vo = new SV01Vo();
+        sv01Vo.setSeq(seq);
+        sv01Dao.hateSV01Vo(sv01Vo);
 
-		sv01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		return sv01Vo;
-	}
+        sv01Vo.setSessionid(sessionid);
+        sv01Vo.setDatelog(DateUtil.getTodayTime());
 
-	@Transactional(rollbackFor = { Exception.class })
-	public SV01Vo hateSV01Vo(SV01Vo sv01Vo, String sessionid) throws Exception {
-		sv01Dao.hateSV01Vo(sv01Vo);
+        sv01Dao.hatelogSV01Vo(sv01Vo);
 
-		sv01Vo.setSessionid(sessionid);
-		sv01Vo.setDatelog(DateUtil.getTodayTime());
-
-		sv01Dao.hatelogSV01Vo(sv01Vo);
-
-		sv01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		return sv01Vo;
-	}
+        sv01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
+        return SV01Composer.entityToResponse(sv01Vo, Collections.emptyList());
+    }
 
 }
