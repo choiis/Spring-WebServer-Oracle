@@ -1,5 +1,9 @@
 package com.singer.application.service.sf;
 
+import com.singer.application.dto.sf.SF01Composer;
+import com.singer.application.dto.sf.SF01ListResponse;
+import com.singer.application.dto.sf.SF01Request;
+import com.singer.application.dto.sf.SF01Response;
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -8,7 +12,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -47,8 +50,10 @@ public class SF01Service {
     private S3Util s3Util;
 
     @Transactional(rollbackFor = {Exception.class})
-    public int insertSF01Vo(SF01Vo sf01Vo, MultipartHttpServletRequest request, String userid) throws Exception {
+    public SF01Response insertSF01Vo(SF01Request sf01Request, MultipartHttpServletRequest request, String userid)
+        throws Exception {
 
+        SF01Vo sf01Vo = SF01Composer.requestToentity(sf01Request, userid);
         MultipartFile multipartFile = null;
         Iterator<String> itr = request.getFileNames();
 
@@ -73,36 +78,26 @@ public class SF01Service {
         s3Util.putS3File(S3_FILE_PATH + ftpfilename, file);
         file.delete();
 
-        return sf01Dao.insertSF01Vo(sf01Vo);
+        int success = sf01Dao.insertSF01Vo(sf01Vo);
+        sf01Vo.setResult(success);
+        return SF01Composer.entityToResponse(sf01Vo);
     }
 
-    public List<SF01Vo> selectSF01Vo(SF01Vo sf01vo) throws Exception {
+    public SF01ListResponse selectSF01Vo(int nowPage) throws Exception {
 
-        return sf01Dao.selectSF01Vo(sf01vo);
-    }
-
-    public int selectSF01Count() throws Exception {
+        SF01Vo sf01Vo = new SF01Vo();
+        sf01Vo.setNowPage(nowPage);
+        List<SF01Vo> list = sf01Dao.selectSF01Vo(sf01Vo);
         SF01Vo vo = sf01Dao.selectSF01Count();
-        return ObjectUtils.isEmpty(vo) ? 0 : CommonUtil.getPageCnt(vo.getTotCnt());
+        int totalCount = ObjectUtils.isEmpty(vo) ? 0 : CommonUtil.getPageCnt(vo.getTotCnt());
+        return SF01Composer.entityListToResponse(list, nowPage, totalCount);
     }
 
-    public List<SF01Vo> selectFindSF01Vo(SF01Vo sf01vo) throws Exception {
 
-        if (StringUtils.isEmpty(sf01vo.getFindText())) {
-            throw new AppException(ExceptionMsg.EXT_MSG_INPUT_10);
-        } else if (sf01vo.getSelection() == 1) { // 제목으로 검색
-            sf01vo.setTitle(sf01vo.getFindText());
-        } else if (sf01vo.getSelection() == 2) { // 아이디로 검색
-            sf01vo.setUserid(sf01vo.getFindText());
-        } else {
-            throw new AppException(ExceptionMsg.EXT_MSG_INPUT_11);
-        }
+    public SF01Response selectOneSF01Vo(int seq, String userid) throws Exception {
 
-        return sf01Dao.selectFindSF01Vo(sf01vo);
-    }
-
-    public SF01Vo selectOneSF01Vo(SF01Vo sf01vo, String userid) throws Exception {
-
+        SF01Vo sf01vo = new SF01Vo();
+        sf01vo.setSeq(seq);
         sf01Dao.clickSF01Vo(sf01vo);
         sf01vo.setSessionid(userid);
         sf01vo = sf01Dao.selectOneSF01Vo(sf01vo);
@@ -113,8 +108,7 @@ public class SF01Service {
         }
 
         sf01vo.setShowDate(DateUtil.getDateFormat(sf01vo.getRegdate()));
-
-        return sf01vo;
+        return SF01Composer.entityToResponse(sf01vo);
     }
 
     public int updateSF01Vo(SF01Vo sf01vo) throws Exception {
@@ -122,7 +116,9 @@ public class SF01Service {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public SF01Vo likeSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
+    public SF01Response likeSF01Vo(int seq, String sessionid) throws Exception {
+        SF01Vo sf01Vo = new SF01Vo();
+        sf01Vo.setSeq(seq);
         sf01Dao.likeSF01Vo(sf01Vo);
 
         sf01Vo.setSessionid(sessionid);
@@ -131,11 +127,13 @@ public class SF01Service {
         sf01Dao.likelogSF01Vo(sf01Vo);
 
         sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-        return sf01Vo;
+        return SF01Composer.entityToResponse(sf01Vo);
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public SF01Vo hateSF01Vo(SF01Vo sf01Vo, String sessionid) throws Exception {
+    public SF01Response hateSF01Vo(int seq, String sessionid) throws Exception {
+        SF01Vo sf01Vo = new SF01Vo();
+        sf01Vo.setSeq(seq);
         sf01Dao.hateSF01Vo(sf01Vo);
 
         sf01Vo.setSessionid(sessionid);
@@ -144,12 +142,14 @@ public class SF01Service {
         sf01Dao.hatelogSF01Vo(sf01Vo);
 
         sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-        return sf01Vo;
+        return SF01Composer.entityToResponse(sf01Vo);
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public int deleteSF01Vo(SF01Vo sf01Vo) throws Exception {
+    public int deleteSF01Vo(int seq) throws Exception {
 
+        SF01Vo sf01Vo = new SF01Vo();
+        sf01Vo.setSeq(seq);
         SF02Vo sf02Vo = new SF02Vo();
         sf02Vo.setSeq01(sf01Vo.getSeq());
 
@@ -162,8 +162,10 @@ public class SF01Service {
         return sf01Dao.deleteSF01Vo(sf01Vo);
     }
 
-    public HashMap<String, Object> selectFile(SF01Vo sf01Vo, String userid) throws Exception {
+    public HashMap<String, Object> selectFile(int seq, String userid) throws Exception {
 
+        SF01Vo sf01Vo = new SF01Vo();
+        sf01Vo.setSeq(seq);
         sf01Vo = sf01Dao.selectFile(sf01Vo);
 
         String filename = sf01Vo.getFtpfilename();

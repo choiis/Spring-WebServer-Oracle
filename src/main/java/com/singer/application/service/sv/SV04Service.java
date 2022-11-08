@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.singer.common.util.DateUtil;
 import com.singer.domain.dao.sv.SV04Dao;
 import com.singer.domain.entity.sv.SV04Vo;
 

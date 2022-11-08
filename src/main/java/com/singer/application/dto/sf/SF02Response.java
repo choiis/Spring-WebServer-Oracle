@@ -13,7 +13,7 @@ public class SF02Response {
     int good;
     int reply;
 
-    protected String regdate;
+    String regdate;
 
     boolean deleteYn;
 

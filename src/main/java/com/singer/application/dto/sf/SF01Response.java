@@ -1,10 +1,10 @@
-package com.singer.application.dto.sb;
+package com.singer.application.dto.sf;
 
 import com.singer.common.util.Constants.YES_NO;
 import lombok.Value;
 
 @Value
-public class SB01Response {
+public class SF01Response {
 
     int seq;
 
@@ -27,11 +27,9 @@ public class SB01Response {
 
     String hatelog;
 
-    String video;
+    String filename;
 
-    String videopath;
-
-    YES_NO videobool;
+    int downcnt;
 
     int result;
 }

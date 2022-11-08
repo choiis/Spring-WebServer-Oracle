@@ -25,15 +25,12 @@ import com.singer.common.util.CommonUtil;
 
 @ControllerAdvice
 public class CommonExceptionHandler {
+
     private static final Log log = LogFactory.getLog(ExceptionHandler.class);
 
     private ModelAndView getErrorModelAndView(boolean isAjax, @NonNull String message) {
         ModelAndView mv = null;
-        if (isAjax) {
-            mv = new ModelAndView("forward:/errors");
-        } else {
-            mv = new ModelAndView("forward:/forwardError");
-        }
+        mv = new ModelAndView("forward:/errors");
         mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
         mv.addObject("errorMsg", message);
         return mv;

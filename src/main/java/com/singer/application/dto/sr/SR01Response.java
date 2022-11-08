@@ -1,10 +1,9 @@
-package com.singer.application.dto.sb;
+package com.singer.application.dto.sr;
 
-import com.singer.common.util.Constants.YES_NO;
 import lombok.Value;
 
 @Value
-public class SB01Response {
+public class SR01Response {
 
     int seq;
 
@@ -27,11 +26,13 @@ public class SB01Response {
 
     String hatelog;
 
-    String video;
+    String markertitle;
 
-    String videopath;
+    double mapx;
 
-    YES_NO videobool;
+    double mapy;
+    double avggrade;
 
+    int photocnt;
     int result;
 }

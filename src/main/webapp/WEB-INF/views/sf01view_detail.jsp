@@ -299,7 +299,7 @@
 			</c:choose>
 			
 			<p>파일명 : ${sf01Vo.filename}</p>
-			<a href="/sf01/file/${sf01Vo.seq}/${sf01Vo.regdate}">파일 받기</a>
+			<a href="/sf01/file/${sf01Vo.seq}">파일 받기</a>
 		</div>
 		
 		<div class="container">
