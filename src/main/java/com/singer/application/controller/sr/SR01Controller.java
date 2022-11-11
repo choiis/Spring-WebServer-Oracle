@@ -32,120 +32,119 @@ import lombok.Cleanup;
 @Controller
 public class SR01Controller extends BaseController {
 
-    private final Log log = LogFactory.getLog(SR01Controller.class);
+	private final Log log = LogFactory.getLog(SR01Controller.class);
 
-    @Autowired
-    private SR01Service sr01Service;
+	@Autowired
+	private SR01Service sr01Service;
 
-    @RequestMapping(value = "/sr01/page", method = RequestMethod.GET)
-    public ModelAndView showSR01() throws Exception {
-        ModelAndView model = new ModelAndView("/sr01view");
-        return model;
-    }
+	@RequestMapping(value = "/sr01/page", method = RequestMethod.GET)
+	public ModelAndView showSR01() throws Exception {
+		ModelAndView model = new ModelAndView("/sr01view");
+		return model;
+	}
 
-    @ResponseBody
-    @RequestMapping(value = "/sr01/show_detail/{seq}", method = RequestMethod.GET)
-    public ModelAndView selectDetailSR01Vo(@PathVariable int seq) throws Exception {
-        log.debug("enter sr01show_detail get");
+	@ResponseBody
+	@RequestMapping(value = "/sr01/show_detail/{seq}", method = RequestMethod.GET)
+	public ModelAndView selectDetailSR01Vo(@PathVariable int seq) throws Exception {
+		log.debug("enter sr01show_detail get");
 
-        ModelAndView model = new ModelAndView("/sr01view_detail");
-        model.addObject("seq", seq);
+		ModelAndView model = new ModelAndView("/sr01view_detail");
+		model.addObject("seq", seq);
 
-        log.debug("exit sr01show_detail get");
-        return model;
-    }
+		log.debug("exit sr01show_detail get");
+		return model;
+	}
 
-    @RequestMapping(value = "/sr01/insertPage", method = RequestMethod.GET)
-    public ModelAndView insertPageSR01() throws Exception {
-        ModelAndView model = new ModelAndView("/sr01insert");
-        return model;
-    }
+	@RequestMapping(value = "/sr01/insertPage", method = RequestMethod.GET)
+	public ModelAndView insertPageSR01() throws Exception {
+		ModelAndView model = new ModelAndView("/sr01insert");
+		return model;
+	}
 
-    @ResponseBody
-    @RequestMapping(value = "/sr01/{nowPage}", method = RequestMethod.GET)
-    public ResponseEntity<SR01ListResponse> selectSR01Vo(@PathVariable int nowPage) throws Exception {
-        log.debug("enter sr01 get");
+	@ResponseBody
+	@RequestMapping(value = "/sr01/{nowPage}", method = RequestMethod.GET)
+	public ResponseEntity<SR01ListResponse> selectSR01Vo(@PathVariable int nowPage) throws Exception {
+		log.debug("enter sr01 get");
 
-        SR01ListResponse list = sr01Service.selectSR01Vo(nowPage);
+		SR01ListResponse list = sr01Service.selectSR01Vo(nowPage);
 
-        log.debug("exit sr01 get");
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+		log.debug("exit sr01 get");
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
 
-    @ResponseBody
-    @RequestMapping(value = "/sr01", method = RequestMethod.POST)
-    public ResponseEntity<SR01Response> insertSR01Vo(@ModelAttribute @Valid SR01Request sr01Request,
-        MultipartHttpServletRequest request) throws Exception {
-        log.debug("enter sr01 post");
+	@ResponseBody
+	@RequestMapping(value = "/sr01", method = RequestMethod.POST)
+	public ResponseEntity<SR01Response> insertSR01Vo(@ModelAttribute @Valid SR01Request sr01Request,
+			MultipartHttpServletRequest request) throws Exception {
+		log.debug("enter sr01 post");
 
-        String userid = getSessionId(request);
-        SR01Response sr01Response = sr01Service.insertSR01Vo(sr01Request, request, userid);
+		String userid = getSessionId(request);
+		SR01Response sr01Response = sr01Service.insertSR01Vo(sr01Request, request, userid);
 
-        log.debug("exit sr01 post");
-        return new ResponseEntity<>(sr01Response, HttpStatus.CREATED);
-    }
+		log.debug("exit sr01 post");
+		return new ResponseEntity<>(sr01Response, HttpStatus.CREATED);
+	}
 
-    @ResponseBody
-    @RequestMapping(value = "/sr01/one/{seq}", method = RequestMethod.GET)
-    public ResponseEntity<SR01Response> selectOneSR01Vo(@PathVariable int seq, HttpServletRequest request)
-        throws Exception {
-        log.debug("enter sr01One get");
+	@ResponseBody
+	@RequestMapping(value = "/sr01/one/{seq}", method = RequestMethod.GET)
+	public ResponseEntity<SR01Response> selectOneSR01Vo(@PathVariable int seq, HttpServletRequest request)
+			throws Exception {
+		log.debug("enter sr01One get");
 
-        String userid = getSessionId(request);
-        SR01Response sr01Response = sr01Service.selectOneSR01Vo(seq, userid);
+		String userid = getSessionId(request);
+		SR01Response sr01Response = sr01Service.selectOneSR01Vo(seq, userid);
 
-        log.debug("exit sr01One get");
-        return new ResponseEntity<SR01Response>(sr01Response, HttpStatus.OK);
-    }
+		log.debug("exit sr01One get");
+		return new ResponseEntity<SR01Response>(sr01Response, HttpStatus.OK);
+	}
 
-    @ResponseBody
-    @RequestMapping(value = "/sr01/{seq}", method = RequestMethod.DELETE)
-    public ResponseEntity<SR01Response> deleteSR01Vo(@PathVariable int seq)
-        throws Exception {
-        log.debug("enter sr01 delete");
-
-        sr01Service.deleteSR01Vo(seq);
-
-        log.debug("exit sr01 delete");
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/sr01/like/{seq}", method = RequestMethod.PATCH)
-    public ResponseEntity<SR01Response> likeSR01vo(@PathVariable int seq, HttpServletRequest request)
-        throws Exception {
-        log.debug("enter sr01like put");
+	@ResponseBody
+	@RequestMapping(value = "/sr01/{seq}", method = RequestMethod.DELETE)
+	public ResponseEntity<SR01Response> deleteSR01Vo(@PathVariable int seq, HttpServletRequest request)
+			throws Exception {
+		log.debug("enter sr01 delete");
 
         String sessionid = getSessionId(request);
-        SR01Response sr01Response = sr01Service.likeSR01Vo(seq, sessionid);
+		sr01Service.deleteSR01Vo(seq, sessionid);
 
-        log.debug("exit sr01like put");
-        return new ResponseEntity<>(sr01Response, HttpStatus.OK);
-    }
+		log.debug("exit sr01 delete");
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 
-    @ResponseBody
-    @RequestMapping(value = "/sr01/hate/{seq}", method = RequestMethod.PATCH)
-    public ResponseEntity<SR01Response> hateSR01vo(@PathVariable int seq, HttpServletRequest request)
-        throws Exception {
-        log.debug("enter sr01hate put");
+	@ResponseBody
+	@RequestMapping(value = "/sr01/like/{seq}", method = RequestMethod.PATCH)
+	public ResponseEntity<SR01Response> likeSR01vo(@PathVariable int seq, HttpServletRequest request) throws Exception {
+		log.debug("enter sr01like put");
 
-        String sessionid = getSessionId(request);
-        SR01Response sr01Response = sr01Service.hateSR01Vo(seq, sessionid);
+		String sessionid = getSessionId(request);
+		SR01Response sr01Response = sr01Service.likeSR01Vo(seq, sessionid);
 
-        log.debug("exit sr01hate put");
-        return new ResponseEntity<>(sr01Response, HttpStatus.OK);
-    }
+		log.debug("exit sr01like put");
+		return new ResponseEntity<>(sr01Response, HttpStatus.OK);
+	}
 
-    @ResponseBody
-    @RequestMapping(value = "/sr01/photo/{seq}/{idx}", method = RequestMethod.GET)
-    public void selectPhotoSR01Vo(@PathVariable int seq, @PathVariable int idx, HttpServletRequest request,
-        HttpServletResponse response) throws Exception {
-        log.debug("enter sr01photo get");
-        @Cleanup
-        InputStream is = sr01Service.selectPhoto(seq, idx);
+	@ResponseBody
+	@RequestMapping(value = "/sr01/hate/{seq}", method = RequestMethod.PATCH)
+	public ResponseEntity<SR01Response> hateSR01vo(@PathVariable int seq, HttpServletRequest request) throws Exception {
+		log.debug("enter sr01hate put");
 
-        IOUtils.copy(is, response.getOutputStream());
+		String sessionid = getSessionId(request);
+		SR01Response sr01Response = sr01Service.hateSR01Vo(seq, sessionid);
 
-        log.debug("exit sr01photo get");
-    }
+		log.debug("exit sr01hate put");
+		return new ResponseEntity<>(sr01Response, HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/sr01/photo/{seq}/{idx}", method = RequestMethod.GET)
+	public void selectPhotoSR01Vo(@PathVariable int seq, @PathVariable int idx, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		log.debug("enter sr01photo get");
+		@Cleanup
+		InputStream is = sr01Service.selectPhoto(seq, idx);
+
+		IOUtils.copy(is, response.getOutputStream());
+
+		log.debug("exit sr01photo get");
+	}
 }

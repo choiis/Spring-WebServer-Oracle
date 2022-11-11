@@ -1,6 +1,5 @@
 package com.singer.application.dto.sf;
 
-import com.singer.common.util.Constants.YES_NO;
 import lombok.Value;
 
 @Value

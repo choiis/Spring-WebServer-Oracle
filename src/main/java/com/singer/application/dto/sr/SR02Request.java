@@ -1,10 +1,12 @@
 package com.singer.application.dto.sr;
 
-import com.singer.common.exception.ExceptionMsg;
-import javax.validation.constraints.NotEmpty;
-import lombok.Value;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Value
+@NoArgsConstructor
+@Setter
+@Getter
 public class SR02Request {
 
     int seq;

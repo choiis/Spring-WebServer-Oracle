@@ -26,50 +26,48 @@ import com.singer.application.service.sf.SF02Service;
 @Controller
 public class SF02Controller extends BaseController {
 
-    private final Log log = LogFactory.getLog(SF02Controller.class);
+	private final Log log = LogFactory.getLog(SF02Controller.class);
 
-    @Autowired
-    private SF02Service sf02Service;
+	@Autowired
+	private SF02Service sf02Service;
 
-    @ResponseBody
-    @RequestMapping(value = "/sf02/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
-    public ResponseEntity<SF02ListResponse> selectSF02Vo(@PathVariable int seq01,
-        @PathVariable int parents, @PathVariable int nowPage, HttpServletRequest request)
-        throws Exception {
-        log.debug("enter sf02 get");
+	@ResponseBody
+	@RequestMapping(value = "/sf02/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
+	public ResponseEntity<SF02ListResponse> selectSF02Vo(@PathVariable int seq01, @PathVariable int parents,
+			@PathVariable int nowPage, HttpServletRequest request) throws Exception {
+		log.debug("enter sf02 get");
 
-        String userid = getSessionId(request);
-        SF02ListResponse listResponse = sf02Service.selectSF02Vo(seq01, parents, nowPage, userid);
+		String userid = getSessionId(request);
+		SF02ListResponse listResponse = sf02Service.selectSF02Vo(seq01, parents, nowPage, userid);
 
-        log.debug("exit sf02 get");
-        return new ResponseEntity<SF02ListResponse>(listResponse, HttpStatus.OK);
-    }
+		log.debug("exit sf02 get");
+		return new ResponseEntity<SF02ListResponse>(listResponse, HttpStatus.OK);
+	}
 
-    @ResponseBody
-    @RequestMapping(value = "/sf02", method = RequestMethod.POST)
-    public ResponseEntity<SF02Response> insertSF02Vo(@RequestBody @Valid SF02Request sf02Request,
-        HttpServletRequest request)
-        throws Exception {
-        log.debug("enter sf02 post");
+	@ResponseBody
+	@RequestMapping(value = "/sf02", method = RequestMethod.POST)
+	public ResponseEntity<SF02Response> insertSF02Vo(@RequestBody @Valid SF02Request sf02Request,
+			HttpServletRequest request) throws Exception {
+		log.debug("enter sf02 post");
 
-        String userid = getSessionId(request);
-        SF02Response sf02Response = sf02Service.insertSF02Vo(sf02Request, userid);
+		String userid = getSessionId(request);
+		SF02Response sf02Response = sf02Service.insertSF02Vo(sf02Request, userid);
 
-        log.debug("exit sf02 post");
-        return new ResponseEntity<SF02Response>(sf02Response, HttpStatus.CREATED);
-    }
+		log.debug("exit sf02 post");
+		return new ResponseEntity<SF02Response>(sf02Response, HttpStatus.CREATED);
+	}
 
-    @ResponseBody
-    @RequestMapping(value = "/sf02/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
-    public ResponseEntity<SF02Response> deleteSF02Vo(@PathVariable int seq,
-        @PathVariable int seq01, @PathVariable int parents, HttpServletRequest request)
-        throws Exception {
-        log.debug("enter sf02 delete");
+	@ResponseBody
+	@RequestMapping(value = "/sf02/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
+	public ResponseEntity<SF02Response> deleteSF02Vo(@PathVariable int seq, @PathVariable int seq01,
+			@PathVariable int parents, HttpServletRequest request) throws Exception {
+		log.debug("enter sf02 delete");
 
-        sf02Service.deleteSF02Vo(seq, seq01, parents);
+		String sessionid = getSessionId(request);
+		sf02Service.deleteSF02Vo(seq, seq01, parents, sessionid);
 
-        log.debug("exit sf02 delete");
-        return new ResponseEntity<SF02Response>(HttpStatus.NO_CONTENT);
-    }
+		log.debug("exit sf02 delete");
+		return new ResponseEntity<SF02Response>(HttpStatus.NO_CONTENT);
+	}
 
 }

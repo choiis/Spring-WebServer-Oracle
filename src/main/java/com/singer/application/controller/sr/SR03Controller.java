@@ -4,7 +4,6 @@ import com.singer.application.controller.BaseController;
 import com.singer.application.dto.sr.SR03ListResponse;
 import com.singer.application.dto.sr.SR03Request;
 import com.singer.application.dto.sr.SR03Response;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.singer.application.service.sr.SR03Service;
-import com.singer.domain.entity.sr.SR03Vo;
 
 @RequestMapping("/sr01")
 @Controller
@@ -68,7 +65,8 @@ public class SR03Controller extends BaseController {
         throws Exception {
         log.debug("enter sr03 delete");
 
-        sr03Service.deleteSR03Vo(seq, seq01, parents);
+		String sessionid = getSessionId(request);
+        sr03Service.deleteSR03Vo(seq, seq01, parents, sessionid);
 
         log.debug("exit sr03 delete");
         return new ResponseEntity<SR03Response>(HttpStatus.NO_CONTENT);

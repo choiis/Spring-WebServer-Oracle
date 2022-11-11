@@ -121,7 +121,8 @@ public class SB01Controller extends BaseController {
         throws Exception {
         log.debug("enter sb01 delete");
 
-        sb01Service.deleteSB01Vo(seq);
+        String sessionid = getSessionId(request);
+        sb01Service.deleteSB01Vo(seq, sessionid);
 
         log.debug("exit sb01 delete");
         return new ResponseEntity<SB01Response>(HttpStatus.NO_CONTENT);

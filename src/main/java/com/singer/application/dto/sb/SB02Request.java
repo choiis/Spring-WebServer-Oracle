@@ -2,9 +2,14 @@ package com.singer.application.dto.sb;
 
 import com.singer.common.exception.ExceptionMsg;
 import javax.validation.constraints.NotEmpty;
-import lombok.Value;
 
-@Value
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Setter
+@Getter
 public class SB02Request {
 
     int seq01;
