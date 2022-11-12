@@ -1,6 +1,7 @@
 package com.singer.application.controller.sm;
 
 import com.singer.application.controller.BaseController;
+
 import java.io.InputStream;
 import java.util.List;
 
@@ -9,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +26,11 @@ import com.singer.application.service.sm.SM01Service;
 import com.singer.domain.entity.sm.SM01Vo;
 
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class SM01Controller extends BaseController {
-
-    private final Log log = LogFactory.getLog(SM01Controller.class);
 
     @Autowired
     private SM01Service sm01Service;

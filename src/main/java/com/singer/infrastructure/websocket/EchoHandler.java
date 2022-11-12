@@ -13,8 +13,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
@@ -29,13 +27,13 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Cleanup;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class EchoHandler extends TextWebSocketHandler {
 
-    private static final Log logger = LogFactory.getLog(EchoHandler.class);
 
     private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-    @SuppressWarnings("unchecked")
     private Map<String, WebSocketSession> userMap = new HashedMap<>();
 
     private static final String FILE_UPLOAD_PATH = "D:/tmp/";
@@ -80,7 +78,7 @@ public class EchoHandler extends TextWebSocketHandler {
         }
         sessionList.add(session);
         userMap.put(username, session);
-        logger.info("websocket connected open : " + session.getId() + " " + username);
+        log.info("websocket connected open : " + session.getId() + " " + username);
         StringBuilder nameList = new StringBuilder("");
         Stream<String> stream = userMap.keySet().stream();
         stream.forEach(x -> {
@@ -97,7 +95,7 @@ public class EchoHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
-        logger.info("websocket get text : " + session.getId() + " " + message.getPayload());
+    	log.info("websocket get text : " + session.getId() + " " + message.getPayload());
         String sessionName = getUserName(session);
         if (StringUtils.isEmpty(sessionName)) {
             return;
@@ -119,7 +117,7 @@ public class EchoHandler extends TextWebSocketHandler {
             if (sendSession != null) {
                 sendSession.sendMessage(new TextMessage(PACKET_HEADER_DM + sessionName + "(dm) : " + received[2]));
             } else {
-                session.sendMessage(new TextMessage(PACKET_HEADER_DM + received[1] + " 님이 없습니다"));
+                session.sendMessage(new TextMessage(PACKET_HEADER_DM + received[1] + " �떂�씠 �뾾�뒿�땲�떎"));
             }
         }
 
@@ -163,7 +161,7 @@ public class EchoHandler extends TextWebSocketHandler {
 
             imgFile.delete();
         } catch (IOException e) {
-            logger.error(e, e);
+        	log.error(e.getMessage());
         }
     }
 
@@ -172,12 +170,12 @@ public class EchoHandler extends TextWebSocketHandler {
         String username = getUserName(session);
         userMap.remove(username);
         sessionList.remove(session);
-        logger.info("websocket connected close : " + session.getId() + " name " + username + " status "
+        log.info("websocket connected close : " + session.getId() + " name " + username + " status "
             + status.getReason());
     }
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        logger.error(session.getId() + " exception : " + exception.getMessage());
+    	log.error(session.getId() + " exception : " + exception.getMessage());
     }
 }

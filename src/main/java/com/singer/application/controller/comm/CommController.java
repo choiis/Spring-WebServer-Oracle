@@ -1,14 +1,11 @@
 package com.singer.application.controller.comm;
 
 import com.singer.application.controller.BaseController;
-import com.singer.application.controller.sb.SB01Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,10 +22,12 @@ import com.singer.common.util.Constants.USER_CODE;
 import com.singer.application.service.comm.CommService;
 import com.singer.domain.entity.CommVo;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
+@Slf4j
 public class CommController extends BaseController {
-	private final Log log = LogFactory.getLog(SB01Controller.class);
 
 	@Autowired
 	private CommService commService;

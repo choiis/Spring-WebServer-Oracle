@@ -6,8 +6,6 @@ import com.singer.application.dto.sv.SV04Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,11 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.singer.application.service.sv.SV02Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RequestMapping("/sv01")
 @Controller
+@Slf4j
 public class SV02Controller extends BaseController {
 
-    private final Log log = LogFactory.getLog(SV02Controller.class);
 
     @Autowired
     private SV02Service sv02Service;

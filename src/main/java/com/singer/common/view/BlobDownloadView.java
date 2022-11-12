@@ -21,6 +21,7 @@ import org.springframework.web.servlet.view.AbstractView;
 import lombok.Cleanup;
 import oracle.sql.BLOB;
 
+@SuppressWarnings("deprecation")
 public class BlobDownloadView extends AbstractView {
     public BlobDownloadView() {
         // setContentType("apllication/download; charset=utf-8");

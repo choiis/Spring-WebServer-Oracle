@@ -15,6 +15,7 @@ import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@SuppressWarnings("deprecation")
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -35,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return firewall;
     }
 
-    @Override
+	@Override
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);
         web.httpFirewall(allowUrlEncodedSlashHttpFirewall()).ignoring().antMatchers("/", "/resources/**", "/logout",

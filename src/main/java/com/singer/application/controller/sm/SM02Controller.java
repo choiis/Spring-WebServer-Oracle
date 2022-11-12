@@ -1,14 +1,13 @@
 package com.singer.application.controller.sm;
 
 import com.singer.application.controller.BaseController;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,10 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.singer.application.service.sm.SM02Service;
 import com.singer.domain.entity.sm.SM02Vo;
 
-@Controller
-public class SM02Controller extends BaseController {
+import lombok.extern.slf4j.Slf4j;
 
-	private final Log log = LogFactory.getLog(SM02Controller.class);
+@Controller
+@Slf4j
+public class SM02Controller extends BaseController {
 
 	@Autowired
 	private SM02Service sm02Service;

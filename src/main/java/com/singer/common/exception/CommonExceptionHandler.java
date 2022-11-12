@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.BindingResult;
@@ -23,10 +21,11 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.singer.common.util.CommonUtil;
 
-@ControllerAdvice
-public class CommonExceptionHandler {
+import lombok.extern.slf4j.Slf4j;
 
-	private static final Log log = LogFactory.getLog(ExceptionHandler.class);
+@ControllerAdvice
+@Slf4j
+public class CommonExceptionHandler {
 
 	private ModelAndView getErrorModelAndView(boolean isAjax, @NonNull String message) {
 		ModelAndView mv = null;
@@ -46,17 +45,22 @@ public class CommonExceptionHandler {
 			mv.addObject("errorMsg", ex.getLocalizedMessage());
 			return mv;
 		};
+		log.error("ClientException");
+		log.error(ext.getMessage());
+		ext.printStackTrace();
 		return func.apply(ext);
 	}
 
 	@ExceptionHandler(SQLException.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "your message")
 	public ModelAndView sQLExceptionHandler(HttpServletRequest request, SQLException ext) {
-		log.info("SQLException");
+
 		if (StringUtils.isEmpty(ext.getMessage())) {
 			return null;
 		}
-		log.info(ext.getMessage());
+		log.error("SQLException");
+		log.error(ext.getMessage());
+		ext.printStackTrace();
 
 		boolean isAjax = CommonUtil.ajaxCheck(request);
 		return getErrorModelAndView(isAjax, ext.getCause().getLocalizedMessage());
@@ -64,24 +68,23 @@ public class CommonExceptionHandler {
 
 	@ExceptionHandler(AppException.class)
 	public ModelAndView appExceptionHandler(HttpServletRequest request, AppException ext) {
-		log.info("AppException");
 		if (StringUtils.isEmpty(ext.getMessage())) {
 			return null;
 		}
-		log.info(ext.getMessage());
+		log.error("AppException");
+		log.error(ext.getMessage());
+		ext.printStackTrace();
 
 		return getErrorModelAndView(CommonUtil.ajaxCheck(request), ext.getMessage());
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public ModelAndView noHandlerFoundException(HttpServletRequest request, NoHandlerFoundException ext) {
-
-		log.info("NoHandlerFoundException");
 		if (StringUtils.isEmpty(ext.getMessage())) {
 			return null;
 		}
-		log.info(ext.getMessage());
-
+		log.error("NoHandlerFoundException");
+		log.error(ext.getMessage());
 		String errorURL = request.getRequestURL().toString();
 		return getErrorModelAndView(CommonUtil.ajaxCheck(request), "error Url" + errorURL + " || " + ext.getMessage());
 	}
@@ -89,7 +92,8 @@ public class CommonExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ModelAndView methodArgumentNotValidException(HttpServletRequest request, HttpServletResponse response,
 			MethodArgumentNotValidException ext) throws IOException {
-
+		log.error("MethodArgumentNotValidException");
+		log.error(ext.getMessage());
 		if (CommonUtil.ajaxCheck(request)) {
 			Function<MethodArgumentNotValidException, ModelAndView> func = (ex) -> {
 				ModelAndView mv = new ModelAndView("forward:/errors");
@@ -123,12 +127,12 @@ public class CommonExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ModelAndView exceptionHandler(HttpServletRequest request, Exception ext) {
-		log.info("defaultException");
 		if (StringUtils.isEmpty(ext.getMessage())) {
 			return null;
 		}
-		log.info(ext.getMessage());
-
+		log.error("defaultException");
+		log.error(ext.getMessage());
+		ext.printStackTrace();
 		return getErrorModelAndView(CommonUtil.ajaxCheck(request), ext.getMessage());
 	}
 }

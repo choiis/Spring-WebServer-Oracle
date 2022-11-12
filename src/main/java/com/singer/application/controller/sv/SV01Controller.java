@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,10 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.application.service.sv.SV01Service;
 
-@Controller
-public class SV01Controller extends BaseController {
+import lombok.extern.slf4j.Slf4j;
 
-	private final Log log = LogFactory.getLog(SV01Controller.class);
+@Controller
+@Slf4j
+public class SV01Controller extends BaseController {
 
 	@Autowired
 	private SV01Service sv01Service;

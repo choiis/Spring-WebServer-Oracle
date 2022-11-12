@@ -5,14 +5,15 @@ import com.singer.application.dto.sf.SF01ListResponse;
 import com.singer.application.dto.sf.SF01Request;
 import com.singer.application.dto.sf.SF01Response;
 import com.singer.application.service.sf.SF01Service;
+
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@Slf4j
 public class SF01Controller extends BaseController {
-
-	private final Log log = LogFactory.getLog(SF01Controller.class);
 
 	@Autowired
 	private SF01Service sf01Service;

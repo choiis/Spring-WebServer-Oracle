@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,11 +26,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.singer.application.service.sr.SR01Service;
 
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class SR01Controller extends BaseController {
-
-	private final Log log = LogFactory.getLog(SR01Controller.class);
 
 	@Autowired
 	private SR01Service sr01Service;

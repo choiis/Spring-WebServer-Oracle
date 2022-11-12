@@ -4,8 +4,6 @@ import com.singer.application.controller.BaseController;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.HttpHeaders;
@@ -21,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.singer.infrastructure.config.S3Properties;
 
-@Controller
-public class StreamController extends BaseController {
+import lombok.extern.slf4j.Slf4j;
 
-	private final Log log = LogFactory.getLog(StreamController.class);
+@Controller
+@Slf4j
+public class StreamController extends BaseController {
 
 	@Autowired
 	private S3Properties s3Properties;

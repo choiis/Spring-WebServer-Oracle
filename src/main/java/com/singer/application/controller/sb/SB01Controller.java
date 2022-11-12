@@ -5,6 +5,7 @@ import com.singer.application.dto.sb.SB01ListResponse;
 import com.singer.application.dto.sb.SB01Request;
 import com.singer.application.dto.sb.SB01Response;
 import com.singer.application.service.sb.SB01Service;
+
 import java.io.InputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,11 +26,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class SB01Controller extends BaseController {
 
-    private final Log log = LogFactory.getLog(SB01Controller.class);
 
     @Autowired
     private SB01Service sb01Service;

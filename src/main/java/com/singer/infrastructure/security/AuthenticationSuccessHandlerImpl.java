@@ -2,7 +2,6 @@ package com.singer.infrastructure.security;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.singer.common.util.CommonUtil;
 import com.singer.common.util.Constants.RESULT_CODE;
 import com.singer.application.service.comm.CommService;
 import com.singer.application.service.sm.SM01Service;
@@ -33,7 +31,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 //	@Inject
 //	private SL01Service sl01Service;
 
-	private static String UNKNOWN = "unknown";
+//	private static String UNKNOWN = "unknown";
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -55,9 +53,9 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
 			List<CommVo> menuList = commService.selectMenu(sm01Vo.getUsertype());
 			session.setAttribute("menuList", menuList);
-			String browser = Optional.of(request.getParameter("browser")).orElseGet(() -> UNKNOWN);
-			String device = Optional.of(request.getParameter("device")).orElseGet(() -> UNKNOWN);
-			String ip = CommonUtil.getIp(request);
+//			String browser = Optional.of(request.getParameter("browser")).orElseGet(() -> UNKNOWN);
+//			String device = Optional.of(request.getParameter("device")).orElseGet(() -> UNKNOWN);
+//			String ip = CommonUtil.getIp(request);
 //			SL01Vo sl01Vo = new SL01Vo();
 //			sl01Vo.setUserid(userid);
 //			sl01Vo.setLogintime(DateUtil.getTodayTime());
