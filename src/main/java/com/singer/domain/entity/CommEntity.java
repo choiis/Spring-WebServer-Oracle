@@ -17,7 +17,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class CommVo extends SuperVo {
+public class CommEntity extends SuperEntity {
 
     private static final long serialVersionUID = -8496452258072990844L;
 
@@ -55,7 +55,7 @@ public class CommVo extends SuperVo {
 
     private String errorMsg;
 
-    private List<CommVo> commList;
+    private List<CommEntity> commList;
 
     private String userId;
 

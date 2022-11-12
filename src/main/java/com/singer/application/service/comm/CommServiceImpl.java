@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.singer.common.util.Constants.USER_CODE;
 import com.singer.common.util.DateUtil;
 import com.singer.domain.dao.CommDao;
-import com.singer.domain.entity.CommVo;
+import com.singer.domain.entity.CommEntity;
 
 @Service
 public class CommServiceImpl implements CommService {
@@ -22,17 +22,17 @@ public class CommServiceImpl implements CommService {
 	private CommDao commDao;
 
 	@Override
-	public List<CommVo> selectCode(CommVo vo) throws Exception {
+	public List<CommEntity> selectCode(CommEntity vo) throws Exception {
 		return commDao.selectCode(vo);
 	}
 
 	@Override
-	public List<CommVo> selectMenu(USER_CODE authlevel) throws Exception {
+	public List<CommEntity> selectMenu(USER_CODE authlevel) throws Exception {
 
-		Stream<CommVo> stream = commDao.selectAllMenu().stream()
+		Stream<CommEntity> stream = commDao.selectAllMenu().stream()
 				.filter(s -> s.getAuthlevel().compareTo(authlevel) >= 0);
-		List<CommVo> list = new ArrayList<>();
-		for (Iterator<CommVo> i = stream.iterator(); i.hasNext();) {
+		List<CommEntity> list = new ArrayList<>();
+		for (Iterator<CommEntity> i = stream.iterator(); i.hasNext();) {
 			list.add(i.next());
 		}
 		return list;
@@ -40,7 +40,7 @@ public class CommServiceImpl implements CommService {
 
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
-	public List<CommVo> insertMenu(CommVo commVo, String userid, USER_CODE authlevel) throws Exception {
+	public List<CommEntity> insertMenu(CommEntity commVo, String userid, USER_CODE authlevel) throws Exception {
 		commVo.setReguser(userid);
 		commVo.setModuser(userid);
 		commVo.setRegdate(DateUtil.getToday());
@@ -57,7 +57,7 @@ public class CommServiceImpl implements CommService {
 
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
-	public List<CommVo> updateMenu(CommVo commVo, String userid, USER_CODE authlevel) throws Exception {
+	public List<CommEntity> updateMenu(CommEntity commVo, String userid, USER_CODE authlevel) throws Exception {
 		commVo.setModuser(userid);
 		commVo.setModdate(DateUtil.getToday());
 		int cnt = commDao.updateMenu(commVo);
@@ -72,19 +72,19 @@ public class CommServiceImpl implements CommService {
 
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
-	public List<CommVo> deleteMenu(CommVo commVo, USER_CODE authlevel) throws Exception {
+	public List<CommEntity> deleteMenu(CommEntity commVo, USER_CODE authlevel) throws Exception {
 		commDao.deleteMenu(commVo);
 		commVo.setAuthlevel(authlevel);
 		return commDao.selectMenu(commVo);
 	}
 
 	@Override
-	public List<CommVo> selectCodeGrp(CommVo commVo) throws Exception {
+	public List<CommEntity> selectCodeGrp(CommEntity commVo) throws Exception {
 		return commDao.selectCodeGrp(commVo);
 	}
 
 	@Override
-	public List<CommVo> insertCode(CommVo commVo, String userid) throws Exception {
+	public List<CommEntity> insertCode(CommEntity commVo, String userid) throws Exception {
 
 		commVo.setUsername(userid);
 		commVo.setRegdate(DateUtil.getToday());
@@ -93,13 +93,13 @@ public class CommServiceImpl implements CommService {
 	}
 
 	@Override
-	public List<CommVo> deleteCode(CommVo commVo) throws Exception {
+	public List<CommEntity> deleteCode(CommEntity commVo) throws Exception {
 		commDao.deleteCode(commVo);
 		return commDao.selectCode(commVo);
 	}
 
 	@Override
-	public int updateCode(CommVo commVo) throws Exception {
+	public int updateCode(CommEntity commVo) throws Exception {
 		return commDao.updateCode(commVo);
 	}
 

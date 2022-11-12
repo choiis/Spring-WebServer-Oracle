@@ -18,7 +18,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class SR02Vo implements Serializable, Cloneable {
+public class SR02Entity implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = -86445236446569673L;
 

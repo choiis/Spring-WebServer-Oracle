@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.application.service.sm.SM02Service;
-import com.singer.domain.entity.sm.SM02Vo;
+import com.singer.domain.entity.sm.SM02Entity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,48 +38,48 @@ public class SM02Controller extends BaseController {
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02/{nowPage}", method = RequestMethod.GET)
-	public ResponseEntity<SM02Vo> selectSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpServletRequest request)
+	public ResponseEntity<SM02Entity> selectSM02Vo(@ModelAttribute SM02Entity sm02Entity, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sm02 get");
 
 		String userid = getSessionId(request);
-		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo, userid);
-		sm02Vo.setList(list);
+		List<SM02Entity> list = sm02Service.selectSM02Vo(sm02Entity, userid);
+		sm02Entity.setList(list);
 
 		log.debug("exit sm02 get");
-		return new ResponseEntity<SM02Vo>(sm02Vo, HttpStatus.OK);
+		return new ResponseEntity<>(sm02Entity, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02/{seq}", method = RequestMethod.DELETE)
-	public ResponseEntity<SM02Vo> deleteSM02Vo(@ModelAttribute SM02Vo sm02Vo, HttpServletRequest request)
+	public ResponseEntity<SM02Entity> deleteSM02Vo(@ModelAttribute SM02Entity sm02Entity, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sm02 delete");
 		String userid = getSessionId(request);
 
-		sm02Service.deleteSM02Vo(sm02Vo, userid);
+		sm02Service.deleteSM02Vo(sm02Entity, userid);
 
-		sm02Vo.setNowPage(1);
-		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo, userid);
-		sm02Vo.setList(list);
+		sm02Entity.setNowPage(1);
+		List<SM02Entity> list = sm02Service.selectSM02Vo(sm02Entity, userid);
+		sm02Entity.setList(list);
 
 		log.debug("exit sm02 delete");
-		return new ResponseEntity<SM02Vo>(sm02Vo, HttpStatus.OK);
+		return new ResponseEntity<>(sm02Entity, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/sm02", method = RequestMethod.POST)
-	public ResponseEntity<SM02Vo> insertSM02Vo(@RequestBody @Valid SM02Vo sm02Vo, HttpServletRequest request)
+	public ResponseEntity<SM02Entity> insertSM02Vo(@RequestBody @Valid SM02Entity sm02Entity, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sm02 post");
 
 		String userid = getSessionId(request);
-		sm02Service.insertSM02Vo(sm02Vo, userid);
+		sm02Service.insertSM02Vo(sm02Entity, userid);
 
-		List<SM02Vo> list = sm02Service.selectSM02Vo(sm02Vo, userid);
-		sm02Vo.setList(list);
+		List<SM02Entity> list = sm02Service.selectSM02Vo(sm02Entity, userid);
+		sm02Entity.setList(list);
 
 		log.debug("exit sm02 post");
-		return new ResponseEntity<SM02Vo>(sm02Vo, HttpStatus.CREATED);
+		return new ResponseEntity<>(sm02Entity, HttpStatus.CREATED);
 	}
 }

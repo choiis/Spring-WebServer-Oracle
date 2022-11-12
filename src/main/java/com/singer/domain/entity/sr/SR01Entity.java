@@ -1,6 +1,6 @@
 package com.singer.domain.entity.sr;
 
-import com.singer.domain.entity.BoardVo;
+import com.singer.domain.entity.BoardEntity;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
@@ -22,7 +22,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class SR01Vo extends BoardVo {
+public class SR01Entity extends BoardEntity {
 
 	private static final long serialVersionUID = -460762083171126264L;
 
@@ -39,11 +39,11 @@ public class SR01Vo extends BoardVo {
 	private int idx;
 	private int photocnt;
 
-	private List<SR01Vo> list;
+	private List<SR01Entity> list;
 
-	public void setList(List<SR01Vo> list) {
+	public void setList(List<SR01Entity> list) {
 		this.list = list;
-		// 페이징을 위한 카운트
+		// �럹�씠吏뺤쓣 �쐞�븳 移댁슫�듃
 		if (this.list.size() != 0) {
 			super.setTotCnt(CommonUtil.getPageCnt(this.list.get(0).getTotCnt()));
 		} else {

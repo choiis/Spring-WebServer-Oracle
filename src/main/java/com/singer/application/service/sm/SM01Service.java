@@ -25,7 +25,7 @@ import com.singer.common.util.Constants;
 import com.singer.common.util.Constants.PHONE_INFO_CODE;
 import com.singer.common.util.DateUtil;
 import com.singer.domain.dao.sm.SM01Dao;
-import com.singer.domain.entity.sm.SM01Vo;
+import com.singer.domain.entity.sm.SM01Entity;
 
 import oracle.sql.BLOB;
 
@@ -41,7 +41,7 @@ public class SM01Service {
 	// private AES256Util aes256Util;
 
 	@Transactional(rollbackFor = { Exception.class })
-	public HashMap<String, Object> insertSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request) throws Exception {
+	public HashMap<String, Object> insertSM01Vo(SM01Entity sm01Vo, MultipartHttpServletRequest request) throws Exception {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
 		// String pw = aes256Util.aesEncode(sm01Vo.getPasswd());
@@ -76,7 +76,7 @@ public class SM01Service {
 		return putHash;
 	}
 
-	public List<SM01Vo> selectSM01Vo(SM01Vo sm01Vo) throws Exception {
+	public List<SM01Entity> selectSM01Vo(SM01Entity sm01Vo) throws Exception {
 
 		int nowPage = sm01Vo.getNowPage();
 		sm01Vo.setStartRownum((nowPage - 1) * Constants.ROW_PER_PAGE);
@@ -85,10 +85,10 @@ public class SM01Service {
 		return sm01Dao.selectSM01Vo(sm01Vo);
 	}
 
-	public SM01Vo selectOneSM01Vo(SM01Vo sm01Vo) throws Exception {
+	public SM01Entity selectOneSM01Vo(SM01Entity sm01Vo) throws Exception {
 		sm01Vo = sm01Dao.selectOneSM01Vo(sm01Vo);
-		List<SM01Vo> list = sm01Dao.selectSMI1Vo(sm01Vo);
-		for (SM01Vo vo : list) {
+		List<SM01Entity> list = sm01Dao.selectSMI1Vo(sm01Vo);
+		for (SM01Entity vo : list) {
 
 			if (vo.getInfocode() == PHONE_INFO_CODE.CELL) {
 				sm01Vo.setCellpfnum(vo.getPfnum());
@@ -111,15 +111,15 @@ public class SM01Service {
 		return sm01Vo;
 	}
 
-	public SM01Vo login(SM01Vo sm01Vo) throws Exception {
+	public SM01Entity login(SM01Entity sm01Vo) throws Exception {
 		return sm01Dao.selectLoginSM01Vo(sm01Vo);
 	}
 
-	public int deleteSM01Vo(SM01Vo sm01Vo) throws Exception {
+	public int deleteSM01Vo(SM01Entity sm01Vo) throws Exception {
 		return sm01Dao.deleteSM01Vo(sm01Vo);
 	}
 
-	public InputStream selectImage(SM01Vo sm01Vo, HttpServletRequest request) throws Exception {
+	public InputStream selectImage(SM01Entity sm01Vo, HttpServletRequest request) throws Exception {
 
 		InputStream is = null;
 
@@ -137,7 +137,7 @@ public class SM01Service {
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SM01Vo updateSM01Vo(SM01Vo sm01Vo, MultipartHttpServletRequest request, String userId) throws Exception {
+	public SM01Entity updateSM01Vo(SM01Entity sm01Vo, MultipartHttpServletRequest request, String userId) throws Exception {
 
 		MultipartFile photo = null;
 		Iterator<String> itr = request.getFileNames();
@@ -149,7 +149,7 @@ public class SM01Service {
 		sm01Dao.updateSM01Vo(sm01Vo);
 		// �쟾�솕踰덊샇 蹂�寃�
 		if (!StringUtils.isEmpty(sm01Vo.getCellpcnum()) && !StringUtils.isEmpty(sm01Vo.getCellpbnum())) {
-			SM01Vo vo = new SM01Vo();
+			SM01Entity vo = new SM01Entity();
 			vo.setUserid(sm01Vo.getUserid());
 			vo.setInfocode(PHONE_INFO_CODE.CELL);
 			vo.setPfnum(sm01Vo.getCellpfnum());
@@ -160,7 +160,7 @@ public class SM01Service {
 		}
 
 		if (!StringUtils.isEmpty(sm01Vo.getHomepcnum()) && !StringUtils.isEmpty(sm01Vo.getHomepbnum())) {
-			SM01Vo vo = new SM01Vo();
+			SM01Entity vo = new SM01Entity();
 			vo.setUserid(sm01Vo.getUserid());
 			vo.setInfocode(PHONE_INFO_CODE.HOME);
 			vo.setPfnum(sm01Vo.getHomepfnum());
@@ -171,7 +171,7 @@ public class SM01Service {
 		}
 
 		if (!StringUtils.isEmpty(sm01Vo.getCompanypcnum()) && !StringUtils.isEmpty(sm01Vo.getCompanypbnum())) {
-			SM01Vo vo = new SM01Vo();
+			SM01Entity vo = new SM01Entity();
 			vo.setUserid(sm01Vo.getUserid());
 			vo.setInfocode(PHONE_INFO_CODE.COMPANY);
 			vo.setPfnum(sm01Vo.getCompanypfnum());
@@ -182,7 +182,7 @@ public class SM01Service {
 		}
 
 		if (!StringUtils.isEmpty(sm01Vo.getOtherpcnum()) && !StringUtils.isEmpty(sm01Vo.getOtherpbnum())) {
-			SM01Vo vo = new SM01Vo();
+			SM01Entity vo = new SM01Entity();
 			vo.setUserid(sm01Vo.getUserid());
 			vo.setInfocode(PHONE_INFO_CODE.OTHER);
 			vo.setPfnum(sm01Vo.getOtherpfnum());
@@ -210,7 +210,7 @@ public class SM01Service {
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public int updateSME1Vo(SM01Vo sm01Vo, String userId) throws Exception {
+	public int updateSME1Vo(SM01Entity sm01Vo, String userId) throws Exception {
 		sm01Vo.setInsertid(userId);
 		sm01Dao.updateUserType(sm01Vo);
 		if (sm01Vo.getUsertype() == Constants.USER_CODE.ADMIN) {

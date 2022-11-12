@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.singer.domain.dao.sm.SMI1Dao;
+import com.singer.domain.entity.sm.SM01Entity;
 import com.singer.common.exception.ClientException;
-import com.singer.domain.entity.sm.SM01Vo;
 
 @Service
 public class SMI1Service {
@@ -19,19 +19,19 @@ public class SMI1Service {
 	private SMI1Dao smi1Dao;
 
 
-	public List<SM01Vo> selectSMI1Vo(String searchCode, String searchParam) throws Exception {
+	public List<SM01Entity> selectSMI1Vo(String searchCode, String searchParam) throws Exception {
 
-		List<SM01Vo> list = null;
-		SM01Vo sm01Vo = new SM01Vo();
+		List<SM01Entity> list = null;
+		SM01Entity sm01Entity = new SM01Entity();
 		if (StringUtils.equals(searchCode, "username")) {
-			sm01Vo.setUsername(searchParam);
-			list = smi1Dao.selectByNameSMI1Vo(sm01Vo);
+			sm01Entity.setUsername(searchParam);
+			list = smi1Dao.selectByNameSMI1Vo(sm01Entity);
 		} else if (StringUtils.equals(searchCode, "brth")) {
-			sm01Vo.setBrth(searchParam);
-			list = smi1Dao.selectByBrthSMI1Vo(sm01Vo);
+			sm01Entity.setBrth(searchParam);
+			list = smi1Dao.selectByBrthSMI1Vo(sm01Entity);
 		} else if (StringUtils.equals(searchCode, "cellpbnum")) {
-			sm01Vo.setCellpbnum(searchParam);
-			list = smi1Dao.selectByPhoneSMI1Vo(sm01Vo);
+			sm01Entity.setCellpbnum(searchParam);
+			list = smi1Dao.selectByPhoneSMI1Vo(sm01Entity);
 		} else {
 			throw new ClientException(HttpStatus.BAD_REQUEST);
 		}

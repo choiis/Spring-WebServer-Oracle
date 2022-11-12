@@ -16,7 +16,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.singer.common.util.Constants.USER_CODE;
 import com.singer.domain.dao.CommDao;
-import com.singer.domain.entity.CommVo;
+import com.singer.domain.entity.CommEntity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,13 +57,13 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
         USER_CODE usertype = (USER_CODE) session.getAttribute("usertype");
         // 珥덇린 濡쒓렇�씤 耳��씠�뒪 �븘�땲硫�
         if (!"/main".equals(uri)) {
-            List<CommVo> list = commDao.selectAllMenu();
+            List<CommEntity> list = commDao.selectAllMenu();
 
             // 硫붾돱 沅뚰븳 �젣�뼱
             if (list.stream().anyMatch(s -> StringUtils.equals(uri, s.getMenuurl()))) {
-                Stream<CommVo> stream = list.stream().filter(s -> StringUtils.equals(uri, s.getMenuurl()));
-                for (Iterator<CommVo> i = stream.iterator(); i.hasNext();) {
-                    CommVo comm = i.next();
+                Stream<CommEntity> stream = list.stream().filter(s -> StringUtils.equals(uri, s.getMenuurl()));
+                for (Iterator<CommEntity> i = stream.iterator(); i.hasNext();) {
+                    CommEntity comm = i.next();
                     if (usertype.compareTo(comm.getAuthlevel()) > 0) {// 沅뚰븳 �뾾�뒗 硫붾돱 uri濡� �젒�냽�떆
                         log.debug("use denied");
                         // 403 forbidden

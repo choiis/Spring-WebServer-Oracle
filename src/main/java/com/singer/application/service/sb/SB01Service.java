@@ -32,8 +32,8 @@ import com.singer.common.util.Constants.YES_NO;
 import com.singer.common.util.DateUtil;
 import com.singer.domain.dao.sb.SB01Dao;
 import com.singer.domain.dao.sb.SB02Dao;
-import com.singer.domain.entity.sb.SB01Vo;
-import com.singer.domain.entity.sb.SB02Vo;
+import com.singer.domain.entity.sb.SB01Entity;
+import com.singer.domain.entity.sb.SB02Entity;
 
 @Service
 public class SB01Service {
@@ -54,7 +54,7 @@ public class SB01Service {
 	public SB01Response insertSB01Vo(SB01Request sb01Request, MultipartHttpServletRequest request, String userid)
 			throws Exception {
 
-		SB01Vo sb01Vo = SB01Composer.requestToentity(sb01Request, userid);
+		SB01Entity sb01Vo = SB01Composer.requestToentity(sb01Request, userid);
 		MultipartFile video = null;
 		Iterator<String> itr = request.getFileNames();
 
@@ -86,7 +86,7 @@ public class SB01Service {
 
 		sb01Dao.insertSB01Vo(sb01Vo);
 
-		SB01Vo sb01Vo2 = new SB01Vo();
+		SB01Entity sb01Vo2 = new SB01Entity();
 		sb01Vo2.setSeq(sb01Vo.getSeq());
 		sb01Vo2.setRegdate(DateUtil.getToday());
 		sb01Vo2.setVideopath(sb.toString());
@@ -99,10 +99,10 @@ public class SB01Service {
 
 	public SB01ListResponse selectSB01Vo(int nowPage) throws Exception {
 
-		SB01Vo sb01Vo = new SB01Vo();
+		SB01Entity sb01Vo = new SB01Entity();
 		sb01Vo.setNowPage(nowPage);
-		List<SB01Vo> list = sb01Dao.selectSB01Vo(sb01Vo);
-		SB01Vo vo = sb01Dao.selectSB01VoCount();
+		List<SB01Entity> list = sb01Dao.selectSB01Vo(sb01Vo);
+		SB01Entity vo = sb01Dao.selectSB01VoCount();
 		int totalCount = ObjectUtils.isEmpty(vo) ? 0 : CommonUtil.getPageCnt(vo.getTotCnt());
 
 		return SB01Composer.entityListToResponse(list, nowPage, totalCount);
@@ -111,11 +111,11 @@ public class SB01Service {
 	@Transactional(rollbackFor = { Exception.class })
 	public SB01Response selectOneSB01Vo(int seq, String userid) throws Exception {
 
-		SB01Vo sb01Vo = new SB01Vo();
+		SB01Entity sb01Vo = new SB01Entity();
 		sb01Vo.setSeq(seq);
 		sb01Dao.clickSB01Vo(sb01Vo);
 		sb01Vo.setSessionid(userid);
-		SB01Vo sb01voResult = sb01Dao.selectOneSB01Vo(sb01Vo);
+		SB01Entity sb01voResult = sb01Dao.selectOneSB01Vo(sb01Vo);
 		if (!ObjectUtils.isEmpty(sb01voResult)) {
 			if (userid.equals(sb01voResult.getUserid())) {
 				sb01voResult.setDeleteYn(true);
@@ -125,7 +125,7 @@ public class SB01Service {
 		return SB01Composer.entityToResponse(sb01voResult);
 	}
 
-	public int updateSB01Vo(SB01Vo sb01Vo, MultipartHttpServletRequest request) throws Exception {
+	public int updateSB01Vo(SB01Entity sb01Vo, MultipartHttpServletRequest request) throws Exception {
 
 		MultipartFile video = null;
 		Iterator<String> itr = request.getFileNames();
@@ -154,7 +154,7 @@ public class SB01Service {
 			String deletedPath = sb01Dao.selectVideo(sb01Vo);
 			s3Util.deleteS3File(deletedPath); // S3 �뙆�씪�궘�젣
 
-			SB01Vo sb01Vo2 = new SB01Vo();
+			SB01Entity sb01Vo2 = new SB01Entity();
 			sb01Vo2.setSeq(sb01Vo.getSeq());
 			sb01Vo2.setRegdate(DateUtil.getToday());
 			sb01Vo2.setVideopath(sb.toString());
@@ -168,7 +168,7 @@ public class SB01Service {
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SB01Response likeSB01Vo(int seq, String sessionid) throws Exception {
-		SB01Vo sb01Vo = new SB01Vo();
+		SB01Entity sb01Vo = new SB01Entity();
 		sb01Vo.setSeq(seq);
 		sb01Dao.likeSB01Vo(sb01Vo);
 
@@ -183,7 +183,7 @@ public class SB01Service {
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SB01Response hateSB01Vo(int seq, String sessionid) throws Exception {
-		SB01Vo sb01Vo = new SB01Vo();
+		SB01Entity sb01Vo = new SB01Entity();
 		sb01Vo.setSeq(seq);
 		sb01Dao.hateSB01Vo(sb01Vo);
 
@@ -199,16 +199,16 @@ public class SB01Service {
 	@Transactional(rollbackFor = { Exception.class })
 	public int deleteSB01Vo(int seq, String sessionid) throws Exception {
 
-		SB01Vo sb01Vo = new SB01Vo();
+		SB01Entity sb01Vo = new SB01Entity();
 		sb01Vo.setSeq(seq);
 		sb01Vo.setSessionid(sessionid);
-		SB01Vo sb01voResult = sb01Dao.selectOneSB01Vo(sb01Vo);
+		SB01Entity sb01voResult = sb01Dao.selectOneSB01Vo(sb01Vo);
 
 		if (!StringUtils.equals(sessionid, sb01voResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
 
-		SB02Vo sb02Vo = new SB02Vo();
+		SB02Entity sb02Vo = new SB02Entity();
 		sb02Vo.setSeq01(sb01Vo.getSeq());
 
 		sb02Dao.delete_seqSB02Vo(sb02Vo);
@@ -218,7 +218,7 @@ public class SB01Service {
 
 	public InputStream selectVideo(int seq, HttpServletRequest request) throws Exception {
 
-		SB01Vo sb01Vo = new SB01Vo();
+		SB01Entity sb01Vo = new SB01Entity();
 		sb01Vo.setSeq(seq);
 		return s3Util.getS3FileStream(sb01Dao.selectVideo(sb01Vo));
 	}

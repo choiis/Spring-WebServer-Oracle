@@ -29,8 +29,8 @@ import com.singer.common.exception.ClientException;
 import com.singer.common.exception.ExceptionMsg;
 import com.singer.infrastructure.config.S3Properties;
 import com.singer.infrastructure.util.S3Util;
-import com.singer.domain.entity.sf.SF01Vo;
-import com.singer.domain.entity.sf.SF02Vo;
+import com.singer.domain.entity.sf.SF01Entity;
+import com.singer.domain.entity.sf.SF02Entity;
 
 import lombok.Cleanup;
 
@@ -55,7 +55,7 @@ public class SF01Service {
 	public SF01Response insertSF01Vo(SF01Request sf01Request, MultipartHttpServletRequest request, String userid)
 			throws Exception {
 
-		SF01Vo sf01Vo = SF01Composer.requestToentity(sf01Request, userid);
+		SF01Entity sf01Vo = SF01Composer.requestToentity(sf01Request, userid);
 		MultipartFile multipartFile = null;
 		Iterator<String> itr = request.getFileNames();
 
@@ -87,17 +87,17 @@ public class SF01Service {
 
 	public SF01ListResponse selectSF01Vo(int nowPage) throws Exception {
 
-		SF01Vo sf01Vo = new SF01Vo();
+		SF01Entity sf01Vo = new SF01Entity();
 		sf01Vo.setNowPage(nowPage);
-		List<SF01Vo> list = sf01Dao.selectSF01Vo(sf01Vo);
-		SF01Vo vo = sf01Dao.selectSF01Count();
+		List<SF01Entity> list = sf01Dao.selectSF01Vo(sf01Vo);
+		SF01Entity vo = sf01Dao.selectSF01Count();
 		int totalCount = ObjectUtils.isEmpty(vo) ? 0 : CommonUtil.getPageCnt(vo.getTotCnt());
 		return SF01Composer.entityListToResponse(list, nowPage, totalCount);
 	}
 
 	public SF01Response selectOneSF01Vo(int seq, String userid) throws Exception {
 
-		SF01Vo sf01vo = new SF01Vo();
+		SF01Entity sf01vo = new SF01Entity();
 		sf01vo.setSeq(seq);
 		sf01Dao.clickSF01Vo(sf01vo);
 		sf01vo.setSessionid(userid);
@@ -112,13 +112,13 @@ public class SF01Service {
 		return SF01Composer.entityToResponse(sf01vo);
 	}
 
-	public int updateSF01Vo(SF01Vo sf01vo) throws Exception {
+	public int updateSF01Vo(SF01Entity sf01vo) throws Exception {
 		return sf01Dao.updateSF01Vo(sf01vo);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SF01Response likeSF01Vo(int seq, String sessionid) throws Exception {
-		SF01Vo sf01Vo = new SF01Vo();
+		SF01Entity sf01Vo = new SF01Entity();
 		sf01Vo.setSeq(seq);
 		sf01Dao.likeSF01Vo(sf01Vo);
 
@@ -133,7 +133,7 @@ public class SF01Service {
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SF01Response hateSF01Vo(int seq, String sessionid) throws Exception {
-		SF01Vo sf01Vo = new SF01Vo();
+		SF01Entity sf01Vo = new SF01Entity();
 		sf01Vo.setSeq(seq);
 		sf01Dao.hateSF01Vo(sf01Vo);
 
@@ -149,16 +149,16 @@ public class SF01Service {
 	@Transactional(rollbackFor = { Exception.class })
 	public int deleteSF01Vo(int seq, String sessionid) throws Exception {
 
-		SF01Vo sf01Vo = new SF01Vo();
+		SF01Entity sf01Vo = new SF01Entity();
 		sf01Vo.setSeq(seq);
 		sf01Vo.setSessionid(sessionid);
-		SF01Vo sf01voResult = sf01Dao.selectOneSF01Vo(sf01Vo);
+		SF01Entity sf01voResult = sf01Dao.selectOneSF01Vo(sf01Vo);
 
 		if (!StringUtils.equals(sessionid, sf01voResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
 
-		SF02Vo sf02Vo = new SF02Vo();
+		SF02Entity sf02Vo = new SF02Entity();
 		sf02Vo.setSeq01(sf01Vo.getSeq());
 
 		sf02Dao.delete_seqSF02Vo(sf02Vo);
@@ -172,7 +172,7 @@ public class SF01Service {
 
 	public HashMap<String, Object> selectFile(int seq, String userid) throws Exception {
 
-		SF01Vo sf01Vo = new SF01Vo();
+		SF01Entity sf01Vo = new SF01Entity();
 		sf01Vo.setSeq(seq);
 		sf01Vo = sf01Dao.selectFile(sf01Vo);
 

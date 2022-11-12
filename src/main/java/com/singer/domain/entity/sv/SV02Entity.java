@@ -1,6 +1,6 @@
 package com.singer.domain.entity.sv;
 
-import com.singer.domain.entity.SuperVo;
+import com.singer.domain.entity.SuperEntity;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class SV02Vo extends SuperVo {
+public class SV02Entity extends SuperEntity {
 
 	private static final long serialVersionUID = 1769936264551524793L;
 	private int seq;
@@ -25,6 +25,6 @@ public class SV02Vo extends SuperVo {
 	private int voted;
 	private int totVoted;
 	private int votedYn;
-	private List<SV02Vo> sv02Vos;
+	private List<SV02Entity> sv02Vos;
 
 }

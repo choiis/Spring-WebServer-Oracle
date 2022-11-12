@@ -1,6 +1,6 @@
 package com.singer.domain.entity.sb;
 
-import com.singer.domain.entity.BoardVo;
+import com.singer.domain.entity.BoardEntity;
 import java.util.List;
 
 import com.singer.common.util.Constants.YES_NO;
@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class SB01Vo extends BoardVo {
+public class SB01Entity extends BoardEntity {
 
 	private static final long serialVersionUID = -6895941086562069423L;
 
@@ -26,6 +26,6 @@ public class SB01Vo extends BoardVo {
 
 	private YES_NO videobool;
 
-	private List<SB01Vo> list;
+	private List<SB01Entity> list;
 
 }

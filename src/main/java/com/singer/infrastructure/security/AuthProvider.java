@@ -13,7 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 import com.singer.application.service.sm.SM01Service;
-import com.singer.domain.entity.sm.SM01Vo;
+import com.singer.domain.entity.sm.SM01Entity;
 
 @Component
 public class AuthProvider implements AuthenticationProvider {
@@ -26,7 +26,7 @@ public class AuthProvider implements AuthenticationProvider {
 		String userid = authentication.getName();
 		String passwd = (String) authentication.getCredentials();
 
-		SM01Vo sm01Vo = new SM01Vo();
+		SM01Entity sm01Vo = new SM01Entity();
 		try {
 			sm01Vo.setUserid(userid);
 			sm01Vo = Optional.of(sm01Service.login(sm01Vo))

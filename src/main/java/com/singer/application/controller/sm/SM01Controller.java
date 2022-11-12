@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.application.service.sm.SM01Service;
-import com.singer.domain.entity.sm.SM01Vo;
+import com.singer.domain.entity.sm.SM01Entity;
 
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
@@ -44,13 +44,13 @@ public class SM01Controller extends BaseController {
     }
 
     @RequestMapping(value = "/sm01", method = RequestMethod.POST)
-    public ResponseEntity<SM01Vo> insertSM01Vo(@ModelAttribute @Valid SM01Vo sm01Vo,
+    public ResponseEntity<SM01Entity> insertSM01Vo(@ModelAttribute @Valid SM01Entity sm01Vo,
         MultipartHttpServletRequest request) throws Exception {
         log.debug("enter sm01 pot");
         sm01Service.insertSM01Vo(sm01Vo, request);
 
         log.debug("exit sm01 post");
-        return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
+        return new ResponseEntity<SM01Entity>(sm01Vo, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/sm01/page", method = RequestMethod.GET)
@@ -61,18 +61,18 @@ public class SM01Controller extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/sm01/{nowPage}", method = RequestMethod.GET)
-    public ResponseEntity<SM01Vo> selectSM01Vo(@ModelAttribute SM01Vo sm01Vo) throws Exception {
+    public ResponseEntity<SM01Entity> selectSM01Vo(@ModelAttribute SM01Entity sm01Vo) throws Exception {
         log.debug("enter sm01 get");
 
-        List<SM01Vo> list = sm01Service.selectSM01Vo(sm01Vo);
+        List<SM01Entity> list = sm01Service.selectSM01Vo(sm01Vo);
         sm01Vo.setList(list);
 
         log.debug("exit sm01 get");
-        return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
+        return new ResponseEntity<SM01Entity>(sm01Vo, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/sm01/update", method = RequestMethod.POST)
-    public ModelAndView upateSM01Vo(@ModelAttribute @Valid SM01Vo sm01Vo, MultipartHttpServletRequest request)
+    public ModelAndView upateSM01Vo(@ModelAttribute @Valid SM01Entity sm01Vo, MultipartHttpServletRequest request)
         throws Exception {
         log.debug("enter sm01update post");
 
@@ -89,7 +89,7 @@ public class SM01Controller extends BaseController {
 
     @RequestMapping(value = "/sm01/change", method = RequestMethod.GET)
     public ModelAndView selectOneChangeSM01Vo(HttpServletRequest request) throws Exception {
-        SM01Vo sm01Vo = new SM01Vo();
+        SM01Entity sm01Vo = new SM01Entity();
         log.debug("enter sm01change post");
 
         ModelAndView model = new ModelAndView("/sm01update");
@@ -105,7 +105,7 @@ public class SM01Controller extends BaseController {
     }
 
     @RequestMapping(value = "/sm01/one/{userid}", method = RequestMethod.GET)
-    public ModelAndView selectOneSM01Vo(@ModelAttribute SM01Vo sm01Vo) throws Exception {
+    public ModelAndView selectOneSM01Vo(@ModelAttribute SM01Entity sm01Vo) throws Exception {
         ModelAndView model = new ModelAndView("/sm01show");
         log.debug("enter sm01One get");
 
@@ -118,7 +118,7 @@ public class SM01Controller extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/sm01/photo/{userid}", method = RequestMethod.GET)
-    public void selectPhotoSM01Vo(@ModelAttribute SM01Vo sm01Vo, HttpServletRequest request,
+    public void selectPhotoSM01Vo(@ModelAttribute SM01Entity sm01Vo, HttpServletRequest request,
         HttpServletResponse response) throws Exception {
         log.debug("enter sm01photo get");
 
@@ -132,14 +132,14 @@ public class SM01Controller extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/sm01/sme1", method = RequestMethod.PUT)
-    public ResponseEntity<SM01Vo> upateSME1Vo(@RequestBody SM01Vo sm01Vo, HttpServletRequest request) throws Exception {
+    public ResponseEntity<SM01Entity> upateSME1Vo(@RequestBody SM01Entity sm01Vo, HttpServletRequest request) throws Exception {
         log.debug("enter sme1 put");
 
         String userid = getSessionId(request);
         sm01Service.updateSME1Vo(sm01Vo, userid);
 
         log.debug("exit sme1 put");
-        return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
+        return new ResponseEntity<SM01Entity>(sm01Vo, HttpStatus.OK);
     }
 
 }

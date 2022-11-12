@@ -1,6 +1,6 @@
 package com.singer.domain.entity.sm;
 
-import com.singer.domain.entity.SuperVo;
+import com.singer.domain.entity.SuperEntity;
 import java.util.List;
 
 import javax.validation.constraints.Email;
@@ -25,7 +25,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class SM01Vo extends SuperVo {
+public class SM01Entity extends SuperEntity {
 
     private static final long serialVersionUID = 5452779898991723254L;
 
@@ -51,7 +51,7 @@ public class SM01Vo extends SuperVo {
     private String browser;
     private String insertid;
 
-    private List<SM01Vo> list;
+    private List<SM01Entity> list;
 
     private PHONE_INFO_CODE infocode;
     private String pfnum;
@@ -74,10 +74,10 @@ public class SM01Vo extends SuperVo {
     private String otherpcnum;
     private String otherpbnum;
 
-    public void setList(List<SM01Vo> list) {
+    public void setList(List<SM01Entity> list) {
         this.list = list;
         super.setNowPage(super.getNowPage() + 1);
-        // 페이징을 위한 카운트
+        // �럹�씠吏뺤쓣 �쐞�븳 移댁슫�듃
         if (list.size() != 0) {
             super.setTotCnt(CommonUtil.getPageCnt(this.list.get(0).getTotCnt()));
         } else {

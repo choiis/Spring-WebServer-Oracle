@@ -6,31 +6,31 @@
 -->
 
 <mapper namespace="com.singer.mappers.SB02">		
-		<insert id="insert"  parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<insert id="insert"  parameterType="com.singer.domain.entity.sb.SB02Entity">
 			insert into SB02 (seq, seq01, parents, text, userid, regdate)
 			values (SEQ_SB02.NEXTVAL, #{seq01}, #{parents}, #{text}, #{userid}, #{regdate}) 
 		</insert>
 		
-		<update id="update" parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<update id="update" parameterType="com.singer.domain.entity.sb.SB02Entity">
 			update SB02 
 			set text = #{text}
 			where seq = #{seq}
 			and seq01 = #{seq01}
 		</update>
 		
-		<update id="like" parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<update id="like" parameterType="com.singer.domain.entity.sb.SB02Entity">
 			update SB02 
 			set good = (select good from SB02 where seq = #{seq}) + 1
 			where seq = #{seq}
 		</update>
 		
-		<update id="hate" parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<update id="hate" parameterType="com.singer.domain.entity.sb.SB02Entity">
 			update SB02 
 			set good = (select good from SB02 where seq = #{seq}) - 1
 			where seq = #{seq}
 		</update>
 		
-		<select id="select" resultType="com.singer.domain.entity.sb.SB02Vo"  parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<select id="select" resultType="com.singer.domain.entity.sb.SB02Entity"  parameterType="com.singer.domain.entity.sb.SB02Entity">
 			<![CDATA[
 			select T.*
 			,(select count(*) 
@@ -56,7 +56,7 @@
     		]]>
 		</select>
 		
-		<select id="selectReply" resultType="com.singer.domain.entity.sb.SB02Vo"  parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<select id="selectReply" resultType="com.singer.domain.entity.sb.SB02Entity"  parameterType="com.singer.domain.entity.sb.SB02Entity">
 			<![CDATA[
 				select  /*+ INDEX_DESC(SB02 IDX_SB02_1)*/
         			rownum as rown,
@@ -72,7 +72,7 @@
 			]]>
 		</select>
 		
-		<select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.singer.domain.entity.sb.SB02Entity">
 			<![CDATA[
 			select /*+ INDEX_FFS(SB02 IDX_SB02_1)*/
 				 count(*) 
@@ -82,13 +82,13 @@
   			]]>
 		</select>
 		
-		<delete id="delete" parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<delete id="delete" parameterType="com.singer.domain.entity.sb.SB02Entity">
 			delete from SB02
 			where seq = #{seq}
 			and seq01 = #{seq01}
 		</delete>
 		
-		<select id="checkUser" resultType="com.singer.domain.entity.sb.SB02Vo" parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<select id="checkUser" resultType="com.singer.domain.entity.sb.SB02Entity" parameterType="com.singer.domain.entity.sb.SB02Entity">
 			select 
     			seq as seq,
     			userid as userid
@@ -96,12 +96,12 @@
 			where seq = #{seq}
 		</select>
 		
-		<delete id="delete_seq01" parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<delete id="delete_seq01" parameterType="com.singer.domain.entity.sb.SB02Entity">
 			delete from SB02
 			where seq01 = #{seq01}
 		</delete>
 		
-		<delete id="deleteChild" parameterType="com.singer.domain.entity.sb.SB02Vo">
+		<delete id="deleteChild" parameterType="com.singer.domain.entity.sb.SB02Entity">
 			delete from SB02
 			where seq01 = #{seq01}
 			and parents = #{parents}

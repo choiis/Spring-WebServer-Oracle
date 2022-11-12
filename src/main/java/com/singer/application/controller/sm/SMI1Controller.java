@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.singer.application.service.sm.SMI1Service;
-import com.singer.domain.entity.sm.SM01Vo;
+import com.singer.domain.entity.sm.SM01Entity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,15 +35,15 @@ public class SMI1Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/smi1", method = RequestMethod.GET)
-	public ResponseEntity<SM01Vo> selectSMI1Vo(@RequestParam(value = "searchCode") String searchCode,
+	public ResponseEntity<SM01Entity> selectSMI1Vo(@RequestParam(value = "searchCode") String searchCode,
 			@RequestParam(value = "searchParam") String searchParam) throws Exception {
 		log.debug("enter smi1 get");
 
-		List<SM01Vo> list = smi1Service.selectSMI1Vo(searchCode, searchParam);
-		SM01Vo sm01Vo = new SM01Vo();
-		sm01Vo.setList(list);
+		List<SM01Entity> list = smi1Service.selectSMI1Vo(searchCode, searchParam);
+		SM01Entity sm01Entity = new SM01Entity();
+		sm01Entity.setList(list);
 
 		log.debug("exit smi1 get");
-		return new ResponseEntity<SM01Vo>(sm01Vo, HttpStatus.OK);
+		return new ResponseEntity<SM01Entity>(sm01Entity, HttpStatus.OK);
 	}
 }

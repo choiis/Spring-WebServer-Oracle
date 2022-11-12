@@ -1,6 +1,6 @@
 package com.singer.domain.entity.sv;
 
-import com.singer.domain.entity.BoardVo;
+import com.singer.domain.entity.BoardEntity;
 import java.util.List;
 
 import com.singer.common.util.CommonUtil;
@@ -16,21 +16,21 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class SV01Vo extends BoardVo {
+public class SV01Entity extends BoardEntity {
 
 	private static final long serialVersionUID = -3009192462921744979L;
 	private int recall;
 	private int votedCnt;
 	private int multiselect;
 
-	private List<SV01Vo> list;
-	private List<SV02Vo> sv02Vos;
+	private List<SV01Entity> list;
+	private List<SV02Entity> sv02Vos;
 
 	private int votedYn;
 
-	public void setList(List<SV01Vo> list) {
+	public void setList(List<SV01Entity> list) {
 		this.list = list;
-		// 페이징을 위한 카운트
+		// �럹�씠吏뺤쓣 �쐞�븳 移댁슫�듃
 		if (this.list.size() != 0) {
 			super.setTotCnt(CommonUtil.getPageCnt(this.list.get(0).getTotCnt()));
 		} else {

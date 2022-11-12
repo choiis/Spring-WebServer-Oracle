@@ -8,13 +8,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.singer.domain.entity.sm.SM02Vo;
+import com.singer.domain.entity.sm.SM02Entity;
 
 @Mapper
 public interface SM02Dao {
 
 	@Insert("insert into SM02 (seq,userid, title, text, regdate) values (SEQ_SM02.NEXTVAL ,#{userid}, #{title}, #{text}, #{regdate}) ")
-	public int insertSM02Vo(SM02Vo sm02Vo);
+	public int insertSM02Vo(SM02Entity sm02Entity);
 
 	@Select("select T.* from\r\n" + "				(select S.*,\r\n" + "   				 rownum as rown\r\n"
 			+ "					from\r\n" + "					(select /*+ index_desc(SM02 IDX_SM02_1)*/\r\n"
@@ -24,14 +24,14 @@ public interface SM02Dao {
 			+ "			 		from SM02 \r\n" + " 					where userid = #{userid}\r\n"
 			+ "					) S where rownum <= #{endRownum}\r\n"
 			+ "        		) T where T.rown >= #{startRownum} ")
-	public List<SM02Vo> selectSM02Vo(SM02Vo sm02Vo);
+	public List<SM02Entity> selectSM02Vo(SM02Entity sm02Entity);
 
 	@Select("select * from SM02 where userid = #{userid} and text = #{text} and regdate = #{regdate}")
-	public SM02Vo selectOneSM02Vo(SM02Vo sm02Vo);
+	public SM02Entity selectOneSM02Vo(SM02Entity sm02Entity);
 
 	@Delete("delete from SM02 where seq = #{seq} and userid = #{userid}")
-	public int deleteSM02Vo(SM02Vo sm02Vo);
+	public int deleteSM02Vo(SM02Entity sm02Entity);
 
 	@Update("update SM02  set title = #{title}, text = #{text} where userid  = #{userid} ")
-	public int updateSM02Vo(SM02Vo sm02Vo);
+	public int updateSM02Vo(SM02Entity sm02Entity);
 }

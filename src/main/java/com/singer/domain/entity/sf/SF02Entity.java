@@ -1,6 +1,6 @@
 package com.singer.domain.entity.sf;
 
-import com.singer.domain.entity.ReplyVo;
+import com.singer.domain.entity.ReplyEntity;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
@@ -12,9 +12,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-public class SF02Vo extends ReplyVo {
+public class SF02Entity extends ReplyEntity {
 
 	private static final long serialVersionUID = -8685145699711257079L;
-	private List<SF02Vo> list;
+	private List<SF02Entity> list;
 
 }

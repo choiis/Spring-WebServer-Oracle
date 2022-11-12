@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.singer.domain.entity.sm.SM01Vo;
+import com.singer.domain.entity.sm.SM01Entity;
 
 @Repository("smi1Dao")
 public class SMI1Dao extends SuperDao {
@@ -13,17 +13,17 @@ public class SMI1Dao extends SuperDao {
 	private static final String namespace = "com.singer.mappers.SMI1";
 
 	@SuppressWarnings("unchecked")
-	public List<SM01Vo> selectByBrthSMI1Vo(SM01Vo sm01Vo) throws Exception {
-		return (List<SM01Vo>) selectList(namespace + ".selectByBrth", sm01Vo);
+	public List<SM01Entity> selectByBrthSMI1Vo(SM01Entity sm01Entity) throws Exception {
+		return (List<SM01Entity>) selectList(namespace + ".selectByBrth", sm01Entity);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SM01Vo> selectByNameSMI1Vo(SM01Vo sm01Vo) throws Exception {
-		return (List<SM01Vo>) selectList(namespace + ".selectByName", sm01Vo);
+	public List<SM01Entity> selectByNameSMI1Vo(SM01Entity sm01Entity) throws Exception {
+		return (List<SM01Entity>) selectList(namespace + ".selectByName", sm01Entity);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SM01Vo> selectByPhoneSMI1Vo(SM01Vo sm01Vo) throws Exception {
-		return (List<SM01Vo>) selectList(namespace + ".selectByPhone", sm01Vo);
+	public List<SM01Entity> selectByPhoneSMI1Vo(SM01Entity sm01Entity) throws Exception {
+		return (List<SM01Entity>) selectList(namespace + ".selectByPhone", sm01Entity);
 	}
 }

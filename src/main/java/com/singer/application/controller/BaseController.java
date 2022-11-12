@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.singer.common.util.Constants.USER_CODE;
-import com.singer.domain.entity.CommVo;
+import com.singer.domain.entity.CommEntity;
 
 public class BaseController {
 
@@ -41,11 +41,11 @@ public class BaseController {
     }
 
     @SuppressWarnings("unchecked")
-    protected List<CommVo> getMenuList(HttpServletRequest request) {
+    protected List<CommEntity> getMenuList(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object menuList = session.getAttribute("menuList");
         if (menuList != null) {
-            return (List<CommVo>) menuList;
+            return (List<CommEntity>) menuList;
         } else {
             return null;
         }

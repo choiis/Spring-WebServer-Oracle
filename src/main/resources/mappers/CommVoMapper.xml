@@ -6,44 +6,44 @@
 -->
 
 <mapper namespace="com.singer.mappers.Comm">	
-	<select id="selectCode" resultType="com.singer.domain.entity.CommVo"  parameterType="com.singer.domain.entity.CommVo">
+	<select id="selectCode" resultType="com.singer.domain.entity.CommEntity"  parameterType="com.singer.domain.entity.CommEntity">
 	select *  
 		from code
 	where codegrp = #{codegrp}
 	</select>
 	
-	<select id="selectCodeGrp" resultType="com.singer.domain.entity.CommVo"  parameterType="com.singer.domain.entity.CommVo">
+	<select id="selectCodeGrp" resultType="com.singer.domain.entity.CommEntity"  parameterType="com.singer.domain.entity.CommEntity">
 	select *  
 		from code_grp
 	</select>
 	
-	<insert id="insertCode"  parameterType="com.singer.domain.entity.CommVo">
+	<insert id="insertCode"  parameterType="com.singer.domain.entity.CommEntity">
 	insert into Code
 	values (#{codecd}, #{codenm}, #{codegrp}, #{username},#{regdate}) 
 	</insert>
 	
-	<update id="updateCode" parameterType="com.singer.domain.entity.CommVo">
+	<update id="updateCode" parameterType="com.singer.domain.entity.CommEntity">
 	update Code 
 	set codenm = #{codenm}
 	where codecd = #{codecd}
 	and codegrp = #{codegrp}
 	</update>
 		
-	<delete id="deleteCode" parameterType="com.singer.domain.entity.CommVo">
+	<delete id="deleteCode" parameterType="com.singer.domain.entity.CommEntity">
 	delete from Code
 	where codecd = #{codecd}
 	and codegrp = #{codegrp}
 	</delete>
 	
 	
-	<resultMap type="com.singer.domain.entity.CommVo" id="CommVoResult">
+	<resultMap type="com.singer.domain.entity.CommEntity" id="CommEntityResult">
 		<result column="menucd" property="menucd"/>
 		<result column="menunm" property="menunm"/>
 		<result column="menuurl" property="menuurl"/>
 		<result column="authlevel" property="authlevel" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
 	</resultMap>
 	
-	<select id="selectMenu" resultMap="CommVoResult" parameterType="com.singer.domain.entity.CommVo">
+	<select id="selectMenu" resultMap="CommEntityResult" parameterType="com.singer.domain.entity.CommEntity">
 	select menucd as menucd,
       menunm as menunm,
       menuurl as menuurl,
@@ -52,7 +52,7 @@
 	 order by menucd
 	</select>
 	
-	<select id="selectAllMenu" resultMap="CommVoResult">
+	<select id="selectAllMenu" resultMap="CommEntityResult">
 	select menucd as menucd,
       menunm as menunm,
       menuurl as menuurl,
@@ -60,12 +60,12 @@
 	from menu
 	</select>
 	
-	<insert id="insertMenu"  parameterType="com.singer.domain.entity.CommVo">
+	<insert id="insertMenu"  parameterType="com.singer.domain.entity.CommEntity">
 	insert into MENU
 	values (#{menucd}, #{menunm}, #{menuurl}, #{authlevel, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, #{reguser},#{regdate} , #{reguser},#{regdate}) 
 	</insert>
 	
-	<update id="updateMenu" parameterType="com.singer.domain.entity.CommVo">
+	<update id="updateMenu" parameterType="com.singer.domain.entity.CommEntity">
 	update MENU 
 	set menunm = #{menunm},
 		menuurl = #{menuurl},
@@ -75,12 +75,12 @@
 	where menucd = #{menucd}
 	</update>
 		
-	<delete id="deleteMenu" parameterType="com.singer.domain.entity.CommVo">
+	<delete id="deleteMenu" parameterType="com.singer.domain.entity.CommEntity">
 	delete from MENU
 	where menucd = #{menucd}
 	</delete>
 	
-	<select id="checkCreateUser" resultType="java.lang.String"  parameterType="com.singer.domain.entity.CommVo">
+	<select id="checkCreateUser" resultType="java.lang.String"  parameterType="com.singer.domain.entity.CommEntity">
 	select userid
 		from ${tableName}
 		where seq = #{seq}

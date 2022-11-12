@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SuperVo implements Serializable, Cloneable {
+public class SuperEntity implements Serializable, Cloneable {
 
     private static final long serialVersionUID = -594197827136251262L;
     protected boolean deleteYn;
@@ -26,7 +26,7 @@ public class SuperVo implements Serializable, Cloneable {
     protected int result;
     protected int like;
 
-    protected SuperVo() {
+    protected SuperEntity() {
         this.rowPerPage = Constants.ROW_PER_PAGE;
     }
 

@@ -26,9 +26,9 @@ import com.singer.common.util.Constants.RESULT_CODE;
 import com.singer.common.util.Constants.YES_NO;
 import com.singer.common.util.DateUtil;
 import com.singer.domain.dao.sv.SV01Dao;
-import com.singer.domain.entity.sv.SV01Vo;
-import com.singer.domain.entity.sv.SV02Vo;
-import com.singer.domain.entity.sv.SV04Vo;
+import com.singer.domain.entity.sv.SV01Entity;
+import com.singer.domain.entity.sv.SV02Entity;
+import com.singer.domain.entity.sv.SV04Entity;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
@@ -46,8 +46,8 @@ public class SV01Service {
 	@Transactional(rollbackFor = { Exception.class })
 	public SV01Response insertSV01Vo(SV01Request sv01Request, String userid) throws Exception {
 
-		SV01Vo sv01Vo = SV01Composer.requestToEntity(sv01Request);
-		List<SV02Vo> list = SV01Composer.requestListToEntityList(sv01Request.getList());
+		SV01Entity sv01Vo = SV01Composer.requestToEntity(sv01Request);
+		List<SV02Entity> list = SV01Composer.requestListToEntityList(sv01Request.getList());
 
 		String regDate = DateUtil.getTodayTime();
 		sv01Vo.setUserid(userid);
@@ -74,15 +74,15 @@ public class SV01Service {
 
 	public SV01ListResponse selectSV01Vo(int nowPage) throws Exception {
 
-		SV01Vo sv01Vo = new SV01Vo();
+		SV01Entity sv01Vo = new SV01Entity();
 		sv01Vo.setNowPage(nowPage);
-		List<SV01Vo> list = sv01Dao.selectSV01Vo(sv01Vo);
+		List<SV01Entity> list = sv01Dao.selectSV01Vo(sv01Vo);
 		int totalCount = ObjectUtils.isEmpty(list) ? 0 : CommonUtil.getPageCnt(list.get(0).getTotCnt());
 		return SV01Composer.entityListToResponse(list, null, nowPage, totalCount);
 	}
 
 	public SV01Response selectOneSV01Vo(int seq, @PathVariable int recall, String userid) throws Exception {
-		SV01Vo sv01Vo = new SV01Vo();
+		SV01Entity sv01Vo = new SV01Entity();
 		sv01Vo.setSeq(seq);
 		sv01Vo.setRecall(recall);
 		if (sv01Vo.getRecall() == YES_NO.NO.getValue()) {
@@ -95,34 +95,34 @@ public class SV01Service {
 				sv01Vo.setDeleteYn(true);
 			}
 		}
-		SV02Vo sv02Vo = new SV02Vo();
+		SV02Entity sv02Vo = new SV02Entity();
 		sv02Vo.setSeq(sv01Vo.getSeq());
 		sv02Vo.setUserid(userid);
 
-		List<SV02Vo> list = sv02Dao.selectSV02Vo(sv02Vo);
+		List<SV02Entity> list = sv02Dao.selectSV02Vo(sv02Vo);
 		sv01Vo.setSv02Vos(list);
 		sv01Vo.setTotCnt(sv02Dao.selectCnt(sv02Vo));
 		List<SV02Response> responseList = SV01Composer.entityListToResponseList(list);
 		return SV01Composer.entityToResponse(sv01Vo, responseList);
 	}
 
-	public int updateSV01Vo(SV01Vo sv01Vo) throws Exception {
+	public int updateSV01Vo(SV01Entity sv01Vo) throws Exception {
 		return sv01Dao.updateSV01Vo(sv01Vo);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SV01Response deleteSV01Vo(int seq, String sessionid) throws Exception {
 
-		SV01Vo sv01Vo = new SV01Vo();
+		SV01Entity sv01Vo = new SV01Entity();
 		sv01Vo.setSeq(seq);
 		sv01Vo.setSessionid(sessionid);
 		sv01Vo.setUserid(sessionid);
-		SV01Vo sv01voResult = sv01Dao.selectOneSV01Vo(sv01Vo);
+		SV01Entity sv01voResult = sv01Dao.selectOneSV01Vo(sv01Vo);
 		if (!StringUtils.equals(sessionid, sv01voResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
 
-		SV04Vo sv04Vo = new SV04Vo();
+		SV04Entity sv04Vo = new SV04Entity();
 		sv04Vo.setSeq(sv01Vo.getSeq());
 
 		sv04Dao.delete_seqSV04Vo(sv04Vo);
@@ -134,7 +134,7 @@ public class SV01Service {
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SV01Response likeSV01Vo(int seq, String sessionid) throws Exception {
-		SV01Vo sv01Vo = new SV01Vo();
+		SV01Entity sv01Vo = new SV01Entity();
 		sv01Vo.setSeq(seq);
 		sv01Dao.likeSV01Vo(sv01Vo);
 
@@ -149,7 +149,7 @@ public class SV01Service {
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SV01Response hateSV01Vo(int seq, String sessionid) throws Exception {
-		SV01Vo sv01Vo = new SV01Vo();
+		SV01Entity sv01Vo = new SV01Entity();
 		sv01Vo.setSeq(seq);
 		sv01Dao.hateSV01Vo(sv01Vo);
 

@@ -1,6 +1,6 @@
 package com.singer.domain.entity.sf;
 
-import com.singer.domain.entity.BoardVo;
+import com.singer.domain.entity.BoardEntity;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class SF01Vo extends BoardVo {
+public class SF01Entity extends BoardEntity {
 
 	private static final long serialVersionUID = 6040852554752588185L;
 
@@ -23,6 +23,6 @@ public class SF01Vo extends BoardVo {
 	private String downuserid;
 	private int downcnt;
 
-	private List<SF01Vo> list;
+	private List<SF01Entity> list;
 
 }
