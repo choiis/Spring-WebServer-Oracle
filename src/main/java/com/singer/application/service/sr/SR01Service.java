@@ -56,13 +56,13 @@ public class SR01Service {
 	public SR01Response insertSR01Vo(SR01Request sr01Request, MultipartHttpServletRequest request, String sessionid)
 			throws Exception {
 
-		SR01Entity sr01Vo = SR01Composer.requestToentity(sr01Request, sessionid);
-		sr01Vo.setUserid(sessionid);
-		sr01Vo.setRegdate(DateUtil.getTodayTime());
+		SR01Entity sr01Entity = SR01Composer.requestToentity(sr01Request, sessionid);
+		sr01Entity.setUserid(sessionid);
+		sr01Entity.setRegdate(DateUtil.getTodayTime());
 
-		sr01Dao.insertSR01Vo(sr01Vo);
-		SR02Entity sr02Vo = new SR02Entity(sr01Vo.getSeq(), sessionid, DateUtil.getTodayTime(), sr01Vo.getGrade());
-		sr02Dao.insertSR02Vo(sr02Vo);
+		sr01Dao.insertSR01Vo(sr01Entity);
+		SR02Entity sr02Entity = new SR02Entity(sr01Entity.getSeq(), sessionid, DateUtil.getTodayTime(), sr01Entity.getGrade());
+		sr02Dao.insertSR02Vo(sr02Entity);
 		List<MultipartFile> fileList = request.getFiles("file");
 		int idx = 0;
 		ArrayList<SR01Entity> arrayList = new ArrayList<>();
@@ -76,14 +76,14 @@ public class SR01Service {
 			if (!CommonUtil.chkIMGFile(originalFilename)) {
 				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_4);
 			}
-			SR01Entity sr01Vos = new SR01Entity();
-			sr01Vos.setSeq(sr01Vo.getSeq());
-			sr01Vos.setIdx(idx++);
-			sr01Vos.setRegdate(today);
+			SR01Entity entity = new SR01Entity();
+			entity.setSeq(sr01Entity.getSeq());
+			entity.setIdx(idx++);
+			entity.setRegdate(today);
 			StringBuilder sb = new StringBuilder("rphoto/");
-			sb.append(sr01Vo.getSeq() + "_" + today + "_" + idx + CommonUtil.getExtensionName(originalFilename));
-			sr01Vos.setPhotopath(sb.toString());
-			arrayList.add(sr01Vos);
+			sb.append(sr01Entity.getSeq() + "_" + today + "_" + idx + CommonUtil.getExtensionName(originalFilename));
+			entity.setPhotopath(sb.toString());
+			arrayList.add(entity);
 
 			File file = new File(path + "/" + sb.toString());
 			photo.transferTo(file);
@@ -92,91 +92,91 @@ public class SR01Service {
 		if (!CollectionUtils.isEmpty(arrayList)) {
 			sr01Dao.insertImage(arrayList);
 		}
-		return SR01Composer.entityToResponse(sr01Vo);
+		return SR01Composer.entityToResponse(sr01Entity);
 	}
 
 	public SR01ListResponse selectSR01Vo(int nowPage) throws Exception {
-		SR01Entity sr01Vo = new SR01Entity();
-		sr01Vo.setNowPage(nowPage);
-		List<SR01Entity> list = sr01Dao.selectSR01Vo(sr01Vo);
+		SR01Entity sr01Entity = new SR01Entity();
+		sr01Entity.setNowPage(nowPage);
+		List<SR01Entity> list = sr01Dao.selectSR01Vo(sr01Entity);
 		int totalCount = ObjectUtils.isEmpty(list) ? 0 : CommonUtil.getPageCnt(list.get(0).getTotCnt());
 		return SR01Composer.entityListToResponse(list, nowPage, totalCount);
 	}
 
 	public SR01Response selectOneSR01Vo(int seq, String userid) throws Exception {
-		SR01Entity sr01Vo = new SR01Entity();
-		sr01Vo.setSeq(seq);
-		sr01Dao.clickSR01Vo(sr01Vo);
+		SR01Entity sr01Entity = new SR01Entity();
+		sr01Entity.setSeq(seq);
+		sr01Dao.clickSR01Vo(sr01Entity);
 
-		sr01Vo.setUserid(userid);
-		sr01Vo = sr01Dao.selectOneSR01Vo(sr01Vo);
-		if (!ObjectUtils.isEmpty(sr01Vo)) {
-			if (userid.equals(sr01Vo.getUserid())) {
-				sr01Vo.setDeleteYn(true);
+		sr01Entity.setUserid(userid);
+		sr01Entity = sr01Dao.selectOneSR01Vo(sr01Entity);
+		if (!ObjectUtils.isEmpty(sr01Entity)) {
+			if (userid.equals(sr01Entity.getUserid())) {
+				sr01Entity.setDeleteYn(true);
 			}
 		}
-		return SR01Composer.entityToResponse(sr01Vo);
+		return SR01Composer.entityToResponse(sr01Entity);
 	}
 
-	public int updateSR01Vo(SR01Entity sr01Vo) throws Exception {
-		return sr01Dao.updateSR01Vo(sr01Vo);
+	public int updateSR01Vo(SR01Entity entity) throws Exception {
+		return sr01Dao.updateSR01Vo(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SR01Response likeSR01Vo(int seq, String sessionid) throws Exception {
-		SR01Entity sr01Vo = new SR01Entity();
-		sr01Vo.setSeq(seq);
-		sr01Dao.likeSR01Vo(sr01Vo);
+		SR01Entity sr01Entity = new SR01Entity();
+		sr01Entity.setSeq(seq);
+		sr01Dao.likeSR01Vo(sr01Entity);
 
-		sr01Vo.setSessionid(sessionid);
-		sr01Vo.setDatelog(DateUtil.getTodayTime());
+		sr01Entity.setSessionid(sessionid);
+		sr01Entity.setDatelog(DateUtil.getTodayTime());
 
-		sr01Dao.likelogSR01Vo(sr01Vo);
+		sr01Dao.likelogSR01Vo(sr01Entity);
 
-		sr01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		return SR01Composer.entityToResponse(sr01Vo);
+		sr01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
+		return SR01Composer.entityToResponse(sr01Entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SR01Response hateSR01Vo(int seq, String sessionid) throws Exception {
-		SR01Entity sr01Vo = new SR01Entity();
-		sr01Vo.setSeq(seq);
-		sr01Dao.hateSR01Vo(sr01Vo);
+		SR01Entity sr01Entity = new SR01Entity();
+		sr01Entity.setSeq(seq);
+		sr01Dao.hateSR01Vo(sr01Entity);
 
-		sr01Vo.setSessionid(sessionid);
-		sr01Vo.setDatelog(DateUtil.getTodayTime());
+		sr01Entity.setSessionid(sessionid);
+		sr01Entity.setDatelog(DateUtil.getTodayTime());
 
-		sr01Dao.hatelogSR01Vo(sr01Vo);
+		sr01Dao.hatelogSR01Vo(sr01Entity);
 
-		sr01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		return SR01Composer.entityToResponse(sr01Vo);
+		sr01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
+		return SR01Composer.entityToResponse(sr01Entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public int deleteSR01Vo(int seq, String sessionid) throws Exception {
-		SR01Entity sr01Vo = new SR01Entity();
-		sr01Vo.setSeq(seq);
-		sr01Vo.setSessionid(sessionid);
-		sr01Vo.setUserid(sessionid);
-		SR01Entity sr01voResult = sr01Dao.selectOneSR01Vo(sr01Vo);
+		SR01Entity sr01Entity = new SR01Entity();
+		sr01Entity.setSeq(seq);
+		sr01Entity.setSessionid(sessionid);
+		sr01Entity.setUserid(sessionid);
+		SR01Entity sr01EntityResult = sr01Dao.selectOneSR01Vo(sr01Entity);
 
-		if (!StringUtils.equals(sessionid, sr01voResult.getUserid())) {
+		if (!StringUtils.equals(sessionid, sr01EntityResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
 
-		SR03Entity sr03Vo = new SR03Entity();
-		sr03Vo.setSeq(sr01Vo.getSeq());
+		SR03Entity sr03Entity = new SR03Entity();
+		sr03Entity.setSeq(sr01Entity.getSeq());
 
-		sr03Dao.delete_seqSR03Vo(sr03Vo);
+		sr03Dao.delete_seqSR03Vo(sr03Entity);
 
-		return sr01Dao.deleteSR01Vo(sr01Vo);
+		return sr01Dao.deleteSR01Vo(sr01Entity);
 	}
 
 	public InputStream selectPhoto(int seq, int idx) throws Exception {
-		SR01Entity sr01Vo = new SR01Entity();
-		sr01Vo.setSeq(seq);
-		sr01Vo.setIdx(idx);
-		return s3Util.getS3FileStream(sr01Dao.selectPhoto(sr01Vo));
+		SR01Entity sr01Entity = new SR01Entity();
+		sr01Entity.setSeq(seq);
+		sr01Entity.setIdx(idx);
+		return s3Util.getS3FileStream(sr01Dao.selectPhoto(sr01Entity));
 	}
 
 }

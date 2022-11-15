@@ -10,10 +10,10 @@ public class SV03Composer {
 
         List<SV02Entity> list = new ArrayList<>();
         for (SV03Request request : requestList) {
-            SV02Entity sv02Vo = new SV02Entity();
-            sv02Vo.setSeq(request.getSeq());
-            sv02Vo.setIdx(request.getIdx());
-            list.add(sv02Vo);
+            SV02Entity entity = new SV02Entity();
+            entity.setSeq(request.getSeq());
+            entity.setIdx(request.getIdx());
+            list.add(entity);
         }
 
         return list;

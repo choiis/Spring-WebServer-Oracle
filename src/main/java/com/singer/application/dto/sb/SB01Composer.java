@@ -10,30 +10,30 @@ public class SB01Composer {
 
         List<SB01Response> responseList = new ArrayList<>();
 
-        for (SB01Entity vo : list) {
+        for (SB01Entity entity : list) {
             responseList.add(
-                new SB01Response(vo.getSeq(), vo.getTitle(), vo.getText(), vo.getUserid(), vo.getGood(), vo.getHit(),
-                    vo.getShowDate(), vo.getRegdate(), vo.getReply(), vo.isDeleteYn(), vo.getGoodlog(), vo.getHatelog(),
-                    vo.getVideo(), vo.getVideopath(), vo.getVideobool(), vo.getResult()));
+                new SB01Response(entity.getSeq(), entity.getTitle(), entity.getText(), entity.getUserid(), entity.getGood(), entity.getHit(),
+                    entity.getShowDate(), entity.getRegdate(), entity.getReply(), entity.isDeleteYn(), entity.getGoodlog(), entity.getHatelog(),
+                    entity.getVideo(), entity.getVideopath(), entity.getVideobool(), entity.getResult()));
         }
 
         return new SB01ListResponse(responseList, nowPage, totCnt);
     }
 
-    public static SB01Response entityToResponse(SB01Entity vo) {
-        return new SB01Response(vo.getSeq(), vo.getTitle(), vo.getText(), vo.getUserid(), vo.getGood(), vo.getHit(),
-            vo.getShowDate(), vo.getRegdate(),
-            vo.getReply(), vo.isDeleteYn(), vo.getGoodlog(), vo.getHatelog(), vo.getVideo(), vo.getVideopath(),
-            vo.getVideobool(), vo.getResult());
+    public static SB01Response entityToResponse(SB01Entity entity) {
+        return new SB01Response(entity.getSeq(), entity.getTitle(), entity.getText(), entity.getUserid(), entity.getGood(), entity.getHit(),
+            entity.getShowDate(), entity.getRegdate(),
+            entity.getReply(), entity.isDeleteYn(), entity.getGoodlog(), entity.getHatelog(), entity.getVideo(), entity.getVideopath(),
+            entity.getVideobool(), entity.getResult());
     }
 
 
     public static SB01Entity requestToentity(SB01Request request, String userid) {
-        SB01Entity sb01Vo = new SB01Entity();
-        sb01Vo.setTitle(request.getTitle());
-        sb01Vo.setText(request.getTitle());
-        sb01Vo.setUserid(userid);
+        SB01Entity sb01Entity = new SB01Entity();
+        sb01Entity.setTitle(request.getTitle());
+        sb01Entity.setText(request.getTitle());
+        sb01Entity.setUserid(userid);
 
-        return sb01Vo;
+        return sb01Entity;
     }
 }

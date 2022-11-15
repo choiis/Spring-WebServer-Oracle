@@ -9,25 +9,25 @@ import java.util.List;
 public class SV01Composer {
 
     public static SV01Entity requestToEntity(SV01Request request) {
-        SV01Entity sv01Vo = new SV01Entity();
-        sv01Vo.setTitle(request.getTitle());
-        sv01Vo.setText(request.getText());
-        sv01Vo.setMultiselect(request.getMultiselect());
-        return sv01Vo;
+        SV01Entity sv01Entity = new SV01Entity();
+        sv01Entity.setTitle(request.getTitle());
+        sv01Entity.setText(request.getText());
+        sv01Entity.setMultiselect(request.getMultiselect());
+        return sv01Entity;
     }
 
 
     public static List<SV02Entity> requestListToEntityList(List<SV02Request> list) {
 
-        List<SV02Entity> voList = new ArrayList<>();
+        List<SV02Entity> entityList = new ArrayList<>();
         for (SV02Request request : list) {
-            SV02Entity vo = new SV02Entity();
-            vo.setIdx(request.getIdx());
-            vo.setContent(request.getContent());
-            voList.add(vo);
+            SV02Entity entity = new SV02Entity();
+            entity.setIdx(request.getIdx());
+            entity.setContent(request.getContent());
+            entityList.add(entity);
         }
 
-        return voList;
+        return entityList;
     }
 
 
@@ -36,11 +36,11 @@ public class SV01Composer {
 
         List<SV01Response> responseList = new ArrayList<>();
 
-        for (SV01Entity vo : list) {
+        for (SV01Entity entity : list) {
             responseList.add(
-                new SV01Response(vo.getSeq(), vo.getTitle(), vo.getText(), vo.getUserid(), vo.getGood(), vo.getHit(),
-                    vo.getShowDate(), vo.getRegdate(), vo.getReply(), vo.isDeleteYn(), vo.getGoodlog(), vo.getHatelog(),
-                    vo.getVotedCnt(), vo.getMultiselect(), vo.getVotedYn(), vo.getTotCnt(), sv02Vos, vo.getResult()));
+                new SV01Response(entity.getSeq(), entity.getTitle(), entity.getText(), entity.getUserid(), entity.getGood(), entity.getHit(),
+                    entity.getShowDate(), entity.getRegdate(), entity.getReply(), entity.isDeleteYn(), entity.getGoodlog(), entity.getHatelog(),
+                    entity.getVotedCnt(), entity.getMultiselect(), entity.getVotedYn(), entity.getTotCnt(), sv02Vos, entity.getResult()));
         }
 
         return new SV01ListResponse(responseList, nowPage, totCnt);
@@ -49,16 +49,16 @@ public class SV01Composer {
     public static List<SV02Response> entityListToResponseList(List<SV02Entity> list) {
         List<SV02Response> responseList = new ArrayList<>();
 
-        for (SV02Entity vo : list) {
-            responseList.add(new SV02Response(vo.getIdx(), vo.getContent(), vo.getVoted()));
+        for (SV02Entity entity : list) {
+            responseList.add(new SV02Response(entity.getIdx(), entity.getContent(), entity.getVoted()));
         }
         return responseList;
     }
 
-    public static SV01Response entityToResponse(SV01Entity vo, List<SV02Response> list) {
-        return new SV01Response(vo.getSeq(), vo.getTitle(), vo.getText(), vo.getUserid(), vo.getGood(), vo.getHit(),
-            vo.getShowDate(), vo.getRegdate(),
-            vo.getReply(), vo.isDeleteYn(), vo.getGoodlog(), vo.getHatelog(), vo.getVotedCnt(), vo.getMultiselect(),
-            vo.getVotedYn(), vo.getTotCnt(), list, vo.getResult());
+    public static SV01Response entityToResponse(SV01Entity entity, List<SV02Response> list) {
+        return new SV01Response(entity.getSeq(), entity.getTitle(), entity.getText(), entity.getUserid(), entity.getGood(), entity.getHit(),
+            entity.getShowDate(), entity.getRegdate(),
+            entity.getReply(), entity.isDeleteYn(), entity.getGoodlog(), entity.getHatelog(), entity.getVotedCnt(), entity.getMultiselect(),
+            entity.getVotedYn(), entity.getTotCnt(), list, entity.getResult());
     }
 }

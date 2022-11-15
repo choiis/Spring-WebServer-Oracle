@@ -26,28 +26,28 @@ public class SV04Service {
 
 	public SV04Response insertSV04Vo(SV04Request request, String userid) throws Exception {
 
-		SV04Entity sv04Vo = SV04Composer.requestToEntity(request, userid);
+		SV04Entity sv04Entity = SV04Composer.requestToEntity(request, userid);
 
-		sv04Dao.insertSV04Vo(sv04Vo);
+		sv04Dao.insertSV04Vo(sv04Entity);
 
-		return SV04Composer.entityToResponse(sv04Vo);
+		return SV04Composer.entityToResponse(sv04Entity);
 	}
 
-	public int likeSV04Vo(SV04Entity sv04Vo) throws Exception {
-		return sv04Dao.likeSV04Vo(sv04Vo);
+	public int likeSV04Vo(SV04Entity entity) throws Exception {
+		return sv04Dao.likeSV04Vo(entity);
 	}
 
 	public SV04ListResponse selectSV04Vo(int seq01, int parents, int nowPage, String userid) throws Exception {
 
-		SV04Entity sv04Vo = SV04Composer.selectInfoToEntity(seq01, parents, nowPage);
-		if (sv04Vo.getNowPage() == 1) { // 泥ロ럹�씠吏� �슂泥��떆 Total�븣�븘�빞�븳�떎
-			sv04Vo.setTotCnt(sv04Dao.selectSV04Total(sv04Vo));
+		SV04Entity sv04Entity = SV04Composer.selectInfoToEntity(seq01, parents, nowPage);
+		if (sv04Entity.getNowPage() == 1) { // 泥ロ럹�씠吏� �슂泥��떆 Total�븣�븘�빞�븳�떎
+			sv04Entity.setTotCnt(sv04Dao.selectSV04Total(sv04Entity));
 		}
 		List<SV04Entity> list;
-		if (sv04Vo.getParents() > 0) {
-			list = sv04Dao.selectReplySV04Vo(sv04Vo);
+		if (sv04Entity.getParents() > 0) {
+			list = sv04Dao.selectReplySV04Vo(sv04Entity);
 		} else {
-			list = sv04Dao.selectSV04Vo(sv04Vo);
+			list = sv04Dao.selectSV04Vo(sv04Entity);
 		}
 
 		Stream<SV04Entity> stream = list.stream();
@@ -57,27 +57,27 @@ public class SV04Service {
 			}
 		});
 
-		return SV04Composer.entityListToResponse(list, sv04Vo.getParents(), sv04Vo.getNowPage(), sv04Vo.getTotCnt());
+		return SV04Composer.entityListToResponse(list, sv04Entity.getParents(), sv04Entity.getNowPage(), sv04Entity.getTotCnt());
 	}
 
-	public int updateSV04Vo(SV04Entity sv04Vo) throws Exception {
-		return sv04Dao.updateSV04Vo(sv04Vo);
+	public int updateSV04Vo(SV04Entity entity) throws Exception {
+		return sv04Dao.updateSV04Vo(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public int deleteSV04Vo(int seq, int seq01, int parents, String sessionid) throws Exception {
 
-		SV04Entity sv04Vo = SV04Composer.deleteInfoToEntity(seq, seq01, parents);
-		SV04Entity sv04voResult = sv04Dao.checkUserSV04Vo(sv04Vo);
-		if (!StringUtils.equals(sessionid, sv04voResult.getUserid())) {
+		SV04Entity sv04Entity = SV04Composer.deleteInfoToEntity(seq, seq01, parents);
+		SV04Entity sv04EntityResult = sv04Dao.checkUserSV04Vo(sv04Entity);
+		if (!StringUtils.equals(sessionid, sv04EntityResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
-		if (sv04Vo.getParents() > 0) {
-			sv04Dao.deleteChild(sv04Vo);
-			sv04Vo.setParents(0);
+		if (sv04Entity.getParents() > 0) {
+			sv04Dao.deleteChild(sv04Entity);
+			sv04Entity.setParents(0);
 		}
 
-		return sv04Dao.deleteSV04Vo(sv04Vo);
+		return sv04Dao.deleteSV04Vo(sv04Entity);
 	}
 
 }

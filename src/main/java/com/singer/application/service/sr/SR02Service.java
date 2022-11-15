@@ -19,30 +19,30 @@ public class SR02Service {
 
     public SR02Response insertSR02Vo(SR02Request request, String sessionid) throws Exception {
 
-        SR02Entity sr02Vo = SR02Composer.requestToEntitu(request, sessionid);
-        sr02Dao.insertSR02Vo(sr02Vo);
+        SR02Entity sr02Entity = SR02Composer.requestToEntitu(request, sessionid);
+        sr02Dao.insertSR02Vo(sr02Entity);
 
-        SR01Entity sr01Vo = new SR01Entity();
-        sr01Vo.setSeq(sr02Vo.getSeq());
-        sr02Dao.selectGradeSR02Vo(sr01Vo);
-        return SR02Composer.entityToResponse(sr01Vo);
+        SR01Entity sr01Entity = new SR01Entity();
+        sr01Entity.setSeq(sr02Entity.getSeq());
+        sr02Dao.selectGradeSR02Vo(sr01Entity);
+        return SR02Composer.entityToResponse(sr01Entity);
     }
 
     public SR02Response selectOneSR02Vo(int seq, String userid) throws Exception {
-        SR01Entity sr01Vo = new SR01Entity();
-        sr01Vo.setSeq(seq);
-        sr01Vo.setUserid(userid);
-        SR01Entity vo = sr02Dao.selectOneSR02Vo(sr01Vo);
+        SR01Entity sr01Entity = new SR01Entity();
+        sr01Entity.setSeq(seq);
+        sr01Entity.setUserid(userid);
+        SR01Entity entity = sr02Dao.selectOneSR02Vo(sr01Entity);
 
-        return SR02Composer.entityToResponse(vo);
+        return SR02Composer.entityToResponse(entity);
     }
 
 
     public int deleteSR02Vo(int seq, String userid) throws Exception {
-        SR01Entity sr01Vo = new SR01Entity();
-        sr01Vo.setSeq(seq);
-        sr01Vo.setSessionid(userid);
-        return sr02Dao.deleteSR02Vo(sr01Vo);
+        SR01Entity sr01Entity = new SR01Entity();
+        sr01Entity.setSeq(seq);
+        sr01Entity.setSessionid(userid);
+        return sr02Dao.deleteSR02Vo(sr01Entity);
     }
 
 }

@@ -10,35 +10,35 @@ public class SR01Composer {
 
         List<SR01Response> responseList = new ArrayList<>();
 
-        for (SR01Entity vo : list) {
+        for (SR01Entity entity : list) {
             responseList.add(
-                new SR01Response(vo.getSeq(), vo.getTitle(), vo.getText(), vo.getUserid(), vo.getGood(), vo.getHit(),
-                    vo.getShowDate(), vo.getRegdate(), vo.getReply(), vo.isDeleteYn(), vo.getGoodlog(), vo.getHatelog(),
-                    vo.getMarkertitle(), vo.getMapx(), vo.getMapy(), vo.getAvggrade(), vo.getPhotocnt(),
-                    vo.getResult()));
+                new SR01Response(entity.getSeq(), entity.getTitle(), entity.getText(), entity.getUserid(), entity.getGood(), entity.getHit(),
+                    entity.getShowDate(), entity.getRegdate(), entity.getReply(), entity.isDeleteYn(), entity.getGoodlog(), entity.getHatelog(),
+                    entity.getMarkertitle(), entity.getMapx(), entity.getMapy(), entity.getAvggrade(), entity.getPhotocnt(),
+                    entity.getResult()));
         }
 
         return new SR01ListResponse(responseList, nowPage, totCnt);
     }
 
-    public static SR01Response entityToResponse(SR01Entity vo) {
-        return new SR01Response(vo.getSeq(), vo.getTitle(), vo.getText(), vo.getUserid(), vo.getGood(), vo.getHit(),
-            vo.getShowDate(), vo.getRegdate(),
-            vo.getReply(), vo.isDeleteYn(), vo.getGoodlog(), vo.getHatelog(), vo.getMarkertitle(), vo.getMapx(),
-            vo.getMapy(), vo.getAvggrade(), vo.getPhotocnt(),
-            vo.getResult());
+    public static SR01Response entityToResponse(SR01Entity entity) {
+        return new SR01Response(entity.getSeq(), entity.getTitle(), entity.getText(), entity.getUserid(), entity.getGood(), entity.getHit(),
+            entity.getShowDate(), entity.getRegdate(),
+            entity.getReply(), entity.isDeleteYn(), entity.getGoodlog(), entity.getHatelog(), entity.getMarkertitle(), entity.getMapx(),
+            entity.getMapy(), entity.getAvggrade(), entity.getPhotocnt(),
+            entity.getResult());
     }
 
 
     public static SR01Entity requestToentity(SR01Request request, String userid) {
-        SR01Entity sr01Vo = new SR01Entity();
-        sr01Vo.setTitle(request.getTitle());
-        sr01Vo.setText(request.getTitle());
-        sr01Vo.setUserid(userid);
-        sr01Vo.setMarkertitle(request.getMarkertitle());
-        sr01Vo.setGrade(request.getGrade());
-        sr01Vo.setMapx(request.getMapx());
-        sr01Vo.setMapy(request.getMapy());
-        return sr01Vo;
+        SR01Entity sr01Entity = new SR01Entity();
+        sr01Entity.setTitle(request.getTitle());
+        sr01Entity.setText(request.getTitle());
+        sr01Entity.setUserid(userid);
+        sr01Entity.setMarkertitle(request.getMarkertitle());
+        sr01Entity.setGrade(request.getGrade());
+        sr01Entity.setMapx(request.getMapx());
+        sr01Entity.setMapy(request.getMapy());
+        return sr01Entity;
     }
 }

@@ -55,128 +55,128 @@ public class SF01Service {
 	public SF01Response insertSF01Vo(SF01Request sf01Request, MultipartHttpServletRequest request, String userid)
 			throws Exception {
 
-		SF01Entity sf01Vo = SF01Composer.requestToentity(sf01Request, userid);
+		SF01Entity sf01Entity = SF01Composer.requestToentity(sf01Request, userid);
 		MultipartFile multipartFile = null;
 		Iterator<String> itr = request.getFileNames();
 
 		if (ObjectUtils.isEmpty(itr)) {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_3);
 		}
-		sf01Vo.setUserid(userid);
-		sf01Vo.setRegdate(DateUtil.getTodayTime());
+		sf01Entity.setUserid(userid);
+		sf01Entity.setRegdate(DateUtil.getTodayTime());
 
 		while (itr.hasNext()) {
 			multipartFile = request.getFile(itr.next());
 		}
 		String filename = multipartFile.getOriginalFilename();
-		sf01Vo.setFilename(filename);
+		sf01Entity.setFilename(filename);
 
-		String ftpfilename = sf01Vo.getRegdate() + "." + CommonUtil.getExtensionName(filename);
+		String ftpfilename = sf01Entity.getRegdate() + "." + CommonUtil.getExtensionName(filename);
 
-		sf01Vo.setFtpfilename(ftpfilename);
+		sf01Entity.setFtpfilename(ftpfilename);
 		File file = new File(s3Properties.getTempPath() + "/" + ftpfilename);
 		multipartFile.transferTo(file);
 
 		s3Util.putS3File(S3_FILE_PATH + ftpfilename, file);
 		file.delete();
 
-		int success = sf01Dao.insertSF01Vo(sf01Vo);
-		sf01Vo.setResult(success);
-		return SF01Composer.entityToResponse(sf01Vo);
+		int success = sf01Dao.insertSF01Vo(sf01Entity);
+		sf01Entity.setResult(success);
+		return SF01Composer.entityToResponse(sf01Entity);
 	}
 
 	public SF01ListResponse selectSF01Vo(int nowPage) throws Exception {
 
-		SF01Entity sf01Vo = new SF01Entity();
-		sf01Vo.setNowPage(nowPage);
-		List<SF01Entity> list = sf01Dao.selectSF01Vo(sf01Vo);
-		SF01Entity vo = sf01Dao.selectSF01Count();
-		int totalCount = ObjectUtils.isEmpty(vo) ? 0 : CommonUtil.getPageCnt(vo.getTotCnt());
+		SF01Entity sf01Entity = new SF01Entity();
+		sf01Entity.setNowPage(nowPage);
+		List<SF01Entity> list = sf01Dao.selectSF01Vo(sf01Entity);
+		SF01Entity entity = sf01Dao.selectSF01Count();
+		int totalCount = ObjectUtils.isEmpty(entity) ? 0 : CommonUtil.getPageCnt(entity.getTotCnt());
 		return SF01Composer.entityListToResponse(list, nowPage, totalCount);
 	}
 
 	public SF01Response selectOneSF01Vo(int seq, String userid) throws Exception {
 
-		SF01Entity sf01vo = new SF01Entity();
-		sf01vo.setSeq(seq);
-		sf01Dao.clickSF01Vo(sf01vo);
-		sf01vo.setSessionid(userid);
-		sf01vo = sf01Dao.selectOneSF01Vo(sf01vo);
-		if (!ObjectUtils.isEmpty(sf01vo)) {
-			if (userid.equals(sf01vo.getUserid())) {
-				sf01vo.setDeleteYn(true);
+		SF01Entity sf01Entity = new SF01Entity();
+		sf01Entity.setSeq(seq);
+		sf01Dao.clickSF01Vo(sf01Entity);
+		sf01Entity.setSessionid(userid);
+		sf01Entity = sf01Dao.selectOneSF01Vo(sf01Entity);
+		if (!ObjectUtils.isEmpty(sf01Entity)) {
+			if (userid.equals(sf01Entity.getUserid())) {
+				sf01Entity.setDeleteYn(true);
 			}
 		}
 
-		sf01vo.setShowDate(DateUtil.getDateFormat(sf01vo.getRegdate()));
-		return SF01Composer.entityToResponse(sf01vo);
+		sf01Entity.setShowDate(DateUtil.getDateFormat(sf01Entity.getRegdate()));
+		return SF01Composer.entityToResponse(sf01Entity);
 	}
 
-	public int updateSF01Vo(SF01Entity sf01vo) throws Exception {
-		return sf01Dao.updateSF01Vo(sf01vo);
+	public int updateSF01Vo(SF01Entity entity) throws Exception {
+		return sf01Dao.updateSF01Vo(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SF01Response likeSF01Vo(int seq, String sessionid) throws Exception {
-		SF01Entity sf01Vo = new SF01Entity();
-		sf01Vo.setSeq(seq);
-		sf01Dao.likeSF01Vo(sf01Vo);
+		SF01Entity sf01Entity = new SF01Entity();
+		sf01Entity.setSeq(seq);
+		sf01Dao.likeSF01Vo(sf01Entity);
 
-		sf01Vo.setSessionid(sessionid);
-		sf01Vo.setDatelog(DateUtil.getTodayTime());
+		sf01Entity.setSessionid(sessionid);
+		sf01Entity.setDatelog(DateUtil.getTodayTime());
 
-		sf01Dao.likelogSF01Vo(sf01Vo);
+		sf01Dao.likelogSF01Vo(sf01Entity);
 
-		sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		return SF01Composer.entityToResponse(sf01Vo);
+		sf01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
+		return SF01Composer.entityToResponse(sf01Entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SF01Response hateSF01Vo(int seq, String sessionid) throws Exception {
-		SF01Entity sf01Vo = new SF01Entity();
-		sf01Vo.setSeq(seq);
-		sf01Dao.hateSF01Vo(sf01Vo);
+		SF01Entity sf01Entity = new SF01Entity();
+		sf01Entity.setSeq(seq);
+		sf01Dao.hateSF01Vo(sf01Entity);
 
-		sf01Vo.setSessionid(sessionid);
-		sf01Vo.setDatelog(DateUtil.getTodayTime());
+		sf01Entity.setSessionid(sessionid);
+		sf01Entity.setDatelog(DateUtil.getTodayTime());
 
-		sf01Dao.hatelogSF01Vo(sf01Vo);
+		sf01Dao.hatelogSF01Vo(sf01Entity);
 
-		sf01Vo.setResult(RESULT_CODE.SUCCESS.getValue());
-		return SF01Composer.entityToResponse(sf01Vo);
+		sf01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
+		return SF01Composer.entityToResponse(sf01Entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public int deleteSF01Vo(int seq, String sessionid) throws Exception {
 
-		SF01Entity sf01Vo = new SF01Entity();
-		sf01Vo.setSeq(seq);
-		sf01Vo.setSessionid(sessionid);
-		SF01Entity sf01voResult = sf01Dao.selectOneSF01Vo(sf01Vo);
+		SF01Entity sf01Entity = new SF01Entity();
+		sf01Entity.setSeq(seq);
+		sf01Entity.setSessionid(sessionid);
+		SF01Entity sf01voResult = sf01Dao.selectOneSF01Vo(sf01Entity);
 
 		if (!StringUtils.equals(sessionid, sf01voResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
 
-		SF02Entity sf02Vo = new SF02Entity();
-		sf02Vo.setSeq01(sf01Vo.getSeq());
+		SF02Entity sf02Entity = new SF02Entity();
+		sf02Entity.setSeq01(sf01Entity.getSeq());
 
-		sf02Dao.delete_seqSF02Vo(sf02Vo);
+		sf02Dao.delete_seqSF02Vo(sf02Entity);
 
-		sf01Vo = sf01Dao.selectFile(sf01Vo);
+		sf01Entity = sf01Dao.selectFile(sf01Entity);
 
-		s3Util.deleteS3File(S3_FILE_PATH + sf01Vo.getFtpfilename());
+		s3Util.deleteS3File(S3_FILE_PATH + sf01Entity.getFtpfilename());
 
-		return sf01Dao.deleteSF01Vo(sf01Vo);
+		return sf01Dao.deleteSF01Vo(sf01Entity);
 	}
 
 	public HashMap<String, Object> selectFile(int seq, String userid) throws Exception {
 
-		SF01Entity sf01Vo = new SF01Entity();
-		sf01Vo.setSeq(seq);
-		sf01Vo = sf01Dao.selectFile(sf01Vo);
+		SF01Entity sf01Entity = new SF01Entity();
+		sf01Entity.setSeq(seq);
+		sf01Entity = sf01Dao.selectFile(sf01Entity);
 
-		String filename = sf01Vo.getFtpfilename();
+		String filename = sf01Entity.getFtpfilename();
 		@Cleanup
 		InputStream inputStream = s3Util.getS3FileStream(S3_FILE_PATH + filename);
 
@@ -186,11 +186,11 @@ public class SF01Service {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
 		hashMap.put("downfile", file);
-		hashMap.put("filename", sf01Vo.getFilename());
+		hashMap.put("filename", sf01Entity.getFilename());
 
-		sf01Vo.setDownuserid(userid);
-		sf01Vo.setRegdate(DateUtil.getTodayTime());
-		sf01Dao.mergeSFD1Vo(sf01Vo);
+		sf01Entity.setDownuserid(userid);
+		sf01Entity.setRegdate(DateUtil.getTodayTime());
+		sf01Dao.mergeSFD1Vo(sf01Entity);
 
 		return hashMap;
 	}

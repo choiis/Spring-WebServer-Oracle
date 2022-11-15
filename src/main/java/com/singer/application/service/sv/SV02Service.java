@@ -23,8 +23,8 @@ public class SV02Service {
     @Autowired
     private SV02Dao sv02Dao;
 
-    public int updateSV01Vo(SV02Entity sv02Vo) throws Exception {
-        return sv02Dao.updateSV02Vo(sv02Vo);
+    public int updateSV01Vo(SV02Entity entity) throws Exception {
+        return sv02Dao.updateSV02Vo(entity);
     }
 
     @Transactional(rollbackFor = {Exception.class})

@@ -25,28 +25,28 @@ public class SR03Service {
 
 	public SR03Response insertSR03Vo(SR03Request request, String userid) throws Exception {
 
-		SR03Entity sr03Vo = SR03Composer.requestToEntity(request, userid);
+		SR03Entity sr03Entity = SR03Composer.requestToEntity(request, userid);
 
-		sr03Dao.insertSR03Vo(sr03Vo);
+		sr03Dao.insertSR03Vo(sr03Entity);
 
-		return SR03Composer.entityToResponse(sr03Vo);
+		return SR03Composer.entityToResponse(sr03Entity);
 	}
 
-	public int likeSR03Vo(SR03Entity sr03Vo) throws Exception {
-		return sr03Dao.likeSR03Vo(sr03Vo);
+	public int likeSR03Vo(SR03Entity entity) throws Exception {
+		return sr03Dao.likeSR03Vo(entity);
 	}
 
 	public SR03ListResponse selectSR03Vo(int seq01, int parents, int nowPage, String userid) throws Exception {
 
-		SR03Entity sr03Vo = SR03Composer.selectInfoToEntity(seq01, parents, nowPage);
-		if (sr03Vo.getNowPage() == 1) { // 泥ロ럹�씠吏� �슂泥��떆 Total�븣�븘�빞�븳�떎
-			sr03Vo.setTotCnt(sr03Dao.selectSR03Total(sr03Vo));
+		SR03Entity sr03Entity = SR03Composer.selectInfoToEntity(seq01, parents, nowPage);
+		if (sr03Entity.getNowPage() == 1) { // 泥ロ럹�씠吏� �슂泥��떆 Total�븣�븘�빞�븳�떎
+			sr03Entity.setTotCnt(sr03Dao.selectSR03Total(sr03Entity));
 		}
 		List<SR03Entity> list;
-		if (sr03Vo.getParents() > 0) {
-			list = sr03Dao.selectReplySR03Vo(sr03Vo);
+		if (sr03Entity.getParents() > 0) {
+			list = sr03Dao.selectReplySR03Vo(sr03Entity);
 		} else {
-			list = sr03Dao.selectSR03Vo(sr03Vo);
+			list = sr03Dao.selectSR03Vo(sr03Entity);
 		}
 
 		Stream<SR03Entity> stream = list.stream();
@@ -56,26 +56,26 @@ public class SR03Service {
 			}
 		});
 
-		return SR03Composer.entityListToResponse(list, sr03Vo.getParents(), sr03Vo.getNowPage(), sr03Vo.getTotCnt());
+		return SR03Composer.entityListToResponse(list, sr03Entity.getParents(), sr03Entity.getNowPage(), sr03Entity.getTotCnt());
 	}
 
-	public int updateSR03Vo(SR03Entity sr03Vo) throws Exception {
-		return sr03Dao.updateSR03Vo(sr03Vo);
+	public int updateSR03Vo(SR03Entity entity) throws Exception {
+		return sr03Dao.updateSR03Vo(entity);
 	}
 
 	public int deleteSR03Vo(int seq, int seq01, int parents, String sessionid) throws Exception {
 
-		SR03Entity sr03Vo = SR03Composer.deleteInfoToEntity(seq, seq01, parents);
-		SR03Entity sr03voResult = sr03Dao.checkUserSR03Vo(sr03Vo);
-		if (!StringUtils.equals(sessionid, sr03voResult.getUserid())) {
+		SR03Entity sr03Entity = SR03Composer.deleteInfoToEntity(seq, seq01, parents);
+		SR03Entity sr03EntityResult = sr03Dao.checkUserSR03Vo(sr03Entity);
+		if (!StringUtils.equals(sessionid, sr03EntityResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
-		if (sr03Vo.getParents() > 0) {
-			sr03Dao.deleteChild(sr03Vo);
-			sr03Vo.setParents(0);
+		if (sr03Entity.getParents() > 0) {
+			sr03Dao.deleteChild(sr03Entity);
+			sr03Entity.setParents(0);
 		}
 
-		return sr03Dao.deleteSR03Vo(sr03Vo);
+		return sr03Dao.deleteSR03Vo(sr03Entity);
 	}
 
 }
