@@ -17,7 +17,7 @@ public class SR02Service {
     @Autowired
     private SR02Dao sr02Dao;
 
-    public SR02Response insertSR02Vo(SR02Request request, String sessionid) throws Exception {
+    public SR02Response insertSR02(SR02Request request, String sessionid) throws Exception {
 
         SR02Entity sr02Entity = SR02Composer.requestToEntitu(request, sessionid);
         sr02Dao.insertSR02Vo(sr02Entity);
@@ -28,7 +28,7 @@ public class SR02Service {
         return SR02Composer.entityToResponse(sr01Entity);
     }
 
-    public SR02Response selectOneSR02Vo(int seq, String userid) throws Exception {
+    public SR02Response selectOneSR02(int seq, String userid) throws Exception {
         SR01Entity sr01Entity = new SR01Entity();
         sr01Entity.setSeq(seq);
         sr01Entity.setUserid(userid);
@@ -38,7 +38,7 @@ public class SR02Service {
     }
 
 
-    public int deleteSR02Vo(int seq, String userid) throws Exception {
+    public int deleteSR02(int seq, String userid) throws Exception {
         SR01Entity sr01Entity = new SR01Entity();
         sr01Entity.setSeq(seq);
         sr01Entity.setSessionid(userid);

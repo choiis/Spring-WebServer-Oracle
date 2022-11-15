@@ -23,7 +23,7 @@ public class SR03Service {
 	@Autowired
 	private SR03Dao sr03Dao;
 
-	public SR03Response insertSR03Vo(SR03Request request, String userid) throws Exception {
+	public SR03Response insertSR03(SR03Request request, String userid) throws Exception {
 
 		SR03Entity sr03Entity = SR03Composer.requestToEntity(request, userid);
 
@@ -32,11 +32,11 @@ public class SR03Service {
 		return SR03Composer.entityToResponse(sr03Entity);
 	}
 
-	public int likeSR03Vo(SR03Entity entity) throws Exception {
+	public int likeSR03(SR03Entity entity) throws Exception {
 		return sr03Dao.likeSR03Vo(entity);
 	}
 
-	public SR03ListResponse selectSR03Vo(int seq01, int parents, int nowPage, String userid) throws Exception {
+	public SR03ListResponse selectSR03(int seq01, int parents, int nowPage, String userid) throws Exception {
 
 		SR03Entity sr03Entity = SR03Composer.selectInfoToEntity(seq01, parents, nowPage);
 		if (sr03Entity.getNowPage() == 1) { // 泥ロ럹�씠吏� �슂泥��떆 Total�븣�븘�빞�븳�떎
@@ -59,11 +59,11 @@ public class SR03Service {
 		return SR03Composer.entityListToResponse(list, sr03Entity.getParents(), sr03Entity.getNowPage(), sr03Entity.getTotCnt());
 	}
 
-	public int updateSR03Vo(SR03Entity entity) throws Exception {
+	public int updateSR03(SR03Entity entity) throws Exception {
 		return sr03Dao.updateSR03Vo(entity);
 	}
 
-	public int deleteSR03Vo(int seq, int seq01, int parents, String sessionid) throws Exception {
+	public int deleteSR03(int seq, int seq01, int parents, String sessionid) throws Exception {
 
 		SR03Entity sr03Entity = SR03Composer.deleteInfoToEntity(seq, seq01, parents);
 		SR03Entity sr03EntityResult = sr03Dao.checkUserSR03Vo(sr03Entity);

@@ -39,7 +39,7 @@ public class SV04Controller extends BaseController {
 
 		String userid = getSessionId(request);
 
-		SV04ListResponse listResponse = sv04Service.selectSV04Vo(seq01, parents, nowPage, userid);
+		SV04ListResponse listResponse = sv04Service.selectSV04(seq01, parents, nowPage, userid);
 
 		log.debug("exit sv04 get");
 		return new ResponseEntity<SV04ListResponse>(listResponse, HttpStatus.OK);
@@ -53,7 +53,7 @@ public class SV04Controller extends BaseController {
 
 		String userid = getSessionId(request);
 
-		SV04Response sv04Response = sv04Service.insertSV04Vo(sv04Request, userid);
+		SV04Response sv04Response = sv04Service.insertSV04(sv04Request, userid);
 
 		log.debug("exit sv04 post");
 		return new ResponseEntity<SV04Response>(sv04Response, HttpStatus.CREATED);
@@ -66,7 +66,7 @@ public class SV04Controller extends BaseController {
 		log.debug("enter sv04 delete");
 
 		String sessionid = getSessionId(request);
-		sv04Service.deleteSV04Vo(seq, seq01, parents, sessionid);
+		sv04Service.deleteSV04(seq, seq01, parents, sessionid);
 
 		log.debug("exit sv04 delete");
 		return new ResponseEntity<SV04Response>(HttpStatus.NO_CONTENT);

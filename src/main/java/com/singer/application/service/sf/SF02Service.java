@@ -24,7 +24,7 @@ public class SF02Service {
 	@Autowired
 	private SF02Dao sf02Dao;
 
-	public SF02Response insertSF02Vo(SF02Request request, String userid) throws Exception {
+	public SF02Response insertSF02(SF02Request request, String userid) throws Exception {
 
 		SF02Entity sf02Entity = SF02Composer.requestToEntity(request, userid);
 
@@ -33,11 +33,11 @@ public class SF02Service {
 		return SF02Composer.entityToResponse(sf02Entity);
 	}
 
-	public int likeSF02Vo(SF02Entity sf02Vo) throws Exception {
-		return sf02Dao.likeSF02Vo(sf02Vo);
+	public int likeSF02(SF02Entity entity) throws Exception {
+		return sf02Dao.likeSF02Vo(entity);
 	}
 
-	public SF02ListResponse selectSF02Vo(int seq01, int parents, int nowPage, String userid) throws Exception {
+	public SF02ListResponse selectSF02(int seq01, int parents, int nowPage, String userid) throws Exception {
 
 		SF02Entity sf02Entity = SF02Composer.selectInfoToEntity(seq01, parents, nowPage);
 		if (sf02Entity.getNowPage() == 1) { // 泥ロ럹�씠吏� �슂泥��떆 Total�븣�븘�빞�븳�떎
@@ -60,12 +60,12 @@ public class SF02Service {
 		return SF02Composer.entityListToResponse(list, sf02Entity.getParents(), sf02Entity.getNowPage(), sf02Entity.getTotCnt());
 	}
 
-	public int updateSF02Vo(SF02Entity entity) throws Exception {
+	public int updateSF02(SF02Entity entity) throws Exception {
 		return sf02Dao.updateSF02Vo(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public int deleteSF02Vo(int seq, int seq01, int parents, String sessionid) throws Exception {
+	public int deleteSF02(int seq, int seq01, int parents, String sessionid) throws Exception {
 
 		SF02Entity sf02Entity = SF02Composer.deleteInfoToEntity(seq, seq01, parents);
 		SF02Entity sf02EntityResult = sf02Dao.checkUserSF02Vo(sf02Entity);

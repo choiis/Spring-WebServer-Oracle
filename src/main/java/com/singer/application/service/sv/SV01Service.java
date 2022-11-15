@@ -44,7 +44,7 @@ public class SV01Service {
 	private SV04Dao sv04Dao;
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SV01Response insertSV01Vo(SV01Request sv01Request, String userid) throws Exception {
+	public SV01Response insertSV01(SV01Request sv01Request, String userid) throws Exception {
 
 		SV01Entity sv01Entity = SV01Composer.requestToEntity(sv01Request);
 		List<SV02Entity> list = SV01Composer.requestListToEntityList(sv01Request.getList());
@@ -72,7 +72,7 @@ public class SV01Service {
 		return SV01Composer.entityToResponse(sv01Entity, Collections.emptyList());
 	}
 
-	public SV01ListResponse selectSV01Vo(int nowPage) throws Exception {
+	public SV01ListResponse selectSV01(int nowPage) throws Exception {
 
 		SV01Entity sv01Entity = new SV01Entity();
 		sv01Entity.setNowPage(nowPage);
@@ -81,7 +81,7 @@ public class SV01Service {
 		return SV01Composer.entityListToResponse(list, null, nowPage, totalCount);
 	}
 
-	public SV01Response selectOneSV01Vo(int seq, @PathVariable int recall, String userid) throws Exception {
+	public SV01Response selectOneSV01(int seq, @PathVariable int recall, String userid) throws Exception {
 		SV01Entity sv01Entity = new SV01Entity();
 		sv01Entity.setSeq(seq);
 		sv01Entity.setRecall(recall);
@@ -106,12 +106,12 @@ public class SV01Service {
 		return SV01Composer.entityToResponse(sv01Entity, responseList);
 	}
 
-	public int updateSV01Vo(SV01Entity entity) throws Exception {
+	public int updateSV01(SV01Entity entity) throws Exception {
 		return sv01Dao.updateSV01Vo(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SV01Response deleteSV01Vo(int seq, String sessionid) throws Exception {
+	public SV01Response deleteSV01(int seq, String sessionid) throws Exception {
 
 		SV01Entity sv01Entity = new SV01Entity();
 		sv01Entity.setSeq(seq);
@@ -133,7 +133,7 @@ public class SV01Service {
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SV01Response likeSV01Vo(int seq, String sessionid) throws Exception {
+	public SV01Response likeSV01(int seq, String sessionid) throws Exception {
 		SV01Entity sv01Entity = new SV01Entity();
 		sv01Entity.setSeq(seq);
 		sv01Dao.likeSV01Vo(sv01Entity);
@@ -148,7 +148,7 @@ public class SV01Service {
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SV01Response hateSV01Vo(int seq, String sessionid) throws Exception {
+	public SV01Response hateSV01(int seq, String sessionid) throws Exception {
 		SV01Entity sv01Entity = new SV01Entity();
 		sv01Entity.setSeq(seq);
 		sv01Dao.hateSV01Vo(sv01Entity);

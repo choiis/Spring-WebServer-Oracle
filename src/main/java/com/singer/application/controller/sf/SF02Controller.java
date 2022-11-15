@@ -38,7 +38,7 @@ public class SF02Controller extends BaseController {
 		log.debug("enter sf02 get");
 
 		String userid = getSessionId(request);
-		SF02ListResponse listResponse = sf02Service.selectSF02Vo(seq01, parents, nowPage, userid);
+		SF02ListResponse listResponse = sf02Service.selectSF02(seq01, parents, nowPage, userid);
 
 		log.debug("exit sf02 get");
 		return new ResponseEntity<SF02ListResponse>(listResponse, HttpStatus.OK);
@@ -51,7 +51,7 @@ public class SF02Controller extends BaseController {
 		log.debug("enter sf02 post");
 
 		String userid = getSessionId(request);
-		SF02Response sf02Response = sf02Service.insertSF02Vo(sf02Request, userid);
+		SF02Response sf02Response = sf02Service.insertSF02(sf02Request, userid);
 
 		log.debug("exit sf02 post");
 		return new ResponseEntity<SF02Response>(sf02Response, HttpStatus.CREATED);
@@ -64,7 +64,7 @@ public class SF02Controller extends BaseController {
 		log.debug("enter sf02 delete");
 
 		String sessionid = getSessionId(request);
-		sf02Service.deleteSF02Vo(seq, seq01, parents, sessionid);
+		sf02Service.deleteSF02(seq, seq01, parents, sessionid);
 
 		log.debug("exit sf02 delete");
 		return new ResponseEntity<SF02Response>(HttpStatus.NO_CONTENT);

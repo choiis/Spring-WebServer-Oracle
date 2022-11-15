@@ -52,7 +52,7 @@ public class SF01Service {
 	private S3Util s3Util;
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SF01Response insertSF01Vo(SF01Request sf01Request, MultipartHttpServletRequest request, String userid)
+	public SF01Response insertSF01(SF01Request sf01Request, MultipartHttpServletRequest request, String userid)
 			throws Exception {
 
 		SF01Entity sf01Entity = SF01Composer.requestToentity(sf01Request, userid);
@@ -85,7 +85,7 @@ public class SF01Service {
 		return SF01Composer.entityToResponse(sf01Entity);
 	}
 
-	public SF01ListResponse selectSF01Vo(int nowPage) throws Exception {
+	public SF01ListResponse selectSF01List(int nowPage) throws Exception {
 
 		SF01Entity sf01Entity = new SF01Entity();
 		sf01Entity.setNowPage(nowPage);
@@ -95,7 +95,7 @@ public class SF01Service {
 		return SF01Composer.entityListToResponse(list, nowPage, totalCount);
 	}
 
-	public SF01Response selectOneSF01Vo(int seq, String userid) throws Exception {
+	public SF01Response selectOneSF01(int seq, String userid) throws Exception {
 
 		SF01Entity sf01Entity = new SF01Entity();
 		sf01Entity.setSeq(seq);
@@ -112,12 +112,12 @@ public class SF01Service {
 		return SF01Composer.entityToResponse(sf01Entity);
 	}
 
-	public int updateSF01Vo(SF01Entity entity) throws Exception {
+	public int updateSF01(SF01Entity entity) throws Exception {
 		return sf01Dao.updateSF01Vo(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SF01Response likeSF01Vo(int seq, String sessionid) throws Exception {
+	public SF01Response likeSF01(int seq, String sessionid) throws Exception {
 		SF01Entity sf01Entity = new SF01Entity();
 		sf01Entity.setSeq(seq);
 		sf01Dao.likeSF01Vo(sf01Entity);
@@ -132,7 +132,7 @@ public class SF01Service {
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SF01Response hateSF01Vo(int seq, String sessionid) throws Exception {
+	public SF01Response hateSF01(int seq, String sessionid) throws Exception {
 		SF01Entity sf01Entity = new SF01Entity();
 		sf01Entity.setSeq(seq);
 		sf01Dao.hateSF01Vo(sf01Entity);
@@ -147,14 +147,14 @@ public class SF01Service {
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public int deleteSF01Vo(int seq, String sessionid) throws Exception {
+	public int deleteSF01(int seq, String sessionid) throws Exception {
 
 		SF01Entity sf01Entity = new SF01Entity();
 		sf01Entity.setSeq(seq);
 		sf01Entity.setSessionid(sessionid);
-		SF01Entity sf01voResult = sf01Dao.selectOneSF01Vo(sf01Entity);
+		SF01Entity sf01EntityResult = sf01Dao.selectOneSF01Vo(sf01Entity);
 
-		if (!StringUtils.equals(sessionid, sf01voResult.getUserid())) {
+		if (!StringUtils.equals(sessionid, sf01EntityResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
 

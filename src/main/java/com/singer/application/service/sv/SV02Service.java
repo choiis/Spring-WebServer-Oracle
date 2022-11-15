@@ -23,12 +23,12 @@ public class SV02Service {
     @Autowired
     private SV02Dao sv02Dao;
 
-    public int updateSV01Vo(SV02Entity entity) throws Exception {
+    public int updateSV01(SV02Entity entity) throws Exception {
         return sv02Dao.updateSV02Vo(entity);
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public int insertSv03Vo(SV03ListRequest listRequest, String userid) throws Exception {
+    public int insertSv03(SV03ListRequest listRequest, String userid) throws Exception {
         List<SV02Entity> list = SV03Composer.requsetListToEntityList(listRequest.getList());
         if (CollectionUtils.isEmpty(list)) {
             throw new AppException(ExceptionMsg.EXT_MSG_INPUT_8);

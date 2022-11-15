@@ -24,7 +24,7 @@ public class SV04Service {
 	@Autowired
 	private SV04Dao sv04Dao;
 
-	public SV04Response insertSV04Vo(SV04Request request, String userid) throws Exception {
+	public SV04Response insertSV04(SV04Request request, String userid) throws Exception {
 
 		SV04Entity sv04Entity = SV04Composer.requestToEntity(request, userid);
 
@@ -33,11 +33,11 @@ public class SV04Service {
 		return SV04Composer.entityToResponse(sv04Entity);
 	}
 
-	public int likeSV04Vo(SV04Entity entity) throws Exception {
+	public int likeSV04(SV04Entity entity) throws Exception {
 		return sv04Dao.likeSV04Vo(entity);
 	}
 
-	public SV04ListResponse selectSV04Vo(int seq01, int parents, int nowPage, String userid) throws Exception {
+	public SV04ListResponse selectSV04(int seq01, int parents, int nowPage, String userid) throws Exception {
 
 		SV04Entity sv04Entity = SV04Composer.selectInfoToEntity(seq01, parents, nowPage);
 		if (sv04Entity.getNowPage() == 1) { // 泥ロ럹�씠吏� �슂泥��떆 Total�븣�븘�빞�븳�떎
@@ -60,12 +60,12 @@ public class SV04Service {
 		return SV04Composer.entityListToResponse(list, sv04Entity.getParents(), sv04Entity.getNowPage(), sv04Entity.getTotCnt());
 	}
 
-	public int updateSV04Vo(SV04Entity entity) throws Exception {
+	public int updateSV04(SV04Entity entity) throws Exception {
 		return sv04Dao.updateSV04Vo(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public int deleteSV04Vo(int seq, int seq01, int parents, String sessionid) throws Exception {
+	public int deleteSV04(int seq, int seq01, int parents, String sessionid) throws Exception {
 
 		SV04Entity sv04Entity = SV04Composer.deleteInfoToEntity(seq, seq01, parents);
 		SV04Entity sv04EntityResult = sv04Dao.checkUserSV04Vo(sv04Entity);

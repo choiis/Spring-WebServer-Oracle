@@ -38,7 +38,7 @@ public class SR03Controller extends BaseController {
         log.debug("enter sr03 get");
 
         String userid = getSessionId(request);
-        SR03ListResponse listResponse = sr03Service.selectSR03Vo(seq01, parents, nowPage, userid);
+        SR03ListResponse listResponse = sr03Service.selectSR03(seq01, parents, nowPage, userid);
 
         log.debug("exit sr03 get");
         return new ResponseEntity<SR03ListResponse>(listResponse, HttpStatus.OK);
@@ -51,7 +51,7 @@ public class SR03Controller extends BaseController {
         log.debug("enter sr03 post");
 
         String userid = getSessionId(request);
-        SR03Response sr03Response = sr03Service.insertSR03Vo(sr03Request, userid);
+        SR03Response sr03Response = sr03Service.insertSR03(sr03Request, userid);
 
         log.debug("exit sr03 post");
         return new ResponseEntity<SR03Response>(sr03Response, HttpStatus.CREATED);
@@ -65,7 +65,7 @@ public class SR03Controller extends BaseController {
         log.debug("enter sr03 delete");
 
 		String sessionid = getSessionId(request);
-        sr03Service.deleteSR03Vo(seq, seq01, parents, sessionid);
+        sr03Service.deleteSR03(seq, seq01, parents, sessionid);
 
         log.debug("exit sr03 delete");
         return new ResponseEntity<SR03Response>(HttpStatus.NO_CONTENT);

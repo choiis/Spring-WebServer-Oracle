@@ -59,7 +59,7 @@ public class SV01Controller extends BaseController {
 	public ResponseEntity<SV01ListResponse> selectSV01Vo(@PathVariable int nowPage) throws Exception {
 		log.debug("enter sv01 get");
 
-		SV01ListResponse listResponse = sv01Service.selectSV01Vo(nowPage);
+		SV01ListResponse listResponse = sv01Service.selectSV01(nowPage);
 
 		log.debug("exit sv01 get");
 		return new ResponseEntity<SV01ListResponse>(listResponse, HttpStatus.OK);
@@ -72,7 +72,7 @@ public class SV01Controller extends BaseController {
 		log.debug("enter sv01 post");
 
 		String userid = getSessionId(request);
-		SV01Response sv01Response = sv01Service.insertSV01Vo(sv01Request, userid);
+		SV01Response sv01Response = sv01Service.insertSV01(sv01Request, userid);
 
 		log.debug("exit sv01 post");
 		return new ResponseEntity<SV01Response>(sv01Response, HttpStatus.OK);
@@ -85,7 +85,7 @@ public class SV01Controller extends BaseController {
 		log.debug("enter sv01One get");
 
 		String userid = getSessionId(request);
-		SV01Response response = sv01Service.selectOneSV01Vo(seq, recall, userid);
+		SV01Response response = sv01Service.selectOneSV01(seq, recall, userid);
 
 		log.debug("exit sv01One get");
 		return new ResponseEntity<SV01Response>(response, HttpStatus.OK);
@@ -98,7 +98,7 @@ public class SV01Controller extends BaseController {
 		log.debug("enter sv01 delete");
 
 		String sessionid = getSessionId(request);
-		sv01Service.deleteSV01Vo(seq, sessionid);
+		sv01Service.deleteSV01(seq, sessionid);
 
 		log.debug("exit sv01 delete");
 		return new ResponseEntity<SV01Response>(HttpStatus.NO_CONTENT);
@@ -110,7 +110,7 @@ public class SV01Controller extends BaseController {
 		log.debug("enter sv01like put");
 
 		String sessionid = getSessionId(request);
-		SV01Response sv01Response = sv01Service.likeSV01Vo(seq, sessionid);
+		SV01Response sv01Response = sv01Service.likeSV01(seq, sessionid);
 
 		log.debug("exit sv01like put");
 		return new ResponseEntity<SV01Response>(sv01Response, HttpStatus.OK);
@@ -122,7 +122,7 @@ public class SV01Controller extends BaseController {
 		log.debug("enter sv01hate put");
 
 		String sessionid = getSessionId(request);
-		SV01Response sv01Response = sv01Service.hateSV01Vo(seq, sessionid);
+		SV01Response sv01Response = sv01Service.hateSV01(seq, sessionid);
 
 		log.debug("exit sv01hate put");
 		return new ResponseEntity<SV01Response>(sv01Response, HttpStatus.OK);

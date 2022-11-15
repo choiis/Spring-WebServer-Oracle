@@ -23,7 +23,7 @@ public class SB02Service {
 	@Autowired
 	private SB02Dao sb02Dao;
 
-	public SB02Response insertSB02Vo(SB02Request request, String userid) throws Exception {
+	public SB02Response insertSB02(SB02Request request, String userid) throws Exception {
 
 		SB02Entity sb02Entity = SB02Composer.requestToEntity(request, userid);
 
@@ -32,11 +32,11 @@ public class SB02Service {
 		return SB02Composer.entityToResponse(sb02Entity);
 	}
 
-	public int likeSB02Vo(SB02Entity sb02Entity) throws Exception {
+	public int likeSB02(SB02Entity sb02Entity) throws Exception {
 		return sb02Dao.likeSB02Vo(sb02Entity);
 	}
 
-	public SB02ListResponse selectSB02Vo(int seq01, int parents, int nowPage, String userid) throws Exception {
+	public SB02ListResponse selectSB02List(int seq01, int parents, int nowPage, String userid) throws Exception {
 		SB02Entity sb02Entity = SB02Composer.selectInfoToEntity(seq01, parents, nowPage);
 
 		if (sb02Entity.getNowPage() == 1) { // 泥ロ럹�씠吏� �슂泥��떆 Total�븣�븘�빞�븳�떎
@@ -59,16 +59,16 @@ public class SB02Service {
 		return SB02Composer.entityListToResponse(list, sb02Entity.getParents(), sb02Entity.getNowPage(), sb02Entity.getTotCnt());
 	}
 
-	public int updateSB02Vo(SB02Entity entity) throws Exception {
+	public int updateSB02(SB02Entity entity) throws Exception {
 		return sb02Dao.updateSB02Vo(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public int deleteSB02Vo(int seq, int seq01, int parents, String sessionid) throws Exception {
+	public int deleteSB02(int seq, int seq01, int parents, String sessionid) throws Exception {
 
 		SB02Entity sb02Entity = SB02Composer.deleteInfoToEntity(seq, seq01, parents);
-		SB02Entity sb02voResult = sb02Dao.checkUserSB02Vo(sb02Entity);
-		if (!StringUtils.equals(sessionid, sb02voResult.getUserid())) {
+		SB02Entity sb02EntityResult = sb02Dao.checkUserSB02Vo(sb02Entity);
+		if (!StringUtils.equals(sessionid, sb02EntityResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
 

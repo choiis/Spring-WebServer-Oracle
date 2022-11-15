@@ -64,7 +64,7 @@ public class SR01Controller extends BaseController {
 	public ResponseEntity<SR01ListResponse> selectSR01Vo(@PathVariable int nowPage) throws Exception {
 		log.debug("enter sr01 get");
 
-		SR01ListResponse list = sr01Service.selectSR01Vo(nowPage);
+		SR01ListResponse list = sr01Service.selectSR01(nowPage);
 
 		log.debug("exit sr01 get");
 		return new ResponseEntity<>(list, HttpStatus.OK);
@@ -77,7 +77,7 @@ public class SR01Controller extends BaseController {
 		log.debug("enter sr01 post");
 
 		String userid = getSessionId(request);
-		SR01Response sr01Response = sr01Service.insertSR01Vo(sr01Request, request, userid);
+		SR01Response sr01Response = sr01Service.insertSR01(sr01Request, request, userid);
 
 		log.debug("exit sr01 post");
 		return new ResponseEntity<>(sr01Response, HttpStatus.CREATED);
@@ -90,7 +90,7 @@ public class SR01Controller extends BaseController {
 		log.debug("enter sr01One get");
 
 		String userid = getSessionId(request);
-		SR01Response sr01Response = sr01Service.selectOneSR01Vo(seq, userid);
+		SR01Response sr01Response = sr01Service.selectOneSR01(seq, userid);
 
 		log.debug("exit sr01One get");
 		return new ResponseEntity<SR01Response>(sr01Response, HttpStatus.OK);
@@ -103,7 +103,7 @@ public class SR01Controller extends BaseController {
 		log.debug("enter sr01 delete");
 
         String sessionid = getSessionId(request);
-		sr01Service.deleteSR01Vo(seq, sessionid);
+		sr01Service.deleteSR01(seq, sessionid);
 
 		log.debug("exit sr01 delete");
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -115,7 +115,7 @@ public class SR01Controller extends BaseController {
 		log.debug("enter sr01like put");
 
 		String sessionid = getSessionId(request);
-		SR01Response sr01Response = sr01Service.likeSR01Vo(seq, sessionid);
+		SR01Response sr01Response = sr01Service.likeSR01(seq, sessionid);
 
 		log.debug("exit sr01like put");
 		return new ResponseEntity<>(sr01Response, HttpStatus.OK);
@@ -127,7 +127,7 @@ public class SR01Controller extends BaseController {
 		log.debug("enter sr01hate put");
 
 		String sessionid = getSessionId(request);
-		SR01Response sr01Response = sr01Service.hateSR01Vo(seq, sessionid);
+		SR01Response sr01Response = sr01Service.hateSR01(seq, sessionid);
 
 		log.debug("exit sr01hate put");
 		return new ResponseEntity<>(sr01Response, HttpStatus.OK);

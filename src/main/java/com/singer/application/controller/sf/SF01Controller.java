@@ -52,7 +52,7 @@ public class SF01Controller extends BaseController {
 		ModelAndView model = new ModelAndView("/sf01view_detail");
 
 		String userid = getSessionId(request);
-		SF01Response sf01Response = sf01Service.selectOneSF01Vo(seq, userid);
+		SF01Response sf01Response = sf01Service.selectOneSF01(seq, userid);
 		model.addObject("sf01Vo", sf01Response);
 
 		log.debug("exit sf01show_detail get");
@@ -67,7 +67,7 @@ public class SF01Controller extends BaseController {
 
 		String userid = getSessionId(request);
 
-		SF01Response sf01Response = sf01Service.insertSF01Vo(sf01Request, request, userid);
+		SF01Response sf01Response = sf01Service.insertSF01(sf01Request, request, userid);
 
 		log.debug("exit sf01 post");
 		return new ResponseEntity<SF01Response>(sf01Response, HttpStatus.OK);
@@ -78,7 +78,7 @@ public class SF01Controller extends BaseController {
 	public ResponseEntity<SF01ListResponse> selectSF01Vo(@PathVariable int nowPage) throws Exception {
 		log.debug("enter sf01 get");
 
-		SF01ListResponse listResponse = sf01Service.selectSF01Vo(nowPage);
+		SF01ListResponse listResponse = sf01Service.selectSF01List(nowPage);
 
 		log.debug("exit sf01 get");
 		return new ResponseEntity<SF01ListResponse>(listResponse, HttpStatus.OK);
@@ -91,7 +91,7 @@ public class SF01Controller extends BaseController {
 		log.debug("enter /sf01/seq get");
 
 		String userid = getSessionId(request);
-		SF01Response sf01Response = sf01Service.selectOneSF01Vo(seq, userid);
+		SF01Response sf01Response = sf01Service.selectOneSF01(seq, userid);
 
 		log.debug("exit /sf01/seq get");
 		return new ResponseEntity<>(sf01Response, HttpStatus.OK);
@@ -116,7 +116,7 @@ public class SF01Controller extends BaseController {
 		log.debug("enter sf01 delete");
 
 		String sessionid = getSessionId(request);
-		sf01Service.deleteSF01Vo(seq, sessionid);
+		sf01Service.deleteSF01(seq, sessionid);
 
 		log.debug("exit sf01 delete");
 		return new ResponseEntity<SF01Response>(HttpStatus.NO_CONTENT);
@@ -129,7 +129,7 @@ public class SF01Controller extends BaseController {
 
 		String sessionid = getSessionId(request);
 
-		SF01Response sf01Response = sf01Service.likeSF01Vo(seq, sessionid);
+		SF01Response sf01Response = sf01Service.likeSF01(seq, sessionid);
 
 		log.debug("exit sf01like put");
 		return new ResponseEntity<SF01Response>(sf01Response, HttpStatus.OK);
@@ -142,7 +142,7 @@ public class SF01Controller extends BaseController {
 
 		String sessionid = getSessionId(request);
 
-		SF01Response sf01Response = sf01Service.hateSF01Vo(seq, sessionid);
+		SF01Response sf01Response = sf01Service.hateSF01(seq, sessionid);
 
 		log.debug("exit sf01hate put");
 		return new ResponseEntity<SF01Response>(sf01Response, HttpStatus.OK);

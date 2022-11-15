@@ -53,7 +53,7 @@ public class SR01Service {
 	private S3Properties s3Properties;
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SR01Response insertSR01Vo(SR01Request sr01Request, MultipartHttpServletRequest request, String sessionid)
+	public SR01Response insertSR01(SR01Request sr01Request, MultipartHttpServletRequest request, String sessionid)
 			throws Exception {
 
 		SR01Entity sr01Entity = SR01Composer.requestToentity(sr01Request, sessionid);
@@ -95,7 +95,7 @@ public class SR01Service {
 		return SR01Composer.entityToResponse(sr01Entity);
 	}
 
-	public SR01ListResponse selectSR01Vo(int nowPage) throws Exception {
+	public SR01ListResponse selectSR01(int nowPage) throws Exception {
 		SR01Entity sr01Entity = new SR01Entity();
 		sr01Entity.setNowPage(nowPage);
 		List<SR01Entity> list = sr01Dao.selectSR01Vo(sr01Entity);
@@ -103,7 +103,7 @@ public class SR01Service {
 		return SR01Composer.entityListToResponse(list, nowPage, totalCount);
 	}
 
-	public SR01Response selectOneSR01Vo(int seq, String userid) throws Exception {
+	public SR01Response selectOneSR01(int seq, String userid) throws Exception {
 		SR01Entity sr01Entity = new SR01Entity();
 		sr01Entity.setSeq(seq);
 		sr01Dao.clickSR01Vo(sr01Entity);
@@ -118,12 +118,12 @@ public class SR01Service {
 		return SR01Composer.entityToResponse(sr01Entity);
 	}
 
-	public int updateSR01Vo(SR01Entity entity) throws Exception {
+	public int updateSR01(SR01Entity entity) throws Exception {
 		return sr01Dao.updateSR01Vo(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SR01Response likeSR01Vo(int seq, String sessionid) throws Exception {
+	public SR01Response likeSR01(int seq, String sessionid) throws Exception {
 		SR01Entity sr01Entity = new SR01Entity();
 		sr01Entity.setSeq(seq);
 		sr01Dao.likeSR01Vo(sr01Entity);
@@ -138,7 +138,7 @@ public class SR01Service {
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public SR01Response hateSR01Vo(int seq, String sessionid) throws Exception {
+	public SR01Response hateSR01(int seq, String sessionid) throws Exception {
 		SR01Entity sr01Entity = new SR01Entity();
 		sr01Entity.setSeq(seq);
 		sr01Dao.hateSR01Vo(sr01Entity);
@@ -153,7 +153,7 @@ public class SR01Service {
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
-	public int deleteSR01Vo(int seq, String sessionid) throws Exception {
+	public int deleteSR01(int seq, String sessionid) throws Exception {
 		SR01Entity sr01Entity = new SR01Entity();
 		sr01Entity.setSeq(seq);
 		sr01Entity.setSessionid(sessionid);

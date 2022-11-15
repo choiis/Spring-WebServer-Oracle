@@ -37,7 +37,7 @@ public class SR02Controller extends BaseController {
         log.debug("enter sr02 post");
 
         String userid = getSessionId(request);
-        SR02Response sr02Response = sr02Service.insertSR02Vo(sr02Request, userid);
+        SR02Response sr02Response = sr02Service.insertSR02(sr02Request, userid);
 
         log.debug("exit sr02 post");
         return new ResponseEntity<SR02Response>(sr02Response, HttpStatus.CREATED);
@@ -48,7 +48,7 @@ public class SR02Controller extends BaseController {
     public ResponseEntity<SR02Response> deleteSR02Vo(@PathVariable int seq, HttpServletRequest request)
         throws Exception {
         log.debug("enter sr02 delete");
-        sr02Service.deleteSR02Vo(seq, getSessionId(request));
+        sr02Service.deleteSR02(seq, getSessionId(request));
 
         log.debug("exit sr02 delete");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -61,7 +61,7 @@ public class SR02Controller extends BaseController {
         log.debug("enter sr02 get");
 
         String userid = getSessionId(request);
-        SR02Response response = sr02Service.selectOneSR02Vo(seq, userid);
+        SR02Response response = sr02Service.selectOneSR02(seq, userid);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

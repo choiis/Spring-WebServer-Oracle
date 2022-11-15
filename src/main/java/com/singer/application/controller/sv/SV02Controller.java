@@ -35,7 +35,7 @@ public class SV02Controller extends BaseController {
         log.debug("enter sv03 post");
 
         String userid = getSessionId(request);
-        sv02Service.insertSv03Vo(listRequest, userid);
+        sv02Service.insertSv03(listRequest, userid);
 
         log.debug("exit sv03 post");
         return new ResponseEntity<>(HttpStatus.CREATED);
