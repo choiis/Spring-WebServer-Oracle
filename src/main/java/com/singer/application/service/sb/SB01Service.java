@@ -84,7 +84,7 @@ public class SB01Service {
 
 		s3Util.putS3File(sb.toString(), file);
 
-		sb01Dao.insertSB01Vo(sb01Entity);
+		sb01Dao.insertSB01(sb01Entity);
 
 		SB01Entity sb01Entity2 = new SB01Entity();
 		sb01Entity2.setSeq(sb01Entity.getSeq());
@@ -101,8 +101,8 @@ public class SB01Service {
 
 		SB01Entity sb01Entity = new SB01Entity();
 		sb01Entity.setNowPage(nowPage);
-		List<SB01Entity> list = sb01Dao.selectSB01Vo(sb01Entity);
-		SB01Entity entity = sb01Dao.selectSB01VoCount();
+		List<SB01Entity> list = sb01Dao.selectSB01(sb01Entity);
+		SB01Entity entity = sb01Dao.selectSB01Count();
 		int totalCount = ObjectUtils.isEmpty(entity) ? 0 : CommonUtil.getPageCnt(entity.getTotCnt());
 
 		return SB01Composer.entityListToResponse(list, nowPage, totalCount);
@@ -113,9 +113,9 @@ public class SB01Service {
 
 		SB01Entity sb01Entity = new SB01Entity();
 		sb01Entity.setSeq(seq);
-		sb01Dao.clickSB01Vo(sb01Entity);
+		sb01Dao.clickSB01(sb01Entity);
 		sb01Entity.setSessionid(userid);
-		SB01Entity sb01EntityResult = sb01Dao.selectOneSB01Vo(sb01Entity);
+		SB01Entity sb01EntityResult = sb01Dao.selectOneSB01(sb01Entity);
 		if (!ObjectUtils.isEmpty(sb01EntityResult)) {
 			if (userid.equals(sb01EntityResult.getUserid())) {
 				sb01EntityResult.setDeleteYn(true);
@@ -163,19 +163,19 @@ public class SB01Service {
 			sb01Dao.updateVideo(sb01Entity2);
 		}
 
-		return sb01Dao.updateSB01Vo(sb01Entity);
+		return sb01Dao.updateSB01(sb01Entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SB01Response likeSB01(int seq, String sessionid) throws Exception {
 		SB01Entity sb01Entity = new SB01Entity();
 		sb01Entity.setSeq(seq);
-		sb01Dao.likeSB01Vo(sb01Entity);
+		sb01Dao.likeSB01(sb01Entity);
 
 		sb01Entity.setSessionid(sessionid);
 		sb01Entity.setDatelog(DateUtil.getTodayTime());
 
-		sb01Dao.likelogSB01Vo(sb01Entity);
+		sb01Dao.likelogSB01(sb01Entity);
 
 		sb01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
 		return SB01Composer.entityToResponse(sb01Entity);
@@ -185,12 +185,12 @@ public class SB01Service {
 	public SB01Response hateSB01V(int seq, String sessionid) throws Exception {
 		SB01Entity sb01Entity = new SB01Entity();
 		sb01Entity.setSeq(seq);
-		sb01Dao.hateSB01Vo(sb01Entity);
+		sb01Dao.hateSB01(sb01Entity);
 
 		sb01Entity.setSessionid(sessionid);
 		sb01Entity.setDatelog(DateUtil.getTodayTime());
 
-		sb01Dao.hatelogSB01Vo(sb01Entity);
+		sb01Dao.hatelogSB01(sb01Entity);
 
 		sb01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
 		return SB01Composer.entityToResponse(sb01Entity);
@@ -202,7 +202,7 @@ public class SB01Service {
 		SB01Entity sb01Entity = new SB01Entity();
 		sb01Entity.setSeq(seq);
 		sb01Entity.setSessionid(sessionid);
-		SB01Entity sb01EntityResult = sb01Dao.selectOneSB01Vo(sb01Entity);
+		SB01Entity sb01EntityResult = sb01Dao.selectOneSB01(sb01Entity);
 
 		if (!StringUtils.equals(sessionid, sb01EntityResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
@@ -211,9 +211,9 @@ public class SB01Service {
 		SB02Entity sb02Entity = new SB02Entity();
 		sb02Entity.setSeq01(sb01Entity.getSeq());
 
-		sb02Dao.delete_seqSB02Vo(sb02Entity);
+		sb02Dao.deleteSeqSB02(sb02Entity);
 
-		return sb01Dao.deleteSB01Vo(sb01Entity);
+		return sb01Dao.deleteSB01(sb01Entity);
 	}
 
 	public InputStream selectVideo(int seq, HttpServletRequest request) throws Exception {

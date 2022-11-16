@@ -12,65 +12,61 @@ public class SF01Dao extends SuperDao {
 
 	private static final String namespace = "com.singer.mappers.SF01";
 
-	public int insertSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return insert(namespace + ".insert", SF01Vo);
+	public int insertSF01(SF01Entity entity) throws Exception {
+		return insert(namespace + ".insert", entity);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SF01Entity> selectSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return (List<SF01Entity>) selectList(namespace + ".select", SF01Vo);
+	public List<SF01Entity> selectSF01(SF01Entity entity) throws Exception {
+		return (List<SF01Entity>) selectList(namespace + ".select", entity);
 	}
 
 	public SF01Entity selectSF01Count() throws Exception {
 		return (SF01Entity) selectOne(namespace + ".selectCount");
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<SF01Entity> selectFindSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return (List<SF01Entity>) selectList(namespace + ".selectFind", SF01Vo);
+
+	public SF01Entity selectOneSF01(SF01Entity entity) throws Exception {
+		return (SF01Entity) selectOne(namespace + ".selectOne", entity);
 	}
 
-	public SF01Entity selectOneSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return (SF01Entity) selectOne(namespace + ".selectOne", SF01Vo);
+	public SF01Entity checkUserSF01(SF01Entity entity) throws Exception {
+		return (SF01Entity) selectOne(namespace + ".checkUser", entity);
 	}
 
-	public SF01Entity checkUserSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return (SF01Entity) selectOne(namespace + ".checkUser", SF01Vo);
+	public int updateSF01(SF01Entity entity) throws Exception {
+		return update(namespace + ".update", entity);
 	}
 
-	public int updateSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return update(namespace + ".update", SF01Vo);
+	public int likeSF01(SF01Entity entity) throws Exception {
+		return insert(namespace + ".like", entity);
 	}
 
-	public int likeSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return insert(namespace + ".like", SF01Vo);
+	public int hateSF01(SF01Entity entity) throws Exception {
+		return insert(namespace + ".hate", entity);
 	}
 
-	public int hateSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return insert(namespace + ".hate", SF01Vo);
+	public int clickSF01(SF01Entity entity) throws Exception {
+		return update(namespace + ".click", entity);
 	}
 
-	public int clickSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return update(namespace + ".click", SF01Vo);
+	public int deleteSF01(SF01Entity entity) throws Exception {
+		return delete(namespace + ".delete", entity);
 	}
 
-	public int deleteSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return delete(namespace + ".delete", SF01Vo);
+	public SF01Entity selectFile(SF01Entity entity) throws Exception {
+		return (SF01Entity) selectOne(namespace + ".selectFile", entity);
 	}
 
-	public SF01Entity selectFile(SF01Entity SF01Vo) throws Exception {
-		return (SF01Entity) selectOne(namespace + ".selectFile", SF01Vo);
+	public int likelogSF01(SF01Entity entity) throws Exception {
+		return update(namespace + ".likelog", entity);
 	}
 
-	public int likelogSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return update(namespace + ".likelog", SF01Vo);
+	public int hatelogSF01(SF01Entity entity) throws Exception {
+		return update(namespace + ".hatelog", entity);
 	}
 
-	public int hatelogSF01Vo(SF01Entity SF01Vo) throws Exception {
-		return update(namespace + ".hatelog", SF01Vo);
-	}
-
-	public int mergeSFD1Vo(SF01Entity sf01vo) throws Exception {
-		return update(namespace + ".mergesf01", sf01vo);
+	public int mergeSFD1(SF01Entity entity) throws Exception {
+		return update(namespace + ".mergesf01", entity);
 	}
 }

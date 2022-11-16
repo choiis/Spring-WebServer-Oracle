@@ -39,7 +39,7 @@ public class SV04Controller extends BaseController {
 
 		String userid = getSessionId(request);
 
-		SV04ListResponse listResponse = sv04Service.selectSV04(seq01, parents, nowPage, userid);
+		SV04ListResponse listResponse = sv04Service.selectSV04List(seq01, parents, nowPage, userid);
 
 		log.debug("exit sv04 get");
 		return new ResponseEntity<SV04ListResponse>(listResponse, HttpStatus.OK);

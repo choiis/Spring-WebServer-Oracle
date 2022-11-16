@@ -60,9 +60,9 @@ public class SR01Service {
 		sr01Entity.setUserid(sessionid);
 		sr01Entity.setRegdate(DateUtil.getTodayTime());
 
-		sr01Dao.insertSR01Vo(sr01Entity);
+		sr01Dao.insertSR01(sr01Entity);
 		SR02Entity sr02Entity = new SR02Entity(sr01Entity.getSeq(), sessionid, DateUtil.getTodayTime(), sr01Entity.getGrade());
-		sr02Dao.insertSR02Vo(sr02Entity);
+		sr02Dao.insertSR02(sr02Entity);
 		List<MultipartFile> fileList = request.getFiles("file");
 		int idx = 0;
 		ArrayList<SR01Entity> arrayList = new ArrayList<>();
@@ -95,10 +95,10 @@ public class SR01Service {
 		return SR01Composer.entityToResponse(sr01Entity);
 	}
 
-	public SR01ListResponse selectSR01(int nowPage) throws Exception {
+	public SR01ListResponse selectSR01List(int nowPage) throws Exception {
 		SR01Entity sr01Entity = new SR01Entity();
 		sr01Entity.setNowPage(nowPage);
-		List<SR01Entity> list = sr01Dao.selectSR01Vo(sr01Entity);
+		List<SR01Entity> list = sr01Dao.selectSR01(sr01Entity);
 		int totalCount = ObjectUtils.isEmpty(list) ? 0 : CommonUtil.getPageCnt(list.get(0).getTotCnt());
 		return SR01Composer.entityListToResponse(list, nowPage, totalCount);
 	}
@@ -106,10 +106,10 @@ public class SR01Service {
 	public SR01Response selectOneSR01(int seq, String userid) throws Exception {
 		SR01Entity sr01Entity = new SR01Entity();
 		sr01Entity.setSeq(seq);
-		sr01Dao.clickSR01Vo(sr01Entity);
+		sr01Dao.clickSR01(sr01Entity);
 
 		sr01Entity.setUserid(userid);
-		sr01Entity = sr01Dao.selectOneSR01Vo(sr01Entity);
+		sr01Entity = sr01Dao.selectOneSR01(sr01Entity);
 		if (!ObjectUtils.isEmpty(sr01Entity)) {
 			if (userid.equals(sr01Entity.getUserid())) {
 				sr01Entity.setDeleteYn(true);
@@ -119,19 +119,19 @@ public class SR01Service {
 	}
 
 	public int updateSR01(SR01Entity entity) throws Exception {
-		return sr01Dao.updateSR01Vo(entity);
+		return sr01Dao.updateSR01(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public SR01Response likeSR01(int seq, String sessionid) throws Exception {
 		SR01Entity sr01Entity = new SR01Entity();
 		sr01Entity.setSeq(seq);
-		sr01Dao.likeSR01Vo(sr01Entity);
+		sr01Dao.likeSR01(sr01Entity);
 
 		sr01Entity.setSessionid(sessionid);
 		sr01Entity.setDatelog(DateUtil.getTodayTime());
 
-		sr01Dao.likelogSR01Vo(sr01Entity);
+		sr01Dao.likelogSR01(sr01Entity);
 
 		sr01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
 		return SR01Composer.entityToResponse(sr01Entity);
@@ -141,12 +141,12 @@ public class SR01Service {
 	public SR01Response hateSR01(int seq, String sessionid) throws Exception {
 		SR01Entity sr01Entity = new SR01Entity();
 		sr01Entity.setSeq(seq);
-		sr01Dao.hateSR01Vo(sr01Entity);
+		sr01Dao.hateSR01(sr01Entity);
 
 		sr01Entity.setSessionid(sessionid);
 		sr01Entity.setDatelog(DateUtil.getTodayTime());
 
-		sr01Dao.hatelogSR01Vo(sr01Entity);
+		sr01Dao.hatelogSR01(sr01Entity);
 
 		sr01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
 		return SR01Composer.entityToResponse(sr01Entity);
@@ -158,7 +158,7 @@ public class SR01Service {
 		sr01Entity.setSeq(seq);
 		sr01Entity.setSessionid(sessionid);
 		sr01Entity.setUserid(sessionid);
-		SR01Entity sr01EntityResult = sr01Dao.selectOneSR01Vo(sr01Entity);
+		SR01Entity sr01EntityResult = sr01Dao.selectOneSR01(sr01Entity);
 
 		if (!StringUtils.equals(sessionid, sr01EntityResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
@@ -167,9 +167,9 @@ public class SR01Service {
 		SR03Entity sr03Entity = new SR03Entity();
 		sr03Entity.setSeq(sr01Entity.getSeq());
 
-		sr03Dao.delete_seqSR03Vo(sr03Entity);
+		sr03Dao.deleteSeqSR03(sr03Entity);
 
-		return sr01Dao.deleteSR01Vo(sr01Entity);
+		return sr01Dao.deleteSR01(sr01Entity);
 	}
 
 	public InputStream selectPhoto(int seq, int idx) throws Exception {

@@ -59,7 +59,7 @@ public class SV01Controller extends BaseController {
 	public ResponseEntity<SV01ListResponse> selectSV01Vo(@PathVariable int nowPage) throws Exception {
 		log.debug("enter sv01 get");
 
-		SV01ListResponse listResponse = sv01Service.selectSV01(nowPage);
+		SV01ListResponse listResponse = sv01Service.selectSV01List(nowPage);
 
 		log.debug("exit sv01 get");
 		return new ResponseEntity<SV01ListResponse>(listResponse, HttpStatus.OK);

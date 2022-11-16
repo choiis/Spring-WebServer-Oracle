@@ -12,49 +12,49 @@ public class SF02Dao extends SuperDao {
 
 	private static final String namespace = "com.singer.mappers.SF02";
 
-	public int insertSF02Vo(SF02Entity sf02Vo) throws Exception {
-		return insert(namespace + ".insert", sf02Vo);
+	public int insertSF02(SF02Entity entity) throws Exception {
+		return insert(namespace + ".insert", entity);
 	}
 
-	public int likeSF02Vo(SF02Entity sf02Vo) throws Exception {
-		return update(namespace + ".like", sf02Vo);
+	public int likeSF02(SF02Entity entity) throws Exception {
+		return update(namespace + ".like", entity);
 	}
 
-	public int hateSF02Vo(SF02Entity sf02Vo) throws Exception {
-		return update(namespace + ".hate", sf02Vo);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<SF02Entity> selectSF02Vo(SF02Entity sf02Vo) throws Exception {
-		return (List<SF02Entity>) selectList(namespace + ".select", sf02Vo);
+	public int hateSF02(SF02Entity entity) throws Exception {
+		return update(namespace + ".hate", entity);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SF02Entity> selectReplySF02Vo(SF02Entity sf02Vo) throws Exception {
-		return (List<SF02Entity>) selectList(namespace + ".selectReply", sf02Vo);
+	public List<SF02Entity> selectSF02(SF02Entity entity) throws Exception {
+		return (List<SF02Entity>) selectList(namespace + ".select", entity);
 	}
 
-	public int selectSF02Total(SF02Entity sf02Vo) throws Exception {
-		return selectCnt(namespace + ".selectTotal", sf02Vo);
+	@SuppressWarnings("unchecked")
+	public List<SF02Entity> selectReplySF02(SF02Entity entity) throws Exception {
+		return (List<SF02Entity>) selectList(namespace + ".selectReply", entity);
 	}
 
-	public int updateSF02Vo(SF02Entity sf02Vo) throws Exception {
-		return update(namespace + ".update", sf02Vo);
+	public int selectSF02Count(SF02Entity entity) throws Exception {
+		return selectCnt(namespace + ".selectTotal", entity);
 	}
 
-	public int deleteSF02Vo(SF02Entity sf02Vo) throws Exception {
-		return delete(namespace + ".delete", sf02Vo);
+	public int updateSF02(SF02Entity entity) throws Exception {
+		return update(namespace + ".update", entity);
 	}
 
-	public SF02Entity checkUserSF02Vo(SF02Entity sf02Vo) throws Exception {
-		return (SF02Entity) selectOne(namespace + ".checkUser", sf02Vo);
+	public int deleteSF02(SF02Entity entity) throws Exception {
+		return delete(namespace + ".delete", entity);
 	}
 
-	public int delete_seqSF02Vo(SF02Entity sf02Vo) throws Exception {
-		return delete(namespace + ".delete_seq01", sf02Vo);
+	public SF02Entity checkUserSF02(SF02Entity entity) throws Exception {
+		return (SF02Entity) selectOne(namespace + ".checkUser", entity);
 	}
 
-	public int deleteChild(SF02Entity sf02Vo) throws Exception {
-		return delete(namespace + ".deleteChild", sf02Vo);
+	public int deleteSeqSF02(SF02Entity entity) throws Exception {
+		return delete(namespace + ".delete_seq01", entity);
+	}
+
+	public int deleteChild(SF02Entity entity) throws Exception {
+		return delete(namespace + ".deleteChild", entity);
 	}
 }

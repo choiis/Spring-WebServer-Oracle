@@ -28,26 +28,26 @@ public class SV04Service {
 
 		SV04Entity sv04Entity = SV04Composer.requestToEntity(request, userid);
 
-		sv04Dao.insertSV04Vo(sv04Entity);
+		sv04Dao.insertSV04(sv04Entity);
 
 		return SV04Composer.entityToResponse(sv04Entity);
 	}
 
 	public int likeSV04(SV04Entity entity) throws Exception {
-		return sv04Dao.likeSV04Vo(entity);
+		return sv04Dao.likeSV04(entity);
 	}
 
-	public SV04ListResponse selectSV04(int seq01, int parents, int nowPage, String userid) throws Exception {
+	public SV04ListResponse selectSV04List(int seq01, int parents, int nowPage, String userid) throws Exception {
 
 		SV04Entity sv04Entity = SV04Composer.selectInfoToEntity(seq01, parents, nowPage);
 		if (sv04Entity.getNowPage() == 1) { // 泥ロ럹�씠吏� �슂泥��떆 Total�븣�븘�빞�븳�떎
-			sv04Entity.setTotCnt(sv04Dao.selectSV04Total(sv04Entity));
+			sv04Entity.setTotCnt(sv04Dao.selectSV04Count(sv04Entity));
 		}
 		List<SV04Entity> list;
 		if (sv04Entity.getParents() > 0) {
-			list = sv04Dao.selectReplySV04Vo(sv04Entity);
+			list = sv04Dao.selectReplySV04(sv04Entity);
 		} else {
-			list = sv04Dao.selectSV04Vo(sv04Entity);
+			list = sv04Dao.selectSV04(sv04Entity);
 		}
 
 		Stream<SV04Entity> stream = list.stream();
@@ -61,14 +61,14 @@ public class SV04Service {
 	}
 
 	public int updateSV04(SV04Entity entity) throws Exception {
-		return sv04Dao.updateSV04Vo(entity);
+		return sv04Dao.updateSV04(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public int deleteSV04(int seq, int seq01, int parents, String sessionid) throws Exception {
 
 		SV04Entity sv04Entity = SV04Composer.deleteInfoToEntity(seq, seq01, parents);
-		SV04Entity sv04EntityResult = sv04Dao.checkUserSV04Vo(sv04Entity);
+		SV04Entity sv04EntityResult = sv04Dao.checkUserSV04(sv04Entity);
 		if (!StringUtils.equals(sessionid, sv04EntityResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
@@ -77,7 +77,7 @@ public class SV04Service {
 			sv04Entity.setParents(0);
 		}
 
-		return sv04Dao.deleteSV04Vo(sv04Entity);
+		return sv04Dao.deleteSV04(sv04Entity);
 	}
 
 }

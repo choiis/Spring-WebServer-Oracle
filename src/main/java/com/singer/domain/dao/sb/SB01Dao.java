@@ -12,69 +12,69 @@ public class SB01Dao extends SuperDao {
 
 	private static final String namespace = "com.singer.mappers.SB01";
 
-	public int insertSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return insert(namespace + ".insert", sb01Vo);
+	public int insertSB01(SB01Entity entity) throws Exception {
+		return insert(namespace + ".insert", entity);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SB01Entity> selectSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return (List<SB01Entity>) selectList(namespace + ".select", sb01Vo);
+	public List<SB01Entity> selectSB01(SB01Entity entity) throws Exception {
+		return (List<SB01Entity>) selectList(namespace + ".select", entity);
 	}
 
-	public SB01Entity selectSB01VoCount() throws Exception {
+	public SB01Entity selectSB01Count() throws Exception {
 		return (SB01Entity) selectOne(namespace + ".selectCount");
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SB01Entity> selectFindSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return (List<SB01Entity>) selectList(namespace + ".selectFind", sb01Vo);
+	public List<SB01Entity> selectFindSB01(SB01Entity entity) throws Exception {
+		return (List<SB01Entity>) selectList(namespace + ".selectFind", entity);
 	}
 
-	public SB01Entity selectOneSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return (SB01Entity) selectOne(namespace + ".selectOne", sb01Vo);
+	public SB01Entity selectOneSB01(SB01Entity entity) throws Exception {
+		return (SB01Entity) selectOne(namespace + ".selectOne", entity);
 	}
 
-	public SB01Entity checkUserSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return (SB01Entity) selectOne(namespace + ".checkUser", sb01Vo);
+	public SB01Entity checkUserSB01(SB01Entity entity) throws Exception {
+		return (SB01Entity) selectOne(namespace + ".checkUser", entity);
 	}
 
-	public int updateSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return update(namespace + ".update", sb01Vo);
+	public int updateSB01(SB01Entity entity) throws Exception {
+		return update(namespace + ".update", entity);
 	}
 
-	public int likeSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return insert(namespace + ".like", sb01Vo);
+	public int likeSB01(SB01Entity entity) throws Exception {
+		return insert(namespace + ".like", entity);
 	}
 
-	public int hateSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return insert(namespace + ".hate", sb01Vo);
+	public int hateSB01(SB01Entity entity) throws Exception {
+		return insert(namespace + ".hate", entity);
 	}
 
-	public int clickSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return update(namespace + ".click", sb01Vo);
+	public int clickSB01(SB01Entity entity) throws Exception {
+		return update(namespace + ".click", entity);
 	}
 
-	public int deleteSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return delete(namespace + ".delete", sb01Vo);
+	public int deleteSB01(SB01Entity entity) throws Exception {
+		return delete(namespace + ".delete", entity);
 	}
 
-	public int insertVideo(SB01Entity sb01Vo) throws Exception {
-		return insert(namespace + ".insertVideo", sb01Vo);
+	public int insertVideo(SB01Entity entity) throws Exception {
+		return insert(namespace + ".insertVideo", entity);
 	}
 
-	public int updateVideo(SB01Entity sb01Vo) throws Exception {
-		return update(namespace + ".updateVideo", sb01Vo);
+	public int updateVideo(SB01Entity entity) throws Exception {
+		return update(namespace + ".updateVideo", entity);
 	}
 
-	public String selectVideo(SB01Entity sb01Vo) throws Exception {
-		return (String) selectOne(namespace + ".selectVideo", sb01Vo);
+	public String selectVideo(SB01Entity entity) throws Exception {
+		return (String) selectOne(namespace + ".selectVideo", entity);
 	}
 
-	public int likelogSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return update(namespace + ".likelog", sb01Vo);
+	public int likelogSB01(SB01Entity entity) throws Exception {
+		return update(namespace + ".likelog", entity);
 	}
 
-	public int hatelogSB01Vo(SB01Entity sb01Vo) throws Exception {
-		return update(namespace + ".hatelog", sb01Vo);
+	public int hatelogSB01(SB01Entity entity) throws Exception {
+		return update(namespace + ".hatelog", entity);
 	}
 }

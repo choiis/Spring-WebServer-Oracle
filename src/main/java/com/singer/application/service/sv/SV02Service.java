@@ -24,7 +24,7 @@ public class SV02Service {
     private SV02Dao sv02Dao;
 
     public int updateSV01(SV02Entity entity) throws Exception {
-        return sv02Dao.updateSV02Vo(entity);
+        return sv02Dao.updateSV02(entity);
     }
 
     @Transactional(rollbackFor = {Exception.class})
@@ -41,7 +41,7 @@ public class SV02Service {
             s.setUserid(userid);
             s.setRegdate(regDate);
         });
-        sv02Dao.insertSV03Vo(list);
+        sv02Dao.insertSV03(list);
         return 1;
     }
 

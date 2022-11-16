@@ -27,26 +27,26 @@ public class SB02Service {
 
 		SB02Entity sb02Entity = SB02Composer.requestToEntity(request, userid);
 
-		sb02Dao.insertSB02Vo(sb02Entity);
+		sb02Dao.insertSB02(sb02Entity);
 
 		return SB02Composer.entityToResponse(sb02Entity);
 	}
 
 	public int likeSB02(SB02Entity sb02Entity) throws Exception {
-		return sb02Dao.likeSB02Vo(sb02Entity);
+		return sb02Dao.likeSB02(sb02Entity);
 	}
 
 	public SB02ListResponse selectSB02List(int seq01, int parents, int nowPage, String userid) throws Exception {
 		SB02Entity sb02Entity = SB02Composer.selectInfoToEntity(seq01, parents, nowPage);
 
 		if (sb02Entity.getNowPage() == 1) { // 泥ロ럹�씠吏� �슂泥��떆 Total�븣�븘�빞�븳�떎
-			sb02Entity.setTotCnt(sb02Dao.selectSF02Total(sb02Entity));
+			sb02Entity.setTotCnt(sb02Dao.selectSF02Count(sb02Entity));
 		}
 		List<SB02Entity> list;
 		if (sb02Entity.getParents() > 0) {
-			list = sb02Dao.selectReplySB02Vo(sb02Entity);
+			list = sb02Dao.selectReplySB02(sb02Entity);
 		} else {
-			list = sb02Dao.selectSB02Vo(sb02Entity);
+			list = sb02Dao.selectSB02(sb02Entity);
 		}
 
 		Stream<SB02Entity> stream = list.stream();
@@ -60,14 +60,14 @@ public class SB02Service {
 	}
 
 	public int updateSB02(SB02Entity entity) throws Exception {
-		return sb02Dao.updateSB02Vo(entity);
+		return sb02Dao.updateSB02(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
 	public int deleteSB02(int seq, int seq01, int parents, String sessionid) throws Exception {
 
 		SB02Entity sb02Entity = SB02Composer.deleteInfoToEntity(seq, seq01, parents);
-		SB02Entity sb02EntityResult = sb02Dao.checkUserSB02Vo(sb02Entity);
+		SB02Entity sb02EntityResult = sb02Dao.checkUserSB02(sb02Entity);
 		if (!StringUtils.equals(sessionid, sb02EntityResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
@@ -76,7 +76,7 @@ public class SB02Service {
 			sb02Dao.deleteChild(sb02Entity);
 			sb02Entity.setParents(0);
 		}
-		return sb02Dao.deleteSB02Vo(sb02Entity);
+		return sb02Dao.deleteSB02(sb02Entity);
 	}
 
 }

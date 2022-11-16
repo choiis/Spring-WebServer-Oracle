@@ -66,17 +66,17 @@ public class SV01Service {
 			}
 		}
 
-		sv01Dao.insertSV01Vo(sv01Entity);
-		sv02Dao.insertSV02Vo(list);
+		sv01Dao.insertSV01(sv01Entity);
+		sv02Dao.insertSV02(list);
 
 		return SV01Composer.entityToResponse(sv01Entity, Collections.emptyList());
 	}
 
-	public SV01ListResponse selectSV01(int nowPage) throws Exception {
+	public SV01ListResponse selectSV01List(int nowPage) throws Exception {
 
 		SV01Entity sv01Entity = new SV01Entity();
 		sv01Entity.setNowPage(nowPage);
-		List<SV01Entity> list = sv01Dao.selectSV01Vo(sv01Entity);
+		List<SV01Entity> list = sv01Dao.selectSV01(sv01Entity);
 		int totalCount = ObjectUtils.isEmpty(list) ? 0 : CommonUtil.getPageCnt(list.get(0).getTotCnt());
 		return SV01Composer.entityListToResponse(list, null, nowPage, totalCount);
 	}
@@ -86,10 +86,10 @@ public class SV01Service {
 		sv01Entity.setSeq(seq);
 		sv01Entity.setRecall(recall);
 		if (sv01Entity.getRecall() == YES_NO.NO.getValue()) {
-			sv01Dao.clickSV01Vo(sv01Entity);
+			sv01Dao.clickSV01(sv01Entity);
 		}
 		sv01Entity.setUserid(userid);
-		sv01Entity = sv01Dao.selectOneSV01Vo(sv01Entity);
+		sv01Entity = sv01Dao.selectOneSV01(sv01Entity);
 		if (!ObjectUtils.isEmpty(sv01Entity)) {
 			if (userid.equals(sv01Entity.getUserid())) {
 				sv01Entity.setDeleteYn(true);
@@ -99,15 +99,15 @@ public class SV01Service {
 		sv02Entity.setSeq(sv01Entity.getSeq());
 		sv02Entity.setUserid(userid);
 
-		List<SV02Entity> list = sv02Dao.selectSV02Vo(sv02Entity);
+		List<SV02Entity> list = sv02Dao.selectSV02(sv02Entity);
 		sv01Entity.setSv02Vos(list);
-		sv01Entity.setTotCnt(sv02Dao.selectCnt(sv02Entity));
+		sv01Entity.setTotCnt(sv02Dao.selectCount(sv02Entity));
 		List<SV02Response> responseList = SV01Composer.entityListToResponseList(list);
 		return SV01Composer.entityToResponse(sv01Entity, responseList);
 	}
 
 	public int updateSV01(SV01Entity entity) throws Exception {
-		return sv01Dao.updateSV01Vo(entity);
+		return sv01Dao.updateSV01(entity);
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
@@ -117,7 +117,7 @@ public class SV01Service {
 		sv01Entity.setSeq(seq);
 		sv01Entity.setSessionid(sessionid);
 		sv01Entity.setUserid(sessionid);
-		SV01Entity sv01EntityResult = sv01Dao.selectOneSV01Vo(sv01Entity);
+		SV01Entity sv01EntityResult = sv01Dao.selectOneSV01(sv01Entity);
 		if (!StringUtils.equals(sessionid, sv01EntityResult.getUserid())) {
 			throw new ClientException(HttpStatus.FORBIDDEN);
 		}
@@ -125,9 +125,9 @@ public class SV01Service {
 		SV04Entity sv04Entity = new SV04Entity();
 		sv04Entity.setSeq(sv01Entity.getSeq());
 
-		sv04Dao.delete_seqSV04Vo(sv04Entity);
+		sv04Dao.deleteSeqSV04(sv04Entity);
 
-		sv01Dao.deleteSV01Vo(sv01Entity);
+		sv01Dao.deleteSV01(sv01Entity);
 		sv01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
 		return SV01Composer.entityToResponse(sv01Entity, Collections.emptyList());
 	}
@@ -136,12 +136,12 @@ public class SV01Service {
 	public SV01Response likeSV01(int seq, String sessionid) throws Exception {
 		SV01Entity sv01Entity = new SV01Entity();
 		sv01Entity.setSeq(seq);
-		sv01Dao.likeSV01Vo(sv01Entity);
+		sv01Dao.likeSV01(sv01Entity);
 
 		sv01Entity.setSessionid(sessionid);
 		sv01Entity.setDatelog(DateUtil.getTodayTime());
 
-		sv01Dao.likelogSV01Vo(sv01Entity);
+		sv01Dao.likelogSV01(sv01Entity);
 
 		sv01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
 		return SV01Composer.entityToResponse(sv01Entity, Collections.emptyList());
@@ -151,12 +151,12 @@ public class SV01Service {
 	public SV01Response hateSV01(int seq, String sessionid) throws Exception {
 		SV01Entity sv01Entity = new SV01Entity();
 		sv01Entity.setSeq(seq);
-		sv01Dao.hateSV01Vo(sv01Entity);
+		sv01Dao.hateSV01(sv01Entity);
 
 		sv01Entity.setSessionid(sessionid);
 		sv01Entity.setDatelog(DateUtil.getTodayTime());
 
-		sv01Dao.hatelogSV01Vo(sv01Entity);
+		sv01Dao.hatelogSV01(sv01Entity);
 
 		sv01Entity.setResult(RESULT_CODE.SUCCESS.getValue());
 		return SV01Composer.entityToResponse(sv01Entity, Collections.emptyList());

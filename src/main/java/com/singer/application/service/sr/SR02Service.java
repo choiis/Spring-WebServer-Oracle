@@ -20,11 +20,11 @@ public class SR02Service {
     public SR02Response insertSR02(SR02Request request, String sessionid) throws Exception {
 
         SR02Entity sr02Entity = SR02Composer.requestToEntitu(request, sessionid);
-        sr02Dao.insertSR02Vo(sr02Entity);
+        sr02Dao.insertSR02(sr02Entity);
 
         SR01Entity sr01Entity = new SR01Entity();
         sr01Entity.setSeq(sr02Entity.getSeq());
-        sr02Dao.selectGradeSR02Vo(sr01Entity);
+        sr02Dao.selectGradeSR02(sr01Entity);
         return SR02Composer.entityToResponse(sr01Entity);
     }
 
@@ -32,7 +32,7 @@ public class SR02Service {
         SR01Entity sr01Entity = new SR01Entity();
         sr01Entity.setSeq(seq);
         sr01Entity.setUserid(userid);
-        SR01Entity entity = sr02Dao.selectOneSR02Vo(sr01Entity);
+        SR01Entity entity = sr02Dao.selectOneSR02(sr01Entity);
 
         return SR02Composer.entityToResponse(entity);
     }
@@ -42,7 +42,7 @@ public class SR02Service {
         SR01Entity sr01Entity = new SR01Entity();
         sr01Entity.setSeq(seq);
         sr01Entity.setSessionid(userid);
-        return sr02Dao.deleteSR02Vo(sr01Entity);
+        return sr02Dao.deleteSR02(sr01Entity);
     }
 
 }

@@ -38,7 +38,7 @@ public class SR03Controller extends BaseController {
         log.debug("enter sr03 get");
 
         String userid = getSessionId(request);
-        SR03ListResponse listResponse = sr03Service.selectSR03(seq01, parents, nowPage, userid);
+        SR03ListResponse listResponse = sr03Service.selectSR03List(seq01, parents, nowPage, userid);
 
         log.debug("exit sr03 get");
         return new ResponseEntity<SR03ListResponse>(listResponse, HttpStatus.OK);

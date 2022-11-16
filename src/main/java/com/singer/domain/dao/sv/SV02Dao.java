@@ -11,28 +11,28 @@ import com.singer.domain.entity.sv.SV02Entity;
 public class SV02Dao extends SuperDao {
 	private static final String namespace = "com.singer.mappers.SV02";
 
-	public int insertSV02Vo(List<SV02Entity> list) throws Exception {
+	public int insertSV02(List<SV02Entity> list) throws Exception {
 		return insert(namespace + ".insert", list);
 	}
 
-	public int updateSV02Vo(SV02Entity sv02Vo) throws Exception {
-		return insert(namespace + ".update", sv02Vo);
+	public int updateSV02(SV02Entity entity) throws Exception {
+		return insert(namespace + ".update", entity);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SV02Entity> selectSV02Vo(SV02Entity sv02Vo) throws Exception {
-		return (List<SV02Entity>) selectList(namespace + ".select", sv02Vo);
+	public List<SV02Entity> selectSV02(SV02Entity entity) throws Exception {
+		return (List<SV02Entity>) selectList(namespace + ".select", entity);
 	}
 
-	public int selectCnt(SV02Entity sv02Vo) throws Exception {
-		return selectCnt(namespace + ".selectTot", sv02Vo);
+	public int selectCount(SV02Entity entity) throws Exception {
+		return selectCnt(namespace + ".selectTot", entity);
 	}
 
-	public int deleteSV02Vo(SV02Entity sv02Vo) throws Exception {
-		return delete(namespace + ".delete", sv02Vo);
+	public int deleteSV02(SV02Entity entity) throws Exception {
+		return delete(namespace + ".delete", entity);
 	}
 
-	public int insertSV03Vo(List<SV02Entity> list) throws Exception {
+	public int insertSV03(List<SV02Entity> list) throws Exception {
 		return insert(namespace + ".insertSv03Vo", list);
 	}
 }

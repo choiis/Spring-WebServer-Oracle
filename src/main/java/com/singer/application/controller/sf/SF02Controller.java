@@ -38,7 +38,7 @@ public class SF02Controller extends BaseController {
 		log.debug("enter sf02 get");
 
 		String userid = getSessionId(request);
-		SF02ListResponse listResponse = sf02Service.selectSF02(seq01, parents, nowPage, userid);
+		SF02ListResponse listResponse = sf02Service.selectSF02List(seq01, parents, nowPage, userid);
 
 		log.debug("exit sf02 get");
 		return new ResponseEntity<SF02ListResponse>(listResponse, HttpStatus.OK);
