@@ -1,8 +1,6 @@
 package com.singer.common.bean;
 
 import com.fasterxml.jackson.core.JsonEncoding;
-import com.singer.common.view.BlobDownloadView;
-import com.singer.common.view.FileDownloadView;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -27,13 +25,4 @@ public class ViewConfigs {
         return jsonView;
     }
 
-    @Bean(name = "filedownloadView")
-    public FileDownloadView fileDownloadView() {
-        return new FileDownloadView();
-    }
-
-    @Bean(name = "blobdownloadView")
-    public BlobDownloadView blobDownloadView() {
-        return new BlobDownloadView();
-    }
 }

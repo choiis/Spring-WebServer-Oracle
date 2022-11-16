@@ -6,7 +6,6 @@ import com.singer.application.dto.sf.SF01Request;
 import com.singer.application.dto.sf.SF01Response;
 import java.io.File;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,7 +169,7 @@ public class SF01Service {
 		return sf01Dao.deleteSF01Vo(sf01Entity);
 	}
 
-	public HashMap<String, Object> selectFile(int seq, String userid) throws Exception {
+	public File selectFile(int seq, String userid) throws Exception {
 
 		SF01Entity sf01Entity = new SF01Entity();
 		sf01Entity.setSeq(seq);
@@ -183,16 +182,11 @@ public class SF01Service {
 		File file = new File(s3Properties.getTempPath() + "/" + filename);
 		FileUtils.copyInputStreamToFile(inputStream, file);
 
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-
-		hashMap.put("downfile", file);
-		hashMap.put("filename", sf01Entity.getFilename());
-
 		sf01Entity.setDownuserid(userid);
 		sf01Entity.setRegdate(DateUtil.getTodayTime());
 		sf01Dao.mergeSFD1Vo(sf01Entity);
 
-		return hashMap;
+		return file;
 	}
 
 }

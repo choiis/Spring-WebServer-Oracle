@@ -8,12 +8,19 @@ import com.singer.application.service.sf.SF01Service;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -99,14 +106,18 @@ public class SF01Controller extends BaseController {
 
 	@ResponseBody
 	@RequestMapping(value = "/sf01/file/{seq}", method = RequestMethod.GET)
-	public ModelAndView selectFileSF01Vo(@PathVariable int seq, HttpServletRequest request) throws Exception {
+	public ResponseEntity<Object> selectFileSF01Vo(@PathVariable int seq, HttpServletRequest request) throws Exception {
 		log.debug("enter sf01File get");
 
 		String userid = getSessionId(request);
-		HashMap<String, Object> downloadFile = sf01Service.selectFile(seq, userid);
+		File file = sf01Service.selectFile(seq, userid);
+		Resource resource = new InputStreamResource(Files.newInputStream(Paths.get(file.getPath())));
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());
 
 		log.debug("exit sf01File get");
-		return new ModelAndView("filedownloadView", "downloadFile", downloadFile);
+		return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
 	}
 
 	@ResponseBody
