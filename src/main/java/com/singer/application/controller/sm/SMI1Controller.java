@@ -1,7 +1,5 @@
 package com.singer.application.controller.sm;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -13,15 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.singer.application.dto.sm.SMI1ListResponse;
 import com.singer.application.service.sm.SMI1Service;
-import com.singer.domain.entity.sm.SM01Entity;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
 public class SMI1Controller {
-
 
 	@Autowired
 	private SMI1Service smi1Service;
@@ -35,15 +32,13 @@ public class SMI1Controller {
 
 	@ResponseBody
 	@RequestMapping(value = "/smi1", method = RequestMethod.GET)
-	public ResponseEntity<SM01Entity> selectSMI1Vo(@RequestParam(value = "searchCode") String searchCode,
+	public ResponseEntity<SMI1ListResponse> selectSMI1(@RequestParam(value = "searchCode") String searchCode,
 			@RequestParam(value = "searchParam") String searchParam) throws Exception {
 		log.debug("enter smi1 get");
 
-		List<SM01Entity> list = smi1Service.selectSMI1Vo(searchCode, searchParam);
-		SM01Entity sm01Entity = new SM01Entity();
-		sm01Entity.setList(list);
+		SMI1ListResponse listResponse = smi1Service.selectSMI1List(searchCode, searchParam);
 
 		log.debug("exit smi1 get");
-		return new ResponseEntity<SM01Entity>(sm01Entity, HttpStatus.OK);
+		return new ResponseEntity<>(listResponse, HttpStatus.OK);
 	}
 }

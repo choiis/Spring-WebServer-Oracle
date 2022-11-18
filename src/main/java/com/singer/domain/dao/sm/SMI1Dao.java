@@ -13,17 +13,17 @@ public class SMI1Dao extends SuperDao {
 	private static final String namespace = "com.singer.mappers.SMI1";
 
 	@SuppressWarnings("unchecked")
-	public List<SM01Entity> selectByBrthSMI1Vo(SM01Entity sm01Entity) throws Exception {
+	public List<SM01Entity> selectByBrthSMI1(SM01Entity sm01Entity) throws Exception {
 		return (List<SM01Entity>) selectList(namespace + ".selectByBrth", sm01Entity);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SM01Entity> selectByNameSMI1Vo(SM01Entity sm01Entity) throws Exception {
+	public List<SM01Entity> selectByNameSMI1(SM01Entity sm01Entity) throws Exception {
 		return (List<SM01Entity>) selectList(namespace + ".selectByName", sm01Entity);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SM01Entity> selectByPhoneSMI1Vo(SM01Entity sm01Entity) throws Exception {
+	public List<SM01Entity> selectByPhoneSMI1(SM01Entity sm01Entity) throws Exception {
 		return (List<SM01Entity>) selectList(namespace + ".selectByPhone", sm01Entity);
 	}
 }

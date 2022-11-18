@@ -49,9 +49,9 @@ public class SB02Composer {
 
         List<SB02Response> responseList = new ArrayList<>();
 
-        for (SB02Entity vo : list) {
-            responseList.add(new SB02Response(vo.getSeq(), vo.getSeq01(), vo.getUserid(), vo.getText(), vo.getGood(),
-                vo.getReply(), vo.getRegdate(), vo.isDeleteYn()));
+        for (SB02Entity entity : list) {
+            responseList.add(new SB02Response(entity.getSeq(), entity.getSeq01(), entity.getUserid(), entity.getText(), entity.getGood(),
+                entity.getReply(), entity.getRegdate(), entity.isDeleteYn()));
         }
 
         return new SB02ListResponse(responseList, parents, nowPage, totCnt);

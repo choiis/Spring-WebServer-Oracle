@@ -47,24 +47,7 @@
 		    };
 
 			gfn_ajaxRequestBody("sm02","POST" , sendData , function(data) {
-				var html = "";
-
-				// jQuery 유틸리티 메서드 
-				$.each(data.list, function(index, item){
-				
-					html += '<tr>';
-		            html += '<td scope="col" width="100">' + item.title + '</td>';
-		            html += '<td id="text' + index + '" scope="col" width="340">' + item.text + '</td>';
-		            html += '<td id="regdate' + index + '" scope="col" width="115">' + gfn_dateFormat(item.regdate) + '</td>';
-		            html += '<td id="seq' + index + '" style="display:none;">' + item.seq + '</td>';
-		            html += '<td scope="col" width="50"><input type="button" value="삭제" onclick="deletesm02('+ index +')"></td>';
-					html += '</tr>';
-					
-				});
-				$("#sm02viewTbody").html(html);
-				 
-				// 페이징 함수 호출
-				gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
+				showSM02List();
 			});
 		});
 		
@@ -100,23 +83,7 @@
 		if(confirm("삭제할까요?")) {
 			
 			gfn_ajaxRest("sm02/" + $("#seq" + idx).text(), "DELETE"  , function(data) {
-				var html = "";
-				// jQuery 유틸리티 메서드 
-				$.each(data.list, function(index, item){
-				
-					html += '<tr>';
-		            html += '<td scope="col" width="100">' + item.title + '</td>';
-		            html += '<td id="text' + index + '" scope="col" width="340">' + item.text + '</td>';
-		            html += '<td id="regdate' + index + '" scope="col" width="115">' + gfn_dateFormat(item.regdate) + '</td>';
-		            html += '<td id="seq' + index + '" style="display:none;">' + item.seq + '</td>';
-		            html += '<td scope="col" width="50"><input type="button" value="삭제" onclick="deletesm02('+ index +')"></td>';
-					html += '</tr>';
-					
-				});
-				$("#sm02viewTbody").html(html);
-				 
-				// 페이징 함수 호출
-				gfn_paging(data.nowPage, data.totCnt , "#pagenation", "page_move");
+				showSM02List();
 			});
 		}
 	}

@@ -38,7 +38,7 @@ public class SR03Dao extends SuperDao {
 		return selectCnt(namespace + ".selectTotal", entity);
 	}
 
-	public int updateSR03Vo(SR03Entity entity) throws Exception {
+	public int updateSR03(SR03Entity entity) throws Exception {
 		return update(namespace + ".update", entity);
 	}
 

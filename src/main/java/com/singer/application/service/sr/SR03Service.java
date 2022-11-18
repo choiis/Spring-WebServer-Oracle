@@ -60,7 +60,7 @@ public class SR03Service {
 	}
 
 	public int updateSR03(SR03Entity entity) throws Exception {
-		return sr03Dao.updateSR03Vo(entity);
+		return sr03Dao.updateSR03(entity);
 	}
 
 	public int deleteSR03(int seq, int seq01, int parents, String sessionid) throws Exception {
