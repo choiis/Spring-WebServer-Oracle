@@ -36,15 +36,15 @@ public class BeanConfig {
     @Bean
     public AmazonS3 amazonS3() {
 
-        AWSCredentials credentials = new BasicAWSCredentials(s3Properties.getAccess(), s3Properties.getSecret());
+        AWSCredentials credentials = new BasicAWSCredentials(s3Properties.access(), s3Properties.secret());
 
         // minio 참고
         //https://stackoverflow.com/questions/49332533/using-s3-java-sdk-to-talk-to-s3-compatible-storage-minio
         return AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials))
             .withPathStyleAccessEnabled(true)
             .withEndpointConfiguration(
-                new EndpointConfiguration(s3Properties.getEndpoint(),
-                    AwsHostNameUtils.parseRegion(s3Properties.getEndpoint(), AmazonS3Client.S3_SERVICE_NAME))
+                new EndpointConfiguration(s3Properties.endpoint(),
+                    AwsHostNameUtils.parseRegion(s3Properties.endpoint(), AmazonS3Client.S3_SERVICE_NAME))
             ).build();
     }
 

@@ -1,11 +1,16 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.5'	
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
-apply plugin: 'java'
-apply plugin: 'io.spring.dependency-management'
+group = 'com.singer'
+version = '0.0.1-SNAPSHOT'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 repositories {
     mavenCentral()
@@ -13,43 +18,43 @@ repositories {
         url = uri('https://repo.maven.apache.org/maven2/')
     }
 }
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-quartz'
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
-    implementation 'com.oracle.database.jdbc:ojdbc8:21.3.0.0'
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation 'org.apache.commons:commons-collections4:4.1'
-    implementation 'commons-io:commons-io:2.6'
-    implementation 'commons-dbcp:commons-dbcp:1.4'
-    implementation 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    implementation 'javax.mail:mail:1.4.3'
-    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.68'
-    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.261'
-    implementation 'javax.servlet:jstl:1.2'
-    implementation 'org.quartz-scheduler:quartz:2.3.0'
+
+    // MyBatis + Oracle
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    implementation 'com.oracle.database.jdbc:ojdbc11:23.5.0.24.07' // adjust as needed
+
+    // Lombok (entities, services etc.)
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+    // AWS S3 SDK (v2)
+    implementation 'software.amazon.awssdk:bom:2.25.65'
+    implementation 'software.amazon.awssdk:s3:2.38.8'
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.793'
+
+    // MinIO (if you still use it directly somewhere)
+    implementation 'io.minio:minio:8.5.11'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // OpenAPI / Swagger UI
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-group = 'com.singer'
-description = 'Spring-WebServer-Oracle'
-java.sourceCompatibility = JavaVersion.VERSION_11
-java.targetCompatibility = JavaVersion.VERSION_11
-
-bootJar {
-    launchScript()
-}
-
-test {
+tasks.named('test') {
     useJUnitPlatform()
-    testLogging.showStandardStreams = true
 }
 
 tasks.withType(JavaCompile) {

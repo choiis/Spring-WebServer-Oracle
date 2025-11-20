@@ -32,7 +32,7 @@ public class StreamController extends BaseController {
 	public ResponseEntity<ResourceRegion> videoStreaming(@RequestHeader HttpHeaders headers) throws IOException {
 		log.info("videoStreaming!!!");
 
-		String streamurl = s3Properties.getStreamPath();
+		String streamurl = s3Properties.streamPath();
 		UrlResource video = new UrlResource(streamurl);
 		ResourceRegion region = getResourceRegion(video, headers);
 

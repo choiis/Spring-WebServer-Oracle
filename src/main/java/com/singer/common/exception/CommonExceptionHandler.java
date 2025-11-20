@@ -1,138 +1,114 @@
 package com.singer.common.exception;
 
-import java.io.IOException;
-import java.sql.SQLException;
+import java.net.BindException;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.function.Function;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
+import java.util.stream.Collectors;
+import lombok.Getter;
+import org.springframework.beans.ConversionNotSupportedException;
+import org.springframework.beans.TypeMismatchException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.lang.NonNull;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
-import com.singer.common.util.CommonUtil;
-
 import lombok.extern.slf4j.Slf4j;
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
+import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 
 @ControllerAdvice
 @Slf4j
 public class CommonExceptionHandler {
 
-	private ModelAndView getErrorModelAndView(boolean isAjax, @NonNull String message) {
-		ModelAndView mv = null;
-		mv = new ModelAndView("forward:/errors");
-		mv.addObject("errorCode", HttpStatus.INTERNAL_SERVER_ERROR);
-		mv.addObject("errorMsg", message);
-		return mv;
-	}
+	public static final Map<Class<?>, ResponseType> responseTypes = Arrays.stream(ResponseType.values())
+			.collect(Collectors.toUnmodifiableMap(ResponseType::getTargetClass, Function.identity()));
 
-	@ExceptionHandler(ClientException.class)
-	public ModelAndView clientExceptionHandler(HttpServletRequest request, HttpServletResponse response,
-			ClientException ext) throws IOException {
-
-		Function<ClientException, ModelAndView> func = (ex) -> {
-			ModelAndView mv = new ModelAndView("forward:/" + ex.getHttpStatusCode().value());
-			mv.addObject("errorCode", ex.getHttpStatusCode());
-			mv.addObject("errorMsg", ex.getLocalizedMessage());
-			return mv;
-		};
-		log.error("ClientException");
-		log.error(ext.getMessage());
-		ext.printStackTrace();
-		return func.apply(ext);
-	}
-
-	@ExceptionHandler(SQLException.class)
-	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "your message")
-	public ModelAndView sQLExceptionHandler(HttpServletRequest request, SQLException ext) {
-
-		if (StringUtils.isEmpty(ext.getMessage())) {
-			return null;
-		}
-		log.error("SQLException");
-		log.error(ext.getMessage());
-		ext.printStackTrace();
-
-		boolean isAjax = CommonUtil.ajaxCheck(request);
-		return getErrorModelAndView(isAjax, ext.getCause().getLocalizedMessage());
-	}
-
-	@ExceptionHandler(AppException.class)
-	public ModelAndView appExceptionHandler(HttpServletRequest request, AppException ext) {
-		if (StringUtils.isEmpty(ext.getMessage())) {
-			return null;
-		}
-		log.error("AppException");
-		log.error(ext.getMessage());
-		ext.printStackTrace();
-
-		return getErrorModelAndView(CommonUtil.ajaxCheck(request), ext.getMessage());
-	}
-
-	@ExceptionHandler(NoHandlerFoundException.class)
-	public ModelAndView noHandlerFoundException(HttpServletRequest request, NoHandlerFoundException ext) {
-		if (StringUtils.isEmpty(ext.getMessage())) {
-			return null;
-		}
-		log.error("NoHandlerFoundException");
-		log.error(ext.getMessage());
-		String errorURL = request.getRequestURL().toString();
-		return getErrorModelAndView(CommonUtil.ajaxCheck(request), "error Url" + errorURL + " || " + ext.getMessage());
-	}
-
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ModelAndView methodArgumentNotValidException(HttpServletRequest request, HttpServletResponse response,
-			MethodArgumentNotValidException ext) throws IOException {
-		log.error("MethodArgumentNotValidException");
-		log.error(ext.getMessage());
-		if (CommonUtil.ajaxCheck(request)) {
-			Function<MethodArgumentNotValidException, ModelAndView> func = (ex) -> {
-				ModelAndView mv = new ModelAndView("forward:/errors");
-				mv.addObject("errorCode", HttpStatus.BAD_REQUEST);
-				mv.addObject("errorMsg", makeValidErrorMessage(ex.getBindingResult()));
-				return mv;
-			};
-			return func.apply(ext);
+	@ExceptionHandler({ Exception.class })
+	public ResponseEntity<CommonResponse<Void>> handle(WebRequest request, Exception e) {
+		var responseType = responseTypes.getOrDefault(e.getClass(), ResponseType.TYPE_NOT_DEFINED);
+		if (responseType.getStatus().is5xxServerError()) {
+			log.error("handling error {}", request.getDescription(false), e);
 		} else {
-			Function<MethodArgumentNotValidException, ModelAndView> func = (ex) -> {
-				ModelAndView mv = new ModelAndView("forward:/" + HttpStatus.BAD_REQUEST.value());
-				mv.addObject("errorCode", HttpStatus.BAD_REQUEST);
-				mv.addObject("errorMsg", makeValidErrorMessage(ex.getBindingResult()));
-				return mv;
-			};
-			return func.apply(ext);
+			log.warn("handling exception {}", request.getDescription(false), e);
 		}
+		return new ResponseEntity<>(CommonResponse.error(responseType.code, responseType.getMessage(e)),
+				new HttpHeaders(), responseType.status);
 	}
 
-	private String makeValidErrorMessage(BindingResult bindingResult) {
-		StringBuilder builder = new StringBuilder();
-		for (FieldError fieldError : bindingResult.getFieldErrors()) {
-			builder.append("[");
-			// builder.append(fieldError.getField());
-			builder.append(fieldError.getDefaultMessage());
-			builder.append("]");
+	@Getter
+	public enum ResponseType {
+		TYPE_NOT_DEFINED(INTERNAL_SERVER_ERROR, -99999, "something nasty happened", RuntimeException.class, false),
+		ASYNC_REQ_TIMEOUT(SERVICE_UNAVAILABLE, -99998, AsyncRequestTimeoutException.class),
+		NO_HANDLER_FOUND(NOT_FOUND, -99997, NoHandlerFoundException.class),
+		SERVLET_REQ_BINDING(BAD_REQUEST, -99996, ServletRequestBindingException.class),
+		MISSING_SERVLET_REQ_PART(BAD_REQUEST, -99995, MissingServletRequestPartException.class),
+		MISSING_SERVLET_REQ_PARAM(BAD_REQUEST, -99994, MissingServletRequestParameterException.class),
+		MISSING_PATH_VAR(INTERNAL_SERVER_ERROR, -99993, MissingPathVariableException.class),
+		MEDIA_TYPE_NOT_ACCEPTABLE(NOT_ACCEPTABLE, -99992, HttpMediaTypeNotAcceptableException.class),
+		MEDIA_TYPE_NOT_SUPPORTED(UNSUPPORTED_MEDIA_TYPE, -99991, HttpMediaTypeNotSupportedException.class),
+		METHOD_NOT_SUPPORTED(METHOD_NOT_ALLOWED, -99990, HttpRequestMethodNotSupportedException.class),
+		BIND_EXCEPTION(BAD_REQUEST, -99989, BindException.class),
+		HTTP_MSG_NOT_WRITABLE(INTERNAL_SERVER_ERROR, -99988, HttpMessageNotWritableException.class),
+		HTTP_MSG_NOT_READABLE(BAD_REQUEST, -99987, HttpMessageNotReadableException.class),
+		TYPE_MISMATCH(BAD_REQUEST, -99986, TypeMismatchException.class),
+		CONVERSION_NOT_SUPPORTED(INTERNAL_SERVER_ERROR, -99985, ConversionNotSupportedException.class),
+
+		METHOD_ARGUMENT_TYPE_MISMATCH(BAD_REQUEST, -99984, "argument type mismatch",
+				MethodArgumentTypeMismatchException.class),
+		METHOD_ARGUMENT_NOT_VALID(BAD_REQUEST, -99983, "argument not valid", MethodArgumentNotValidException.class,
+				false),
+		FORBIDDEN_403(FORBIDDEN, -99982, "forbidden", org.springframework.security.access.AccessDeniedException.class,
+				false);
+
+		private final HttpStatus status;
+		private final int code;
+		private final Class<? extends Throwable> targetClass;
+
+		private final Function<Throwable, String> messageGenerator;
+
+		ResponseType(HttpStatus status, int code, Class<? extends Throwable> targetClass) {
+			this.status = status;
+			this.code = code;
+			this.targetClass = targetClass;
+			this.messageGenerator = Throwable::getMessage;
 		}
 
-		return builder.toString();
-	}
-
-	@ExceptionHandler(Exception.class)
-	public ModelAndView exceptionHandler(HttpServletRequest request, Exception ext) {
-		if (StringUtils.isEmpty(ext.getMessage())) {
-			return null;
+		ResponseType(HttpStatus status, int code, String message, Class<? extends Throwable> targetClass) {
+			this(status, code, message, targetClass, true);
 		}
-		log.error("defaultException");
-		log.error(ext.getMessage());
-		ext.printStackTrace();
-		return getErrorModelAndView(CommonUtil.ajaxCheck(request), ext.getMessage());
+
+		ResponseType(HttpStatus status, int code, String message, Class<? extends Throwable> targetClass,
+				boolean includeExceptionMessage) {
+			this.status = status;
+			this.code = code;
+			this.targetClass = targetClass;
+			this.messageGenerator = e -> includeExceptionMessage ? String.format("%s: %s", message, e.getMessage())
+					: message;
+		}
+
+		private String getMessage(Throwable e) {
+			return messageGenerator.apply(e);
+		}
 	}
 }

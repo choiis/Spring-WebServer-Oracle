@@ -1,23 +1,46 @@
 package com.singer.application.dto.sm;
 
-import lombok.Value;
+public record SMI1Response(
+        String username,
+        String userid,
+        String brth,
+        String regdate,
+        String pfnum,
+        String pcnum,
+        String pbnum,
+        String email
+) {
 
-@Value
-public class SMI1Response {
+    public String getUsername() {
+        return username();
+    }
 
-	String username;
+    public String getUserid() {
+        return userid();
+    }
 
-	String userid;
+    public String getBrth() {
+        return brth();
+    }
 
-	String brth;
+    public String getRegdate() {
+        return regdate();
+    }
 
-	String regdate;
+    public String getPfnum() {
+        return pfnum();
+    }
 
-	String pfnum;
+    public String getPcnum() {
+        return pcnum();
+    }
 
-	String pcnum;
+    public String getPbnum() {
+        return pbnum();
+    }
 
-	String pbnum;
+    public String getEmail() {
+        return email();
+    }
 
-	String email;
 }

@@ -1,16 +1,28 @@
 package com.singer.application.dto.sv;
 
 import java.util.List;
-import lombok.Value;
 
-@Value
-public class SV04ListResponse {
+public record SV04ListResponse(
+        List<SV04Response> list,
+        int parents,
+        int nowPage,
+        int totCnt
+) {
 
-    List<SV04Response> list;
+    public List<SV04Response> getList() {
+        return list();
+    }
 
-    int parents;
+    public int getParents() {
+        return parents();
+    }
 
-    int nowPage;
+    public int getNowPage() {
+        return nowPage();
+    }
 
-    int totCnt;
+    public int getTotCnt() {
+        return totCnt();
+    }
+
 }

@@ -1,18 +1,31 @@
 package com.singer.application.dto.sr;
 
-import lombok.Value;
+public record SR02Response(
+        int seq,
+        String userid,
+        double grade,
+        String regdate,
+        int result
+) {
 
-@Value
-public class SR02Response {
+    public int getSeq() {
+        return seq();
+    }
 
-    int seq;
+    public String getUserid() {
+        return userid();
+    }
 
-    String userid;
+    public double getGrade() {
+        return grade();
+    }
 
-    double grade;
+    public String getRegdate() {
+        return regdate();
+    }
 
-    String regdate;
-
-    int result;
+    public int getResult() {
+        return result();
+    }
 
 }

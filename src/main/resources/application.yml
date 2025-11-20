@@ -6,26 +6,17 @@ spring:
   application:
     name: webserver-oracle
   datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+    driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@127.0.0.1:1521/xe
     username: insung
     password: 12345678
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 1000MB
-      max-request-size: 1000MB
 
 mybatis:
-  type-aliases-package: com.singer.domain.entity
-  mapper-locations: classpath*:mappers/*Mapper.xml
+  mapper-locations: classpath*:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
 management:
-  server:
-    port: 28090
   endpoints:
     web:
       exposure:
@@ -34,15 +25,16 @@ management:
     health:
       show-details: always
 
-
 aws:
   s3:
     endpoint: http://localhost:9000
-    temp:
-      path: /workspace/temp/
-    bucket:
-      name: s3-storage
+    tempPath: /workspace/temp/
+    bucketName: s3-storage
     access: minioadmin
     secret: minioadmin
-    stream:
-      path: enters3path
+    streamPath: enters3path
+
+jwt:
+  # Base64 encoded secret key (at least 256 bits). Replace with your own in real usage.
+  secret: dGhpc19pc19hX3NhbXBsZV9qd3Rfc2VjcmV0X2tleV9mb3JfZGVtbw==
+  expiration-seconds: 3600

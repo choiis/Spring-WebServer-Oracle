@@ -1,16 +1,28 @@
 package com.singer.application.dto.sr;
 
 import java.util.List;
-import lombok.Value;
 
-@Value
-public class SR03ListResponse {
+public record SR03ListResponse(
+        List<SR03Response> list,
+        int parents,
+        int nowPage,
+        int totCnt
+) {
 
-    List<SR03Response> list;
+    public List<SR03Response> getList() {
+        return list();
+    }
 
-    int parents;
+    public int getParents() {
+        return parents();
+    }
 
-    int nowPage;
+    public int getNowPage() {
+        return nowPage();
+    }
 
-    int totCnt;
+    public int getTotCnt() {
+        return totCnt();
+    }
+
 }

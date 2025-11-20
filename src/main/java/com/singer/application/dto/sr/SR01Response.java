@@ -1,38 +1,96 @@
 package com.singer.application.dto.sr;
 
-import lombok.Value;
+public record SR01Response(
+        int seq,
+        String title,
+        String text,
+        String userid,
+        int good,
+        int hit,
+        String showDate,
+        String regdate,
+        int reply,
+        boolean deleteYn,
+        String goodlog,
+        String hatelog,
+        String markertitle,
+        double mapx,
+        double mapy,
+        double avggrade,
+        int photocnt,
+        int result
+) {
 
-@Value
-public class SR01Response {
+    public int getSeq() {
+        return seq();
+    }
 
-    int seq;
+    public String getTitle() {
+        return title();
+    }
 
-    String title;
-    String text;
+    public String getText() {
+        return text();
+    }
 
-    String userid;
+    public String getUserid() {
+        return userid();
+    }
 
-    int good;
+    public int getGood() {
+        return good();
+    }
 
-    int hit;
+    public int getHit() {
+        return hit();
+    }
 
-    String showDate;
-    String regdate;
+    public String getShowDate() {
+        return showDate();
+    }
 
-    int reply;
+    public String getRegdate() {
+        return regdate();
+    }
 
-    boolean deleteYn;
-    String goodlog;
+    public int getReply() {
+        return reply();
+    }
 
-    String hatelog;
+    public boolean getDeleteYn() {
+        return deleteYn();
+    }
 
-    String markertitle;
+    public String getGoodlog() {
+        return goodlog();
+    }
 
-    double mapx;
+    public String getHatelog() {
+        return hatelog();
+    }
 
-    double mapy;
-    double avggrade;
+    public String getMarkertitle() {
+        return markertitle();
+    }
 
-    int photocnt;
-    int result;
+    public double getMapx() {
+        return mapx();
+    }
+
+    public double getMapy() {
+        return mapy();
+    }
+
+    public double getAvggrade() {
+        return avggrade();
+    }
+
+    public int getPhotocnt() {
+        return photocnt();
+    }
+
+    public int getResult() {
+        return result();
+    }
+
 }

@@ -2,26 +2,44 @@ package com.singer.application.dto.sb;
 
 import com.singer.common.exception.ExceptionMsg;
 import com.singer.common.util.Constants.YES_NO;
-import javax.validation.constraints.NotEmpty;
-import lombok.Value;
+import jakarta.validation.constraints.NotEmpty;
 
-@Value
-public class SB01Request {
+public record SB01Request(
+        String title,
+        String text,
+        String userid,
+        String regdate,
+        String video,
+        String videopath,
+        YES_NO videobool
+) {
 
-    @NotEmpty(message = ExceptionMsg.EXT_MSG_INPUT_1)
-    String title;
+    public String getTitle() {
+        return title();
+    }
 
-    @NotEmpty(message = ExceptionMsg.EXT_MSG_INPUT_2)
-    String text;
+    public String getText() {
+        return text();
+    }
 
-    String userid;
+    public String getUserid() {
+        return userid();
+    }
 
+    public String getRegdate() {
+        return regdate();
+    }
 
-    String regdate;
+    public String getVideo() {
+        return video();
+    }
 
-    String video;
+    public String getVideopath() {
+        return videopath();
+    }
 
-    String videopath;
+    public YES_NO getVideobool() {
+        return videobool();
+    }
 
-    YES_NO videobool;
 }

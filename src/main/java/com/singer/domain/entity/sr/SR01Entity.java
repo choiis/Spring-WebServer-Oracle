@@ -3,7 +3,7 @@ package com.singer.domain.entity.sr;
 import com.singer.domain.entity.BoardEntity;
 import java.util.List;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;

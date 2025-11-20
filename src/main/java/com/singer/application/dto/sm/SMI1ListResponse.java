@@ -1,11 +1,13 @@
 package com.singer.application.dto.sm;
 
 import java.util.List;
-import lombok.Value;
 
-@Value
-public class SMI1ListResponse {
+public record SMI1ListResponse(
+        List<SMI1Response> list
+) {
 
-	List<SMI1Response> list;
+    public List<SMI1Response> getList() {
+        return list();
+    }
 
 }

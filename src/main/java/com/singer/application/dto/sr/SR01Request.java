@@ -1,25 +1,49 @@
 package com.singer.application.dto.sr;
 
 import com.singer.common.exception.ExceptionMsg;
-import javax.validation.constraints.NotEmpty;
-import lombok.Value;
+import jakarta.validation.constraints.NotEmpty;
 
-@Value
-public class SR01Request {
+public record SR01Request(
+        String title,
+        String text,
+        String userid,
+        String markertitle,
+        int grade,
+        double mapx,
+        double mapy,
+        String regdate
+) {
 
-    @NotEmpty(message = ExceptionMsg.EXT_MSG_INPUT_1)
-    String title;
+    public String getTitle() {
+        return title();
+    }
 
-    @NotEmpty(message = ExceptionMsg.EXT_MSG_INPUT_2)
-    String text;
+    public String getText() {
+        return text();
+    }
 
-    String userid;
+    public String getUserid() {
+        return userid();
+    }
 
-    String markertitle;
+    public String getMarkertitle() {
+        return markertitle();
+    }
 
-    int grade;
-    double mapx;
-    double mapy;
-    String regdate;
+    public int getGrade() {
+        return grade();
+    }
+
+    public double getMapx() {
+        return mapx();
+    }
+
+    public double getMapy() {
+        return mapy();
+    }
+
+    public String getRegdate() {
+        return regdate();
+    }
 
 }

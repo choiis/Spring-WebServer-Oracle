@@ -1,14 +1,23 @@
 package com.singer.application.dto.sf;
 
 import java.util.List;
-import lombok.Value;
 
-@Value
-public class SF01ListResponse {
+public record SF01ListResponse(
+        List<SF01Response> list,
+        int nowPage,
+        int totCnt
+) {
 
-    List<SF01Response> list;
+    public List<SF01Response> getList() {
+        return list();
+    }
 
-    int nowPage;
+    public int getNowPage() {
+        return nowPage();
+    }
 
-    int totCnt;
+    public int getTotCnt() {
+        return totCnt();
+    }
+
 }

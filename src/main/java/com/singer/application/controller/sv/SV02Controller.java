@@ -4,7 +4,7 @@ import com.singer.application.controller.BaseController;
 import com.singer.application.dto.sv.SV03ListRequest;
 import com.singer.application.dto.sv.SV04Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

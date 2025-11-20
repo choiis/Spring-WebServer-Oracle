@@ -1,41 +1,98 @@
 package com.singer.application.dto.sv;
 
 import java.util.List;
-import lombok.Value;
 
-@Value
-public class SV01Response {
+public record SV01Response(
+        int seq,
+        String title,
+        String text,
+        String userid,
+        int good,
+        int hit,
+        String showDate,
+        String regdate,
+        int reply,
+        boolean deleteYn,
+        String goodlog,
+        String hatelog,
+        int votedCnt,
+        int multiselect,
+        int votedYn,
+        int totCnt,
+        List<SV02Response> sv02Vos,
+        int result
+) {
 
-    int seq;
+    public int getSeq() {
+        return seq();
+    }
 
-    String title;
-    String text;
+    public String getTitle() {
+        return title();
+    }
 
-    String userid;
+    public String getText() {
+        return text();
+    }
 
-    int good;
+    public String getUserid() {
+        return userid();
+    }
 
-    int hit;
+    public int getGood() {
+        return good();
+    }
 
-    String showDate;
-    String regdate;
+    public int getHit() {
+        return hit();
+    }
 
-    int reply;
+    public String getShowDate() {
+        return showDate();
+    }
 
-    boolean deleteYn;
-    String goodlog;
+    public String getRegdate() {
+        return regdate();
+    }
 
-    String hatelog;
+    public int getReply() {
+        return reply();
+    }
 
-    int votedCnt;
+    public boolean getDeleteYn() {
+        return deleteYn();
+    }
 
-    int multiselect;
+    public String getGoodlog() {
+        return goodlog();
+    }
 
-    int votedYn;
+    public String getHatelog() {
+        return hatelog();
+    }
 
-    int totCnt;
+    public int getVotedCnt() {
+        return votedCnt();
+    }
 
-    List<SV02Response> sv02Vos;
+    public int getMultiselect() {
+        return multiselect();
+    }
 
-    int result;
+    public int getVotedYn() {
+        return votedYn();
+    }
+
+    public int getTotCnt() {
+        return totCnt();
+    }
+
+    public List<SV02Response> getSv02Vos() {
+        return sv02Vos();
+    }
+
+    public int getResult() {
+        return result();
+    }
+
 }

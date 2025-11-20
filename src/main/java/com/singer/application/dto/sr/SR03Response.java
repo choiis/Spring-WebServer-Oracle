@@ -1,20 +1,46 @@
 package com.singer.application.dto.sr;
 
-import lombok.Value;
+public record SR03Response(
+        int seq,
+        int seq01,
+        String userid,
+        String text,
+        int good,
+        int reply,
+        String regdate,
+        boolean deleteYn
+) {
 
-@Value
-public class SR03Response {
+    public int getSeq() {
+        return seq();
+    }
 
-    int seq;
+    public int getSeq01() {
+        return seq01();
+    }
 
-    int seq01;
-    String userid;
-    String text;
-    int good;
-    int reply;
+    public String getUserid() {
+        return userid();
+    }
 
-    protected String regdate;
+    public String getText() {
+        return text();
+    }
 
-    boolean deleteYn;
+    public int getGood() {
+        return good();
+    }
+
+    public int getReply() {
+        return reply();
+    }
+
+    public String getRegdate() {
+        return regdate();
+    }
+
+    public boolean getDeleteYn() {
+        return deleteYn();
+    }
 
 }

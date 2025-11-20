@@ -1,22 +1,34 @@
 package com.singer.application.dto.sf;
 
 import com.singer.common.exception.ExceptionMsg;
-import javax.validation.constraints.NotEmpty;
-import lombok.Value;
+import jakarta.validation.constraints.NotEmpty;
 
-@Value
-public class SF01Request {
+public record SF01Request(
+        String title,
+        String text,
+        String userid,
+        String regdate,
+        String filename
+) {
 
-    @NotEmpty(message = ExceptionMsg.EXT_MSG_INPUT_1)
-    String title;
+    public String getTitle() {
+        return title();
+    }
 
-    @NotEmpty(message = ExceptionMsg.EXT_MSG_INPUT_2)
-    String text;
+    public String getText() {
+        return text();
+    }
 
-    String userid;
+    public String getUserid() {
+        return userid();
+    }
 
+    public String getRegdate() {
+        return regdate();
+    }
 
-    String regdate;
+    public String getFilename() {
+        return filename();
+    }
 
-    String filename;
 }

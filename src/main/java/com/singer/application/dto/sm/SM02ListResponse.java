@@ -1,14 +1,23 @@
 package com.singer.application.dto.sm;
 
 import java.util.List;
-import lombok.Value;
 
-@Value
-public class SM02ListResponse {
+public record SM02ListResponse(
+        List<SM02Response> list,
+        int nowPage,
+        int totCnt
+) {
 
-	List<SM02Response> list;
+    public List<SM02Response> getList() {
+        return list();
+    }
 
-	int nowPage;
+    public int getNowPage() {
+        return nowPage();
+    }
 
-	int totCnt;
+    public int getTotCnt() {
+        return totCnt();
+    }
+
 }

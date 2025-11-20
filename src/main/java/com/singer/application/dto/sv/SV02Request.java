@@ -1,6 +1,6 @@
 package com.singer.application.dto.sv;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 import com.singer.common.exception.ExceptionMsg;
 

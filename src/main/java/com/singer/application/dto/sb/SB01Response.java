@@ -1,37 +1,88 @@
 package com.singer.application.dto.sb;
 
 import com.singer.common.util.Constants.YES_NO;
-import lombok.Value;
 
-@Value
-public class SB01Response {
+public record SB01Response(
+        int seq,
+        String title,
+        String text,
+        String userid,
+        int good,
+        int hit,
+        String showDate,
+        String regdate,
+        int reply,
+        boolean deleteYn,
+        String goodlog,
+        String hatelog,
+        String video,
+        String videopath,
+        YES_NO videobool,
+        int result
+) {
 
-    int seq;
+    public int getSeq() {
+        return seq();
+    }
 
-    String title;
-    String text;
+    public String getTitle() {
+        return title();
+    }
 
-    String userid;
+    public String getText() {
+        return text();
+    }
 
-    int good;
+    public String getUserid() {
+        return userid();
+    }
 
-    int hit;
+    public int getGood() {
+        return good();
+    }
 
-    String showDate;
-    String regdate;
+    public int getHit() {
+        return hit();
+    }
 
-    int reply;
+    public String getShowDate() {
+        return showDate();
+    }
 
-    boolean deleteYn;
-    String goodlog;
+    public String getRegdate() {
+        return regdate();
+    }
 
-    String hatelog;
+    public int getReply() {
+        return reply();
+    }
 
-    String video;
+    public boolean getDeleteYn() {
+        return deleteYn();
+    }
 
-    String videopath;
+    public String getGoodlog() {
+        return goodlog();
+    }
 
-    YES_NO videobool;
+    public String getHatelog() {
+        return hatelog();
+    }
 
-    int result;
+    public String getVideo() {
+        return video();
+    }
+
+    public String getVideopath() {
+        return videopath();
+    }
+
+    public YES_NO getVideobool() {
+        return videobool();
+    }
+
+    public int getResult() {
+        return result();
+    }
+
 }

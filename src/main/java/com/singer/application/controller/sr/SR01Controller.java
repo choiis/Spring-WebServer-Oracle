@@ -7,9 +7,9 @@ import com.singer.application.dto.sr.SR01Response;
 import java.io.InputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;

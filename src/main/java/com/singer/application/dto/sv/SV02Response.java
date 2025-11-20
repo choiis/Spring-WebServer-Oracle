@@ -1,15 +1,21 @@
 package com.singer.application.dto.sv;
 
-import lombok.Value;
+public record SV02Response(
+        int idx,
+        String content,
+        int voted
+) {
 
-@Value
-public class SV02Response {
+    public int getIdx() {
+        return idx();
+    }
 
-    int idx;
+    public String getContent() {
+        return content();
+    }
 
-    String content;
-
-    int voted;
-
+    public int getVoted() {
+        return voted();
+    }
 
 }

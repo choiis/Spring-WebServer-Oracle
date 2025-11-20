@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,7 +78,7 @@ public class SB01Service {
 			throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
 		}
 
-		String path = s3Properties.getTempPath();
+		String path = s3Properties.tempPath();
 		File file = new File(path + "/" + sb.toString());
 		video.transferTo(file);
 
@@ -148,7 +148,7 @@ public class SB01Service {
 				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_5);
 			}
 
-			String path = s3Properties.getTempPath();
+			String path = s3Properties.tempPath();
 			File file = new File(path + "/" + sb.toString());
 			video.transferTo(file);
 			String deletedPath = sb01Dao.selectVideo(sb01Entity);

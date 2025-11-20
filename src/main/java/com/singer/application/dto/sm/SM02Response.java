@@ -1,16 +1,26 @@
 package com.singer.application.dto.sm;
 
-import lombok.Value;
+public record SM02Response(
+        String title,
+        String text,
+        String regdate,
+        int seq
+) {
 
-@Value
-public class SM02Response {
+    public String getTitle() {
+        return title();
+    }
 
-	String title;
+    public String getText() {
+        return text();
+    }
 
-	String text;
+    public String getRegdate() {
+        return regdate();
+    }
 
-	String regdate;
-
-	int seq;
+    public int getSeq() {
+        return seq();
+    }
 
 }

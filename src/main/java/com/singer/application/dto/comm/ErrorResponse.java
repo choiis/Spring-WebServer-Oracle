@@ -1,12 +1,18 @@
 package com.singer.application.dto.comm;
 
-import lombok.Value;
 import org.springframework.http.HttpStatus;
 
-@Value
-public class ErrorResponse {
+public record ErrorResponse(
+        HttpStatus errorCode,
+        String errorMsg
+) {
 
-    HttpStatus errorCode;
+    public HttpStatus getErrorCode() {
+        return errorCode();
+    }
 
-    String errorMsg;
+    public String getErrorMsg() {
+        return errorMsg();
+    }
+
 }

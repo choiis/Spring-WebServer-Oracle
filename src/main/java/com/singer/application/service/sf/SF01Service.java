@@ -73,7 +73,7 @@ public class SF01Service {
 		String ftpfilename = sf01Entity.getRegdate() + "." + CommonUtil.getExtensionName(filename);
 
 		sf01Entity.setFtpfilename(ftpfilename);
-		File file = new File(s3Properties.getTempPath() + "/" + ftpfilename);
+		File file = new File(s3Properties.tempPath() + "/" + ftpfilename);
 		multipartFile.transferTo(file);
 
 		s3Util.putS3File(S3_FILE_PATH + ftpfilename, file);
@@ -179,7 +179,7 @@ public class SF01Service {
 		@Cleanup
 		InputStream inputStream = s3Util.getS3FileStream(S3_FILE_PATH + filename);
 
-		File file = new File(s3Properties.getTempPath() + "/" + filename);
+		File file = new File(s3Properties.tempPath() + "/" + filename);
 		FileUtils.copyInputStreamToFile(inputStream, file);
 
 		sf01Entity.setDownuserid(userid);

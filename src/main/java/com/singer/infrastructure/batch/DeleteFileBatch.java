@@ -31,7 +31,7 @@ public class DeleteFileBatch extends QuartzJobBean {
 
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-		String path = s3Properties.getTempPath();
+		String path = s3Properties.tempPath();
 		Path deletePath = Paths.get(path);
 		Consumer<Path> consumer = filePath -> {
 			Stream<Path> stream;

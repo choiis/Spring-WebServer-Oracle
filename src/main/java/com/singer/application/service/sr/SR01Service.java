@@ -67,7 +67,7 @@ public class SR01Service {
 		int idx = 0;
 		ArrayList<SR01Entity> arrayList = new ArrayList<>();
 		String today = DateUtil.getToday();
-		String path = s3Properties.getTempPath();
+		String path = s3Properties.tempPath();
 		for (MultipartFile photo : fileList) {
 			if (photo.getSize() == 0) {
 				continue;
