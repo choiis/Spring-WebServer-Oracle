@@ -20,15 +20,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.singer.infrastructure.config.S3Properties;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RequestMapping("/api/comm")
+
+@RestController
 @Slf4j
 public class StreamController extends BaseController {
 
 	@Autowired
 	private S3Properties s3Properties;
 
-	@RequestMapping(value = "/comm/videoStreaming", method = RequestMethod.GET)
+	@RequestMapping(value = "/videoStreaming", method = RequestMethod.GET)
 	public ResponseEntity<ResourceRegion> videoStreaming(@RequestHeader HttpHeaders headers) throws IOException {
 		log.info("videoStreaming!!!");
 

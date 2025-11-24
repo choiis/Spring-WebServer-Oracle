@@ -23,8 +23,11 @@ import com.singer.application.service.comm.CommService;
 import com.singer.domain.entity.CommEntity;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RequestMapping("/api/comm")
+
+@RestController
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @Slf4j
 public class CommController extends BaseController {
@@ -32,26 +35,11 @@ public class CommController extends BaseController {
 	@Autowired
 	private CommService commService;
 
-	@RequestMapping(value = "/comm/chat/page", method = RequestMethod.GET)
-	public ModelAndView toShowChatting() throws Exception {
-		ModelAndView model = new ModelAndView("/chatting");
-		return model;
-	}
 
-	@RequestMapping(value = "/comm/menu/page", method = RequestMethod.GET)
-	public ModelAndView toShowmenu() throws Exception {
-		ModelAndView model = new ModelAndView("/menu");
-		return model;
-	}
 
-	@RequestMapping(value = "/comm/code/page", method = RequestMethod.GET)
-	public ModelAndView toShowcode() throws Exception {
-		ModelAndView model = new ModelAndView("/code");
-		return model;
-	}
 
 	@ResponseBody
-	@RequestMapping(value = "/comm/code/{codegrp}", method = RequestMethod.GET)
+	@RequestMapping(value = "/code/{codegrp}", method = RequestMethod.GET)
 	public ResponseEntity<CommEntity> toSelectCommCode(@ModelAttribute CommEntity commVo) throws Exception {
 		log.debug("CommVo : " + commVo);
 
@@ -62,7 +50,7 @@ public class CommController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/comm/codeGrp", method = RequestMethod.GET)
+	@RequestMapping(value = "/codeGrp", method = RequestMethod.GET)
 	public ResponseEntity<CommEntity> toSelectCommCodeGrp(@ModelAttribute CommEntity commVo) throws Exception {
 
 		log.debug("CommVo : " + commVo);
@@ -74,7 +62,7 @@ public class CommController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/comm/menu", method = RequestMethod.GET)
+	@RequestMapping(value = "/menu", method = RequestMethod.GET)
 	public ResponseEntity<CommEntity> toSelectMenu(HttpServletRequest request) throws Exception {
 		CommEntity commVo = new CommEntity();
 
@@ -85,7 +73,7 @@ public class CommController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/comm/menu", method = RequestMethod.POST)
+	@RequestMapping(value = "/menu", method = RequestMethod.POST)
 	public ResponseEntity<CommEntity> toInsertMenu(@RequestBody CommEntity commVo, HttpServletRequest request)
 			throws Exception {
 
@@ -100,7 +88,7 @@ public class CommController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/comm/menu/{menucd}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/menu/{menucd}", method = RequestMethod.DELETE)
 	public ResponseEntity<CommEntity> toDeleteMenu(@ModelAttribute CommEntity commVo, HttpServletRequest request)
 			throws Exception {
 
@@ -116,7 +104,7 @@ public class CommController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/comm/menu", method = RequestMethod.PUT)
+	@RequestMapping(value = "/menu", method = RequestMethod.PUT)
 	public ResponseEntity<CommEntity> toUpdateMenu(@RequestBody CommEntity commVo, HttpServletRequest request)
 			throws Exception {
 
@@ -131,7 +119,7 @@ public class CommController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/comm/code", method = RequestMethod.POST)
+	@RequestMapping(value = "/code", method = RequestMethod.POST)
 	public ResponseEntity<CommEntity> toInsertCode(@RequestBody CommEntity commVo, HttpServletRequest request)
 			throws Exception {
 
@@ -145,7 +133,7 @@ public class CommController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/comm/code/{codegrp}/{codecd}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/code/{codegrp}/{codecd}", method = RequestMethod.DELETE)
 	public ResponseEntity<CommEntity> toDeleteCode(@ModelAttribute CommEntity commVo, HttpServletRequest request)
 			throws Exception {
 
@@ -158,7 +146,7 @@ public class CommController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/comm/code", method = RequestMethod.PUT)
+	@RequestMapping(value = "/code", method = RequestMethod.PUT)
 	public ResponseEntity<CommEntity> toUpdateCode(CommEntity commVo, HttpServletRequest request) throws Exception {
 
 		log.debug("CommVo : " + commVo);
@@ -168,12 +156,5 @@ public class CommController extends BaseController {
 		return new ResponseEntity<CommEntity>(commVo, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/authExpire")
-	public ModelAndView authExpire() throws Exception {
-
-		ModelAndView model = new ModelAndView("/authExpire");
-
-		return model;
-	}
 
 }

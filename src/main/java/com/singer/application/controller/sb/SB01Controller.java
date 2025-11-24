@@ -27,8 +27,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RequestMapping("/api/sb01")
+
+@RestController
 @Slf4j
 public class SB01Controller extends BaseController {
 
@@ -36,35 +39,11 @@ public class SB01Controller extends BaseController {
     @Autowired
     private SB01Service sb01Service;
 
-    @RequestMapping(value = "/sb01/page", method = RequestMethod.GET)
-    public ModelAndView showSB01() throws Exception {
-        ModelAndView model = new ModelAndView("/sb01view");
-        return model;
-    }
 
-    @RequestMapping(value = "/sb01/insertPage", method = RequestMethod.GET)
-    public ModelAndView insertPageSB01() throws Exception {
-        ModelAndView model = new ModelAndView("/sb01insert");
-        return model;
-    }
+
 
     @ResponseBody
-    @RequestMapping(value = "/sb01/show_detail/{seq}", method = RequestMethod.GET)
-    public ModelAndView selectOneSB01View(@PathVariable int seq, HttpServletRequest request) throws Exception {
-        log.debug("enter sb01show_detail get");
-
-        ModelAndView model = new ModelAndView("/sb01view_detail");
-
-        String userid = getSessionId(request);
-        SB01Response response = sb01Service.selectOneSB01(seq, userid);
-        model.addObject("sb01Vo", response);
-
-        log.debug("exit sb01show_detail get");
-        return model;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/sb01", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<SB01Response> insertSB01Vo(@ModelAttribute @Valid SB01Request sb01Request,
         MultipartHttpServletRequest request) throws Exception {
         log.debug("enter sb01 post");
@@ -78,7 +57,7 @@ public class SB01Controller extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/sb01/{nowPage}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{nowPage}", method = RequestMethod.GET)
     public ResponseEntity<SB01ListResponse> selectSB01Vo(@PathVariable int nowPage) throws Exception {
         log.debug("enter sb01 get");
 
@@ -89,7 +68,7 @@ public class SB01Controller extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/sb01/seq/{seq}", method = RequestMethod.GET)
+    @RequestMapping(value = "/seq/{seq}", method = RequestMethod.GET)
     public ResponseEntity<SB01Response> selectOneSB01Vo(@PathVariable int seq, HttpServletRequest request)
         throws Exception {
         log.debug("enter sb01/seq get");
@@ -102,7 +81,7 @@ public class SB01Controller extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/sb01/video/{seq}", method = RequestMethod.GET)
+    @RequestMapping(value = "/video/{seq}", method = RequestMethod.GET)
     public void selectVideoSB01Vo(@PathVariable int seq, HttpServletRequest request,
         HttpServletResponse response) throws Exception {
         log.debug("enter sb01Video get");
@@ -116,7 +95,7 @@ public class SB01Controller extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/sb01/{seq}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
     public ResponseEntity<SB01Response> deleteSB01Vo(@PathVariable int seq, HttpServletRequest request)
         throws Exception {
         log.debug("enter sb01 delete");
@@ -129,7 +108,7 @@ public class SB01Controller extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/sb01/like/{seq}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/like/{seq}", method = RequestMethod.PATCH)
     public ResponseEntity<SB01Response> likeSB01Vo(@PathVariable int seq, HttpServletRequest request)
         throws Exception {
         log.debug("enter sb01like put");
@@ -143,7 +122,7 @@ public class SB01Controller extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/sb01/hate/{seq}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/hate/{seq}", method = RequestMethod.PATCH)
     public ResponseEntity<SB01Response> hateSB01Vo(@PathVariable int seq, HttpServletRequest request)
         throws Exception {
         log.debug("enter sb01hate put");

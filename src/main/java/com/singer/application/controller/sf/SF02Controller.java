@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.singer.application.service.sf.SF02Service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/sf01")
-@Controller
+@RequestMapping("/api/sf02")
+
+@RestController
 @Slf4j
 public class SF02Controller extends BaseController {
 	
@@ -32,7 +34,7 @@ public class SF02Controller extends BaseController {
 	private SF02Service sf02Service;
 
 	@ResponseBody
-	@RequestMapping(value = "/sf02/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SF02ListResponse> selectSF02Vo(@PathVariable int seq01, @PathVariable int parents,
 			@PathVariable int nowPage, HttpServletRequest request) throws Exception {
 		log.debug("enter sf02 get");
@@ -45,7 +47,7 @@ public class SF02Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf02", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<SF02Response> insertSF02Vo(@RequestBody @Valid SF02Request sf02Request,
 			HttpServletRequest request) throws Exception {
 		log.debug("enter sf02 post");
@@ -58,7 +60,7 @@ public class SF02Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf02/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
 	public ResponseEntity<SF02Response> deleteSF02Vo(@PathVariable int seq, @PathVariable int seq01,
 			@PathVariable int parents, HttpServletRequest request) throws Exception {
 		log.debug("enter sf02 delete");

@@ -22,8 +22,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.singer.application.service.sm.SM02Service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RequestMapping("/api/sm02")
+
+@RestController
 @Slf4j
 public class SM02Controller extends BaseController {
 
@@ -31,7 +34,7 @@ public class SM02Controller extends BaseController {
 	private SM02Service sm02Service;
 
 	@ResponseBody
-	@RequestMapping(value = "/sm02/{nowPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SM02ListResponse> selectSM02(@PathVariable int nowPage, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sm02 get");
@@ -44,7 +47,7 @@ public class SM02Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sm02/{seq}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseEntity<SM02Response> deleteSM02(@PathVariable int seq, HttpServletRequest request) throws Exception {
 		log.debug("enter sm02 delete");
 		String userid = getSessionId(request);
@@ -56,7 +59,7 @@ public class SM02Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sm02", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<SM02Response> insertSM02(@RequestBody @Valid SM02Request sm02Request,
 			HttpServletRequest request) throws Exception {
 		log.debug("enter sm02 post");

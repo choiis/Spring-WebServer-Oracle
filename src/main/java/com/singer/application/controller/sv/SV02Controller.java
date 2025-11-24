@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.singer.application.service.sv.SV02Service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/sv01")
-@Controller
+@RequestMapping("/api/sv03")
+
+@RestController
 @Slf4j
 public class SV02Controller extends BaseController {
 
@@ -28,7 +30,7 @@ public class SV02Controller extends BaseController {
     private SV02Service sv02Service;
 
     @ResponseBody
-    @RequestMapping(value = "/sv03", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<SV04Response> insertSV03Vo(@RequestBody SV03ListRequest listRequest,
         HttpServletRequest request)
         throws Exception {

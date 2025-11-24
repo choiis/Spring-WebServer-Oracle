@@ -15,23 +15,21 @@ import com.singer.application.dto.sm.SMI1ListResponse;
 import com.singer.application.service.sm.SMI1Service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RequestMapping("/api/smi1")
+
+@RestController
 @Slf4j
 public class SMI1Controller {
 
 	@Autowired
 	private SMI1Service smi1Service;
 
-	@RequestMapping(value = "/smi1/page", method = RequestMethod.GET)
-	public ModelAndView page() {
-		ModelAndView model = new ModelAndView("smi1view");
-
-		return model;
-	}
+	
 
 	@ResponseBody
-	@RequestMapping(value = "/smi1", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<SMI1ListResponse> selectSMI1(@RequestParam(value = "searchCode") String searchCode,
 			@RequestParam(value = "searchParam") String searchParam) throws Exception {
 		log.debug("enter smi1 get");

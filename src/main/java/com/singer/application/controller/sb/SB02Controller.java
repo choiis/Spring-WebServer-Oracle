@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/sb01")
-@Controller
+@RequestMapping("/api/sb02")
+
+@RestController
 @Slf4j
 public class SB02Controller extends BaseController {
 
@@ -30,7 +32,7 @@ public class SB02Controller extends BaseController {
     private SB02Service sb02Service;
 
     @ResponseBody
-    @RequestMapping(value = "/sb02/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{seq01}/{parents}/{nowPage}", method = RequestMethod.GET)
     public ResponseEntity<SB02ListResponse> selectSB02Vo(@PathVariable int seq01,
         @PathVariable int parents, @PathVariable int nowPage, HttpServletRequest request)
         throws Exception {
@@ -44,7 +46,7 @@ public class SB02Controller extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/sb02", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<SB02Response> insertSB02Vo(@RequestBody @Valid SB02Request sb02Request, HttpServletRequest request)
         throws Exception {
         log.debug("enter sb02 post");
@@ -57,7 +59,7 @@ public class SB02Controller extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/sb02/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{seq}/{seq01}/{parents}", method = RequestMethod.DELETE)
     public ResponseEntity<SB02Response> deleteSB02Vo(@PathVariable int seq,
         @PathVariable int seq01, @PathVariable int parents, HttpServletRequest request)
         throws Exception {

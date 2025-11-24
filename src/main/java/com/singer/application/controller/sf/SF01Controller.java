@@ -31,43 +31,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RequestMapping("/api/sf01")
+
+@RestController
 @Slf4j
 public class SF01Controller extends BaseController {
 
 	@Autowired
 	private SF01Service sf01Service;
 
-	@RequestMapping(value = "/sf01/page", method = RequestMethod.GET)
-	public ModelAndView showSF01() throws Exception {
-		ModelAndView model = new ModelAndView("/sf01view");
-		return model;
-	}
 
-	@RequestMapping(value = "/sf01/insertPage", method = RequestMethod.GET)
-	public ModelAndView insertPageSF01() throws Exception {
-		ModelAndView model = new ModelAndView("/sf01insert");
-		return model;
-	}
+
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01/show_detail/{seq}", method = RequestMethod.GET)
-	public ModelAndView selectOneSF01VoView(@PathVariable int seq, HttpServletRequest request) throws Exception {
-		log.debug("enter sf01show_detail get");
-
-		ModelAndView model = new ModelAndView("/sf01view_detail");
-
-		String userid = getSessionId(request);
-		SF01Response sf01Response = sf01Service.selectOneSF01(seq, userid);
-		model.addObject("sf01Vo", sf01Response);
-
-		log.debug("exit sf01show_detail get");
-		return model;
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/sf01", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<SF01Response> insertSF01Vo(@ModelAttribute @Valid SF01Request sf01Request,
 			MultipartHttpServletRequest request) throws Exception {
 		log.debug("enter sf01 post");
@@ -81,7 +60,7 @@ public class SF01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01/{nowPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SF01ListResponse> selectSF01Vo(@PathVariable int nowPage) throws Exception {
 		log.debug("enter sf01 get");
 
@@ -92,7 +71,7 @@ public class SF01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01/seq/{seq}", method = RequestMethod.GET)
+	@RequestMapping(value = "/seq/{seq}", method = RequestMethod.GET)
 	public ResponseEntity<SF01Response> selectOneSF01Vo(@PathVariable int seq, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter /sf01/seq get");
@@ -105,7 +84,7 @@ public class SF01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01/file/{seq}", method = RequestMethod.GET)
+	@RequestMapping(value = "/file/{seq}", method = RequestMethod.GET)
 	public ResponseEntity<Object> selectFileSF01Vo(@PathVariable int seq, HttpServletRequest request) throws Exception {
 		log.debug("enter sf01File get");
 
@@ -121,7 +100,7 @@ public class SF01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01/{seq}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseEntity<SF01Response> deleteSF01Vo(@PathVariable int seq, HttpServletRequest request)
 			throws Exception {
 		log.debug("enter sf01 delete");
@@ -134,7 +113,7 @@ public class SF01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01/like/{seq}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/like/{seq}", method = RequestMethod.PATCH)
 	public ResponseEntity<SF01Response> likeSF01Vo(@PathVariable int seq, HttpServletRequest request) throws Exception {
 		log.debug("enter sf01like put");
 
@@ -147,7 +126,7 @@ public class SF01Controller extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/sf01/hate/{seq}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/hate/{seq}", method = RequestMethod.PATCH)
 	public ResponseEntity<SF01Response> hateSF01Vo(@PathVariable int seq, HttpServletRequest request) throws Exception {
 		log.debug("enter sf01hate put");
 

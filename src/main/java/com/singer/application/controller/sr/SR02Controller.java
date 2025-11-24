@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.singer.application.service.sr.SR02Service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/sr01")
-@Controller
+@RequestMapping("/api/sr02")
+
+@RestController
 @Slf4j
 public class SR02Controller extends BaseController {
 
@@ -30,7 +32,7 @@ public class SR02Controller extends BaseController {
     private SR02Service sr02Service;
 
     @ResponseBody
-    @RequestMapping(value = "/sr02", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<SR02Response> insertSR02Vo(@RequestBody @Valid SR02Request sr02Request,
         HttpServletRequest request)
         throws Exception {
@@ -44,7 +46,7 @@ public class SR02Controller extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "sr02/{seq}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
     public ResponseEntity<SR02Response> deleteSR02Vo(@PathVariable int seq, HttpServletRequest request)
         throws Exception {
         log.debug("enter sr02 delete");
@@ -55,7 +57,7 @@ public class SR02Controller extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "sr02/{seq}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{seq}", method = RequestMethod.GET)
     public ResponseEntity<SR02Response> selectOneSR02Vo(@PathVariable int seq, HttpServletRequest request)
         throws Exception {
         log.debug("enter sr02 get");
