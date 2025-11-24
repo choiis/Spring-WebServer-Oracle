@@ -30,12 +30,6 @@ public class SM02Controller extends BaseController {
 	@Autowired
 	private SM02Service sm02Service;
 
-	@RequestMapping(value = "/sm02/page", method = RequestMethod.GET)
-	public ModelAndView showSM02() throws Exception {
-		ModelAndView model = new ModelAndView("/sm02view");
-		return model;
-	}
-
 	@ResponseBody
 	@RequestMapping(value = "/sm02/{nowPage}", method = RequestMethod.GET)
 	public ResponseEntity<SM02ListResponse> selectSM02(@PathVariable int nowPage, HttpServletRequest request)

@@ -35,13 +35,6 @@ public class SM01Controller extends BaseController {
     @Autowired
     private SM01Service sm01Service;
 
-    @RequestMapping(value = "/sm01/joinPage", method = RequestMethod.GET)
-    public ModelAndView joinPage() {
-
-        ModelAndView model = new ModelAndView("/join");
-
-        return model;
-    }
 
     @RequestMapping(value = "/sm01", method = RequestMethod.POST)
     public ResponseEntity<SM01Entity> insertSM01Vo(@ModelAttribute @Valid SM01Entity sm01Vo,
@@ -51,12 +44,6 @@ public class SM01Controller extends BaseController {
 
         log.debug("exit sm01 post");
         return new ResponseEntity<SM01Entity>(sm01Vo, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/sm01/page", method = RequestMethod.GET)
-    public ModelAndView showSM01() {
-        ModelAndView model = new ModelAndView("/sm01list");
-        return model;
     }
 
     @ResponseBody
