@@ -8,8 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/smi1")
-
+@RequestMapping("/api/v1/smi1")
 @RestController
 @Slf4j
 public class SMI1Controller {

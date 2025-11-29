@@ -1,5 +1,6 @@
 package com.singer.application.service.sm;
 
+import com.singer.application.dto.sm.SM01UpdateRequest;
 import com.singer.common.exception.AppException;
 import com.singer.common.exception.ClientException;
 import com.singer.common.exception.ExceptionMsg;
@@ -133,78 +134,21 @@ public class SM01Service {
 		return is;
 	}
 
-	@Transactional(rollbackFor = { Exception.class })
-	public SM01Entity updateSM01Vo(SM01Entity sm01Vo, MultipartHttpServletRequest request, String userId) throws Exception {
+    @Transactional(rollbackFor = { Exception.class })
+    public void updateSM01(String userid, SM01UpdateRequest request) throws Exception {
 
-		MultipartFile photo = null;
-		Iterator<String> itr = request.getFileNames();
+        SM01Entity entity = new SM01Entity();
+        entity.setUserid(userid);
+        entity.setUsername(request.username());
+        entity.setBrth(request.brth());
+        entity.setEmail(request.email());
 
-		while (itr.hasNext()) {
-			photo = request.getFile(itr.next());
-		}
-		// ���옣�썑
-		sm01Dao.updateSM01Vo(sm01Vo);
-		// �쟾�솕踰덊샇 蹂�寃�
-		if (!StringUtils.isEmpty(sm01Vo.getCellpcnum()) && !StringUtils.isEmpty(sm01Vo.getCellpbnum())) {
-			SM01Entity vo = new SM01Entity();
-			vo.setUserid(sm01Vo.getUserid());
-			vo.setInfocode(PHONE_INFO_CODE.CELL);
-			vo.setPfnum(sm01Vo.getCellpfnum());
-			vo.setPcnum(sm01Vo.getCellpcnum());
-			vo.setPbnum(sm01Vo.getCellpbnum());
-			vo.setRegdate(DateUtil.getToday());
-			sm01Dao.insertSMI1Vo(vo);
-		}
+        if (StringUtils.isNotBlank(request.passwd())) {
+            entity.setPasswd(request.passwd());
+        }
 
-		if (!StringUtils.isEmpty(sm01Vo.getHomepcnum()) && !StringUtils.isEmpty(sm01Vo.getHomepbnum())) {
-			SM01Entity vo = new SM01Entity();
-			vo.setUserid(sm01Vo.getUserid());
-			vo.setInfocode(PHONE_INFO_CODE.HOME);
-			vo.setPfnum(sm01Vo.getHomepfnum());
-			vo.setPcnum(sm01Vo.getHomepcnum());
-			vo.setPbnum(sm01Vo.getHomepbnum());
-			vo.setRegdate(DateUtil.getToday());
-			sm01Dao.insertSMI1Vo(vo);
-		}
-
-		if (!StringUtils.isEmpty(sm01Vo.getCompanypcnum()) && !StringUtils.isEmpty(sm01Vo.getCompanypbnum())) {
-			SM01Entity vo = new SM01Entity();
-			vo.setUserid(sm01Vo.getUserid());
-			vo.setInfocode(PHONE_INFO_CODE.COMPANY);
-			vo.setPfnum(sm01Vo.getCompanypfnum());
-			vo.setPcnum(sm01Vo.getCompanypcnum());
-			vo.setPbnum(sm01Vo.getCompanypbnum());
-			vo.setRegdate(DateUtil.getToday());
-			sm01Dao.insertSMI1Vo(vo);
-		}
-
-		if (!StringUtils.isEmpty(sm01Vo.getOtherpcnum()) && !StringUtils.isEmpty(sm01Vo.getOtherpbnum())) {
-			SM01Entity vo = new SM01Entity();
-			vo.setUserid(sm01Vo.getUserid());
-			vo.setInfocode(PHONE_INFO_CODE.OTHER);
-			vo.setPfnum(sm01Vo.getOtherpfnum());
-			vo.setPcnum(sm01Vo.getOtherpcnum());
-			vo.setPbnum(sm01Vo.getOtherpbnum());
-			vo.setRegdate(DateUtil.getToday());
-			sm01Dao.insertSMI1Vo(vo);
-		}
-
-		if (photo.getSize() != 0) {
-
-			if (!CommonUtil.chkIMGFile(photo.getOriginalFilename())) {
-				throw new AppException(ExceptionMsg.EXT_MSG_INPUT_4);
-			}
-			HashMap<String, Object> putHash = new HashMap<String, Object>();
-			putHash.put("userid", sm01Vo.getUserid());
-			putHash.put("regdate", DateUtil.getToday());
-			putHash.put("photo", photo.getBytes());
-
-			sm01Dao.updateImage(putHash);
-		}
-		sm01Vo.setUserid(userId);
-		// �옱 議고쉶
-		return sm01Dao.selectOneSM01Vo(sm01Vo);
-	}
+        sm01Dao.updateSM01Vo(entity);
+    }
 
 	@Transactional(rollbackFor = { Exception.class })
 	public int updateSME1Vo(SM01Entity sm01Vo, String userId) throws Exception {

@@ -13,8 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/sv01")
-
+@RequestMapping("/api/v1/sv01")
 @RestController
 @Slf4j
 public class SV01Controller extends BaseController {
@@ -74,6 +73,22 @@ public class SV01Controller extends BaseController {
 		log.debug("exit sv01 delete");
 		return new ResponseEntity<SV01Response>(HttpStatus.NO_CONTENT);
 	}
+
+    @ResponseBody
+    @RequestMapping(value = "/sv01/{seq}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateSV01(
+            @PathVariable("seq") int seq,
+            @Valid @RequestBody SV01Request request,
+            HttpServletRequest httpRequest) throws Exception {
+
+        log.debug("enter sv01 update");
+
+        String userid = getSessionId(httpRequest);
+        sv01Service.updateSV01(seq, request, userid);
+
+        log.debug("exit sv01 update");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 	@ResponseBody
 	@RequestMapping(value = "/like/{seq}", method = RequestMethod.PATCH)

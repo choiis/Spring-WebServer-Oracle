@@ -168,6 +168,25 @@ public class SF01Service {
 		return sf01Dao.deleteSF01(sf01Entity);
 	}
 
+    @Transactional(rollbackFor = { Exception.class })
+    public void updateSF01(int seq, SF01Request request, String userid) throws Exception {
+
+        SF01Entity sf01Entity = new SF01Entity();
+        sf01Entity.setSeq(seq);
+        sf01Entity.setSessionid(userid);
+        SF01Entity sf01EntityResult = sf01Dao.selectOneSF01(sf01Entity);
+
+        if (!StringUtils.equals(userid, sf01EntityResult.getUserid())) {
+            throw new ClientException(HttpStatus.FORBIDDEN);
+        }
+
+        SF01Entity entity = SF01Composer.requestToentity(request, userid);
+        entity.setSeq(seq);
+
+        updateSF01(entity);
+    }
+
+
 	public File selectFile(int seq, String userid) throws Exception {
 
 		SF01Entity sf01Entity = new SF01Entity();

@@ -171,6 +171,24 @@ public class SR01Service {
 		return sr01Dao.deleteSR01(sr01Entity);
 	}
 
+    @Transactional(rollbackFor = { Exception.class })
+    public void updateSR01(int seq, SR01Request request, String userid) throws Exception {
+        SR01Entity sr01Entity = new SR01Entity();
+        sr01Entity.setSeq(seq);
+        sr01Entity.setSessionid(userid);
+        sr01Entity.setUserid(userid);
+        SR01Entity sr01EntityResult = sr01Dao.selectOneSR01(sr01Entity);
+
+        if (!StringUtils.equals(userid, sr01EntityResult.getUserid())) {
+            throw new ClientException(HttpStatus.FORBIDDEN);
+        }
+
+        SR01Entity entity = SR01Composer.requestToentity(request, userid);
+        entity.setSeq(seq);
+
+        updateSR01(entity);
+    }
+
 	public InputStream selectPhoto(int seq, int idx) throws Exception {
 		SR01Entity sr01Entity = new SR01Entity();
 		sr01Entity.setSeq(seq);

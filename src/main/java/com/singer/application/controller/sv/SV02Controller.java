@@ -11,8 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/sv03")
-
+@RequestMapping("/api/v1/sv03")
 @RestController
 @Slf4j
 public class SV02Controller extends BaseController {

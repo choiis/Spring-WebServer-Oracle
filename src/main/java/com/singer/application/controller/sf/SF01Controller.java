@@ -22,8 +22,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-@RequestMapping("/api/sf01")
-
+@RequestMapping("/api/v1/sf01")
 @RestController
 @Slf4j
 public class SF01Controller extends BaseController {
@@ -100,6 +99,22 @@ public class SF01Controller extends BaseController {
 		log.debug("exit sf01 delete");
 		return new ResponseEntity<SF01Response>(HttpStatus.NO_CONTENT);
 	}
+
+    @ResponseBody
+    @RequestMapping(value = "/sf01/{seq}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateSF01(
+            @PathVariable("seq") int seq,
+            @Valid @RequestBody SF01Request request,
+            HttpServletRequest httpRequest) throws Exception {
+
+        log.debug("enter SF01 PUT");
+
+        String userid = getSessionId(httpRequest);
+        sf01Service.updateSF01(seq, request, userid);
+
+        log.debug("exit SF01 PUT");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 	@ResponseBody
 	@RequestMapping(value = "/like/{seq}", method = RequestMethod.PATCH)

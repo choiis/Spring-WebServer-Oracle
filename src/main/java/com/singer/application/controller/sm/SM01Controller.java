@@ -1,6 +1,7 @@
 package com.singer.application.controller.sm;
 
 import com.singer.application.controller.BaseController;
+import com.singer.application.dto.sm.SM01UpdateRequest;
 import com.singer.application.service.sm.SM01Service;
 import com.singer.domain.entity.sm.SM01Entity;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,8 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.io.InputStream;
 import java.util.List;
 
-@RequestMapping("/api/sm01")
-
+@RequestMapping("/api/v1/sm01")
 @RestController
 @Slf4j
 public class SM01Controller extends BaseController {
@@ -31,7 +31,7 @@ public class SM01Controller extends BaseController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<SM01Entity> insertSM01Vo(@ModelAttribute @Valid SM01Entity sm01Vo,
         MultipartHttpServletRequest request) throws Exception {
-        log.debug("enter sm01 pot");
+        log.debug("enter sm01 post");
         sm01Service.insertSM01Vo(sm01Vo, request);
 
         log.debug("exit sm01 post");
@@ -50,7 +50,19 @@ public class SM01Controller extends BaseController {
         return new ResponseEntity<SM01Entity>(sm01Vo, HttpStatus.OK);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/sm01/{userid}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateSM01(
+            @PathVariable("userid") String userid,
+            @Valid @RequestBody SM01UpdateRequest request) throws Exception {
 
+        log.debug("enter sm01 PUT");
+
+        sm01Service.updateSM01(userid, request);
+
+        log.debug("enter sm01 PUT");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 
     @ResponseBody

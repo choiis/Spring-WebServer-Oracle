@@ -35,6 +35,15 @@ public class SM02Service {
 		return SM02Composer.entityListToResponse(list);
 	}
 
+    @Transactional(rollbackFor = { Exception.class })
+    public void updateSM02(int seq, SM02Request request, String userid) throws Exception {
+
+        SM02Entity entity = SM02Composer.requestToEntity(request, userid);
+        entity.setSeq(seq);
+
+        sm02Dao.updateSM02(entity);
+    }
+
 	@Transactional(rollbackFor = { Exception.class })
 	public int deleteSM02(int seq, String userid) throws Exception {
 		SM02Entity entity = new SM02Entity();

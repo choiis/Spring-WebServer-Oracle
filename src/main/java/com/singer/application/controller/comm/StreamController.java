@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-@RequestMapping("/api/comm")
-
+@RequestMapping("/api/v1/comm")
 @RestController
 @Slf4j
 public class StreamController extends BaseController {

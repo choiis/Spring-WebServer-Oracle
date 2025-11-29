@@ -19,8 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.InputStream;
 
-@RequestMapping("/api/sr01")
-
+@RequestMapping("/api/v1/sr01")
 @RestController
 @Slf4j
 public class SR01Controller extends BaseController {
@@ -80,6 +79,22 @@ public class SR01Controller extends BaseController {
 		log.debug("exit sr01 delete");
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+
+    @ResponseBody
+    @RequestMapping(value = "/sr01/{seq}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateSR01(
+            @PathVariable("seq") int seq,
+            @Valid @RequestBody SR01Request request,
+            HttpServletRequest httpRequest) throws Exception {
+
+        log.debug("enter SR01 PUT");
+
+        String userid = getSessionId(httpRequest);
+        sr01Service.updateSR01(seq, request, userid);
+
+        log.debug("exit SR01 PUT");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 	@ResponseBody
 	@RequestMapping(value = "/like/{seq}", method = RequestMethod.PATCH)

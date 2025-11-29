@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/comm")
-
+@RequestMapping("/api/v1/comm")
 @RestController
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @Slf4j

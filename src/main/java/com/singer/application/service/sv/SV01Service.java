@@ -127,6 +127,24 @@ public class SV01Service {
 		return SV01Composer.entityToResponse(sv01Entity, Collections.emptyList());
 	}
 
+    @Transactional(rollbackFor = { Exception.class })
+    public void updateSV01(int seq, SV01Request request, String userid) throws Exception {
+        SV01Entity sv01Entity = new SV01Entity();
+        sv01Entity.setSeq(seq);
+        sv01Entity.setSessionid(userid);
+        sv01Entity.setUserid(userid);
+        SV01Entity sv01EntityResult = sv01Dao.selectOneSV01(sv01Entity);
+        if (!StringUtils.equals(userid, sv01EntityResult.getUserid())) {
+            throw new ClientException(HttpStatus.FORBIDDEN);
+        }
+
+        SV01Entity entity = SV01Composer.requestToEntity(request);
+        entity.setSeq(seq);
+        entity.setUserid(userid);
+
+        updateSV01(entity);
+    }
+
 	@Transactional(rollbackFor = { Exception.class })
 	public SV01Response likeSV01(int seq, String sessionid) throws Exception {
 		SV01Entity sv01Entity = new SV01Entity();

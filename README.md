@@ -26,7 +26,7 @@ Default port: `http://localhost:8090`
 
 ### 1) Login
 
-- POST `/api/auth/login`
+- POST `/api/v1/auth/login`
 - Request Body:
 
 ```json

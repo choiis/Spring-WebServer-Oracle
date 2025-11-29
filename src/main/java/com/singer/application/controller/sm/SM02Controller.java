@@ -13,8 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/sm02")
-
+@RequestMapping("/api/v1/sm02")
 @RestController
 @Slf4j
 public class SM02Controller extends BaseController {
@@ -59,4 +58,20 @@ public class SM02Controller extends BaseController {
 		log.debug("exit sm02 post");
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
+
+    @ResponseBody
+    @RequestMapping(value = "/sm02/{seq}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateSM02(
+            @PathVariable("seq") int seq,
+            @Valid @RequestBody SM02Request request,
+            HttpServletRequest httpRequest) throws Exception {
+
+        log.debug("enter SM02 PUT");
+
+        String userid = getSessionId(httpRequest); // 이미 BaseController에 있는 메서드
+        sm02Service.updateSM02(seq, request, userid);
+
+        log.debug("exit SM02 PUT");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -213,6 +213,23 @@ public class SB01Service {
 		return sb01Dao.deleteSB01(sb01Entity);
 	}
 
+    @Transactional(rollbackFor = { Exception.class })
+    public void updateSB01Simple(int seq, SB01Request request, String userid) throws Exception {
+        SB01Entity sb01Entity = new SB01Entity();
+        sb01Entity.setSeq(seq);
+        sb01Entity.setSessionid(userid);
+        SB01Entity sb01EntityResult = sb01Dao.selectOneSB01(sb01Entity);
+
+        if (!StringUtils.equals(userid, sb01EntityResult.getUserid())) {
+            throw new ClientException(HttpStatus.FORBIDDEN);
+        }
+
+        SB01Entity entity = SB01Composer.requestToentity(request, userid);
+        entity.setSeq(seq);
+
+        sb01Dao.updateSB01(entity);
+    }
+
 	public InputStream selectVideo(int seq, HttpServletRequest request) throws Exception {
 
 		SB01Entity sb01Entity = new SB01Entity();
