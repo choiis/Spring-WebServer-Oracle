@@ -3,13 +3,13 @@ create user insung identified by 12345678;
 grant connect, resource, dba to insung;
 
 CREATE table insung.SM01(
-userid varchar2(10) not null,
-passwd varchar2(30) not null,
-username varchar2(20) not null,
+userid varchar2(15) not null,
+passwd varchar2(40) not null,
+username varchar2(60) not null,
 brth varchar2(8) not null,
 grade number(1) default 4 not null,
 regdate varchar2(8) not null,
-email varchar2(30) not null,
+email varchar2(100) not null,
 usertype number(1) default 4 not null
 );
 
@@ -84,7 +84,7 @@ add constraint fk_SME1 foreign key(userid) references insung.SM01(userid) on del
 CREATE table insung.MENU (
   menucd varchar2(2) not null,
   menunm varchar2(50) not null,
-  menuurl varchar2(50) not null,
+  menuurl varchar2(150) not null,
   authlevel number(1) default 4 not null,
   reguser varchar2(20) not null,
   regdate varchar2(8) not null,
@@ -153,14 +153,15 @@ insert into insung.CODE values('05','파일','P002','admin','20180901');
 insert into insung.CODE values('06','기타','P002','admin','20180901');
 
 CREATE SEQUENCE insung.seq_SM02
-START WITH 1 INCREMENT BY 1 ;
+START WITH 101
+  INCREMENT BY 1;
 
 
 CREATE table insung.SM02(
 seq number not null,
 userid varchar2(10) not null,
-title varchar2(20) not null,
-text varchar2(200) not null,
+title varchar2(50) not null,
+text varchar2(500) not null,
 regdate varchar2(20) not null
 );
 
@@ -174,12 +175,13 @@ CREATE index insung.idx_SM02_1
 on insung.SM02(userid, regdate);
 
 CREATE SEQUENCE insung.seq_SB01
-START WITH 1 INCREMENT BY 1 ;
+START WITH 21
+  INCREMENT BY 1;
 
 create table insung.SB01(
   seq number not null,
-  title varchar2(20) not null,
-  text varchar2(200) not null,
+  title varchar2(50) not null,
+  text varchar2(500) not null,
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
   hit number(4)  default 0 not null ,
@@ -212,12 +214,14 @@ alter table insung.SBV1
 add constraint fk_SBV1 foreign key(seq) references insung.SB01(seq) on delete cascade;
 
 CREATE SEQUENCE insung.seq_SB02
-START WITH 1 INCREMENT BY 1 ;
+START WITH 201
+  INCREMENT BY 1;
+
 
 create table insung.SB02(
   seq number not null,
   seq01 number not null,
-  text varchar2(200) not null,
+  text varchar2(500) not null,
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
   good number(4) default 0 not null,
@@ -248,12 +252,13 @@ alter table insung.SBG1
 add constraint fk_sbg1 foreign key(seq) references insung.SB01(seq) on delete cascade;
 
 CREATE SEQUENCE insung.seq_SF01
-START WITH 1 INCREMENT BY 1 ;
+START WITH 21
+  INCREMENT BY 1;
 
 create table insung.SF01(
   seq number not null,
-  title varchar2(20) not null,
-  text varchar2(200) not null,
+  title varchar2(50) not null,
+  text varchar2(500) not null,
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
   hit number(4)  default 0 not null ,
@@ -275,12 +280,13 @@ CREATE index insung.idx_SF01_2
 on insung.SF01(userid , regdate desc);
 
 CREATE SEQUENCE insung.seq_SF02
-START WITH 1 INCREMENT BY 1 ;
+START WITH 201
+  INCREMENT BY 1;
 
 create table insung.SF02(
   seq number not null,
   seq01 number not null,
-  text varchar2(200) not null,
+  text varchar2(500) not null,
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
   good number(4) default 0 not null,
@@ -327,12 +333,13 @@ CREATE index insung.idx_SFD1_1
 on insung.SFD1(downuserid);
 
 CREATE SEQUENCE insung.seq_SV01
-START WITH 1 INCREMENT BY 1 ;
+START WITH 21
+  INCREMENT BY 1;
 
 create table insung.SV01(
   seq number not null,
-  title varchar2(20) not null,
-  text varchar2(200) not null,
+  title varchar2(50) not null,
+  text varchar2(500) not null,
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
   hit number(4)  default 0 not null,
@@ -380,12 +387,14 @@ alter table insung.SV03
 add constraint fk_sv03 foreign key(seq, idx) references insung.SV02(seq, idx) on delete cascade;
 
 CREATE SEQUENCE insung.seq_SV04
-START WITH 1 INCREMENT BY 1 ;
+  START WITH 201
+  INCREMENT BY 1;
+
 
 create table insung.SV04 (
   seq number not null,
   seq01 number not null,
-  text varchar2(200) not null,
+  text varchar2(500) not null,
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
   good number(4) default 0 not null,
@@ -416,16 +425,17 @@ alter table insung.SVG1
 add constraint fk_svg1 foreign key(seq) references insung.SV01(seq) on delete cascade;
 
 CREATE SEQUENCE insung.seq_SR01
-START WITH 1 INCREMENT BY 1;
+  START WITH 21
+  INCREMENT BY 1;
 
 create table insung.SR01 (
   seq number not null,
-  title varchar2(20) not null,
-  text varchar2(200) not null,
+  title varchar2(50) not null,
+  text varchar2(500) not null,
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
   hit number(4)  default 0 not null,
-  markertitle varchar2(40) not null,
+  markertitle varchar2(100) not null,
   mapx number  not NULL,
   mapy number  not NULL,
   good number(4) default 0 not null
@@ -457,12 +467,13 @@ alter table insung.SR02
 add constraint fk_sr02 foreign key(seq) references insung.SR01(seq) on delete cascade;
 
 CREATE SEQUENCE insung.seq_SR03
-START WITH 1 INCREMENT BY 1 ;
+  START WITH 201
+  INCREMENT BY 1;
 
 create table insung.SR03 (
   seq number not null,
   seq01 number not null,
-  text varchar2(200) not null,
+  text varchar2(500) not null,
   userid varchar2(20) not null,
   regdate varchar2(20) not null,
   good number(4) default 0 not null,
@@ -504,3 +515,513 @@ add constraint pk_SRG1 primary key(seq,sessionid);
 
 alter table insung.SRG1
 add constraint fk_sg1 foreign key(seq) references insung.SR01(seq) on delete cascade;
+
+
+------------------------
+----------- data init
+------------------------
+
+INSERT INTO insung.SM01 (userid, passwd, username, brth, grade, regdate, email, usertype)
+VALUES ('user01', 'pass01', '사용자01', '19900101', 4, '20250101', 'user01@example.com', 4);
+INSERT INTO insung.SM01 VALUES ('user02', 'pass02', '사용자02', '19900202', 3, '20250102', 'user02@example.com', 3);
+INSERT INTO insung.SM01 VALUES ('user03', 'pass03', '사용자03', '19900303', 2, '20250103', 'user03@example.com', 2);
+INSERT INTO insung.SM01 VALUES ('user04', 'pass04', '사용자04', '19900404', 1, '20250104', 'user04@example.com', 1);
+INSERT INTO insung.SM01 VALUES ('user05', 'pass05', '사용자05', '19900505', 4, '20250105', 'user05@example.com', 4);
+INSERT INTO insung.SM01 VALUES ('user06', 'pass06', '사용자06', '19900606', 4, '20250106', 'user06@example.com', 4);
+INSERT INTO insung.SM01 VALUES ('user07', 'pass07', '사용자07', '19900707', 3, '20250107', 'user07@example.com', 3);
+INSERT INTO insung.SM01 VALUES ('user08', 'pass08', '사용자08', '19900808', 2, '20250108', 'user08@example.com', 2);
+INSERT INTO insung.SM01 VALUES ('user09', 'pass09', '사용자09', '19900909', 1, '20250109', 'user09@example.com', 1);
+INSERT INTO insung.SM01 VALUES ('user10', 'pass10', '사용자10', '19901010', 4, '20250110', 'user10@example.com', 4);
+INSERT INTO insung.SM01 VALUES ('user11', 'pass11', '사용자11', '19901111', 4, '20250111', 'user11@example.com', 4);
+INSERT INTO insung.SM01 VALUES ('user12', 'pass12', '사용자12', '19901212', 3, '20250112', 'user12@example.com', 3);
+INSERT INTO insung.SM01 VALUES ('user13', 'pass13', '사용자13', '19910113', 2, '20250113', 'user13@example.com', 2);
+INSERT INTO insung.SM01 VALUES ('user14', 'pass14', '사용자14', '19910214', 1, '20250114', 'user14@example.com', 1);
+INSERT INTO insung.SM01 VALUES ('user15', 'pass15', '사용자15', '19910315', 4, '20250115', 'user15@example.com', 4);
+INSERT INTO insung.SM01 VALUES ('user16', 'pass16', '사용자16', '19910416', 4, '20250116', 'user16@example.com', 4);
+INSERT INTO insung.SM01 VALUES ('user17', 'pass17', '사용자17', '19910517', 3, '20250117', 'user17@example.com', 3);
+INSERT INTO insung.SM01 VALUES ('user18', 'pass18', '사용자18', '19910618', 2, '20250118', 'user18@example.com', 2);
+INSERT INTO insung.SM01 VALUES ('user19', 'pass19', '사용자19', '19910719', 1, '20250119', 'user19@example.com', 1);
+
+COMMIT;
+
+BEGIN
+  FOR r IN (SELECT userid FROM insung.SM01) LOOP
+    INSERT INTO insung.SMP1 (userid, regdate, photo)
+    VALUES (r.userid, '20250201', empty_blob());
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_infocode NUMBER := 1;
+BEGIN
+  FOR r IN (SELECT userid FROM insung.SM01 ORDER BY userid) LOOP
+    INSERT INTO insung.SMI1 (userid, infocode, pfnum, pcnum, pbnum, regdate)
+    VALUES (
+      r.userid,
+      v_infocode,
+      LPAD(1000 + v_infocode, 4, '0'),
+      '0001',
+      '0001',
+      '20250201'
+    );
+    v_infocode := v_infocode + 1;
+    IF v_infocode > 99 THEN
+      v_infocode := 1;
+    END IF;
+  END LOOP;
+END;
+/
+COMMIT;
+
+BEGIN
+  FOR r IN (SELECT userid FROM insung.SM01 ORDER BY userid) LOOP
+    INSERT INTO insung.SME1 (userid, regdate, insertid)
+    VALUES (r.userid, '20250201', 'admin');
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_rn   NUMBER := 0;
+  v_cnt  NUMBER;
+BEGIN
+  FOR r IN (SELECT userid FROM insung.SM01 ORDER BY userid) LOOP
+    v_rn := v_rn + 1;
+    v_cnt := 3 + MOD(v_rn, 5);
+    FOR i IN 1..v_cnt LOOP
+      INSERT INTO insung.SM02 (seq, userid, title, text, regdate)
+      VALUES (
+        insung.seq_SM02.NEXTVAL,
+        r.userid,
+        'MEMO-' || TO_CHAR(i),
+        r.userid || ' 메모 ' || TO_CHAR(i),
+        '202503' || LPAD(MOD(i, 28) + 1, 2, '0')
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_userid  VARCHAR2(10);
+BEGIN
+  FOR i IN 1..20 LOOP
+    SELECT userid INTO v_userid
+    FROM (
+      SELECT userid, ROW_NUMBER() OVER (ORDER BY userid) rn
+      FROM insung.SM01
+    )
+    WHERE rn = MOD(i-1, 20) + 1;
+
+    INSERT INTO insung.SB01 (seq, title, text, userid, regdate, hit, good, videobool)
+    VALUES (
+      insung.seq_SB01.NEXTVAL,
+      'SB01-' || LPAD(i,2,'0'),
+      '동영상 게시글 ' || TO_CHAR(i) || ' 내용입니다.',
+      v_userid,
+      '202504' || LPAD(MOD(i, 28) + 1, 2, '0'),
+      5 * i,
+      MOD(i, 5),
+      CASE WHEN MOD(i, 2) = 0 THEN 1 ELSE 0 END
+    );
+  END LOOP;
+END;
+/
+COMMIT;
+
+BEGIN
+  FOR r IN (SELECT seq, regdate FROM insung.SB01 WHERE videobool = 1) LOOP
+    INSERT INTO insung.SBV1 (seq, regdate, videopath)
+    VALUES (r.seq, r.regdate, '/video/sb01_' || LPAD(r.seq, 3, '0') || '.mp4');
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_cnt     NUMBER;
+  v_userid  VARCHAR2(10);
+BEGIN
+  FOR r IN (SELECT seq FROM insung.SB01 ORDER BY seq) LOOP
+    v_cnt := 5 + MOD(r.seq, 11); -- 5 ~ 15
+    IF v_cnt > 15 THEN v_cnt := 15; END IF;
+
+    FOR i IN 1..v_cnt LOOP
+      SELECT userid INTO v_userid
+      FROM (
+        SELECT userid, ROW_NUMBER() OVER (ORDER BY userid) rn
+        FROM insung.SM01
+      )
+      WHERE rn = MOD(i-1, 20) + 1;
+
+      INSERT INTO insung.SB02 (seq, seq01, text, userid, regdate, good, parents)
+      VALUES (
+        insung.seq_SB02.NEXTVAL,
+        r.seq,
+        'SB01-' || r.seq || ' 댓글 ' || TO_CHAR(i),
+        v_userid,
+        '202505' || LPAD(MOD(i, 28) + 1, 2, '0'),
+        MOD(i, 3),
+        0
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_cnt NUMBER;
+BEGIN
+  FOR r IN (SELECT seq FROM insung.SB01 ORDER BY seq) LOOP
+    v_cnt := 2 + MOD(r.seq, 3); -- 2 ~ 4
+    FOR i IN 1..v_cnt LOOP
+      INSERT INTO insung.SBG1 (seq, sessionid, datelog, goodlog, hatelog)
+      VALUES (
+        r.seq,
+        'SBSESS' || TO_CHAR(r.seq) || '_' || TO_CHAR(i),
+        '202506' || LPAD(MOD(i, 28) + 1, 2, '0'),
+        CASE WHEN MOD(i,2)=1 THEN 'Y' ELSE NULL END,
+        CASE WHEN MOD(i,2)=0 THEN 'Y' ELSE NULL END
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_userid VARCHAR2(10);
+BEGIN
+  FOR i IN 1..20 LOOP
+    SELECT userid INTO v_userid
+    FROM (
+      SELECT userid, ROW_NUMBER() OVER (ORDER BY userid) rn
+      FROM insung.SM01
+    )
+    WHERE rn = MOD(i-1, 20) + 1;
+
+    INSERT INTO insung.SF01 (seq, title, text, userid, regdate, hit, good, filename, ftpfilename)
+    VALUES (
+      insung.seq_SF01.NEXTVAL,
+      'SF01-' || LPAD(i,2,'0'),
+      '파일 게시글 ' || TO_CHAR(i) || ' 내용입니다.',
+      v_userid,
+      '202507' || LPAD(MOD(i, 28) + 1, 2, '0'),
+      3 * i,
+      MOD(i, 5),
+      'file' || TO_CHAR(i) || '.dat',
+      'file' || TO_CHAR(i) || '_ftp.dat'
+    );
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_cnt     NUMBER;
+  v_userid  VARCHAR2(10);
+BEGIN
+  FOR r IN (SELECT seq FROM insung.SF01 ORDER BY seq) LOOP
+    v_cnt := 5 + MOD(r.seq, 11);
+    IF v_cnt > 15 THEN v_cnt := 15; END IF;
+
+    FOR i IN 1..v_cnt LOOP
+      SELECT userid INTO v_userid
+      FROM (
+        SELECT userid, ROW_NUMBER() OVER (ORDER BY userid) rn
+        FROM insung.SM01
+      )
+      WHERE rn = MOD(i-1, 20) + 1;
+
+      INSERT INTO insung.SF02 (seq, seq01, text, userid, regdate, good, parents)
+      VALUES (
+        insung.seq_SF02.NEXTVAL,
+        r.seq,
+        'SF01-' || r.seq || ' 댓글 ' || TO_CHAR(i),
+        v_userid,
+        '202508' || LPAD(MOD(i, 28) + 1, 2, '0'),
+        MOD(i, 3),
+        0
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_cnt NUMBER;
+BEGIN
+  FOR r IN (SELECT seq FROM insung.SF01 ORDER BY seq) LOOP
+    v_cnt := 2 + MOD(r.seq, 3);
+    FOR i IN 1..v_cnt LOOP
+      INSERT INTO insung.SFG1 (seq, sessionid, datelog, goodlog, hatelog)
+      VALUES (
+        r.seq,
+        'SFSESS' || TO_CHAR(r.seq) || '_' || TO_CHAR(i),
+        '202509' || LPAD(MOD(i, 28) + 1, 2, '0'),
+        CASE WHEN MOD(i,2)=1 THEN 'Y' ELSE NULL END,
+        CASE WHEN MOD(i,2)=0 THEN 'Y' ELSE NULL END
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_userid VARCHAR2(10);
+BEGIN
+  FOR i IN 1..20 LOOP
+    SELECT userid INTO v_userid
+    FROM (
+      SELECT userid, ROW_NUMBER() OVER (ORDER BY userid) rn
+      FROM insung.SM01
+    )
+    WHERE rn = MOD(i-1, 20) + 1;
+
+    INSERT INTO insung.SV01 (seq, title, text, userid, regdate, hit, multiselect, good)
+    VALUES (
+      insung.seq_SV01.NEXTVAL,
+      'SV01-' || LPAD(i,2,'0'),
+      '투표 ' || TO_CHAR(i) || '의 내용입니다.',
+      v_userid,
+      '202510' || LPAD(MOD(i, 28) + 1, 2, '0'),
+      4 * i,
+      CASE WHEN MOD(i,2)=0 THEN 1 ELSE 0 END,
+      MOD(i, 5)
+    );
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_cnt NUMBER;
+BEGIN
+  FOR r IN (SELECT seq, title FROM insung.SV01 ORDER BY seq) LOOP
+    v_cnt := 3 + MOD(r.seq, 4); -- 3~6
+    IF v_cnt > 6 THEN v_cnt := 6; END IF;
+
+    FOR i IN 1..v_cnt LOOP
+      INSERT INTO insung.SV02 (seq, idx, content, userid, regdate)
+      VALUES (
+        r.seq,
+        i,
+        r.title || ' 선택지 ' || TO_CHAR(i),
+        'admin',
+        '202511' || LPAD(MOD(i, 28) + 1, 2, '0')
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+BEGIN
+  FOR p IN (SELECT seq FROM insung.SV01 ORDER BY seq) LOOP
+    FOR u IN (SELECT userid FROM insung.SM01 ORDER BY userid) LOOP
+      INSERT INTO insung.SV03 (seq, idx, userid, regdate)
+      VALUES (
+        p.seq,
+        1,
+        u.userid,
+        '20251201'
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_cnt     NUMBER;
+  v_userid  VARCHAR2(10);
+BEGIN
+  FOR r IN (SELECT seq FROM insung.SV01 ORDER BY seq) LOOP
+    v_cnt := 5 + MOD(r.seq, 11);
+    IF v_cnt > 15 THEN v_cnt := 15; END IF;
+
+    FOR i IN 1..v_cnt LOOP
+      SELECT userid INTO v_userid
+      FROM (
+        SELECT userid, ROW_NUMBER() OVER (ORDER BY userid) rn
+        FROM insung.SM01
+      )
+      WHERE rn = MOD(i-1, 20) + 1;
+
+      INSERT INTO insung.SV04 (seq, seq01, text, userid, regdate, good, parents)
+      VALUES (
+        insung.seq_SV04.NEXTVAL,
+        r.seq,
+        'SV01-' || r.seq || ' 댓글 ' || TO_CHAR(i),
+        v_userid,
+        '202512' || LPAD(MOD(i, 28) + 1, 2, '0'),
+        MOD(i, 3),
+        0
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_cnt NUMBER;
+BEGIN
+  FOR r IN (SELECT seq FROM insung.SV01 ORDER BY seq) LOOP
+    v_cnt := 2 + MOD(r.seq, 3);
+    FOR i IN 1..v_cnt LOOP
+      INSERT INTO insung.SVG1 (seq, sessionid, datelog, goodlog, hatelog)
+      VALUES (
+        r.seq,
+        'SVSESS' || TO_CHAR(r.seq) || '_' || TO_CHAR(i),
+        '202501' || LPAD(MOD(i, 28) + 1, 2, '0'),
+        CASE WHEN MOD(i,2)=1 THEN 'Y' ELSE NULL END,
+        CASE WHEN MOD(i,2)=0 THEN 'Y' ELSE NULL END
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_userid VARCHAR2(10);
+BEGIN
+  FOR i IN 1..20 LOOP
+    SELECT userid INTO v_userid
+    FROM (
+      SELECT userid, ROW_NUMBER() OVER (ORDER BY userid) rn
+      FROM insung.SM01
+    )
+    WHERE rn = MOD(i-1, 20) + 1;
+
+    INSERT INTO insung.SR01 (seq, title, text, userid, regdate, hit, markertitle, mapx, mapy, good)
+    VALUES (
+      insung.seq_SR01.NEXTVAL,
+      'SR01-' || LPAD(i,2,'0'),
+      '맛집 ' || TO_CHAR(i) || ' 소개입니다.',
+      v_userid,
+      '202502' || LPAD(MOD(i, 28) + 1, 2, '0'),
+      4 * i,
+      'SRMARK-' || LPAD(i,2,'0'),
+      120 + i * 0.01,
+      35 + i * 0.01,
+      MOD(i, 5)
+    );
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_seq    insung.SR01.seq%TYPE;
+  v_i      NUMBER := 0;
+  v_total  NUMBER;
+BEGIN
+  SELECT COUNT(*) INTO v_total FROM insung.SR01;
+
+  IF v_total = 0 THEN
+    RAISE_APPLICATION_ERROR(-20001, 'SR01 has no data');
+  END IF;
+
+  FOR u IN (SELECT userid FROM insung.SM01 ORDER BY userid) LOOP
+    v_i := v_i + 1;
+
+    SELECT seq
+      INTO v_seq
+      FROM (
+        SELECT seq,
+               ROW_NUMBER() OVER (ORDER BY seq) AS rn
+        FROM insung.SR01
+      )
+     WHERE rn = MOD(v_i-1, v_total) + 1;
+
+    INSERT INTO insung.SR02 (seq, userid, grade, regdate)
+    VALUES (
+      v_seq,
+      u.userid,
+      3 + MOD(v_i, 3),
+      '202503' || LPAD(MOD(v_i, 28) + 1, 2, '0')
+    );
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_cnt     NUMBER;
+  v_userid  VARCHAR2(10);
+BEGIN
+  FOR r IN (SELECT seq FROM insung.SR01 ORDER BY seq) LOOP
+    v_cnt := 5 + MOD(r.seq, 11);
+    IF v_cnt > 15 THEN v_cnt := 15; END IF;
+
+    FOR i IN 1..v_cnt LOOP
+      SELECT userid INTO v_userid
+      FROM (
+        SELECT userid, ROW_NUMBER() OVER (ORDER BY userid) rn
+        FROM insung.SM01
+      )
+      WHERE rn = MOD(i-1, 20) + 1;
+
+      INSERT INTO insung.SR03 (seq, seq01, text, userid, regdate, good, parents)
+      VALUES (
+        insung.seq_SR03.NEXTVAL,
+        r.seq,
+        'SR01-' || r.seq || ' 댓글 ' || TO_CHAR(i),
+        v_userid,
+        '202504' || LPAD(MOD(i, 28) + 1, 2, '0'),
+        MOD(i, 3),
+        0
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_cnt NUMBER;
+BEGIN
+  FOR r IN (SELECT seq FROM insung.SR01 ORDER BY seq) LOOP
+    v_cnt := 1 + MOD(r.seq, 3); -- 1~3
+    FOR i IN 1..v_cnt LOOP
+      INSERT INTO insung.SRP1 (seq, idx, regdate, photopath)
+      VALUES (
+        r.seq,
+        i,
+        '202505' || LPAD(MOD(i, 28) + 1, 2, '0'),
+        '/photo/sr01_' || LPAD(r.seq,3,'0') || '_' || TO_CHAR(i) || '.jpg'
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
+
+DECLARE
+  v_cnt NUMBER;
+BEGIN
+  FOR r IN (SELECT seq FROM insung.SR01 ORDER BY seq) LOOP
+    v_cnt := 2 + MOD(r.seq, 3);
+    FOR i IN 1..v_cnt LOOP
+      INSERT INTO insung.SRG1 (seq, sessionid, datelog, goodlog, hatelog)
+      VALUES (
+        r.seq,
+        'SRSESS' || TO_CHAR(r.seq) || '_' || TO_CHAR(i),
+        '202506' || LPAD(MOD(i, 28) + 1, 2, '0'),
+        CASE WHEN MOD(i,2)=1 THEN 'Y' ELSE NULL END,
+        CASE WHEN MOD(i,2)=0 THEN 'Y' ELSE NULL END
+      );
+    END LOOP;
+  END LOOP;
+END;
+/
+COMMIT;
