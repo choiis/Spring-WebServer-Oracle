@@ -1,11 +1,7 @@
 package com.singer.common.exception;
 
-import java.net.BindException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
@@ -27,15 +23,14 @@ import org.springframework.web.context.request.async.AsyncRequestTimeoutExceptio
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import lombok.extern.slf4j.Slf4j;
+
+import java.net.BindException;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
-import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 
 @ControllerAdvice
 @Slf4j

@@ -1,13 +1,9 @@
 package com.singer.domain.entity.sv;
 
 import com.singer.domain.entity.SuperEntity;
-import java.util.List;
+import lombok.*;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.List;
 
 @NoArgsConstructor
 @Setter

@@ -5,17 +5,16 @@ import com.singer.application.dto.sb.SB02ListResponse;
 import com.singer.application.dto.sb.SB02Request;
 import com.singer.application.dto.sb.SB02Response;
 import com.singer.common.exception.ClientException;
-
-import java.util.List;
-import java.util.stream.Stream;
-
+import com.singer.domain.dao.sb.SB02Dao;
+import com.singer.domain.entity.sb.SB02Entity;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.singer.domain.dao.sb.SB02Dao;
-import com.singer.domain.entity.sb.SB02Entity;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class SB02Service {

@@ -1,11 +1,13 @@
 package com.singer.infrastructure.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,7 +30,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // 비밀번호 암호화 방식 (DB 상황에 맞게 변경 가능)
         return new BCryptPasswordEncoder();
     }
 
@@ -40,7 +41,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
@@ -53,6 +54,20 @@ public class SecurityConfig {
                                 "/actuator/health"
                         ).permitAll()
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((req, res, e) -> {
+                            // 🔹 인증 안 된 경우 → 401
+                            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            res.setContentType("application/json;charset=UTF-8");
+                            res.getWriter().write("{\"message\":\"Unauthorized\"}");
+                        })
+                        .accessDeniedHandler((req, res, e) -> {
+                            // 🔹 인증은 됐는데 권한이 부족한 경우 → 403
+                            res.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                            res.setContentType("application/json;charset=UTF-8");
+                            res.getWriter().write("{\"message\":\"Forbidden\"}");
+                        })
                 )
                 .userDetailsService(userDetailsService)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

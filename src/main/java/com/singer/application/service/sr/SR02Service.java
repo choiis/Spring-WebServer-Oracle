@@ -3,13 +3,11 @@ package com.singer.application.service.sr;
 import com.singer.application.dto.sr.SR02Composer;
 import com.singer.application.dto.sr.SR02Request;
 import com.singer.application.dto.sr.SR02Response;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Service;
-
 import com.singer.domain.dao.sr.SR02Dao;
 import com.singer.domain.entity.sr.SR01Entity;
 import com.singer.domain.entity.sr.SR02Entity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class SR02Service {

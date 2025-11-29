@@ -1,18 +1,15 @@
 package com.singer.common.util;
 
-import java.util.Optional;
-
+import com.singer.common.exception.ClientException;
+import com.singer.common.util.Constants.BROWSER_CODE;
 import jakarta.servlet.http.HttpServletRequest;
-
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.ObjectUtils;
 
-import com.singer.common.util.Constants.BROWSER_CODE;
-import com.singer.common.exception.ClientException;
-
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommonUtil {

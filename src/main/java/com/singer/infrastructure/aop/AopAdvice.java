@@ -1,10 +1,8 @@
 package com.singer.infrastructure.aop;
 
-import java.util.Arrays;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -16,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
 
 @Component
 @Aspect

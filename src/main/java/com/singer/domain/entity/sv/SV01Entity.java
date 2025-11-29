@@ -1,15 +1,10 @@
 package com.singer.domain.entity.sv;
 
-import com.singer.domain.entity.BoardEntity;
-import java.util.List;
-
 import com.singer.common.util.CommonUtil;
+import com.singer.domain.entity.BoardEntity;
+import lombok.*;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.List;
 
 @NoArgsConstructor
 @Setter

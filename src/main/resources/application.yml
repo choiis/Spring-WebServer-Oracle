@@ -7,7 +7,7 @@ spring:
     name: webserver-oracle
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@127.0.0.1:1521/xe
+    url: jdbc:oracle:thin:@127.0.0.1:11521/xe
     username: insung
     password: 12345678
 

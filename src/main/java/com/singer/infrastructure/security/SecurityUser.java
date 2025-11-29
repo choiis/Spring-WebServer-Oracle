@@ -1,15 +1,13 @@
 package com.singer.infrastructure.security;
 
-import java.util.Collection;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import com.singer.common.util.Constants.USER_CODE;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 
 @NoArgsConstructor
 @Getter

@@ -1,29 +1,19 @@
 package com.singer.application.controller.comm;
 
-import com.singer.application.controller.BaseController;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import jakarta.servlet.http.HttpServletRequest;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.singer.common.util.Constants.USER_CODE;
+import com.singer.application.controller.BaseController;
 import com.singer.application.service.comm.CommService;
+import com.singer.common.util.Constants.USER_CODE;
 import com.singer.domain.entity.CommEntity;
-
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/api/comm")
 

@@ -7,7 +7,7 @@ services:
       - ORACLE_ALLOW_REMOTE=true
       - ORACLE_PWD=12345678
     ports:
-      - "1521:1521"
+      - "11521:1521"
     volumes:
       - ./init/:/docker-entrypoint-initdb.d/
       - oracle-backup:/opt/oracle/oradata

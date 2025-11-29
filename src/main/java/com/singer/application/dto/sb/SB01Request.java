@@ -1,8 +1,6 @@
 package com.singer.application.dto.sb;
 
-import com.singer.common.exception.ExceptionMsg;
 import com.singer.common.util.Constants.YES_NO;
-import jakarta.validation.constraints.NotEmpty;
 
 public record SB01Request(
         String title,

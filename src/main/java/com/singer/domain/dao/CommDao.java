@@ -1,11 +1,10 @@
 package com.singer.domain.dao;
 
-import java.util.List;
-
+import com.singer.domain.entity.CommEntity;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
-import com.singer.domain.entity.CommEntity;
+import java.util.List;
 
 @Repository("commDao")
 public class CommDao extends SuperDao {

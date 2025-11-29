@@ -1,6 +1,5 @@
 package com.singer.domain.database;
 
-import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -10,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+
+import javax.sql.DataSource;
 
 @Configuration
 @MapperScan("com.singer.domain.dao")

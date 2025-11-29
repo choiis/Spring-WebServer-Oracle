@@ -1,9 +1,9 @@
 package com.singer.application.service.comm;
 
-import java.util.List;
-
 import com.singer.common.util.Constants.USER_CODE;
 import com.singer.domain.entity.CommEntity;
+
+import java.util.List;
 
 public interface CommService {
 	public List<CommEntity> selectCode(CommEntity vo) throws Exception;

@@ -3,21 +3,13 @@ package com.singer.application.controller.sv;
 import com.singer.application.controller.BaseController;
 import com.singer.application.dto.sv.SV03ListRequest;
 import com.singer.application.dto.sv.SV04Response;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.singer.application.service.sv.SV02Service;
 import jakarta.servlet.http.HttpServletRequest;
-
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.singer.application.service.sv.SV02Service;
-
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/sv03")
 

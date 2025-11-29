@@ -1,13 +1,8 @@
 package com.singer.infrastructure.batch;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Iterator;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
-
+import com.singer.infrastructure.config.S3Properties;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -15,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
-import com.singer.infrastructure.config.S3Properties;
-
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 @Setter
 @Component

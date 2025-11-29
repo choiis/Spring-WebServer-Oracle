@@ -1,8 +1,5 @@
 package com.singer.application.dto.sr;
 
-import com.singer.common.exception.ExceptionMsg;
-import jakarta.validation.constraints.NotEmpty;
-
 public record SR01Request(
         String title,
         String text,

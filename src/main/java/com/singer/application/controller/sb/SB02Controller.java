@@ -5,22 +5,13 @@ import com.singer.application.dto.sb.SB02ListResponse;
 import com.singer.application.dto.sb.SB02Request;
 import com.singer.application.dto.sb.SB02Response;
 import com.singer.application.service.sb.SB02Service;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/sb02")
 

@@ -1,9 +1,7 @@
 package com.singer.application.dto.sm;
 
-import jakarta.validation.constraints.NotEmpty;
-
 import com.singer.common.exception.ExceptionMsg;
-
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

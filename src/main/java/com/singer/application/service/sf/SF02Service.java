@@ -5,18 +5,16 @@ import com.singer.application.dto.sf.SF02ListResponse;
 import com.singer.application.dto.sf.SF02Request;
 import com.singer.application.dto.sf.SF02Response;
 import com.singer.common.exception.ClientException;
-
-import java.util.List;
-import java.util.stream.Stream;
-
+import com.singer.domain.dao.sf.SF02Dao;
+import com.singer.domain.entity.sf.SF02Entity;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.singer.domain.dao.sf.SF02Dao;
-import com.singer.domain.entity.sf.SF02Entity;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class SF02Service {

@@ -1,9 +1,9 @@
 package com.singer.application.dto.sm;
 
+import com.singer.domain.entity.sm.SM01Entity;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.singer.domain.entity.sm.SM01Entity;
 
 public class SMI1Composer {
 

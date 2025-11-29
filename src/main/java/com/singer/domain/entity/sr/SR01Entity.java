@@ -1,21 +1,14 @@
 package com.singer.domain.entity.sr;
 
+import com.singer.common.exception.ExceptionMsg;
+import com.singer.common.util.CommonUtil;
 import com.singer.domain.entity.BoardEntity;
-import java.util.List;
-
 import jakarta.validation.constraints.NotEmpty;
-
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.singer.common.util.CommonUtil;
-import com.singer.common.exception.ExceptionMsg;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.List;
 
 @NoArgsConstructor
 @Setter

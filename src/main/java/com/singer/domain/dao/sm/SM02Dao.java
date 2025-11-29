@@ -1,14 +1,9 @@
 package com.singer.domain.dao.sm;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-
 import com.singer.domain.entity.sm.SM02Entity;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface SM02Dao {

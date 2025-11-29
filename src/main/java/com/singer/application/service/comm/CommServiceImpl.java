@@ -1,19 +1,17 @@
 package com.singer.application.service.comm;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.singer.common.util.Constants.USER_CODE;
 import com.singer.common.util.DateUtil;
 import com.singer.domain.dao.CommDao;
 import com.singer.domain.entity.CommEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class CommServiceImpl implements CommService {

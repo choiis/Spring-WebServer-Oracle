@@ -1,24 +1,17 @@
 package com.singer.domain.entity.sm;
 
-import com.singer.domain.entity.SuperEntity;
-import java.util.List;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-
-import org.springframework.web.multipart.MultipartFile;
-
+import com.singer.common.exception.ExceptionMsg;
 import com.singer.common.util.CommonUtil;
 import com.singer.common.util.Constants.PHONE_INFO_CODE;
 import com.singer.common.util.Constants.USER_CODE;
-import com.singer.common.exception.ExceptionMsg;
+import com.singer.domain.entity.SuperEntity;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.List;
 
 @NoArgsConstructor
 @Setter

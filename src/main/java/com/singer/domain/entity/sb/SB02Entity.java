@@ -1,12 +1,12 @@
 package com.singer.domain.entity.sb;
 
 import com.singer.domain.entity.ReplyEntity;
-import java.util.List;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @NoArgsConstructor
 @Getter

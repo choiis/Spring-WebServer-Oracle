@@ -1,6 +1,7 @@
 package com.singer.application.dto.sf;
 
 import com.singer.domain.entity.sf.SF01Entity;
+
 import java.util.ArrayList;
 import java.util.List;
 

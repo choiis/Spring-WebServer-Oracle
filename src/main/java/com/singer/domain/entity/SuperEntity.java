@@ -1,12 +1,11 @@
 package com.singer.domain.entity;
 
-import java.io.Serializable;
-
 import com.singer.common.util.Constants;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 @Getter
 @Setter

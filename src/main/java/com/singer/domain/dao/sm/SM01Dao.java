@@ -1,13 +1,12 @@
 package com.singer.domain.dao.sm;
 
 import com.singer.domain.dao.SuperDao;
+import com.singer.domain.entity.sm.SM01Entity;
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.stereotype.Repository;
-
-import com.singer.domain.entity.sm.SM01Entity;
 
 @Repository("sm01Dao")
 public class SM01Dao extends SuperDao {

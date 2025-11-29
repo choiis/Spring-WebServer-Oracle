@@ -1,14 +1,13 @@
 package com.singer.domain.entity.sm;
 
-import com.singer.domain.entity.BoardEntity;
-import java.util.List;
-
 import com.singer.common.util.CommonUtil;
-
+import com.singer.domain.entity.BoardEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
 
 @NoArgsConstructor
 @Getter

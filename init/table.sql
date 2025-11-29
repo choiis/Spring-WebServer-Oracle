@@ -25,6 +25,20 @@ on insung.SM01(brth);
 CREATE index insung.idx_SM01_3
 on insung.SM01(regdate);
 
+
+INSERT INTO insung.SM01 (
+  userid, passwd, username, brth, grade, regdate, email, usertype
+) VALUES (
+  'admin',
+  'admin1234',
+  '관리자',
+  '19900101',
+  1,
+  '20251129',
+  'admin@example.com',
+  1
+);
+
 CREATE TABLE insung.SMP1(
 userid varchar2(10) not null,
 regdate varchar2(8) not null,

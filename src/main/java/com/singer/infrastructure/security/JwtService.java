@@ -1,11 +1,11 @@
 package com.singer.infrastructure.security;
 
+import com.singer.common.util.Constants.USER_CODE;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -25,15 +25,14 @@ public class JwtService {
         this.signingKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(properties.secret()));
     }
 
-    public String generateToken(Authentication authentication) {
-        Object principal = authentication.getPrincipal();
-        String username = authentication.getName();
-
-        com.singer.common.util.Constants.USER_CODE userType = com.singer.common.util.Constants.USER_CODE.NORMAL;
-        if (principal instanceof SecurityUser securityUser) {
-            userType = securityUser.getUsertype();
+    public String generateToken(String username, USER_CODE userType) {
+        if (userType == null) {
+            userType = USER_CODE.NORMAL;
         }
+        return buildToken(username, userType);
+    }
 
+    private String buildToken(String username, USER_CODE userType) {
         Instant now = Instant.now();
         Instant expiry = now.plusSeconds(properties.expirationSeconds());
 

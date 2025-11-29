@@ -1,12 +1,11 @@
 package com.singer.domain.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.session.SqlSession;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SuperDao {
