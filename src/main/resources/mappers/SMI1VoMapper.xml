@@ -22,86 +22,75 @@
 		</resultMap>
 
 		<select id="selectByBrth" resultMap="SM01EntityResult" parameterType="com.singer.domain.entity.sm.SM01Entity">
-				select
-					S.*,
-					S1.pfnum as pfnum,
-	 				S1.pcnum as pcnum,
-					S1.pbnum as pbnum
-					from 
-	 	 			(
-	 				 select 
-	  				T1.userid,
-	  				T1.username,
-	  				T1.brth,
-	  				T1.email,
-	  				T1.regdate,
-	  				T1.grade
-	  					from SM01 T1 where T1.brth = #{brth}
-	  					and not exists ( /*+ UNNEST NL_AJ  */
-	  					select 1 from SME1 E1 
-	  					where T1.userid = E1.userid
-	  				)
-	  				) S
-					left outer join SMI1 S1
-			 		on S.userid = S1.userid
-			 	and S1.infocode = 1
+				SELECT /*+ LEADING(T1 S1) USE_NL(S1) */
+					T1.userid,
+					T1.username,
+					T1.brth,
+					T1.email,
+					T1.regdate,
+					T1.grade,
+					S1.pfnum AS pfnum,
+					S1.pcnum AS pcnum,
+					S1.pbnum AS pbnum
+				FROM SM01 T1
+				LEFT OUTER JOIN SMI1 S1
+					ON T1.userid = S1.userid AND S1.infocode = 1
+				WHERE T1.brth = #{brth}
+					AND NOT EXISTS (
+						SELECT /*+ UNNEST NL_AJ */ 1
+						FROM SME1 E1
+						WHERE T1.userid = E1.userid
+					)
 		</select>
 		
 		
 		<select id="selectByName" resultMap="SM01EntityResult" parameterType="com.singer.domain.entity.sm.SM01Entity">
-				select
-					S.*,
-					S1.pfnum as pfnum,
-	 				S1.pcnum as pcnum,
-					S1.pbnum as pbnum
-					from 
-	 	 			(
-	 				 select 
-	  				T1.userid,
-	  				T1.username,
-	  				T1.brth,
-	  				T1.email,
-	  				T1.regdate,
-	  				T1.grade
-	  					from SM01 T1 where T1.username like #{username}||'%'
-	  					and not exists ( /*+ UNNEST NL_AJ  */
-	  					select 1 from SME1 E1 
-	  					where T1.userid = E1.userid
-	  				)
-	  				) S
-					left outer join SMI1 S1
-			 		on S.userid = S1.userid
-			 	and S1.infocode = 1
+				SELECT /*+ LEADING(T1 S1) USE_NL(S1) INDEX(T1 idx_SM01_1) */
+					T1.userid,
+					T1.username,
+					T1.brth,
+					T1.email,
+					T1.regdate,
+					T1.grade,
+					S1.pfnum AS pfnum,
+					S1.pcnum AS pcnum,
+					S1.pbnum AS pbnum
+				FROM SM01 T1
+				LEFT OUTER JOIN SMI1 S1
+					ON T1.userid = S1.userid AND S1.infocode = 1
+				WHERE T1.username LIKE #{username} || '%'
+					AND NOT EXISTS (
+						SELECT /*+ UNNEST NL_AJ */ 1
+						FROM SME1 E1
+						WHERE T1.userid = E1.userid
+					)
 		</select>
 
 		<select id="selectByPhone" resultMap="SM01EntityResult" parameterType="com.singer.domain.entity.sm.SM01Entity">
-				select
-	  				S1.userid as userid,
-	  				S1.username as username,
-	  				S1.brth as brth,
-	  				S1.email as email,
-	  				S1.regdate as regdate,
-	  				S1.grade as grade,
-	  				S.pfnum as pfnum,
-	 				S.pcnum as pcnum,
-					S.pbnum as pbnum
-	  				from 
-					(select 
-						T1.* from SMI1 T1
-						where T1.pbnum = #{cellpbnum}
-						<if test="pcnum != null">
-			 				and T1.pcnum = #{cellpcnum}
-			 			</if>
-			 			<if test="pfnum != null">
-			 				and T1.pfnum = #{cellpfnum}
-			 			</if>
-						AND T1.infocode = 1
-						and not exists ( /*+ UNNEST NL_AJ  */
-	 				 	select 1 from SME1 E1 
-	  					where T1.userid = E1.userid
-						)
-					) S
-				inner join SM01 S1
-				on S.userid = S1.userid		
+				SELECT /*+ LEADING(T1 S1) USE_NL(S1) INDEX(T1 idx_SMI1_1) */
+					S1.userid AS userid,
+					S1.username AS username,
+					S1.brth AS brth,
+					S1.email AS email,
+					S1.regdate AS regdate,
+					S1.grade AS grade,
+					T1.pfnum AS pfnum,
+					T1.pcnum AS pcnum,
+					T1.pbnum AS pbnum
+				FROM SMI1 T1
+				INNER JOIN SM01 S1 ON T1.userid = S1.userid
+				WHERE T1.pbnum = #{cellpbnum}
+					<if test="pcnum != null">
+						AND T1.pcnum = #{cellpcnum}
+					</if>
+					<if test="pfnum != null">
+						AND T1.pfnum = #{cellpfnum}
+					</if>
+					AND T1.infocode = 1
+					AND NOT EXISTS (
+						SELECT /*+ UNNEST NL_AJ */ 1
+						FROM SME1 E1
+						WHERE T1.userid = E1.userid
+					)
 		</select>		
 </mapper>

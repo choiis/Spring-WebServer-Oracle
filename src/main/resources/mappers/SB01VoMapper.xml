@@ -94,63 +94,80 @@
 		</select>
 		
 		<select id="selectCount" resultType="com.singer.domain.entity.sb.SB01Entity">
-		<![CDATA[
-			with tot as (select count(*) as cnt /*+ INDEX_FFS(SB01 PK_SB01)*/
-  					from SB01 )
-			select cnt as totCnt from tot
-		]]>
+			SELECT /*+ INDEX_FFS(SB01 PK_SB01) */ COUNT(*) AS totCnt FROM SB01
 		</select>
 		
 		<select id="select" resultType="com.singer.domain.entity.sb.SB01Entity"  parameterType="com.singer.domain.entity.sb.SB01Entity">
 		<![CDATA[
-			select S1.*,
-				(select count(*) 
-        			from SB02 S2
-        			where S1.seq = S2.seq01
-        			and S2.parents = 0
-      			) as reply
-				 from (
-					select /*+ index_desc(SB01 PK_SB01)*/
-					rownum as rown,
-					seq as seq,
-					title as title, 
-					text as text, 
-					userid as userid,  
-					regdate as regdate,
-					hit as hit, 
-					good as good
-			 	from SB01 
-			 	where rownum <= #{endRownum} 
-				) S1 where S1.rown  >= #{startRownum} 
-  			]]>
+			SELECT /*+ LEADING(S1 R) USE_HASH(R) */
+				S1.seq,
+				S1.title,
+				S1.text,
+				S1.userid,
+				S1.regdate,
+				S1.hit,
+				S1.good,
+				NVL(R.reply, 0) AS reply
+			FROM (
+				SELECT *
+				FROM (
+					SELECT /*+ INDEX_DESC(SB01 PK_SB01) */
+						ROW_NUMBER() OVER (ORDER BY seq DESC) AS rn,
+						seq,
+						title,
+						text,
+						userid,
+						regdate,
+						hit,
+						good
+					FROM SB01
+				)
+				WHERE rn > #{startRownum} AND rn <= #{endRownum}
+			) S1
+			LEFT OUTER JOIN (
+				SELECT /*+ INDEX(SB02 IDX_SB02_1) */ seq01, COUNT(*) AS reply
+				FROM SB02
+				WHERE parents = 0
+				GROUP BY seq01
+			) R ON S1.seq = R.seq01
+		]]>
 		</select>
 		
 		<select id="selectFind" resultType="com.singer.domain.entity.sb.SB01Entity"  parameterType="com.singer.domain.entity.sb.SB01Entity">
-			select T.*,
-  				(select count(*) 
-        			from SB02 s2
-        			where T.seq = s2.seq01
-        			and s2.parents = 0
-      			) as reply
-      			from
-  				(select
-					seq as seq,
-					title as title, 
-					text as text, 
-					userid as userid,  
-					regdate as regdate,
-					hit as hit, 
-					good as good
-			 	from SB01 
-  				where 1 = 1
-		 		 <if test="userid != null">
-			 		and userid like #{userid} || '%'
-			 	</if>
-			 	<if test="title != null">
-			 		and title like #{title} || '%'
-			 	</if>
-			 	order by regdate desc
-  				) T
+			SELECT /*+ LEADING(T R) USE_HASH(R) */
+				T.seq,
+				T.title,
+				T.text,
+				T.userid,
+				T.regdate,
+				T.hit,
+				T.good,
+				NVL(R.reply, 0) AS reply
+			FROM (
+				SELECT /*+ INDEX_DESC(SB01 idx_SB01_2) */
+					seq,
+					title,
+					text,
+					userid,
+					regdate,
+					hit,
+					good
+				FROM SB01
+				WHERE 1 = 1
+				<if test="userid != null">
+					AND userid LIKE #{userid} || '%'
+				</if>
+				<if test="title != null">
+					AND title LIKE #{title} || '%'
+				</if>
+				ORDER BY regdate DESC
+			) T
+			LEFT OUTER JOIN (
+				SELECT seq01, COUNT(*) AS reply
+				FROM SB02
+				WHERE parents = 0
+				GROUP BY seq01
+			) R ON T.seq = R.seq01
 		</select>
 		
 		

@@ -112,39 +112,40 @@
     </select>
 
     <select id="select" resultMap="SM01EntityResult" parameterType="com.singer.domain.entity.sm.SM01Entity">
-			<![CDATA[
-        select
-            /*+ ordered use_nl(T1 S1)*/
-            T1.*,
-            S1.pfnum as pfnum,
-            S1.pcnum as pcnum,
-            S1.pbnum as pbnum,
-            (select /*+ INDEX_FFS(SM01 pk_SM01)*/
-                 count(*)
-             from SM01
-            ) as totCnt
-        from
-            (select S1.*
-             from (
-                      select  /*+ index_desc(SM01 idx_SM01_3)*/
-                          rownum as rown,
-                          userid as userid,
-                          username as username,
-                          brth as brth,
-                          grade as grade,
-                          regdate as regdate,
-                          email as email,
-                          usertype as usertype
-                      from SM01
-                      where rownum <= #{endRownum}
-                      order by regdate desc
-                  ) S1 where S1.rown > #{startRownum}
-            ) T1
-                left outer join SMI1 S1
-                                on T1.userid = S1.userid
-                                    and S1.INFOCODE = 1
+        <![CDATA[
+        SELECT /*+ LEADING(T1 S1) USE_NL(S1) */
+            T1.userid,
+            T1.username,
+            T1.brth,
+            T1.grade,
+            T1.regdate,
+            T1.email,
+            T1.usertype,
+            S1.pfnum AS pfnum,
+            S1.pcnum AS pcnum,
+            S1.pbnum AS pbnum,
+            T1.totCnt
+        FROM (
+            SELECT S1.*, totCnt
+            FROM (
+                SELECT /*+ INDEX_DESC(SM01 idx_SM01_3) */
+                    ROW_NUMBER() OVER (ORDER BY regdate DESC) AS rn,
+                    userid,
+                    username,
+                    brth,
+                    grade,
+                    regdate,
+                    email,
+                    usertype
+                FROM SM01
+            ) S1,
+            (SELECT /*+ INDEX_FFS(SM01 pk_SM01) */ COUNT(*) AS totCnt FROM SM01) CNT
+            WHERE S1.rn > #{startRownum} AND S1.rn <= #{endRownum}
+        ) T1
+        LEFT OUTER JOIN SMI1 S1
+            ON T1.userid = S1.userid AND S1.INFOCODE = 1
         ]]>
-		</select>
+    </select>
 
     <delete id="delete" parameterType="com.singer.domain.entity.sm.SM01Entity">
         delete from SM01

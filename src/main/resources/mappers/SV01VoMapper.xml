@@ -66,68 +66,87 @@
 		</select>
 		
 		<select id="select" resultType="com.singer.domain.entity.sv.SV01Entity"  parameterType="com.singer.domain.entity.sv.SV01Entity">
-				<![CDATA[
-			with tot as (
-    			/*+ materialize */
-    			select count(*) as totCnt /*+ INDEX_FFS(SV01 
-    			PK_SV01)*/ from SV01 )  
-    
-			select S1.*,
-				 (select count(*) 
-        			from SV04 S
-        			where S1.seq = S.seq01
-        			and S.parents = 0
-      			) as reply,
-  				(select count(*) 
-        			from SV03 S3
-        			where S1.seq = S3.seq
-      			) as votedCnt,
-      			T.totCnt as totCnt
-				 from (
-					select /*+ index_desc(SV01 PK_SV01)*/
-					rownum as rown,
-					seq as seq,
-					title as title, 
-					text as text, 
-					userid as userid,  
-					regdate as regdate,
-					hit as hit, 
-					good as good
-			 	from SV01 
-			 	where rownum <= #{endRownum} 
-				) S1 ,
-    		tot T
-    		where S1.rown >= #{startRownum} 
-  			]]>
+			<![CDATA[
+			SELECT /*+ LEADING(S1 R V) USE_NL(R) USE_NL(V) */
+				S1.seq,
+				S1.title,
+				S1.text,
+				S1.userid,
+				S1.regdate,
+				S1.hit,
+				S1.good,
+				NVL(R.reply, 0) AS reply,
+				NVL(V.votedCnt, 0) AS votedCnt,
+				S1.totCnt
+			FROM (
+				SELECT S.*, CNT.totCnt
+				FROM (
+					SELECT *
+					FROM (
+						SELECT /*+ INDEX_DESC(SV01 PK_SV01) */
+							ROW_NUMBER() OVER (ORDER BY seq DESC) AS rn,
+							seq,
+							title,
+							text,
+							userid,
+							regdate,
+							hit,
+							good
+						FROM SV01
+					)
+					WHERE rn > #{startRownum} AND rn <= #{endRownum}
+				) S,
+				(SELECT /*+ INDEX_FFS(SV01 PK_SV01) */ COUNT(*) AS totCnt FROM SV01) CNT
+			) S1
+			LEFT OUTER JOIN (
+				SELECT /*+ INDEX(SV04 IDX_SV04_1) */ seq01, COUNT(*) AS reply
+				FROM SV04
+				WHERE parents = 0
+				GROUP BY seq01
+			) R ON S1.seq = R.seq01
+			LEFT OUTER JOIN (
+				SELECT /*+ INDEX(SV03 PK_SV03) */ seq, COUNT(*) AS votedCnt
+				FROM SV03
+				GROUP BY seq
+			) V ON S1.seq = V.seq
+			]]>
 		</select>
 		
 		<select id="selectFind" resultType="com.singer.domain.entity.sv.SV01Entity"  parameterType="com.singer.domain.entity.sv.SV01Entity">
-			select T.*,
-				(select count(*) 
-        			from SV04 s
-        			where T.seq = s.seq01
-        			and s.parents = 0
-      			) as reply
-      			from
-  				(
-					select 
-					seq as seq,
-					title as title, 
-					text as text, 
-					userid as userid,  
-					regdate as regdate,
-					hit as hit, 
-					good as good
-			 	from SV01 
-  				 where 1 = 1
-		 		 <if test="userid != null">
-			 		and userid like #{userid} || '%'
-			 	</if>
-			 	<if test="title != null">
-			 		and title like #{title} || '%'
-			 	</if>
-			 	order by regdate desc
-  				) T
+			SELECT /*+ LEADING(T R) USE_NL(R) */
+				T.seq,
+				T.title,
+				T.text,
+				T.userid,
+				T.regdate,
+				T.hit,
+				T.good,
+				NVL(R.reply, 0) AS reply
+			FROM (
+				SELECT /*+ INDEX_DESC(SV01 idx_SV01_2) */
+					seq,
+					title,
+					text,
+					userid,
+					regdate,
+					hit,
+					good
+				FROM SV01
+				WHERE 1 = 1
+				<if test="userid != null">
+					AND userid LIKE #{userid} || '%'
+				</if>
+				<if test="title != null">
+					AND title LIKE #{title} || '%'
+				</if>
+				ORDER BY regdate DESC
+			) T
+			LEFT OUTER JOIN (
+				SELECT seq01, COUNT(*) AS reply
+				FROM SV04
+				WHERE parents = 0
+				GROUP BY seq01
+			) R ON T.seq = R.seq01
 		</select>
 		
 		<delete id="delete" parameterType="com.singer.domain.entity.sv.SV01Entity">

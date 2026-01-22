@@ -32,28 +32,37 @@
 		
 		<select id="select" resultType="com.singer.domain.entity.sv.SV04Entity"  parameterType="com.singer.domain.entity.sv.SV04Entity">
 			<![CDATA[
-			select T.*
-				,(select count(*) 
-        			from SV04 s2
-        			where s2.seq01 = T.seq01
-        			and s2.parents = T.seq
-      			) as reply
-			from
-				(select  /*+ INDEX_DESC(SV04 IDX_SV04_1)*/
-        			rownum as rown,
-					seq as seq,
-        			seq01 as seq01,
-					text as text, 
-					userid as userid,  
-					regdate as regdate,
-					good as good
-				 from SV04 
- 				where seq01 = #{seq01}
-					and parents = 0
-					and rownum <= #{endRownum}
-    			) T
-    		where T.rown >= #{startRownum}
-    		]]>
+			SELECT /*+ LEADING(T R) USE_NL(R) */
+				T.seq,
+				T.seq01,
+				T.text,
+				T.userid,
+				T.regdate,
+				T.good,
+				NVL(R.reply, 0) AS reply
+			FROM (
+				SELECT *
+				FROM (
+					SELECT /*+ INDEX(SV04 IDX_SV04_1) */
+						ROW_NUMBER() OVER (ORDER BY seq) AS rn,
+						seq,
+						seq01,
+						text,
+						userid,
+						regdate,
+						good
+					FROM SV04
+					WHERE seq01 = #{seq01} AND parents = 0
+				)
+				WHERE rn > #{startRownum} AND rn <= #{endRownum}
+			) T
+			LEFT OUTER JOIN (
+				SELECT seq01, parents, COUNT(*) AS reply
+				FROM SV04
+				WHERE seq01 = #{seq01}
+				GROUP BY seq01, parents
+			) R ON T.seq01 = R.seq01 AND T.seq = R.parents
+			]]>
 		</select>
 		
 		<select id="selectReply" resultType="com.singer.domain.entity.sv.SV04Entity"  parameterType="com.singer.domain.entity.sv.SV04Entity">
